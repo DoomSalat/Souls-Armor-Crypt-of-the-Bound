@@ -1,5 +1,5 @@
 {
-    "name": "InputSystem_Actions",
+    "name": "MainInputSystem",
     "maps": [
         {
             "name": "Player",
@@ -84,6 +84,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sword",
+                    "type": "Button",
+                    "id": "06f6da75-d96b-4649-839e-83685b46f7e1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -470,6 +479,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2aed0108-f58d-43ea-a5c4-dc277f2c9c92",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sword",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
