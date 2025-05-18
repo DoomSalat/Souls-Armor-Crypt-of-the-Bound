@@ -5,17 +5,17 @@ using UnityEngine;
 public class SmoothLook : MonoBehaviour
 {
 	[Title("Target")]
-	[Required, SerializeField] private Transform _target;
+	[SerializeField] private Transform _target;
 
 	[Title("Initial Position")]
 	[SerializeField] private Vector2 _initialLocalPosition = Vector2.zero;
 
 	[Title("Offsets")]
-	[SerializeField] private float _offsetDistanceX = 1f;
-	[SerializeField] private float _offsetDistanceY = 1f;
+	[SerializeField, MinValue(0f)] private float _offsetDistanceX = 1f;
+	[SerializeField, MinValue(0f)] private float _offsetDistanceY = 1f;
 
 	[Title("Smoothing")]
-	[SerializeField, Min(0f)] private float _smoothTime = 0.2f;
+	[SerializeField, MinValue(0f)] private float _smoothTime = 0.2f;
 
 	[Title("Control")]
 	[SerializeField] private bool _isFollowing = false;
@@ -30,13 +30,23 @@ public class SmoothLook : MonoBehaviour
 
 	private void Update()
 	{
-		Vector2 targetPos = _isFollowing ? CalculateDirectionLocalTarget() : _initialLocalPosition;
+		float initalPosZ = transform.localPosition.z;
+
+		Vector2 targetPos = (_target != null && _isFollowing) ? CalculateDirectionLocalTarget() : _initialLocalPosition;
 		_transform.localPosition = Vector2.SmoothDamp(_transform.localPosition, targetPos, ref _velocity, _smoothTime);
+
+		_transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, initalPosZ);
+	}
+
+	public void SetTarget(Transform newTarget)
+	{
+		_target = newTarget;
+		_isFollowing = _target != null;
 	}
 
 	public void SetFollowing(bool isFollowing)
 	{
-		_isFollowing = isFollowing;
+		_isFollowing = isFollowing && _target != null;
 	}
 
 	private Vector2 CalculateDirectionLocalTarget()
@@ -49,6 +59,7 @@ public class SmoothLook : MonoBehaviour
 
 		Vector2 direction = delta.normalized;
 		Vector2 offset = new Vector2(direction.x * _offsetDistanceX, direction.y * _offsetDistanceY);
+
 		return _initialLocalPosition + offset;
 	}
 }
