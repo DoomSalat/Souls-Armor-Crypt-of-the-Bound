@@ -11,6 +11,8 @@ public class InputMove : MonoBehaviour
 	private Rigidbody2D _rigidbody;
 	private Vector2 _moveInput;
 
+	public Vector2 GetInputDirection() => _moveInput;
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
@@ -28,9 +30,14 @@ public class InputMove : MonoBehaviour
 		_inputReader.InputActions.Player.Move.canceled -= OnMoveCanceled;
 	}
 
-	public void Move()
+	public void Move(float speedMultiplier = 1)
 	{
-		_rigidbody.linearVelocity = _moveInput * _speed;
+		_rigidbody.linearVelocity = _moveInput * _speed * speedMultiplier;
+	}
+
+	public void Stop()
+	{
+		_rigidbody.linearVelocity = Vector2.zero;
 	}
 
 	private void OnMovePerformed(InputAction.CallbackContext context)

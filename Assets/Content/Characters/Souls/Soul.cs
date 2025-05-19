@@ -14,17 +14,35 @@ public class Soul : MonoBehaviour, IDamagable
 	[SerializeField, MinValue(0)] private float _knockbackMultiplier = 5f;
 	[SerializeField, MinValue(0)] private float _maxKnockback = 100f;
 	[SerializeField, MinValue(0)] private float _stopThreshold = 0.01f;
-
-	private bool _isDead = false;
+	[SerializeField, MinValue(0.01f)] private float _eyeKnockbackSpeedMultiplier = 3;
 
 	private Rigidbody2D _rigidbody;
 	private WaitUntil _waitKnockStop;
+	private WaitForFixedUpdate _waitFixedKnockStop;
+
+	private bool _isDead = false;
+	private bool _isDying = false;
+	private Vector3 _lockDeadEyePos;
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 
-		_waitKnockStop = new WaitUntil(() => _rigidbody.linearVelocity.sqrMagnitude <= _stopThreshold); ;
+		_waitKnockStop = new WaitUntil(() => _rigidbody.linearVelocity.sqrMagnitude <= _stopThreshold);
+		_waitFixedKnockStop = new WaitForFixedUpdate();
+	}
+
+	private void Update()
+	{
+		if (_isDying == false)
+		{
+			if (_isDead == false)
+				_eye.LookAt(_rigidbody.linearVelocity);
+			else
+			{
+				_eye.LookAt(_lockDeadEyePos, _eyeKnockbackSpeedMultiplier);
+			}
+		}
 	}
 
 	private void FixedUpdate()
@@ -61,8 +79,8 @@ public class Soul : MonoBehaviour, IDamagable
 	{
 		Debug.Log($"{gameObject.name} is Dead.");
 
+		_isDying = true;
 		_rigidbody.linearVelocity = Vector2.zero;
-		_eye.SetFollowing(false);
 	}
 
 	private IEnumerator WaitForStop()
@@ -73,7 +91,8 @@ public class Soul : MonoBehaviour, IDamagable
 			yield break;
 		}
 
-		yield return new WaitForFixedUpdate();
+		yield return _waitFixedKnockStop;
+		_lockDeadEyePos = _rigidbody.linearVelocity;
 		yield return _waitKnockStop;
 
 		Dead();

@@ -8,11 +8,15 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	[SerializeField, Required] private SpringJoint2D _targetController;
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, MinValue(0)] private float _knockbackForceMultiplier = 2f;
+	[Space]
+	[SerializeField, Required] private Transform _targetMouse;
 
 	private Rigidbody2D _rigidbody;
 
 	private float _currentSpeed;
 	private Vector2 _previousPosition;
+
+	private bool _isActive;
 
 	private void Awake()
 	{
@@ -36,6 +40,14 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_activeButton.InputActions.Player.Sword.canceled -= context => DeactiveFollow();
 	}
 
+	private void Update()
+	{
+		if (_isActive)
+			_eye.LookAt(_targetMouse.position);
+		else
+			_eye.LookAt();
+	}
+
 	private void FixedUpdate()
 	{
 		Vector2 currentPosition = _rigidbody.position;
@@ -51,14 +63,14 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 
 	private void ActiveFollow()
 	{
+		_isActive = true;
 		_targetController.enabled = true;
-		_eye.SetFollowing(true);
 	}
 
 	private void DeactiveFollow()
 	{
+		_isActive = false;
 		_targetController.enabled = false;
-		_eye.SetFollowing(false);
 	}
 
 	private Vector2 CalculateKnockbackDirection(Collider2D hitCollider, Collider2D other)

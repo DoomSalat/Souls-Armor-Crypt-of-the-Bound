@@ -10,6 +10,7 @@ public class AngularShake : MonoBehaviour
 	[SerializeField] private bool _fadeOut = true;
 
 	private Tween _shakeTween;
+	private Quaternion _initialRotate;
 
 	private void Start()
 	{
@@ -24,6 +25,8 @@ public class AngularShake : MonoBehaviour
 	[ContextMenu(nameof(Play))]
 	public void Play()
 	{
+		_initialRotate = transform.localRotation;
+
 		_shakeTween?.Kill();
 		_shakeTween = transform.DOShakeRotation(_duration, new Vector3(0, 0, _strength), _vibrato, _randomness, _fadeOut)
 			.SetEase(Ease.Linear)
@@ -34,6 +37,6 @@ public class AngularShake : MonoBehaviour
 	public void Stop()
 	{
 		_shakeTween?.Kill();
-		transform.rotation = Quaternion.identity;
+		transform.localRotation = _initialRotate;
 	}
 }

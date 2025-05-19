@@ -360,7 +360,7 @@ MonoBehaviour:
   _hitBox: {fileID: 1110035281069562493}
   _hurtBox: {fileID: 4754125618302045950}
   _knockbackMultiplier: 1
-  _maxknockback: 100
+  _maxKnockback: 50
   _stopThreshold: 0.01
 --- !u!1 &7274150322628195199
 GameObject:
@@ -550,9 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ff8a29d3099de41aa8cc0406cc0631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
   _initialLocalPosition: {x: 0, y: 0}
+  _smoothTime: 0.2
   _offsetDistanceX: 0.16
   _offsetDistanceY: 0.23
-  _smoothTime: 0.2
-  _isFollowing: 1

@@ -13,7 +13,7 @@ public class Player : MonoBehaviour, IDamagable
 
 	private void FixedUpdate()
 	{
-		_inputMove.Move();
+		//_inputMove.Move();
 	}
 
 	public void TakeDamage(DamageData damageData)
