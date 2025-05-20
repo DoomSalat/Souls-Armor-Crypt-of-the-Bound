@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class AbsorptionAnimationData
+public static class AbsorptionScopeAnimationData
 {
 	public static class Params
 	{

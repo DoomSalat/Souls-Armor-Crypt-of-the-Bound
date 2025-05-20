@@ -30,14 +30,14 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 
 	private void OnEnable()
 	{
-		_activeButton.InputActions.Player.Sword.performed += context => ActiveFollow();
-		_activeButton.InputActions.Player.Sword.canceled += context => DeactiveFollow();
+		_activeButton.InputActions.Player.Mouse.performed += context => ActiveFollow();
+		_activeButton.InputActions.Player.Mouse.canceled += context => DeactiveFollow();
 	}
 
 	private void OnDisable()
 	{
-		_activeButton.InputActions.Player.Sword.performed -= context => ActiveFollow();
-		_activeButton.InputActions.Player.Sword.canceled -= context => DeactiveFollow();
+		_activeButton.InputActions.Player.Mouse.performed -= context => ActiveFollow();
+		_activeButton.InputActions.Player.Mouse.canceled -= context => DeactiveFollow();
 	}
 
 	private void Update()

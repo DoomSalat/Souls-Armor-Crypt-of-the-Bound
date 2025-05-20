@@ -17,10 +17,12 @@ public class TargetFollower : MonoBehaviour
 
 	public void TryFollow(Transform target)
 	{
+		if (enabled == false)
+			return;
+
 		if (target == null)
 		{
 			StopMovement();
-
 			return;
 		}
 

@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider2D), typeof(Rigidbody2D))]
@@ -6,15 +5,6 @@ public class AbsorptionScopeCollider : MonoBehaviour
 {
 	private const float OrientationY = 90f;
 	private const float Half = 0.5f;
-
-	[SerializeField, Required]
-	private Transform _target;
-
-	[SerializeField, MinValue(0f)]
-	private float _maxColliderLength = 5f;
-
-	[SerializeField, MinValue(0f)]
-	private float _rotationSpeed = 360f;
 
 	private Rigidbody2D _rigidbody;
 	private CapsuleCollider2D _capsuleCollider;
@@ -25,38 +15,36 @@ public class AbsorptionScopeCollider : MonoBehaviour
 		_capsuleCollider = GetComponent<CapsuleCollider2D>();
 	}
 
-	public void UpdateCollider()
+	public void UpdateCollider(Vector2 targetPosition)
 	{
-		if (_target == null)
-			return;
-
 		Vector2 scopePosition = transform.position;
-		Vector2 targetPosition = _target.position;
+		Vector2 direction = CalculateDirection(scopePosition, targetPosition);
+		float distanceToTarget = CalculateDistance(scopePosition, targetPosition);
 
-		// Вычисляем направление и расстояние
-		Vector2 direction = (targetPosition - scopePosition).normalized;
-		float distanceToTarget = Vector2.Distance(scopePosition, targetPosition);
-
-		// Ограничиваем длину коллайдера
-		distanceToTarget = Mathf.Min(distanceToTarget, _maxColliderLength);
-
-		// Устанавливаем размер коллайдера
-		_capsuleCollider.size = new Vector2(_capsuleCollider.size.x, distanceToTarget);
-
-		// Смещаем центр коллайдера к середине между прицелом и целью
-		_capsuleCollider.offset = direction * (distanceToTarget * Half);
-
-		// Вычисляем угол поворота
-		float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - OrientationY;
-
-		// Плавно поворачиваем через Rigidbody2D
-		float currentAngle = _rigidbody.rotation;
-		float newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, _rotationSpeed * Time.fixedDeltaTime);
-		_rigidbody.MoveRotation(newAngle);
+		RotateTowardsTarget(direction);
+		UpdateColliderPosition(direction, distanceToTarget);
 	}
 
-	public void SetTarget(Transform newTarget)
+	private Vector2 CalculateDirection(Vector2 from, Vector2 to)
 	{
-		_target = newTarget;
+		return (to - from).normalized;
+	}
+
+	private float CalculateDistance(Vector2 from, Vector2 to)
+	{
+		return (to - from).magnitude;
+	}
+
+	private void RotateTowardsTarget(Vector2 direction)
+	{
+		float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - OrientationY;
+		_rigidbody.rotation = targetAngle;
+	}
+
+	private void UpdateColliderPosition(Vector2 direction, float distance)
+	{
+		float initialWidth = _capsuleCollider.size.x;
+		_capsuleCollider.size = new Vector2(initialWidth, distance + initialWidth);
+		_capsuleCollider.offset = new Vector2(0f, distance * Half);
 	}
 }
