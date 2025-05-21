@@ -1,0 +1,1510 @@
+fileFormatVersion: 2
+guid: 3495cce9435c7ad41b0f433c24e2c569
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3400513962315681469
+    second: Crypt level decorate_0
+  - first:
+      213: 2345357545838842004
+    second: Crypt level decorate_1
+  - first:
+      213: 8187201533130940940
+    second: Crypt level decorate_2
+  - first:
+      213: 2182026404642418447
+    second: Crypt level decorate_3
+  - first:
+      213: 9060762140192098420
+    second: Crypt level decorate_4
+  - first:
+      213: -8613028544982322400
+    second: Crypt level decorate_5
+  - first:
+      213: -4499684959255543151
+    second: Crypt level decorate_6
+  - first:
+      213: 346270504464673078
+    second: Crypt level decorate_7
+  - first:
+      213: 753442428225683828
+    second: Crypt level decorate_8
+  - first:
+      213: 3672572461891988137
+    second: Crypt level decorate_9
+  - first:
+      213: -482753845922203240
+    second: Crypt level decorate_10
+  - first:
+      213: 1218851162107489519
+    second: Crypt level decorate_11
+  - first:
+      213: 5805850339806964760
+    second: Crypt level decorate_12
+  - first:
+      213: -7141254749635436110
+    second: Crypt level decorate_13
+  - first:
+      213: 6012898692165136795
+    second: Crypt level decorate_14
+  - first:
+      213: -172778157338847350
+    second: Crypt level decorate_15
+  - first:
+      213: -6593598751087427907
+    second: Crypt level decorate_16
+  - first:
+      213: -3539463718132206397
+    second: Crypt level decorate_17
+  - first:
+      213: 2661875675638281508
+    second: Crypt level decorate_18
+  - first:
+      213: 3176278075345678909
+    second: Crypt level decorate_19
+  - first:
+      213: 2198095411379242711
+    second: Crypt level decorate_20
+  - first:
+      213: -1077830009353471516
+    second: Crypt level decorate_21
+  - first:
+      213: -1159340655992376827
+    second: Crypt level decorate_22
+  - first:
+      213: -5844916282025244572
+    second: Crypt level decorate_23
+  - first:
+      213: 4500871230478910030
+    second: Crypt level decorate_24
+  - first:
+      213: -2569743908798657310
+    second: Crypt level decorate_25
+  - first:
+      213: -2871856008763185869
+    second: Crypt level decorate_26
+  - first:
+      213: 6668376513136784300
+    second: Crypt level decorate_27
+  - first:
+      213: 4630085552983736513
+    second: Crypt level decorate_28
+  - first:
+      213: 6723572009032751865
+    second: Crypt level decorate_29
+  - first:
+      213: 679218805321147616
+    second: Crypt level decorate_30
+  - first:
+      213: 6447270993052108392
+    second: Crypt level decorate_31
+  - first:
+      213: -7235438924254825782
+    second: Crypt level decorate_32
+  - first:
+      213: -7771174728886133625
+    second: Crypt level decorate_33
+  - first:
+      213: -7349817768271002747
+    second: Crypt level decorate_34
+  - first:
+      213: -8347618064545834249
+    second: Crypt level decorate_35
+  - first:
+      213: 3733442364419630784
+    second: Crypt level decorate_36
+  - first:
+      213: 6323412654884528781
+    second: Crypt level decorate_37
+  - first:
+      213: -1088547831892414084
+    second: Crypt level decorate_38
+  - first:
+      213: 2693968253987234592
+    second: Crypt level decorate_39
+  - first:
+      213: -2976577090374708316
+    second: Crypt level decorate_40
+  - first:
+      213: 5364166185490854750
+    second: Crypt level decorate_41
+  - first:
+      213: -8805211376021062967
+    second: Crypt level decorate_42
+  - first:
+      213: -3892956479034520281
+    second: Crypt level decorate_43
+  - first:
+      213: -5472512546079295919
+    second: Crypt level decorate_44
+  - first:
+      213: 5043650534206581401
+    second: Crypt level decorate_45
+  - first:
+      213: 479984822654084705
+    second: Crypt level decorate_46
+  - first:
+      213: -8266199238543564080
+    second: Crypt level decorate_47
+  - first:
+      213: -853147368950735742
+    second: Crypt level decorate_48
+  - first:
+      213: -4932519191652584187
+    second: Crypt level decorate_49
+  - first:
+      213: -1240794243837100537
+    second: Crypt level decorate_50
+  - first:
+      213: 48151656914403084
+    second: Crypt level decorate_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Crypt level decorate_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 192
+        width: 14
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5, y: 0.040816326}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74700aa217798914bab322bf59b59b7a
+      internalID: 311889696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 241
+        width: 18
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0f5455b2099829428ac4f971baccf3b
+      internalID: 54202629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 192
+        width: 13
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5, y: 0.040816326}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 181f57a129e4cf24f8b87a7a5c0fa07e
+      internalID: 10015145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 208
+        width: 14
+        height: 33
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0801d309bde0148aa37c93468b92ab
+      internalID: 780000042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_4
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 208
+        width: 14
+        height: 33
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634fa61d4cbf49c4aa1026758e0bba14
+      internalID: 1066603344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_5
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 218
+        width: 14
+        height: 23
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0403083869c94a849b991d18efb1a16d
+      internalID: -2057465531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_6
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 218
+        width: 7
+        height: 23
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5206ed922ec2cb34189da83cfdb2f3c1
+      internalID: -1633007183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_7
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 210
+        width: 7
+        height: 31
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a55ec6e5438030d4e8ec207813aba894
+      internalID: -619970479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 192
+        width: 13
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5, y: 0.044444446}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dff241d4a45c79b48856a5534fad1a03
+      internalID: -793513081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_9
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 192
+        width: 13
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.046511628}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e299956160aad2f4b80c0283f607daea
+      internalID: 1072947760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_10
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 225
+        width: 12
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 464f204442317d942839e4e0c9755318
+      internalID: -232808490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_11
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 225
+        width: 15
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac79ac9482fca54a9e5929ad40ffa61
+      internalID: -1466937574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_12
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 226
+        width: 7
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c8a4e531bf00c4599a4c64ab65e762
+      internalID: -1849918799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_13
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 224
+        width: 7
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e4481d850db6a74692e781b36bfdc67
+      internalID: -892301651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_14
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 192
+        width: 13
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.071428575}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bbdcead457a51347a80a8d95157a14c
+      internalID: 886225671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_15
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 160
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14285715}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f7bc31f938ab5e408f9aeb56f09a1c5
+      internalID: 1912157194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_16
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 144
+        width: 18
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27272728}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db70ef6c46f42f0489570b9e38f14aad
+      internalID: 264207950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_17
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 144
+        width: 18
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27272728}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f0e5c3f361be4544a94256945ceae1c
+      internalID: 1549894690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_18
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 160
+        width: 14
+        height: 23
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47df66af302cbdf4a8966e4d00150555
+      internalID: 1811649149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_19
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 160
+        width: 18
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fe173841d49bb243a3300ab8dbfb721
+      internalID: 788956466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_20
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 160
+        width: 14
+        height: 23
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7d2774f9094bee49a96d9f955189cc9
+      internalID: -2034376739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_21
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 160
+        width: 18
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b556b0162ffcc459ca65620b384d4e
+      internalID: 1479621393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_22
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 128
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14285715}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0eed92ff4f1a944ebaaaaeb501bb995
+      internalID: -1829126822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_23
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 96
+        width: 18
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.30769232}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d06e1072b438340bf99164ea9e25e2
+      internalID: -1800774794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_24
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 128
+        width: 14
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dec5a943b33a584f8a7500d6d667505
+      internalID: -1982821354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_25
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8eda8e35f457ac0408187bd09d7d4e94
+      internalID: -1535746746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_26
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 128
+        width: 14
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cb2294380e731842bcafed25eb21f39
+      internalID: 929896830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_27
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 128
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4df8672c488937c4e948f979ea3157cb
+      internalID: -154169880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_28
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 96
+        width: 37
+        height: 25
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2325d493924305e4ebaddfbd0f7062ef
+      internalID: -187422891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_29
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 96
+        width: 18
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb01d79f7f4d3644583f96fc674699b7
+      internalID: 1117913931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_30
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 96
+        width: 14
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e692d9e83a44404c96dc5fb75f202f1
+      internalID: -684147123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_31
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 96
+        width: 11
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96c9b43eb7359414ab6220d6841bb77c
+      internalID: 839824948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_32
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 96
+        width: 10
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a518000ba69036643a9a4bc2414d8bbc
+      internalID: -555521173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_33
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 96
+        width: 10
+        height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be21b87662d02b74199a88fdec0b6078
+      internalID: -994126950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_34
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 64
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14285715}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27d5634193a3da0479e679e044ecb21c
+      internalID: -1173848572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_35
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 80
+        width: 18
+        height: 14
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c50b2ed8ffcdd04439d3100c776f2b1f
+      internalID: 1129014435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_36
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 80
+        width: 14
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 694928b60ce97b54cb4ac91aa9d6218a
+      internalID: 295296424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_37
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 80
+        width: 11
+        height: 11
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb88a73ac925dd34194626a6f8b8556f
+      internalID: 727614018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_38
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 80
+        width: 10
+        height: 9
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 762899087a9896c4a91699cf478f6299
+      internalID: 2047497994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_39
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 80
+        width: 10
+        height: 10
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b2cb1a6a514534c952f3035a49cb43
+      internalID: -1419012302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_40
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 32
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14285715}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e5231a32456734fa750c62a37ddab9
+      internalID: -2047685377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_41
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 48
+        width: 18
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cb5569ce0e765941a52e6522562cea0
+      internalID: 66653076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_42
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 48
+        width: 14
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188953d5ab75d6247bd569d56869c1d8
+      internalID: -897529398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_43
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 48
+        width: 11
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 763f0b72b219f09429f44be1e2c125b4
+      internalID: -1746673164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_44
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 48
+        width: 10
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dd7958c3c2366449afc45f161b98887
+      internalID: 639949712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_45
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 48
+        width: 10
+        height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66893a0125e61264c9755240ed7e90a7
+      internalID: -1444961714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_46
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 32
+        width: 18
+        height: 14
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94ff40d473be4094580d0b8f9fe57120
+      internalID: -146748822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_47
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 32
+        width: 14
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b628373ea5bf284fbca4c70c380058b
+      internalID: 1194714737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_48
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 32
+        width: 11
+        height: 11
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b1c5c0ef7977074e96604991889f4d8
+      internalID: -1433092641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_49
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 32
+        width: 10
+        height: 9
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d6d7f714a91023498415cb5ed4193f7
+      internalID: 1750013624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_50
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 32
+        width: 10
+        height: 10
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18f6a8ee8bef48c4b8b19a36cc932c7e
+      internalID: 1647598142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt level decorate_51
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 37
+        height: 25
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2e7de7f41740a94483bb24564b1ba26
+      internalID: -1549630587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9b2d25657fb68ba409f7c9dda9c8d394
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Crypt level decorate_0: 311889696
+      Crypt level decorate_1: 54202629
+      Crypt level decorate_10: -232808490
+      Crypt level decorate_11: -1466937574
+      Crypt level decorate_12: -1849918799
+      Crypt level decorate_13: -892301651
+      Crypt level decorate_14: 886225671
+      Crypt level decorate_15: 1912157194
+      Crypt level decorate_16: 264207950
+      Crypt level decorate_17: 1549894690
+      Crypt level decorate_18: 1811649149
+      Crypt level decorate_19: 788956466
+      Crypt level decorate_2: 10015145
+      Crypt level decorate_20: -2034376739
+      Crypt level decorate_21: 1479621393
+      Crypt level decorate_22: -1829126822
+      Crypt level decorate_23: -1800774794
+      Crypt level decorate_24: -1982821354
+      Crypt level decorate_25: -1535746746
+      Crypt level decorate_26: 929896830
+      Crypt level decorate_27: -154169880
+      Crypt level decorate_28: -187422891
+      Crypt level decorate_29: 1117913931
+      Crypt level decorate_3: 780000042
+      Crypt level decorate_30: -684147123
+      Crypt level decorate_31: 839824948
+      Crypt level decorate_32: -555521173
+      Crypt level decorate_33: -994126950
+      Crypt level decorate_34: -1173848572
+      Crypt level decorate_35: 1129014435
+      Crypt level decorate_36: 295296424
+      Crypt level decorate_37: 727614018
+      Crypt level decorate_38: 2047497994
+      Crypt level decorate_39: -1419012302
+      Crypt level decorate_4: 1066603344
+      Crypt level decorate_40: -2047685377
+      Crypt level decorate_41: 66653076
+      Crypt level decorate_42: -897529398
+      Crypt level decorate_43: -1746673164
+      Crypt level decorate_44: 639949712
+      Crypt level decorate_45: -1444961714
+      Crypt level decorate_46: -146748822
+      Crypt level decorate_47: 1194714737
+      Crypt level decorate_48: -1433092641
+      Crypt level decorate_49: 1750013624
+      Crypt level decorate_5: -2057465531
+      Crypt level decorate_50: 1647598142
+      Crypt level decorate_51: -1549630587
+      Crypt level decorate_6: -1633007183
+      Crypt level decorate_7: -619970479
+      Crypt level decorate_8: -793513081
+      Crypt level decorate_9: 1072947760
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
