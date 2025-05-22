@@ -14,9 +14,8 @@ public class MouseFollower : MonoBehaviour
 	{
 		if (Mouse.current.leftButton.isPressed)
 		{
-			Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+			Vector3 mouseScreenPos = InputReader.GetMousePosition();
 			Vector3 worldPos = _camera.ScreenToWorldPoint(mouseScreenPos);
-			worldPos.z = 0f;
 			transform.position = worldPos;
 		}
 	}

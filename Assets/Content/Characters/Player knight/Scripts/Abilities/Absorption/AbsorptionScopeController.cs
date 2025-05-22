@@ -9,9 +9,8 @@ public class AbsorptionScopeController : MonoBehaviour
 	[SerializeField, Required] private Collider2D _activationCollider;
 
 	private Camera _mainCamera;
-	private bool _wasActivatedThisFrame;
-	private Vector2 _cachedMousePosition;
-	private Vector2 _cachedWorldPosition;
+	private Vector3 _cachedMousePosition;
+	private Vector3 _cachedWorldPosition;
 
 	public event Action OnActivated;
 	public event Action OnDeactivated;
@@ -21,46 +20,21 @@ public class AbsorptionScopeController : MonoBehaviour
 		_mainCamera = Camera.main;
 	}
 
-	private void LateUpdate()
-	{
-		_wasActivatedThisFrame = false;
-	}
-
 	public bool IsPointInActivationZone()
 	{
-		_cachedMousePosition = Mouse.current.position.ReadValue();
+		_cachedMousePosition = InputReader.GetMousePosition();
 		_cachedWorldPosition = _mainCamera.ScreenToWorldPoint(_cachedMousePosition);
 
 		return _activationCollider.OverlapPoint(_cachedWorldPosition);
 	}
 
-	public bool TryActivate()
-	{
-		if (_wasActivatedThisFrame)
-			return false;
-
-		if (IsPointInActivationZone())
-		{
-			Activate();
-			_wasActivatedThisFrame = true;
-			return true;
-		}
-
-		return false;
-	}
-
-	public void OnMouseClickCanceled(InputAction.CallbackContext context)
-	{
-		Deactivate();
-	}
-
-	private void Activate()
+	public void Activate()
 	{
 		_absorptionScope.Activate();
 		OnActivated?.Invoke();
 	}
 
-	private void Deactivate()
+	public void Deactivate()
 	{
 		_absorptionScope.Hide();
 		OnDeactivated?.Invoke();

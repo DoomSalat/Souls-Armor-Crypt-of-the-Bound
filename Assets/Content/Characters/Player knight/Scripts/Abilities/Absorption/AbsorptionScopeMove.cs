@@ -26,13 +26,15 @@ public class AbsorptionScopeMove : MonoBehaviour
 		if (_isFollowing == false)
 			return;
 
-		Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-		Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+		Vector3 mouseScreenPosition = InputReader.GetMousePosition();
+
+		Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+		mouseWorldPosition = (Vector2)mouseWorldPosition;
 
 		Vector2 currentPosition = _rigidbody.position;
-		Vector2 newPosition = Vector2.MoveTowards(currentPosition, mouseWorldPosition, _moveSpeed * Time.fixedDeltaTime);
+		Vector2 newPosition = Vector3.MoveTowards(currentPosition, mouseWorldPosition, _moveSpeed * Time.fixedDeltaTime);
 
-		if (newPosition == mouseWorldPosition)
+		if (newPosition == (Vector2)mouseWorldPosition)
 		{
 			_rigidbody.linearVelocity = Vector2.zero;
 		}

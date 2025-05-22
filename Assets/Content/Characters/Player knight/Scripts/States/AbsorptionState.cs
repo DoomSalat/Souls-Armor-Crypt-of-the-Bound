@@ -10,8 +10,13 @@ public class AbsorptionState : PlayerState
 		_absorptionScope = absorptionScope;
 	}
 
+	public override void Enter()
+	{
+		_absorptionScope.Activate();
+	}
+
 	public override void OnMouseCanceled(InputAction.CallbackContext context)
 	{
-		_absorptionScope.OnMouseClickCanceled(context);
+		_absorptionScope.Deactivate();
 	}
 }

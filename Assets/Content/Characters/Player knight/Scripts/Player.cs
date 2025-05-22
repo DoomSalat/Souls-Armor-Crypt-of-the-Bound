@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, IDamagable
 
 	private void ChooseCurrentState()
 	{
-		if (_absorptionScope.TryActivate())
+		if (_absorptionScope.IsPointInActivationZone())
 			EnterAbsorptionState();
 		else
 			EnterMovementState();
