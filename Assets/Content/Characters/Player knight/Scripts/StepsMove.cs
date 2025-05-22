@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(InputMove))]
 public class StepsMove : MonoBehaviour
@@ -7,14 +8,17 @@ public class StepsMove : MonoBehaviour
 	[SerializeField] private float _stepDuration = 0.2f;
 
 	private InputMove _inputMove;
-	private bool _isMoving = false;
 	private int _legsCount = 2;
-	private float _stepTimer = 0f;
-	private bool _isStepActive = false;
+	private float _stepTimer;
+	private bool _canStep = true;
+	private Coroutine _stepCoroutine;
+
+	private WaitForSeconds _stepDurationWait;
 
 	private void Awake()
 	{
 		_inputMove = GetComponent<InputMove>();
+		_stepDurationWait = new WaitForSeconds(_stepDuration);
 	}
 
 	private void Update()
@@ -24,74 +28,69 @@ public class StepsMove : MonoBehaviour
 
 		_stepTimer += Time.deltaTime;
 
-		Vector2 direction = _inputMove.GetInputDirection();
-
-		if (direction != Vector2.zero && _isMoving == false && _stepTimer >= _stepInterval)
+		if (_stepTimer >= _stepInterval)
 		{
-			ResetTimer();
+			_canStep = true;
 		}
 	}
 
 	public void Move()
 	{
-		if (_isMoving == false || _legsCount == 0)
+		if (_legsCount == 0 || _canStep == false)
 			return;
 
-		if (_isStepActive)
+		Vector2 direction = _inputMove.GetInputDirection();
+		if (direction == Vector2.zero)
 		{
-			Vector2 direction = _inputMove.GetInputDirection();
-
-			if (direction != Vector2.zero)
-			{
-				_inputMove.Move();
-			}
-			else
-			{
-				_inputMove.Stop();
-				_isStepActive = false;
-			}
-
-			if (_stepTimer >= _stepDuration)
-			{
-				_inputMove.Stop();
-				_isStepActive = false;
-			}
+			_inputMove.Stop();
+			return;
 		}
 
-		if (_stepTimer >= _stepInterval)
-		{
-			_isMoving = false;
-		}
+		_inputMove.Move();
+		_canStep = false;
+		_stepTimer = 0f;
+
+		if (_stepCoroutine != null)
+			StopCoroutine(_stepCoroutine);
+
+		_stepCoroutine = StartCoroutine(StepRoutine());
 	}
 
 	public void Stop()
 	{
-		ResetTimer();
 		_inputMove.Stop();
+		_canStep = true;
+		_stepTimer = 0f;
+
+		if (_stepCoroutine != null)
+		{
+			StopCoroutine(_stepCoroutine);
+			_stepCoroutine = null;
+		}
+	}
+
+	private IEnumerator StepRoutine()
+	{
+		yield return _stepDurationWait;
+
+		_inputMove.Stop();
+		_stepCoroutine = null;
 	}
 
 	public void LoseLeg()
 	{
-		if (_legsCount > 0)
-		{
-			_legsCount--;
-
-			if (_legsCount == 0)
-			{
-				Debug.LogWarning("Рыцарь потерял все ноги и не может двигаться!");
-				_inputMove.Stop();
-			}
-		}
-		else
+		if (_legsCount <= 0)
 		{
 			Debug.LogError("Попытка потерять ногу, когда их уже нет!");
+			return;
 		}
-	}
 
-	private void ResetTimer()
-	{
-		_isMoving = false;
-		_isStepActive = false;
-		_stepTimer = 0f;
+		_legsCount--;
+		Stop();
+
+		if (_legsCount == 0)
+		{
+			Debug.LogWarning("Рыцарь потерял все ноги и не может двигаться!");
+		}
 	}
 }

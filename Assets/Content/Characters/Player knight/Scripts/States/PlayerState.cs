@@ -2,11 +2,11 @@ using UnityEngine.InputSystem;
 
 public abstract class PlayerState
 {
-	protected Player Player { get; private set; }
+	//protected Player Player { get; private set; }
 
-	public PlayerState(Player player)
+	public PlayerState()
 	{
-		Player = player;
+		//Player = player;
 	}
 
 	public virtual void Update() { }

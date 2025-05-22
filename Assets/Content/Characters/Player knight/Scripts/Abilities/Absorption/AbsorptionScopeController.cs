@@ -9,7 +9,9 @@ public class AbsorptionScopeController : MonoBehaviour
 	[SerializeField, Required] private Collider2D _activationCollider;
 
 	private Camera _mainCamera;
-	private bool _isScopeActive = false;
+	private bool _wasActivatedThisFrame;
+	private Vector2 _cachedMousePosition;
+	private Vector2 _cachedWorldPosition;
 
 	public event Action OnActivated;
 	public event Action OnDeactivated;
@@ -19,41 +21,48 @@ public class AbsorptionScopeController : MonoBehaviour
 		_mainCamera = Camera.main;
 	}
 
-	public bool IsPointInActivationZone(Vector2 worldPosition)
+	private void LateUpdate()
 	{
-		return _activationCollider.OverlapPoint(worldPosition);
+		_wasActivatedThisFrame = false;
 	}
 
-	public void OnMouseClickPerformed(InputAction.CallbackContext context)
+	public bool IsPointInActivationZone()
 	{
-		Vector2 mousePosition = Mouse.current.position.ReadValue();
-		Vector2 worldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
+		_cachedMousePosition = Mouse.current.position.ReadValue();
+		_cachedWorldPosition = _mainCamera.ScreenToWorldPoint(_cachedMousePosition);
 
-		if (IsPointInActivationZone(worldPosition))
+		return _activationCollider.OverlapPoint(_cachedWorldPosition);
+	}
+
+	public bool TryActivate()
+	{
+		if (_wasActivatedThisFrame)
+			return false;
+
+		if (IsPointInActivationZone())
 		{
 			Activate();
+			_wasActivatedThisFrame = true;
+			return true;
 		}
+
+		return false;
 	}
 
 	public void OnMouseClickCanceled(InputAction.CallbackContext context)
 	{
-		if (_isScopeActive)
-		{
-			Deactivate();
-		}
+		Deactivate();
 	}
 
 	private void Activate()
 	{
 		_absorptionScope.Activate();
-		_isScopeActive = true;
 		OnActivated?.Invoke();
 	}
 
 	private void Deactivate()
 	{
 		_absorptionScope.Hide();
-		_isScopeActive = false;
 		OnDeactivated?.Invoke();
 	}
 }

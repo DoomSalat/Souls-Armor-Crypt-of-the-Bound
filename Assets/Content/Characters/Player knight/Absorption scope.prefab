@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _movment: {fileID: 3518904467121858889}
+  _movement: {fileID: 3518904467121858889}
   _activatorCollider: {fileID: 7296282367816936620}
   _finder: {fileID: 8452488216625887912}
   _animator: {fileID: 3500675033180133747}

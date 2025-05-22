@@ -20,7 +20,7 @@ public class SwordController : MonoBehaviour
 
 	public void Deactivate()
 	{
-		_springJoint.enabled = false;
 		_sword.DeactiveFollow();
+		_springJoint.enabled = false;
 	}
 }

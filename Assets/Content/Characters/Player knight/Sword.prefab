@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1681709908, guid: 74e12d14bf9210f43a3362678dac222f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,12 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ff8a29d3099de41aa8cc0406cc0631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
   _initialLocalPosition: {x: 0.76, y: 0}
+  _smoothTime: 0.2
   _offsetDistanceX: 0.03
   _offsetDistanceY: 0.03
-  _smoothTime: 0.2
-  _isFollowing: 1
 --- !u!1 &2781621544135332391
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,10 +179,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13106cf0a85d2ed4aa1562d2947beacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeButton: {fileID: 0}
-  _targetController: {fileID: 0}
   _eye: {fileID: 319452641757712795}
+  _localAxisLimiter: {fileID: 3746018895473431096}
   _knockbackForceMultiplier: 0.5
+  _deactiveDamping: 1
+  _followRadius: 6.5
+  _springForce: 30
+  _dampingForce: 1
 --- !u!114 &3746018895473431096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +277,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1438248172960435456, guid: 74e12d14bf9210f43a3362678dac222f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

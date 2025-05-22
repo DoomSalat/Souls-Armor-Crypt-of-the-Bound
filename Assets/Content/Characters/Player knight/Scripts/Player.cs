@@ -2,25 +2,27 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerStateMachine))]
 public class Player : MonoBehaviour, IDamagable
 {
-	[SerializeField, Required] private StepsMove _movement;
 	[SerializeField, Required] private InputMove _inputMove;
+	[SerializeField, Required] private StepsMove _stepsMove;
 	[SerializeField, Required] private AbsorptionScopeController _absorptionScope;
 	[SerializeField, Required] private SwordController _swordController;
 
 	private InputReader _inputReader;
-
-	private PlayerState _currentState;
-	private MovementState _movementState;
-	private AbsorptionState _absorptionState;
+	private PlayerStateMachine _stateMachine;
 
 	private void Awake()
 	{
 		_inputReader = _inputMove.InputReader;
+		_stateMachine = GetComponent<PlayerStateMachine>();
+		_stateMachine.InitializeStates(_stepsMove, _swordController, _absorptionScope);
+	}
 
-		InitializeStates();
-		SetState(_movementState);
+	private void Start()
+	{
+		EnterMovementState();
 	}
 
 	private void OnEnable()
@@ -43,35 +45,21 @@ public class Player : MonoBehaviour, IDamagable
 
 	private void OnMousePerformed(InputAction.CallbackContext context)
 	{
-		_currentState?.OnMousePerformed(context);
+		ChooseCurrentState();
+		_stateMachine.OnMousePerformed(context);
+	}
+
+	private void ChooseCurrentState()
+	{
+		if (_absorptionScope.TryActivate())
+			EnterAbsorptionState();
+		else
+			EnterMovementState();
 	}
 
 	private void OnMouseCanceled(InputAction.CallbackContext context)
 	{
-		_currentState?.OnMouseCanceled(context);
-	}
-
-	private void InitializeStates()
-	{
-		_movementState = new MovementState(this, _movement, _swordController, _absorptionScope);
-		_absorptionState = new AbsorptionState(this, _swordController, _absorptionScope);
-	}
-
-	private void Update()
-	{
-		_currentState?.Update();
-	}
-
-	private void FixedUpdate()
-	{
-		_currentState?.FixedUpdate();
-	}
-
-	public void SetState(PlayerState newState)
-	{
-		_currentState?.Exit();
-		_currentState = newState;
-		_currentState?.Enter();
+		_stateMachine.OnMouseCanceled(context);
 	}
 
 	public void TakeDamage(DamageData damageData)
@@ -81,11 +69,11 @@ public class Player : MonoBehaviour, IDamagable
 
 	public void EnterAbsorptionState()
 	{
-		SetState(_absorptionState);
+		_stateMachine.EnterAbsorptionState();
 	}
 
 	public void EnterMovementState()
 	{
-		SetState(_movementState);
+		_stateMachine.EnterMovementState();
 	}
 }

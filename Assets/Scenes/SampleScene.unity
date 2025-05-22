@@ -36866,6 +36866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 4972086489707388878, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _followSpeed
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 5622260151226317109, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

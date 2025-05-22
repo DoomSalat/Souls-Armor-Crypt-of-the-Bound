@@ -4,7 +4,7 @@ using UnityEngine;
 public class AbsorptionScope : MonoBehaviour
 {
 	[SerializeField, Required] private Transform _target;
-	[SerializeField, Required] private AbsorptionScopeMove _movment;
+	[SerializeField, Required] private AbsorptionScopeMove _movement;
 	[SerializeField, Required] private AbsorptionScopeCollider _activatorCollider;
 	[SerializeField, Required] private SoulFinder _finder;
 	[SerializeField, Required] private AbsorptionScopeAnimation _animator;
@@ -26,18 +26,16 @@ public class AbsorptionScope : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		_movment.Move();
+		_movement.Move();
 
 		_activatorCollider.UpdateCollider(_target.position);
 	}
 
 	public void Activate()
 	{
-		gameObject.SetActive(true);
-
 		transform.position = _target.position;
 		_activatorCollider.UpdateCollider(_target.position);
-		_movment.SetFollowing(true);
+		_movement.SetFollowing(true);
 
 		_animator.PlayAppear();
 	}
@@ -48,7 +46,7 @@ public class AbsorptionScope : MonoBehaviour
 
 		if (findTarget)
 		{
-			_movment.SetFollowing(false);
+			_movement.SetFollowing(false);
 		}
 
 		_animator.SetTarget(findTarget);
@@ -57,10 +55,8 @@ public class AbsorptionScope : MonoBehaviour
 
 	private void Deactive()
 	{
-		_movment.SetFollowing(false);
-
+		_movement.SetFollowing(false);
 		transform.position = _target.position;
-		gameObject.SetActive(false);
 
 		_animator.PlayDissapear();
 	}

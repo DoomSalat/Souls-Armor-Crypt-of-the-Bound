@@ -17,7 +17,7 @@ public class Rigidbody2DLocalAxisLimiter : MonoBehaviour
 		_lastPosition = _rigidbody.position;
 	}
 
-	private void FixedUpdate()
+	public void UpdateLimit()
 	{
 		Vector2 delta = _rigidbody.position - _lastPosition;
 		delta = ApplyAxisSpeedFactors(delta);
