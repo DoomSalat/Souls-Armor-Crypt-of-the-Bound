@@ -28,13 +28,11 @@ public class StepsMove : MonoBehaviour
 
 		if (direction != Vector2.zero && _isMoving == false && _stepTimer >= _stepInterval)
 		{
-			_isMoving = true;
-			_isStepActive = true;
-			_stepTimer = 0f;
+			ResetTimer();
 		}
 	}
 
-	private void FixedUpdate()
+	public void Move()
 	{
 		if (_isMoving == false || _legsCount == 0)
 			return;
@@ -66,6 +64,12 @@ public class StepsMove : MonoBehaviour
 		}
 	}
 
+	public void Stop()
+	{
+		ResetTimer();
+		_inputMove.Stop();
+	}
+
 	public void LoseLeg()
 	{
 		if (_legsCount > 0)
@@ -82,5 +86,12 @@ public class StepsMove : MonoBehaviour
 		{
 			Debug.LogError("Попытка потерять ногу, когда их уже нет!");
 		}
+	}
+
+	private void ResetTimer()
+	{
+		_isMoving = false;
+		_isStepActive = false;
+		_stepTimer = 0f;
 	}
 }

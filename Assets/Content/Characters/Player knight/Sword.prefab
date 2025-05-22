@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 8848358635647617432}
   - component: {fileID: 3746018895473431096}
   m_Layer: 6
-  m_Name: Sword Controller
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

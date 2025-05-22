@@ -4,12 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Sword : MonoBehaviour, IKnockbackProvider
 {
-	[SerializeField, Required] private InputReader _activeButton;
-	[SerializeField, Required] private SpringJoint2D _targetController;
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, MinValue(0)] private float _knockbackForceMultiplier = 2f;
-	[Space]
-	[SerializeField, Required] private Transform _targetMouse;
 
 	private Rigidbody2D _rigidbody;
 
@@ -28,22 +24,10 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		DeactiveFollow();
 	}
 
-	private void OnEnable()
-	{
-		_activeButton.InputActions.Player.Mouse.performed += context => ActiveFollow();
-		_activeButton.InputActions.Player.Mouse.canceled += context => DeactiveFollow();
-	}
-
-	private void OnDisable()
-	{
-		_activeButton.InputActions.Player.Mouse.performed -= context => ActiveFollow();
-		_activeButton.InputActions.Player.Mouse.canceled -= context => DeactiveFollow();
-	}
-
-	private void Update()
+	public void UpdateLook(Transform target)
 	{
 		if (_isActive)
-			_eye.LookAt(_targetMouse.position);
+			_eye.LookAt(target.position);
 		else
 			_eye.LookAt();
 	}
@@ -55,22 +39,20 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_previousPosition = currentPosition;
 	}
 
+	public void ActiveFollow()
+	{
+		_isActive = true;
+	}
+
+	public void DeactiveFollow()
+	{
+		_isActive = false;
+	}
+
 	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)
 	{
 		direction = CalculateKnockbackDirection(hitCollider, other);
 		force = CalculateKnockbackForce();
-	}
-
-	private void ActiveFollow()
-	{
-		_isActive = true;
-		_targetController.enabled = true;
-	}
-
-	private void DeactiveFollow()
-	{
-		_isActive = false;
-		_targetController.enabled = false;
 	}
 
 	private Vector2 CalculateKnockbackDirection(Collider2D hitCollider, Collider2D other)

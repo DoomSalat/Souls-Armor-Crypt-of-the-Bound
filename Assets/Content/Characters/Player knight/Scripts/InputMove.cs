@@ -6,11 +6,12 @@ using UnityEngine.InputSystem;
 public class InputMove : MonoBehaviour
 {
 	[SerializeField, MinValue(0)] private float _speed = 3;
-	[SerializeField] private InputReader _inputReader;
+	[SerializeField, Required] private InputReader _inputReader;
 
 	private Rigidbody2D _rigidbody;
 	private Vector2 _moveInput;
 
+	public InputReader InputReader => _inputReader;
 	public Vector2 GetInputDirection() => _moveInput;
 
 	private void Awake()

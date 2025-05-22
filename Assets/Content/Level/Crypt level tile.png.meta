@@ -361,28 +361,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crypt level tile_0
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 624
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f04944176e2d9644b979eaae7b6721b3
-      internalID: 1321988741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_1
       rect:
         serializedVersion: 2
@@ -471,7 +449,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_5
+      name: Crypt_Interactive Ladder Wall
       rect:
         serializedVersion: 2
         x: 864
@@ -479,7 +457,7 @@ TextureImporter:
         width: 64
         height: 111
       alignment: 9
-      pivot: {x: 0.5, y: 0.14414415}
+      pivot: {x: 0.5, y: 0.054054055}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -493,7 +471,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_13
+      name: Crypt_Roof Front UpToSide
       rect:
         serializedVersion: 2
         x: 64
@@ -515,7 +493,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_14
+      name: Crypt_Roof SideToDown
       rect:
         serializedVersion: 2
         x: 80
@@ -537,7 +515,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_15
+      name: Crypt_Roof UpToSide Close
       rect:
         serializedVersion: 2
         x: 128
@@ -554,72 +532,6 @@ TextureImporter:
       bones: []
       spriteID: 05cf2483574bc354bbd97d3cb6fca247
       internalID: 1418581561
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_16
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 608
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99c99ce4becb2104c839c17dd4d24e30
-      internalID: -1804793377
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_17
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 608
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f7f18c8ed6e7524388a8841d86958c2
-      internalID: 326996595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_18
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 608
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 986dc9c61e6fe9c439e477ebf821425f
-      internalID: 2023939108
       vertices: []
       indices: 
       edges: []
@@ -955,7 +867,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_42
+      name: Crypt_Roof Back UpEnd
       rect:
         serializedVersion: 2
         x: 64
@@ -977,7 +889,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_43
+      name: Crypt_Roof Back UpEnd Colomn
       rect:
         serializedVersion: 2
         x: 144
@@ -994,50 +906,6 @@ TextureImporter:
       bones: []
       spriteID: 4a868991f03ba534db72c7676f02985f
       internalID: 1812078796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_44
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 592
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fd8b0c1e44dab2d49be9fede6e41b606
-      internalID: 535436940
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_45
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 592
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 548a020ad23045745910c910d6652bb2
-      internalID: 423371128
       vertices: []
       indices: 
       edges: []
@@ -1417,7 +1285,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_71
+      name: Crypt_Roof Back DownToSide
       rect:
         serializedVersion: 2
         x: 32
@@ -1439,7 +1307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_72
+      name: Crypt_Roof Back UpDownToSide
       rect:
         serializedVersion: 2
         x: 64
@@ -1461,7 +1329,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_73
+      name: Crypt_Roof Back Up (4)
       rect:
         serializedVersion: 2
         x: 80
@@ -1483,7 +1351,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_74
+      name: Crypt_Roof Back Up (3)
       rect:
         serializedVersion: 2
         x: 96
@@ -1505,7 +1373,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_75
+      name: Crypt_Roof Back Up (2)
       rect:
         serializedVersion: 2
         x: 112
@@ -1527,7 +1395,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_76
+      name: Crypt_Roof Back Up (1)
       rect:
         serializedVersion: 2
         x: 128
@@ -1549,7 +1417,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_77
+      name: Crypt_Roof Back SideToUp Colomn
       rect:
         serializedVersion: 2
         x: 144
@@ -1566,160 +1434,6 @@ TextureImporter:
       bones: []
       spriteID: a703c913562524345beff68dd5d09f60
       internalID: 707781019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_78
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff8f117756f6dc14182c1b5425bafc66
-      internalID: 1035708865
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_79
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 351c71356c4749946bd14cec3d5a243b
-      internalID: -1951602340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_80
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d193732aacd55b42928e704da9fe9f7
-      internalID: -1851526744
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_81
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09bce0acc98b484489a65eaf9580c6bf
-      internalID: -1243310163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_82
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94c5b695b3d2d8b48a3cc5cf1c4cc09e
-      internalID: -901154745
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_83
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc25dda16d5f5ab4388c182cc13d98d1
-      internalID: 1311529489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_84
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 576
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e91d327b2486a6648ad1d5a1f5d5f678
-      internalID: 1021345395
       vertices: []
       indices: 
       edges: []
@@ -2099,7 +1813,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_102
+      name: Crypt_Interactive Ladder floor
       rect:
         serializedVersion: 2
         x: 720
@@ -2121,29 +1835,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_116
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 747278c7c191c6040961fd85ff209305
-      internalID: -1292258640
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_117
+      name: Crypt_WallBorder SideToDown
       rect:
         serializedVersion: 2
         x: 48
@@ -2165,7 +1857,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_118
+      name: Crypt_Roof Side (1)
       rect:
         serializedVersion: 2
         x: 64
@@ -2187,7 +1879,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_119
+      name: Crypt_Roof Black
       rect:
         serializedVersion: 2
         x: 80
@@ -2204,270 +1896,6 @@ TextureImporter:
       bones: []
       spriteID: e6a6940651590b44b8fc8d37dd757f72
       internalID: -222983583
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_120
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5842e47cde8c1874497099a460f9ba89
-      internalID: 304656910
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_121
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2851772c7ea9a9043ac72d0937ff1686
-      internalID: -1726289599
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_122
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d9a7b5bffd00c941a8c9bd5728be6dc
-      internalID: 1057426872
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_123
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ca64a3588c5c374f8bf4ddf92d98690
-      internalID: 1022227538
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_124
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e225427c7bea2d46a567492cf5cc30e
-      internalID: -1282025282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_125
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a92a41b55d584734688170ebcb7a7200
-      internalID: 626555013
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_126
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5923e2ba1e09a924f9b06c6b14d14c79
-      internalID: 1782279202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_127
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a5f63e1efc7542748913ab8f28207634
-      internalID: 1981787951
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_128
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86a479168dba5904db65dccc95f1a7ba
-      internalID: -1099689008
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_129
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1d15d58c6a17324fa860956c786dd52
-      internalID: -893776363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_130
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 44817b0125530994fa606c00b6df2083
-      internalID: 818299302
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_131
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 560
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ccb24398d2340404f887019c095c0871
-      internalID: 583750298
       vertices: []
       indices: 
       edges: []
@@ -2847,51 +2275,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_165
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0513ad1516f98534489ae8397c7515bc
-      internalID: -96086750
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_166
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae93914dd5a32c948b0c4c2e384489e2
-      internalID: 1522669580
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_167
+      name: Crypt_WallBorder Back End
       rect:
         serializedVersion: 2
         x: 48
@@ -2913,7 +2297,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_168
+      name: Crypt_Roof Side (2)
       rect:
         serializedVersion: 2
         x: 64
@@ -2930,314 +2314,6 @@ TextureImporter:
       bones: []
       spriteID: 31f1d2b3c3c1ad04690c0799f77bec47
       internalID: -1474250758
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_169
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9bacd384d78bfa4dab0960cc3bed79e
-      internalID: 362538152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_170
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d985fe16529ce646986d5152405de4c
-      internalID: -547416284
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_171
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4770890562fe04547b2c4c1da562aa64
-      internalID: -1693061549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_172
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c609fb9371319749a05416980db6a89
-      internalID: 743927106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_173
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f868b6e04fd3314293e25ee878160a5
-      internalID: -1208505176
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_174
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 708f9afe3935d74488fbf2f6418f4f6c
-      internalID: 766890164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_175
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84faec6608627f649ac9b6b22d7fd6e3
-      internalID: 405399679
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_176
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3f80e52e1d92c5408dd8d8e3c24aaca
-      internalID: -151637642
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_177
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b594d0644367c3849a52d4713361e916
-      internalID: 1813112445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_178
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f29c65ee1394f694d939f5a8c57752ba
-      internalID: -1867485161
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_179
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1495ee74dd860db43851c8ee3d35a9a2
-      internalID: -416275612
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_180
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c60f1fc443afa84589324ec6e45c712
-      internalID: -1532654441
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_181
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f4dc230839e26f49b6b8315de30f004
-      internalID: 1429809979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_182
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 544
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ca84e453282191439e55b5004576142
-      internalID: -2034970795
       vertices: []
       indices: 
       edges: []
@@ -3617,73 +2693,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_204
-      rect:
-        serializedVersion: 2
-        x: 784
-        y: 528
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b32bfa085d0fda941acdff275d564929
-      internalID: 2070191474
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_216
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 006079938b4482e45b2718f6ff0bbf0d
-      internalID: 607275126
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_217
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f9dd142eb3871c645ad9d6cfbb2067cd
-      internalID: -2031645326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_218
+      name: Crypt_WallBorder Side (1)
       rect:
         serializedVersion: 2
         x: 48
@@ -3705,7 +2715,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_219
+      name: Crypt_Roof Side (3)
       rect:
         serializedVersion: 2
         x: 64
@@ -3722,314 +2732,6 @@ TextureImporter:
       bones: []
       spriteID: 9fec9bdf2e4963447a5a9e49f095d7a9
       internalID: 1591981827
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_220
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2ae46ef6131e6144b44f29a9374d6b1
-      internalID: -513867356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_221
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 82772ece47369524794503bdf476fd10
-      internalID: 623867600
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_222
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37d7bba78817a2a449ca588ca6b7cb52
-      internalID: 184291953
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_223
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 296a8ecddaf28af42a6f061ab5d0fb9b
-      internalID: 786135102
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_224
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 54839805da11dce42b3c6f1a49d845e6
-      internalID: 703245602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_225
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af0e97bb18886554ca22d94f1abf6c9c
-      internalID: 1125021278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_226
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04d100fb1c931ab46bef5387f71169f8
-      internalID: -1064215168
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_227
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63107b2f3465f9f42adfe951779a6da2
-      internalID: -1628459704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_228
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e2b68c4aa1d089448869b1509851a6be
-      internalID: 179857869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_229
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ea212b3b1528544087314927c93cf23
-      internalID: 1117975355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_230
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 913bf7cb69dfa2d4ab057c8aee67a9e3
-      internalID: -1939139897
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_231
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 882f63db59cba974abe377d17039fcf1
-      internalID: 1460600704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_232
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49c551a500c4af9448557869127e9df8
-      internalID: -427737775
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_233
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce9181ef2696b3a4e8307a3984d28e8b
-      internalID: 2085507232
       vertices: []
       indices: 
       edges: []
@@ -4365,7 +3067,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_262
+      name: Crypt_Interactive Ladder Wall Close
       rect:
         serializedVersion: 2
         x: 944
@@ -4373,7 +3075,7 @@ TextureImporter:
         width: 64
         height: 111
       alignment: 9
-      pivot: {x: 0.5, y: 0.14414415}
+      pivot: {x: 0.5, y: 0.054054055}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -4387,51 +3089,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_263
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0e04382116e095458009d1e9d28c8ed
-      internalID: 1533966560
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_264
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35150243c3fea4949842dafe13594281
-      internalID: 658530175
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_265
+      name: Crypt_WallBorder Side (2)
       rect:
         serializedVersion: 2
         x: 48
@@ -4453,7 +3111,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_266
+      name: Crypt_Roof Front UpToSide Colomn Edge
       rect:
         serializedVersion: 2
         x: 64
@@ -4475,7 +3133,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_267
+      name: Crypt_Roof Front (1)
       rect:
         serializedVersion: 2
         x: 80
@@ -4497,7 +3155,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_268
+      name: Crypt_Roof Front (2)
       rect:
         serializedVersion: 2
         x: 96
@@ -4519,7 +3177,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_269
+      name: Crypt_Roof Front (3)
       rect:
         serializedVersion: 2
         x: 112
@@ -4541,7 +3199,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_270
+      name: Crypt_Roof Front (4)
       rect:
         serializedVersion: 2
         x: 128
@@ -4563,7 +3221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_271
+      name: Crypt_Roof Front Colomn
       rect:
         serializedVersion: 2
         x: 144
@@ -4580,204 +3238,6 @@ TextureImporter:
       bones: []
       spriteID: 46f6020f8106b87488d3e3d5019c49cb
       internalID: -1324283628
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_272
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09ecd5f4abc160648aa84e60ad0728c6
-      internalID: 1907127064
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_273
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01b5e4585070b6949ab5ffb8b11f7474
-      internalID: -736256893
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_274
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4c7ab7d5bc11f644ae8f6bc673825af
-      internalID: 2092636053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_275
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d0273f6240eb884facea31757a33535
-      internalID: -1576650873
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_276
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 448c11aa09a6966418cbb79d3f991b7d
-      internalID: -1230826142
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_277
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 93ad3ea17c5e3214fa369a2c332e6e2c
-      internalID: -1596308958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_278
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab0df454c23252c419d7f91a45c24132
-      internalID: -780903489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_279
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 809f5177730a9474bb2be54400d083d4
-      internalID: 634342600
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_280
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 512
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 081efd74e7da7a84db5dbaba0257c05b
-      internalID: -1047598529
       vertices: []
       indices: 
       edges: []
@@ -4893,51 +3353,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_287
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 406723fa0a547314d85f32f5fab49b09
-      internalID: 722953050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_288
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35721804dc2c2e14494a6878aa7d4d2d
-      internalID: 693246148
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_289
+      name: Crypt_WallBorder Side (3)
       rect:
         serializedVersion: 2
         x: 48
@@ -4959,7 +3375,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_290
+      name: Crypt_Wall Colomn Edge (3)
       rect:
         serializedVersion: 2
         x: 64
@@ -4981,95 +3397,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_291
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de2fa9e1eafcfda498dedd51c621d3b3
-      internalID: -186453978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_292
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 850d937ca76122746bfa794e05db16fd
-      internalID: -457009684
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_293
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f492b41b198a4814da0bf6af20061c0d
-      internalID: -1977893863
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_294
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 574b76246e2ed4348871ee2f983bcc41
-      internalID: -2086809266
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_295
+      name: Crypt_Wall Colomn (3)
       rect:
         serializedVersion: 2
         x: 144
@@ -5091,29 +3419,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_296
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f274e0f3fd307cf40b7cfe7e3e766646
-      internalID: 213758575
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_297
+      name: Crypt_Wall Sarcophagus Empty (1)
       rect:
         serializedVersion: 2
         x: 176
@@ -5135,7 +3441,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_298
+      name: Crypt_Wall Sarcophagus Empty (2)
       rect:
         serializedVersion: 2
         x: 192
@@ -5157,7 +3463,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_299
+      name: Crypt_Wall Sarcophagus Empty (3)
       rect:
         serializedVersion: 2
         x: 208
@@ -5179,7 +3485,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_300
+      name: Crypt_Wall Sarcophagus Empty (4)
       rect:
         serializedVersion: 2
         x: 224
@@ -5196,94 +3502,6 @@ TextureImporter:
       bones: []
       spriteID: d5e39e729a7a8134a8993a1e8291e408
       internalID: 1674717754
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_301
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f73bf7fde7be0f3488327b7f96bd4ab7
-      internalID: -1194175676
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_302
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c26c722ba5bf7fc498602fab07ed9ed3
-      internalID: 517434763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_303
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 418c9a9b562c7af41bfaec8ba4221e01
-      internalID: -1089581210
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_304
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 496
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dee966978d826b746abba767693d961e
-      internalID: -654485527
       vertices: []
       indices: 
       edges: []
@@ -5487,51 +3705,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_317
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 66cb8aca33e07f4418391ca9a93e598c
-      internalID: -451456382
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_318
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c99b1907e3e4be349b4154504b0be386
-      internalID: 2116928195
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_319
+      name: Crypt_WallBorder Side (4)
       rect:
         serializedVersion: 2
         x: 48
@@ -5553,7 +3727,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_320
+      name: Crypt_Wall Colomn Edge (2)
       rect:
         serializedVersion: 2
         x: 64
@@ -5575,95 +3749,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_321
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff32c8a816885d1459dc1d1aaafe271c
-      internalID: -1156625575
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_322
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f80ee54751f44c046822b7ef4add4f79
-      internalID: -1212150052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_323
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97b3c4e772ccc50458844568454b22f1
-      internalID: -167262393
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_324
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34647a1b2201b214098b840be35d065e
-      internalID: 347220323
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_325
+      name: Crypt_Wall Colomn (2)
       rect:
         serializedVersion: 2
         x: 144
@@ -5685,29 +3771,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_326
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a53e23d0c8c894843ba50988040b393a
-      internalID: -1165895567
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_327
+      name: Crypt_Wall Sarcophagus Empty (5)
       rect:
         serializedVersion: 2
         x: 176
@@ -5729,7 +3793,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_328
+      name: Crypt_Wall Sarcophagus Empty (6)
       rect:
         serializedVersion: 2
         x: 192
@@ -5751,7 +3815,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_329
+      name: Crypt_Wall Sarcophagus Empty (7)
       rect:
         serializedVersion: 2
         x: 208
@@ -5773,7 +3837,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_330
+      name: Crypt_Wall Sarcophagus Empty (8)
       rect:
         serializedVersion: 2
         x: 224
@@ -5790,94 +3854,6 @@ TextureImporter:
       bones: []
       spriteID: 5bf4500f2cce98146a8d60c225bdedf0
       internalID: 490622447
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_331
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a1e902f5a74fce49a9f6a9702dbaa32
-      internalID: -1044792937
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_332
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d23106a476a00d14185cab1e8a785cad
-      internalID: -1201194173
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_333
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1c597f23d1cdadd42800000b7f5590fe
-      internalID: 1183800221
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_334
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 480
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d430b21cb022480448887c9e41acb1d9
-      internalID: -18958222
       vertices: []
       indices: 
       edges: []
@@ -5993,51 +3969,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_346
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5e858bcdd625bc4b977b62d4afbe84f
-      internalID: 1094871504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_347
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 341b4797ec789df4b972ca945c5596f4
-      internalID: -695969933
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_348
+      name: Crypt_WallBorder Side (5)
       rect:
         serializedVersion: 2
         x: 48
@@ -6059,7 +3991,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_349
+      name: Crypt_Wall Colomn Edge (1)
       rect:
         serializedVersion: 2
         x: 64
@@ -6081,95 +4013,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_350
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b0b4e21af2b89b04d9c897975d4fbe41
-      internalID: -497193396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_351
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e3afe72c896a90469ba5892bddefc1b
-      internalID: 1735851789
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_352
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d54aa08a1f5fff943ad33608d190ab14
-      internalID: -441604974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_353
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 46d499d1084b1d34187f3eeb44cdc45c
-      internalID: 814095749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_354
+      name: Crypt_Wall Colomn (1)
       rect:
         serializedVersion: 2
         x: 144
@@ -6191,29 +4035,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_355
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0cd08be1986d3da4881b56daf7b37307
-      internalID: 808686182
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_356
+      name: Crypt_Wall Sarcophagus Empty (9)
       rect:
         serializedVersion: 2
         x: 176
@@ -6235,7 +4057,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_357
+      name: Crypt_Wall Sarcophagus Empty (10)
       rect:
         serializedVersion: 2
         x: 192
@@ -6257,7 +4079,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_358
+      name: Crypt_Wall Sarcophagus Empty (12)
       rect:
         serializedVersion: 2
         x: 208
@@ -6279,7 +4101,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_359
+      name: Crypt_Wall Sarcophagus Empty (13)
       rect:
         serializedVersion: 2
         x: 224
@@ -6296,94 +4118,6 @@ TextureImporter:
       bones: []
       spriteID: c4f6973b6b8729e42ada88e680a6df5a
       internalID: -1498721080
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_360
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53e5fad291ba8d84ba35d3364cb170a9
-      internalID: -875507453
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_361
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 15a4c20fcf4094441a4bf42038e2e585
-      internalID: -1901738017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_362
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d71abcddb9ba33d4c87187c74b53cc13
-      internalID: -1290252694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_363
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 464
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7fae948ff1b52bd4ab9f0586335187f8
-      internalID: 1443756949
       vertices: []
       indices: 
       edges: []
@@ -6499,7 +4233,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_375
+      name: Crypt_WallBorder Front UpToSide
       rect:
         serializedVersion: 2
         x: 16
@@ -6521,29 +4255,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_376
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1ce67254ba684d458beb562ad7d9f0f
-      internalID: -842810877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_377
+      name: Crypt_WallBorder Front UpToSide Colomn
       rect:
         serializedVersion: 2
         x: 48
@@ -6565,7 +4277,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_378
+      name: Crypt_WallBorder Front Colomn Edge
       rect:
         serializedVersion: 2
         x: 64
@@ -6587,7 +4299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_379
+      name: Crypt_WallBorder Front (1)
       rect:
         serializedVersion: 2
         x: 80
@@ -6609,7 +4321,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_380
+      name: Crypt_WallBorder Front (2)
       rect:
         serializedVersion: 2
         x: 96
@@ -6631,7 +4343,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_381
+      name: Crypt_WallBorder Front (3)
       rect:
         serializedVersion: 2
         x: 112
@@ -6653,7 +4365,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_382
+      name: Crypt_WallBorder Front (4)
       rect:
         serializedVersion: 2
         x: 128
@@ -6675,7 +4387,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_383
+      name: Crypt_WallBorder Front Colomn
       rect:
         serializedVersion: 2
         x: 144
@@ -6692,204 +4404,6 @@ TextureImporter:
       bones: []
       spriteID: b38dcf80aab7f6642b16a9935708f9df
       internalID: 329971570
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_384
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac6359e7e96111841a0d938446d4cc7c
-      internalID: 577636813
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_385
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff8dd9d34b012f94b9d1a4006847239b
-      internalID: -291779962
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_386
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a9f19699d9803bf4ea9bae19353c1491
-      internalID: 106750106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_387
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60826a91437f55f4ba8bccc2d7e2a0eb
-      internalID: -1881404872
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_388
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5330a1873dd4e9947b63237dca92e74c
-      internalID: 882657349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_389
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3383a8597808ed64f97305c3b18acf1e
-      internalID: 534405656
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_390
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 958e2e9d709041542a01697136449889
-      internalID: 1733223227
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_391
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 83627de60ceed034aa80b9878d1c8999
-      internalID: -1374542670
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_392
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 448
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc69a22411288934cbd3e9aec0b5bd6d
-      internalID: -1286417192
       vertices: []
       indices: 
       edges: []
@@ -7137,28 +4651,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_404
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b458c832a1565644cab26c86dbdff0ef
-      internalID: 1998087268
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_405
       rect:
         serializedVersion: 2
@@ -7176,94 +4668,6 @@ TextureImporter:
       bones: []
       spriteID: 9a067af967608b24b894011aca04819f
       internalID: 342901296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_406
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 246f4959b3628b940a376b489ae47b4c
-      internalID: 133081664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_407
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 028926e749adb9f418088eb5f36cdd4f
-      internalID: -2076003746
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_408
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 98e29cd744cb6b84ba19bfb4bf1b0fb4
-      internalID: -521786203
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_409
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed59670bd9a24bf449c35112a43b7d33
-      internalID: -838800315
       vertices: []
       indices: 
       edges: []
@@ -7313,94 +4717,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_412
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5aad9c5a96f664346ae664b09476a81b
-      internalID: 1239134655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_413
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfa1975ff895ace4ca206e6fbfdaa09f
-      internalID: -570171468
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_414
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0d0c0aa547d91e44a86edd57110fb1f
-      internalID: 2131923520
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_415
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 624036d06fcb7e14a8527a76195def9b
-      internalID: -1986714725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_416
       rect:
         serializedVersion: 2
@@ -7418,28 +4734,6 @@ TextureImporter:
       bones: []
       spriteID: 57c4349aa73510749b922ed9720a7be4
       internalID: -1985457127
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_417
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 774136b17b7ef674e86b4db8978230cb
-      internalID: 1977295843
       vertices: []
       indices: 
       edges: []
@@ -7555,50 +4849,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_423
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 432
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8b5cdaa486d81e4681b54c8b0449dea
-      internalID: -1648728974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_424
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 416
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8aa285296c6b4ae469aad246d2771562
-      internalID: 1695676877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_425
       rect:
         serializedVersion: 2
@@ -7621,7 +4871,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_426
+      name: Crypt_Wall Sarcophagus Open (1)
       rect:
         serializedVersion: 2
         x: 80
@@ -7643,7 +4893,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_427
+      name: Crypt_Wall Sarcophagus Open (2)
       rect:
         serializedVersion: 2
         x: 96
@@ -7665,7 +4915,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_428
+      name: Crypt_Wall Sarcophagus Open (3)
       rect:
         serializedVersion: 2
         x: 112
@@ -7687,7 +4937,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_429
+      name: Crypt_Wall Sarcophagus Open (4)
       rect:
         serializedVersion: 2
         x: 128
@@ -7753,7 +5003,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_432
+      name: Crypt_Wall Sarcophagus Open v2 (1)
       rect:
         serializedVersion: 2
         x: 176
@@ -7775,7 +5025,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_433
+      name: Crypt_Wall Sarcophagus Open v2 (2)
       rect:
         serializedVersion: 2
         x: 192
@@ -7797,7 +5047,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_434
+      name: Crypt_Wall Sarcophagus Open v2 (3)
       rect:
         serializedVersion: 2
         x: 208
@@ -7819,7 +5069,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_435
+      name: Crypt_Wall Sarcophagus Open v2 (4)
       rect:
         serializedVersion: 2
         x: 224
@@ -7863,29 +5113,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_437
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 416
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: adc33e11a9d595449b91656cfecdaf75
-      internalID: -1253408398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_438
+      name: Crypt_Wall Cage Slim (1)
       rect:
         serializedVersion: 2
         x: 272
@@ -7907,7 +5135,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_439
+      name: Crypt_Wall Cage Slim v2 (1)
       rect:
         serializedVersion: 2
         x: 288
@@ -7929,7 +5157,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_440
+      name: Crypt_Wall Cage Slim Hole (1)
       rect:
         serializedVersion: 2
         x: 304
@@ -7951,7 +5179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_441
+      name: Crypt_Wall Cage (1)
       rect:
         serializedVersion: 2
         x: 320
@@ -7973,7 +5201,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_442
+      name: Crypt_Wall Cage (2)
       rect:
         serializedVersion: 2
         x: 336
@@ -8193,28 +5421,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_452
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 416
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2706a5128a95fac4abd9ab7eb345a0e6
-      internalID: -1004743557
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_453
       rect:
         serializedVersion: 2
@@ -8259,7 +5465,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_455
+      name: Crypt_Floor Red Smooth (1)
       rect:
         serializedVersion: 2
         x: 736
@@ -8281,7 +5487,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_456
+      name: Crypt_Floor Red Smooth (2)
       rect:
         serializedVersion: 2
         x: 752
@@ -8303,7 +5509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_457
+      name: Crypt_Floor Red Smooth Rust (1)
       rect:
         serializedVersion: 2
         x: 784
@@ -8325,7 +5531,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_458
+      name: Crypt_Floor Red Smooth Rust (2)
       rect:
         serializedVersion: 2
         x: 800
@@ -8523,28 +5729,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_467
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 400
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e74a74733be535543a03fcafde67d378
-      internalID: -1593930585
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_468
       rect:
         serializedVersion: 2
@@ -8567,7 +5751,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_469
+      name: Crypt_Wall Sarcophagus Open (5)
       rect:
         serializedVersion: 2
         x: 80
@@ -8589,7 +5773,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_470
+      name: Crypt_Wall Sarcophagus Open (6)
       rect:
         serializedVersion: 2
         x: 96
@@ -8611,7 +5795,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_471
+      name: Crypt_Wall Sarcophagus Open (7)
       rect:
         serializedVersion: 2
         x: 112
@@ -8633,7 +5817,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_472
+      name: Crypt_Wall Sarcophagus Open (8)
       rect:
         serializedVersion: 2
         x: 128
@@ -8699,7 +5883,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_475
+      name: Crypt_Wall Sarcophagus Open v2 (5)
       rect:
         serializedVersion: 2
         x: 176
@@ -8721,7 +5905,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_476
+      name: Crypt_Wall Sarcophagus Open v2 (6)
       rect:
         serializedVersion: 2
         x: 192
@@ -8743,7 +5927,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_477
+      name: Crypt_Wall Sarcophagus Open v2 (7)
       rect:
         serializedVersion: 2
         x: 208
@@ -8765,7 +5949,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_478
+      name: Crypt_Wall Sarcophagus Open v2 (8)
       rect:
         serializedVersion: 2
         x: 224
@@ -8809,29 +5993,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_480
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 400
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bff1a5f4fb3c69f45814f8a5df99ac2c
-      internalID: -1764638148
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_481
+      name: Crypt_Wall Cage Slim (2)
       rect:
         serializedVersion: 2
         x: 272
@@ -8853,7 +6015,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_482
+      name: Crypt_Wall Cage Slim v2 (2)
       rect:
         serializedVersion: 2
         x: 288
@@ -8875,7 +6037,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_483
+      name: Crypt_Wall Cage Slim Hole (2)
       rect:
         serializedVersion: 2
         x: 304
@@ -8897,7 +6059,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_484
+      name: Crypt_Wall Cage (3)
       rect:
         serializedVersion: 2
         x: 320
@@ -8919,7 +6081,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_485
+      name: Crypt_Wall Cage (4)
       rect:
         serializedVersion: 2
         x: 336
@@ -9139,28 +6301,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_495
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 400
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b9093cab5e3bc24f9c0ca9fe6c999b5
-      internalID: 1730672311
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_496
       rect:
         serializedVersion: 2
@@ -9205,7 +6345,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_498
+      name: Crypt_Floor Red Smooth (3)
       rect:
         serializedVersion: 2
         x: 736
@@ -9227,7 +6367,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_499
+      name: Crypt_Floor Red Smooth (4)
       rect:
         serializedVersion: 2
         x: 752
@@ -9249,7 +6389,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_500
+      name: Crypt_Floor Red Smooth Rust (3)
       rect:
         serializedVersion: 2
         x: 784
@@ -9271,7 +6411,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_501
+      name: Crypt_Floor Red Smooth Rust (4)
       rect:
         serializedVersion: 2
         x: 800
@@ -9469,28 +6609,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_510
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 384
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af73ce36df792754c973434a82b6740f
-      internalID: 213037883
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_511
       rect:
         serializedVersion: 2
@@ -9513,7 +6631,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_512
+      name: Crypt_Wall Sarcophagus Open (9)
       rect:
         serializedVersion: 2
         x: 80
@@ -9535,7 +6653,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_513
+      name: Crypt_Wall Sarcophagus Open (10)
       rect:
         serializedVersion: 2
         x: 96
@@ -9557,7 +6675,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_514
+      name: Crypt_Wall Sarcophagus Open (11)
       rect:
         serializedVersion: 2
         x: 112
@@ -9579,7 +6697,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_515
+      name: Crypt_Wall Sarcophagus Open (12)
       rect:
         serializedVersion: 2
         x: 128
@@ -9645,7 +6763,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_518
+      name: Crypt_Wall Sarcophagus Open v2 (9)
       rect:
         serializedVersion: 2
         x: 176
@@ -9667,7 +6785,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_519
+      name: Crypt_Wall Sarcophagus Open v2 (10)
       rect:
         serializedVersion: 2
         x: 192
@@ -9689,7 +6807,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_520
+      name: Crypt_Wall Sarcophagus Open v2 (11)
       rect:
         serializedVersion: 2
         x: 208
@@ -9711,7 +6829,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_521
+      name: Crypt_Wall Sarcophagus Open v2 (12)
       rect:
         serializedVersion: 2
         x: 224
@@ -9755,29 +6873,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_523
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 384
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94ec61ed26c1cd148ac630f4e58b63bf
-      internalID: 483771577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_524
+      name: Crypt_Wall Cage Slim (3)
       rect:
         serializedVersion: 2
         x: 272
@@ -9799,7 +6895,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_525
+      name: Crypt_Wall Cage Slim v2 (3)
       rect:
         serializedVersion: 2
         x: 288
@@ -9821,7 +6917,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_526
+      name: Crypt_Wall Cage Slim Hole (3)
       rect:
         serializedVersion: 2
         x: 304
@@ -9843,7 +6939,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_527
+      name: Crypt_Wall Cage (5)
       rect:
         serializedVersion: 2
         x: 320
@@ -9865,7 +6961,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_528
+      name: Crypt_Wall Cage (6)
       rect:
         serializedVersion: 2
         x: 336
@@ -10085,28 +7181,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_538
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 384
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f9814ba91d794f46bfff4a59bc024bf
-      internalID: -1511205511
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_539
       rect:
         serializedVersion: 2
@@ -10151,7 +7225,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_541
+      name: Crypt_Floor Red Smooth (5)
       rect:
         serializedVersion: 2
         x: 736
@@ -10173,7 +7247,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_542
+      name: Crypt_Floor Red Smooth (6)
       rect:
         serializedVersion: 2
         x: 752
@@ -10195,7 +7269,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_543
+      name: Crypt_Floor Red Smooth Rust (5)
       rect:
         serializedVersion: 2
         x: 784
@@ -10217,7 +7291,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_544
+      name: Crypt_Floor Red Smooth Rust (6)
       rect:
         serializedVersion: 2
         x: 800
@@ -10415,314 +7489,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_553
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4fe68158498ceb4f947f0b2ef887125
-      internalID: 11057543
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_554
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10d3450884b1d214cb3a3b1a3e361dfa
-      internalID: -646466438
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_555
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0123cb2fc1625b944b137da75c36a295
-      internalID: 488167181
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_556
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3724ae8edc8541440b5f93b77c271af1
-      internalID: -1328070595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_557
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3b55cafbe8431ca4b8c7688d3849f47b
-      internalID: 226533493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_558
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3080dd0a06009ad499e109728c41d619
-      internalID: -1990406702
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_559
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95c920da87d5dfc4aaf68dba8241e0a5
-      internalID: -1926835841
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_560
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1cc25364ef30f8b4fbf2d7db04577308
-      internalID: 1067645256
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_561
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c3e213e3e8f44d7468157c768bf70508
-      internalID: -1739562796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_562
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4631a49b55f245241a584551d22dcefa
-      internalID: -898339503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_563
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37e09b8926953f44b8bb90592d004060
-      internalID: 730891424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_564
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 474a47da1f2e728429e242250ebc1ab9
-      internalID: 950201415
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_565
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1bad1aee644f9374581b2fac8123c88b
-      internalID: -439212118
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_566
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ad662adf547430439548d05db0d37dd
-      internalID: -989471189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crypt level tile_567
       rect:
         serializedVersion: 2
@@ -10833,29 +7599,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_572
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 368
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4738cca899aeda34f8369c9e56fe9d5a
-      internalID: 971653179
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_573
+      name: Crypt_Floor Hole UpLeft
       rect:
         serializedVersion: 2
         x: 608
@@ -10877,7 +7621,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_574
+      name: Crypt_Floor Hole Up (1)
       rect:
         serializedVersion: 2
         x: 624
@@ -10899,7 +7643,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_575
+      name: Crypt_Floor Hole Up (2)
       rect:
         serializedVersion: 2
         x: 640
@@ -10921,7 +7665,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_576
+      name: Crypt_Floor Hole Up (3)
       rect:
         serializedVersion: 2
         x: 656
@@ -10943,7 +7687,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_577
+      name: Crypt_Floor Hole Up (4)
       rect:
         serializedVersion: 2
         x: 672
@@ -10965,7 +7709,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_578
+      name: Crypt_Floor Hole UpRight
       rect:
         serializedVersion: 2
         x: 688
@@ -10987,7 +7731,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_579
+      name: Crypt_Wall Sarcophagus Open v3 (1)
       rect:
         serializedVersion: 2
         x: 80
@@ -11009,7 +7753,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_580
+      name: Crypt_Wall Sarcophagus Open v3 (2)
       rect:
         serializedVersion: 2
         x: 96
@@ -11031,7 +7775,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_581
+      name: Crypt_Wall Sarcophagus Open v3 (3)
       rect:
         serializedVersion: 2
         x: 112
@@ -11053,7 +7797,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_582
+      name: Crypt_Wall Sarcophagus Open v3 (4)
       rect:
         serializedVersion: 2
         x: 128
@@ -11075,7 +7819,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_583
+      name: Crypt_Wall Sarcophagus Open v4 (1)
       rect:
         serializedVersion: 2
         x: 176
@@ -11097,7 +7841,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_584
+      name: Crypt_Wall Sarcophagus Open v4 (2)
       rect:
         serializedVersion: 2
         x: 192
@@ -11119,7 +7863,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_585
+      name: Crypt_Wall Sarcophagus Open v4 (3)
       rect:
         serializedVersion: 2
         x: 208
@@ -11141,7 +7885,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_586
+      name: Crypt_Wall Sarcophagus Open v4 (4)
       rect:
         serializedVersion: 2
         x: 224
@@ -11163,7 +7907,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_587
+      name: Crypt_Wall Bricks (2)
       rect:
         serializedVersion: 2
         x: 272
@@ -11185,7 +7929,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_588
+      name: Crypt_Wall Bricks (3)
       rect:
         serializedVersion: 2
         x: 288
@@ -11207,7 +7951,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_589
+      name: Crypt_Wall Bricks (1)
       rect:
         serializedVersion: 2
         x: 304
@@ -11229,7 +7973,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_590
+      name: Crypt_Wall Bricks (4)
       rect:
         serializedVersion: 2
         x: 320
@@ -11251,7 +7995,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_591
+      name: Crypt_Wall Bricks (5)
       rect:
         serializedVersion: 2
         x: 336
@@ -11273,7 +8017,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_592
+      name: Crypt_Wall Bricks (6)
       rect:
         serializedVersion: 2
         x: 352
@@ -11295,7 +8039,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_593
+      name: Crypt_Wall Bricks (7)
       rect:
         serializedVersion: 2
         x: 368
@@ -11317,7 +8061,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_594
+      name: Crypt_Wall Bricks (8)
       rect:
         serializedVersion: 2
         x: 384
@@ -11339,7 +8083,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_595
+      name: Crypt_Wall Bricks (9)
       rect:
         serializedVersion: 2
         x: 400
@@ -11361,7 +8105,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_596
+      name: Crypt_Wall Bricks (10)
       rect:
         serializedVersion: 2
         x: 416
@@ -11493,29 +8237,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_602
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 352
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9f3d41f91b8be074ba179fd9048a9942
-      internalID: -830715997
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_603
+      name: Crypt_Floor Hole Left (1)
       rect:
         serializedVersion: 2
         x: 608
@@ -11537,7 +8259,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_604
+      name: Crypt_Floor Hole Edge (1)
       rect:
         serializedVersion: 2
         x: 624
@@ -11559,7 +8281,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_605
+      name: Crypt_Floor Hole Edge (2)
       rect:
         serializedVersion: 2
         x: 640
@@ -11581,7 +8303,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_606
+      name: Crypt_Floor Hole Edge (3)
       rect:
         serializedVersion: 2
         x: 656
@@ -11603,7 +8325,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_607
+      name: Crypt_Floor Hole Edge (4)
       rect:
         serializedVersion: 2
         x: 672
@@ -11625,7 +8347,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_608
+      name: Crypt_Floor HoleRight (1)
       rect:
         serializedVersion: 2
         x: 688
@@ -11647,7 +8369,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_609
+      name: Crypt_Floor Red Bricks (1)
       rect:
         serializedVersion: 2
         x: 736
@@ -11669,7 +8391,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_610
+      name: Crypt_Floor Red Bricks (2)
       rect:
         serializedVersion: 2
         x: 752
@@ -11911,7 +8633,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_621
+      name: Crypt_Wall Sarcophagus Open v3 (5)
       rect:
         serializedVersion: 2
         x: 80
@@ -11933,7 +8655,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_622
+      name: Crypt_Wall Sarcophagus Open v3 (6)
       rect:
         serializedVersion: 2
         x: 96
@@ -11955,7 +8677,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_623
+      name: Crypt_Wall Sarcophagus Open v3 (7)
       rect:
         serializedVersion: 2
         x: 112
@@ -11977,7 +8699,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_624
+      name: Crypt_Wall Sarcophagus Open v3 (8)
       rect:
         serializedVersion: 2
         x: 128
@@ -11999,7 +8721,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_625
+      name: Crypt_Wall Sarcophagus Open v4 (5)
       rect:
         serializedVersion: 2
         x: 176
@@ -12021,7 +8743,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_626
+      name: Crypt_Wall Sarcophagus Open v4 (6)
       rect:
         serializedVersion: 2
         x: 192
@@ -12043,7 +8765,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_627
+      name: Crypt_Wall Sarcophagus Open v4 ()
       rect:
         serializedVersion: 2
         x: 208
@@ -12065,7 +8787,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_628
+      name: Crypt_Wall Sarcophagus Open v4 (7)
       rect:
         serializedVersion: 2
         x: 224
@@ -12087,7 +8809,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_629
+      name: Crypt_Wall Bricks (11)
       rect:
         serializedVersion: 2
         x: 272
@@ -12109,7 +8831,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_630
+      name: Crypt_Wall Bricks (12)
       rect:
         serializedVersion: 2
         x: 288
@@ -12131,7 +8853,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_631
+      name: Crypt_Wall Bricks (13)
       rect:
         serializedVersion: 2
         x: 304
@@ -12153,7 +8875,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_632
+      name: Crypt_Wall Bricks (14)
       rect:
         serializedVersion: 2
         x: 320
@@ -12175,7 +8897,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_633
+      name: Crypt_Wall Bricks (15)
       rect:
         serializedVersion: 2
         x: 336
@@ -12197,7 +8919,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_634
+      name: Crypt_Wall Bricks (16)
       rect:
         serializedVersion: 2
         x: 352
@@ -12219,7 +8941,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_635
+      name: Crypt_Wall Bricks (17)
       rect:
         serializedVersion: 2
         x: 368
@@ -12241,7 +8963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_636
+      name: Crypt_Wall Bricks (18)
       rect:
         serializedVersion: 2
         x: 384
@@ -12263,7 +8985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_637
+      name: Crypt_Wall Bricks (19)
       rect:
         serializedVersion: 2
         x: 400
@@ -12285,7 +9007,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_638
+      name: Crypt_Wall Bricks (20)
       rect:
         serializedVersion: 2
         x: 416
@@ -12395,7 +9117,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_643
+      name: Crypt_Floor Hole Left (2)
       rect:
         serializedVersion: 2
         x: 608
@@ -12417,7 +9139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_644
+      name: Crypt_Floor Hole EdgeDown (1)
       rect:
         serializedVersion: 2
         x: 624
@@ -12439,7 +9161,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_645
+      name: Crypt_Floor Hole EdgeDown (2)
       rect:
         serializedVersion: 2
         x: 640
@@ -12461,7 +9183,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_646
+      name: Crypt_Floor Hole EdgeDown (3)
       rect:
         serializedVersion: 2
         x: 656
@@ -12483,7 +9205,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_647
+      name: Crypt_Floor Hole EdgeDown (4)
       rect:
         serializedVersion: 2
         x: 672
@@ -12505,7 +9227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_648
+      name: Crypt_Floor Hole Right (2)
       rect:
         serializedVersion: 2
         x: 688
@@ -12527,29 +9249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_649
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 336
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29c430393a6b75b45a662e1f60051ab3
-      internalID: -1729466922
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_650
+      name: Crypt_Floor Red Bricks (3)
       rect:
         serializedVersion: 2
         x: 736
@@ -12571,7 +9271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_651
+      name: Crypt_Floor Red Bricks (4)
       rect:
         serializedVersion: 2
         x: 752
@@ -12813,7 +9513,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_662
+      name: Crypt_Wall Sarcophagus Open v3 (9)
       rect:
         serializedVersion: 2
         x: 80
@@ -12835,7 +9535,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_663
+      name: Crypt_Wall Sarcophagus Open v3 (10)
       rect:
         serializedVersion: 2
         x: 96
@@ -12857,7 +9557,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_664
+      name: Crypt_Wall Sarcophagus Open v3 (11)
       rect:
         serializedVersion: 2
         x: 112
@@ -12879,7 +9579,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_665
+      name: Crypt_Wall Sarcophagus Open v3 (12)
       rect:
         serializedVersion: 2
         x: 128
@@ -12901,7 +9601,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_666
+      name: Crypt_Wall Sarcophagus Open v4 (9)
       rect:
         serializedVersion: 2
         x: 176
@@ -12923,7 +9623,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_667
+      name: Crypt_Wall Sarcophagus Open v4 (10)
       rect:
         serializedVersion: 2
         x: 192
@@ -12945,7 +9645,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_668
+      name: Crypt_Wall Sarcophagus Open v4 (11)
       rect:
         serializedVersion: 2
         x: 208
@@ -12967,7 +9667,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_669
+      name: Crypt_Wall Sarcophagus Open v4 (12)
       rect:
         serializedVersion: 2
         x: 224
@@ -12989,7 +9689,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_670
+      name: Crypt_Wall Bricks (21)
       rect:
         serializedVersion: 2
         x: 272
@@ -13011,7 +9711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_671
+      name: Crypt_Wall Bricks (22)
       rect:
         serializedVersion: 2
         x: 288
@@ -13033,7 +9733,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_672
+      name: Crypt_Wall Bricks (23)
       rect:
         serializedVersion: 2
         x: 304
@@ -13055,7 +9755,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_673
+      name: Crypt_Wall Bricks (24)
       rect:
         serializedVersion: 2
         x: 320
@@ -13077,7 +9777,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_674
+      name: Crypt_Wall Bricks (25)
       rect:
         serializedVersion: 2
         x: 336
@@ -13099,7 +9799,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_675
+      name: Crypt_Wall Bricks (26)
       rect:
         serializedVersion: 2
         x: 352
@@ -13121,7 +9821,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_676
+      name: Crypt_Wall Bricks (27)
       rect:
         serializedVersion: 2
         x: 368
@@ -13143,7 +9843,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_677
+      name: Crypt_Wall Bricks (28)
       rect:
         serializedVersion: 2
         x: 384
@@ -13165,7 +9865,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_678
+      name: Crypt_Wall Bricks (29)
       rect:
         serializedVersion: 2
         x: 400
@@ -13187,7 +9887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_679
+      name: Crypt_Wall Bricks (30)
       rect:
         serializedVersion: 2
         x: 416
@@ -13297,7 +9997,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_684
+      name: Crypt_Floor Hole Left (3)
       rect:
         serializedVersion: 2
         x: 608
@@ -13319,7 +10019,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_685
+      name: Crypt_Floor Hole Black
       rect:
         serializedVersion: 2
         x: 624
@@ -13407,7 +10107,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_689
+      name: Crypt_Floor Hole Right (3)
       rect:
         serializedVersion: 2
         x: 688
@@ -13429,29 +10129,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_690
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 320
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2aefe438443e8cd4a8225accc729f3b4
-      internalID: 1501393536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crypt level tile_691
+      name: Crypt_Floor Hole Left (4)
       rect:
         serializedVersion: 2
         x: 608
@@ -13561,7 +10239,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_696
+      name: Crypt_Floor Hole Right (4)
       rect:
         serializedVersion: 2
         x: 688
@@ -13583,7 +10261,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_697
+      name: Crypt_Floor Red Bricks Big (1)
       rect:
         serializedVersion: 2
         x: 736
@@ -13605,7 +10283,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_698
+      name: Crypt_Floor Red Bricks Big (2)
       rect:
         serializedVersion: 2
         x: 752
@@ -13627,7 +10305,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_699
+      name: Crypt_Floor Red Bricks Big Rust (1)
       rect:
         serializedVersion: 2
         x: 784
@@ -13649,7 +10327,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_700
+      name: Crypt_Floor Red Bricks Big Rust (2)
       rect:
         serializedVersion: 2
         x: 800
@@ -14485,7 +11163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_738
+      name: Crypt_Floor Hole DownLeft
       rect:
         serializedVersion: 2
         x: 608
@@ -14507,7 +11185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_739
+      name: Crypt_Floor Hole Down (1)
       rect:
         serializedVersion: 2
         x: 624
@@ -14529,7 +11207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_740
+      name: Crypt_Floor Hole Down (2)
       rect:
         serializedVersion: 2
         x: 640
@@ -14551,7 +11229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_741
+      name: Crypt_Floor Hole Down (3)
       rect:
         serializedVersion: 2
         x: 656
@@ -14573,7 +11251,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_742
+      name: Crypt_Floor Hole Down (4)
       rect:
         serializedVersion: 2
         x: 672
@@ -14595,7 +11273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_743
+      name: Crypt_Floor Hole DownRight
       rect:
         serializedVersion: 2
         x: 688
@@ -14617,7 +11295,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_744
+      name: Crypt_Floor Red Bricks Big (3)
       rect:
         serializedVersion: 2
         x: 736
@@ -14639,7 +11317,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_745
+      name: Crypt_Floor Red Bricks Big (4)
       rect:
         serializedVersion: 2
         x: 752
@@ -14661,7 +11339,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_746
+      name: Crypt_Floor Red Bricks Big Rust (3)
       rect:
         serializedVersion: 2
         x: 784
@@ -14683,7 +11361,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_747
+      name: Crypt_Floor Red Bricks Big Rust (4)
       rect:
         serializedVersion: 2
         x: 800
@@ -16135,7 +12813,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_813
+      name: Crypt_Floor Red Bricks Prebroken (1)
       rect:
         serializedVersion: 2
         x: 736
@@ -16157,7 +12835,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_814
+      name: Crypt_Floor Red Bricks Prebroken (2)
       rect:
         serializedVersion: 2
         x: 752
@@ -16839,7 +13517,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_845
+      name: Crypt_Floor Red Bricks Prebroken (3)
       rect:
         serializedVersion: 2
         x: 736
@@ -16861,7 +13539,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_846
+      name: Crypt_Floor Red Bricks Prebroken (4)
       rect:
         serializedVersion: 2
         x: 752
@@ -18335,7 +15013,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_913
+      name: Crypt_Floor Red Bricks Broken UpLeft
       rect:
         serializedVersion: 2
         x: 736
@@ -18357,7 +15035,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_914
+      name: Crypt_Floor Red Bricks Broken Up (1)
       rect:
         serializedVersion: 2
         x: 752
@@ -18379,7 +15057,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_915
+      name: Crypt_Floor Red Bricks Broken Up (2)U
       rect:
         serializedVersion: 2
         x: 768
@@ -18401,7 +15079,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_916
+      name: Crypt_Floor Red Bricks Broken UpRight
       rect:
         serializedVersion: 2
         x: 784
@@ -19127,7 +15805,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_949
+      name: Crypt_Floor Red Bricks Broken Left (1)
       rect:
         serializedVersion: 2
         x: 736
@@ -19149,7 +15827,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_950
+      name: Crypt_Floor Red Bricks Broken (1)
       rect:
         serializedVersion: 2
         x: 752
@@ -19171,7 +15849,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_951
+      name: Crypt_Floor Red Bricks Broken (2)
       rect:
         serializedVersion: 2
         x: 768
@@ -19193,7 +15871,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_952
+      name: Crypt_Floor Red Bricks Broken Right (1)
       rect:
         serializedVersion: 2
         x: 784
@@ -19699,7 +16377,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_975
+      name: Crypt_Floor Red Bricks Broken Left (2)
       rect:
         serializedVersion: 2
         x: 736
@@ -19721,7 +16399,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_976
+      name: Crypt_Floor Red Bricks Broken (3)
       rect:
         serializedVersion: 2
         x: 752
@@ -19743,7 +16421,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_977
+      name: Crypt_Floor Red Bricks Broken (4)
       rect:
         serializedVersion: 2
         x: 768
@@ -19765,7 +16443,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_978
+      name: Crypt_Floor Red Bricks Broken Right (2)
       rect:
         serializedVersion: 2
         x: 784
@@ -20271,7 +16949,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_1001
+      name: Crypt_Floor Red Bricks Broken DownLeft
       rect:
         serializedVersion: 2
         x: 736
@@ -20293,7 +16971,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_1002
+      name: Crypt_Floor Red Bricks Broken Down (1)
       rect:
         serializedVersion: 2
         x: 752
@@ -20315,7 +16993,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_1003
+      name: Crypt_Floor Red Bricks Broken Down (2)
       rect:
         serializedVersion: 2
         x: 768
@@ -20337,7 +17015,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crypt level tile_1004
+      name: Crypt_Floor Red Bricks Broken DownRight
       rect:
         serializedVersion: 2
         x: 784
@@ -21370,6 +18048,160 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Crypt_Wall Colomn (1) Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 464
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18946dec97728954799d38404d3afe0f
+      internalID: 1505607043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_WallBorder Front Colomn Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 448
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82d5081454138c40b042f7ee0d291ef
+      internalID: 33688667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_Wall Colomn (2) Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 480
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62538e387e4e5ef4294e57dbb02b67d0
+      internalID: -70979152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_Wall Colomn (3) Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a03061f4044aeb5418c38bcbb30877e5
+      internalID: 1992896292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_Roof Front Colomn Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 512
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: befb337f1ad37b946ba3d41e79fc95f8
+      internalID: -1921851561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_Roof Back UpEnd Colomn Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 592
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c97c342d3b5967642a5bfaa5c626e4d7
+      internalID: 1645255889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crypt_Roof Back SideToUp Colomn Flip
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 576
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7c4298beeccf74a9ef9eff63170a37
+      internalID: -371932760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -21386,15 +18218,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Crypt level tile_0: 1321988741
       Crypt level tile_1: 1652151725
       Crypt level tile_10: 1663057171
       Crypt level tile_100: -141392872
       Crypt level tile_1000: -1150482853
-      Crypt level tile_1001: 1088445187
-      Crypt level tile_1002: 821908589
-      Crypt level tile_1003: -234826571
-      Crypt level tile_1004: -546306202
       Crypt level tile_1005: 975880690
       Crypt level tile_1006: -1195158047
       Crypt level tile_1007: -985365497
@@ -21411,7 +18238,6 @@ TextureImporter:
       Crypt level tile_1017: -109225562
       Crypt level tile_1018: 1040917124
       Crypt level tile_1019: 1481947505
-      Crypt level tile_102: -1948875974
       Crypt level tile_1020: 1092154017
       Crypt level tile_1021: -1958855593
       Crypt level tile_1022: -982787100
@@ -21458,9 +18284,6 @@ TextureImporter:
       Crypt level tile_114: -712973188
       Crypt level tile_115: -771077501
       Crypt level tile_116: -1292258640
-      Crypt level tile_117: -1020961498
-      Crypt level tile_118: 606897049
-      Crypt level tile_119: -222983583
       Crypt level tile_12: -2134578189
       Crypt level tile_120: 304656910
       Crypt level tile_121: -1726289599
@@ -21472,7 +18295,6 @@ TextureImporter:
       Crypt level tile_127: 1981787951
       Crypt level tile_128: -1099689008
       Crypt level tile_129: -893776363
-      Crypt level tile_13: 1823927866
       Crypt level tile_130: 818299302
       Crypt level tile_131: 583750298
       Crypt level tile_132: -900858895
@@ -21483,7 +18305,6 @@ TextureImporter:
       Crypt level tile_137: 795459431
       Crypt level tile_138: 552803734
       Crypt level tile_139: -1841169753
-      Crypt level tile_14: -187336002
       Crypt level tile_140: -783702381
       Crypt level tile_141: 2061696879
       Crypt level tile_142: 1871564748
@@ -21494,7 +18315,6 @@ TextureImporter:
       Crypt level tile_147: 1648673034
       Crypt level tile_148: 1780007193
       Crypt level tile_149: 2039824015
-      Crypt level tile_15: 1418581561
       Crypt level tile_150: 1306994619
       Crypt level tile_151: -782106321
       Crypt level tile_152: -1004254967
@@ -21513,8 +18333,6 @@ TextureImporter:
       Crypt level tile_164: -914381958
       Crypt level tile_165: -96086750
       Crypt level tile_166: 1522669580
-      Crypt level tile_167: -1447446949
-      Crypt level tile_168: -1474250758
       Crypt level tile_169: 362538152
       Crypt level tile_17: 326996595
       Crypt level tile_170: -547416284
@@ -21570,8 +18388,6 @@ TextureImporter:
       Crypt level tile_215: -381597971
       Crypt level tile_216: 607275126
       Crypt level tile_217: -2031645326
-      Crypt level tile_218: -2115213431
-      Crypt level tile_219: 1591981827
       Crypt level tile_22: 243114784
       Crypt level tile_220: -513867356
       Crypt level tile_221: 623867600
@@ -21619,20 +18435,8 @@ TextureImporter:
       Crypt level tile_26: -691447199
       Crypt level tile_260: 1790399189
       Crypt level tile_261: -81786802
-      Crypt level tile_262: -1941801480
       Crypt level tile_263: 1533966560
-      Crypt level tile_264: 658530175
-      Crypt level tile_265: 469989321
-      Crypt level tile_266: -804675012
-      Crypt level tile_267: -33427797
-      Crypt level tile_268: 435367413
-      Crypt level tile_269: -134086835
       Crypt level tile_27: -343544634
-      Crypt level tile_270: -1675462543
-      Crypt level tile_271: -1324283628
-      Crypt level tile_272: 1907127064
-      Crypt level tile_273: -736256893
-      Crypt level tile_274: 2092636053
       Crypt level tile_275: -1576650873
       Crypt level tile_276: -1230826142
       Crypt level tile_277: -1596308958
@@ -21648,21 +18452,14 @@ TextureImporter:
       Crypt level tile_286: 1926595623
       Crypt level tile_287: 722953050
       Crypt level tile_288: 693246148
-      Crypt level tile_289: -1612323647
       Crypt level tile_29: -1625872217
-      Crypt level tile_290: -756240558
       Crypt level tile_291: -186453978
       Crypt level tile_292: -457009684
       Crypt level tile_293: -1977893863
       Crypt level tile_294: -2086809266
-      Crypt level tile_295: 1768831243
       Crypt level tile_296: 213758575
-      Crypt level tile_297: 1946502108
-      Crypt level tile_298: -128921958
-      Crypt level tile_299: -2027297427
       Crypt level tile_3: 850346852
       Crypt level tile_30: -920920254
-      Crypt level tile_300: 1674717754
       Crypt level tile_301: -1194175676
       Crypt level tile_302: 517434763
       Crypt level tile_303: -1089581210
@@ -21682,20 +18479,13 @@ TextureImporter:
       Crypt level tile_316: -988667637
       Crypt level tile_317: -451456382
       Crypt level tile_318: 2116928195
-      Crypt level tile_319: -1098840148
       Crypt level tile_32: -975583063
-      Crypt level tile_320: 640208459
       Crypt level tile_321: -1156625575
       Crypt level tile_322: -1212150052
       Crypt level tile_323: -167262393
       Crypt level tile_324: 347220323
-      Crypt level tile_325: -106926093
       Crypt level tile_326: -1165895567
-      Crypt level tile_327: 1911362097
-      Crypt level tile_328: -125165762
-      Crypt level tile_329: -427105814
       Crypt level tile_33: -1198971675
-      Crypt level tile_330: 490622447
       Crypt level tile_331: -1044792937
       Crypt level tile_332: -1201194173
       Crypt level tile_333: 1183800221
@@ -21714,19 +18504,12 @@ TextureImporter:
       Crypt level tile_345: -675324788
       Crypt level tile_346: 1094871504
       Crypt level tile_347: -695969933
-      Crypt level tile_348: -1585634858
-      Crypt level tile_349: -1173878260
       Crypt level tile_35: -510236790
       Crypt level tile_350: -497193396
       Crypt level tile_351: 1735851789
       Crypt level tile_352: -441604974
       Crypt level tile_353: 814095749
-      Crypt level tile_354: -2055357029
       Crypt level tile_355: 808686182
-      Crypt level tile_356: -1016271342
-      Crypt level tile_357: 430093236
-      Crypt level tile_358: 1768054203
-      Crypt level tile_359: -1498721080
       Crypt level tile_36: 126984
       Crypt level tile_360: -875507453
       Crypt level tile_361: -1901738017
@@ -21744,16 +18527,8 @@ TextureImporter:
       Crypt level tile_372: -1936862419
       Crypt level tile_373: -257785242
       Crypt level tile_374: -1826044783
-      Crypt level tile_375: 2049569396
       Crypt level tile_376: -842810877
-      Crypt level tile_377: 425597789
-      Crypt level tile_378: -231384402
-      Crypt level tile_379: -671533621
       Crypt level tile_38: -1980357284
-      Crypt level tile_380: -1655804454
-      Crypt level tile_381: -820213833
-      Crypt level tile_382: 201756411
-      Crypt level tile_383: 329971570
       Crypt level tile_384: 577636813
       Crypt level tile_385: -291779962
       Crypt level tile_386: 106750106
@@ -21794,32 +18569,17 @@ TextureImporter:
       Crypt level tile_417: 1977295843
       Crypt level tile_418: 436792598
       Crypt level tile_419: 24417099
-      Crypt level tile_42: -2010409826
       Crypt level tile_420: 1171749570
       Crypt level tile_421: -610921512
       Crypt level tile_422: -588803521
       Crypt level tile_423: -1648728974
       Crypt level tile_424: 1695676877
       Crypt level tile_425: 1494102514
-      Crypt level tile_426: 1473816418
-      Crypt level tile_427: 2103360935
-      Crypt level tile_428: 1116632975
-      Crypt level tile_429: 1586615040
-      Crypt level tile_43: 1812078796
       Crypt level tile_430: -1755353830
       Crypt level tile_431: 1218742692
-      Crypt level tile_432: 1440939161
-      Crypt level tile_433: 1227192600
-      Crypt level tile_434: 1117215013
-      Crypt level tile_435: -1233255805
       Crypt level tile_436: 1447453321
       Crypt level tile_437: -1253408398
-      Crypt level tile_438: 1148679031
-      Crypt level tile_439: -919553299
       Crypt level tile_44: 535436940
-      Crypt level tile_440: 1677007100
-      Crypt level tile_441: 1669686973
-      Crypt level tile_442: -399406615
       Crypt level tile_443: -345065719
       Crypt level tile_444: 596146263
       Crypt level tile_445: 1115311342
@@ -21833,10 +18593,6 @@ TextureImporter:
       Crypt level tile_452: -1004743557
       Crypt level tile_453: 51918788
       Crypt level tile_454: 489650509
-      Crypt level tile_455: -190412265
-      Crypt level tile_456: -598313988
-      Crypt level tile_457: 542592746
-      Crypt level tile_458: -56298996
       Crypt level tile_459: 156285506
       Crypt level tile_46: -43242476
       Crypt level tile_460: 632024573
@@ -21848,25 +18604,12 @@ TextureImporter:
       Crypt level tile_466: -1906501871
       Crypt level tile_467: -1593930585
       Crypt level tile_468: -858144353
-      Crypt level tile_469: -342486264
       Crypt level tile_47: 515279467
-      Crypt level tile_470: -906764712
-      Crypt level tile_471: -808617844
-      Crypt level tile_472: -7096287
       Crypt level tile_473: -2094555770
       Crypt level tile_474: -1087305964
-      Crypt level tile_475: -1248309930
-      Crypt level tile_476: 1178511072
-      Crypt level tile_477: -1009468446
-      Crypt level tile_478: -943955201
       Crypt level tile_479: -183386159
       Crypt level tile_48: -873075501
       Crypt level tile_480: -1764638148
-      Crypt level tile_481: 52430227
-      Crypt level tile_482: -1308367978
-      Crypt level tile_483: -1900817817
-      Crypt level tile_484: 527218684
-      Crypt level tile_485: -63731174
       Crypt level tile_486: -1698490371
       Crypt level tile_487: -977121269
       Crypt level tile_488: -2019161656
@@ -21880,12 +18623,7 @@ TextureImporter:
       Crypt level tile_495: 1730672311
       Crypt level tile_496: -1615972167
       Crypt level tile_497: 23617229
-      Crypt level tile_498: 1835006306
-      Crypt level tile_499: 664056698
-      Crypt level tile_5: -2059171661
       Crypt level tile_50: 618320956
-      Crypt level tile_500: -1091434666
-      Crypt level tile_501: 1832608334
       Crypt level tile_502: 1074753128
       Crypt level tile_503: -219562956
       Crypt level tile_504: 1666440885
@@ -21897,24 +18635,11 @@ TextureImporter:
       Crypt level tile_51: 2142084237
       Crypt level tile_510: 213037883
       Crypt level tile_511: -671096030
-      Crypt level tile_512: -1300917218
-      Crypt level tile_513: 383900124
-      Crypt level tile_514: 385835164
-      Crypt level tile_515: -624789855
       Crypt level tile_516: 2023002463
       Crypt level tile_517: 513395705
-      Crypt level tile_518: -666174641
-      Crypt level tile_519: -501770798
       Crypt level tile_52: 343014353
-      Crypt level tile_520: -656567730
-      Crypt level tile_521: -1741608969
       Crypt level tile_522: -1907781312
       Crypt level tile_523: 483771577
-      Crypt level tile_524: -471582747
-      Crypt level tile_525: -785761046
-      Crypt level tile_526: -160315755
-      Crypt level tile_527: -2084950439
-      Crypt level tile_528: -206926877
       Crypt level tile_529: 469624484
       Crypt level tile_53: -926887645
       Crypt level tile_530: -585061842
@@ -21929,10 +18654,6 @@ TextureImporter:
       Crypt level tile_539: -1424937681
       Crypt level tile_54: 2133569977
       Crypt level tile_540: -611193339
-      Crypt level tile_541: -1797906653
-      Crypt level tile_542: -1602218539
-      Crypt level tile_543: 882118127
-      Crypt level tile_544: -933949645
       Crypt level tile_545: 1296148902
       Crypt level tile_546: -1298475839
       Crypt level tile_547: 673802428
@@ -21964,49 +18685,16 @@ TextureImporter:
       Crypt level tile_570: -1865710925
       Crypt level tile_571: -1766557039
       Crypt level tile_572: 971653179
-      Crypt level tile_573: -578077176
-      Crypt level tile_574: 1332090460
-      Crypt level tile_575: -291673523
-      Crypt level tile_576: 1278639506
-      Crypt level tile_577: -191704635
-      Crypt level tile_578: -1346082800
-      Crypt level tile_579: -2094883971
       Crypt level tile_58: -1354317423
-      Crypt level tile_580: -1090016568
-      Crypt level tile_581: 1622209046
-      Crypt level tile_582: -1348954213
-      Crypt level tile_583: 943233159
-      Crypt level tile_584: 1217323162
-      Crypt level tile_585: -468969651
-      Crypt level tile_586: 284987894
-      Crypt level tile_587: 1747719373
-      Crypt level tile_588: 1854222914
-      Crypt level tile_589: 958564308
       Crypt level tile_59: 1763945405
-      Crypt level tile_590: 2037670853
-      Crypt level tile_591: -1618814137
-      Crypt level tile_592: -1765256744
-      Crypt level tile_593: -1682801555
-      Crypt level tile_594: -581428305
-      Crypt level tile_595: 723055951
-      Crypt level tile_596: 38147962
       Crypt level tile_597: 156648946
       Crypt level tile_598: -513658782
       Crypt level tile_599: 419893157
-      Crypt level tile_6: -1600502202
       Crypt level tile_60: -305334362
       Crypt level tile_600: 1837520239
       Crypt level tile_601: 1854397142
       Crypt level tile_602: -830715997
-      Crypt level tile_603: -439745400
-      Crypt level tile_604: -2023318803
-      Crypt level tile_605: -1916186100
-      Crypt level tile_606: -1788282898
-      Crypt level tile_607: -365108167
-      Crypt level tile_608: -397524868
-      Crypt level tile_609: 726990709
       Crypt level tile_61: -175628602
-      Crypt level tile_610: -1398650562
       Crypt level tile_611: -864859885
       Crypt level tile_612: 1226890391
       Crypt level tile_613: -1637009046
@@ -22018,40 +18706,14 @@ TextureImporter:
       Crypt level tile_619: -2050939920
       Crypt level tile_62: -1392882250
       Crypt level tile_620: 1615810284
-      Crypt level tile_621: 959723864
-      Crypt level tile_622: -1112527921
-      Crypt level tile_623: -1640256377
-      Crypt level tile_624: 1789550017
-      Crypt level tile_625: 28671415
-      Crypt level tile_626: 94611795
-      Crypt level tile_627: -735199382
-      Crypt level tile_628: 1601925300
-      Crypt level tile_629: 608095967
       Crypt level tile_63: -1476631632
-      Crypt level tile_630: -327858681
-      Crypt level tile_631: 1317694482
-      Crypt level tile_632: 1985304781
-      Crypt level tile_633: -450829494
-      Crypt level tile_634: -1330471462
-      Crypt level tile_635: -855775784
-      Crypt level tile_636: -1447602609
-      Crypt level tile_637: -492714496
-      Crypt level tile_638: 1139033946
       Crypt level tile_639: 2014986703
       Crypt level tile_64: -375303342
       Crypt level tile_640: -800813760
       Crypt level tile_641: -1381531141
       Crypt level tile_642: -1232519785
-      Crypt level tile_643: 1341060459
-      Crypt level tile_644: -415606492
-      Crypt level tile_645: 837777878
-      Crypt level tile_646: 2005633384
-      Crypt level tile_647: 1231662317
-      Crypt level tile_648: 1952082820
       Crypt level tile_649: -1729466922
       Crypt level tile_65: -51429602
-      Crypt level tile_650: 2096870588
-      Crypt level tile_651: -1132025986
       Crypt level tile_652: -1309680354
       Crypt level tile_653: 1784940064
       Crypt level tile_654: -833048301
@@ -22063,50 +18725,23 @@ TextureImporter:
       Crypt level tile_66: 1454757990
       Crypt level tile_660: -1045092282
       Crypt level tile_661: -1593334816
-      Crypt level tile_662: -1271846793
-      Crypt level tile_663: -787987299
-      Crypt level tile_664: -1616932951
-      Crypt level tile_665: 363360959
-      Crypt level tile_666: -898935916
-      Crypt level tile_667: -1868778616
-      Crypt level tile_668: -2054397283
-      Crypt level tile_669: -1036862592
       Crypt level tile_67: 679833604
-      Crypt level tile_670: -226885316
-      Crypt level tile_671: 749595780
-      Crypt level tile_672: -138377878
-      Crypt level tile_673: 2048325380
-      Crypt level tile_674: 1577516202
-      Crypt level tile_675: -1764132677
-      Crypt level tile_676: -817080905
-      Crypt level tile_677: -69167388
-      Crypt level tile_678: 1840239198
-      Crypt level tile_679: 1407713470
       Crypt level tile_68: 1666208917
       Crypt level tile_680: 728993878
       Crypt level tile_681: -2055014987
       Crypt level tile_682: 1777449363
       Crypt level tile_683: -197026389
-      Crypt level tile_684: 1173326333
-      Crypt level tile_685: 2144121369
       Crypt level tile_686: -2061006356
       Crypt level tile_687: 308911050
       Crypt level tile_688: 509516059
-      Crypt level tile_689: -203183616
       Crypt level tile_69: -1919674629
       Crypt level tile_690: 1501393536
-      Crypt level tile_691: -2022875291
       Crypt level tile_692: 1736724419
       Crypt level tile_693: 489419768
       Crypt level tile_694: 1812580150
       Crypt level tile_695: 264732381
-      Crypt level tile_696: 1803265424
-      Crypt level tile_697: 1731473107
-      Crypt level tile_698: 1188381988
-      Crypt level tile_699: 1546230325
       Crypt level tile_7: -2144839528
       Crypt level tile_70: -839919526
-      Crypt level tile_700: 736449524
       Crypt level tile_701: 1636266396
       Crypt level tile_702: 12733592
       Crypt level tile_703: -1367265247
@@ -22116,7 +18751,6 @@ TextureImporter:
       Crypt level tile_707: -1387477734
       Crypt level tile_708: 1774320863
       Crypt level tile_709: 1414564986
-      Crypt level tile_71: -1031715507
       Crypt level tile_710: 1502778931
       Crypt level tile_711: -803617247
       Crypt level tile_712: 399384738
@@ -22127,7 +18761,6 @@ TextureImporter:
       Crypt level tile_717: -152798576
       Crypt level tile_718: -644112256
       Crypt level tile_719: 507004208
-      Crypt level tile_72: 1571009886
       Crypt level tile_720: -28978343
       Crypt level tile_721: -1095965406
       Crypt level tile_722: -1341951003
@@ -22138,7 +18771,6 @@ TextureImporter:
       Crypt level tile_727: 1466285797
       Crypt level tile_728: -1646859838
       Crypt level tile_729: -968915415
-      Crypt level tile_73: 547175384
       Crypt level tile_730: 1004603831
       Crypt level tile_731: -1011758721
       Crypt level tile_732: 1082099103
@@ -22147,20 +18779,8 @@ TextureImporter:
       Crypt level tile_735: -1728182812
       Crypt level tile_736: 1247522263
       Crypt level tile_737: -608408279
-      Crypt level tile_738: 1463695684
-      Crypt level tile_739: -1907645913
-      Crypt level tile_74: 1341830500
-      Crypt level tile_740: -437890367
-      Crypt level tile_741: 1677706567
-      Crypt level tile_742: -568547174
-      Crypt level tile_743: -1667495074
-      Crypt level tile_744: 1672614957
-      Crypt level tile_745: -2111483888
-      Crypt level tile_746: -406072829
-      Crypt level tile_747: -316305113
       Crypt level tile_748: -562797306
       Crypt level tile_749: -1732168712
-      Crypt level tile_75: -240002368
       Crypt level tile_750: 2101382774
       Crypt level tile_751: -1128887883
       Crypt level tile_752: 1422177274
@@ -22171,7 +18791,6 @@ TextureImporter:
       Crypt level tile_757: -1366675073
       Crypt level tile_758: -624874573
       Crypt level tile_759: 1111135533
-      Crypt level tile_76: 459496368
       Crypt level tile_760: 620938044
       Crypt level tile_761: 3966848
       Crypt level tile_762: -160164480
@@ -22182,7 +18801,6 @@ TextureImporter:
       Crypt level tile_767: -126541262
       Crypt level tile_768: -192745232
       Crypt level tile_769: -1569192089
-      Crypt level tile_77: 707781019
       Crypt level tile_770: -512024155
       Crypt level tile_771: 205980906
       Crypt level tile_772: 415489779
@@ -22231,8 +18849,6 @@ TextureImporter:
       Crypt level tile_810: -2088666540
       Crypt level tile_811: -153738435
       Crypt level tile_812: -1176222260
-      Crypt level tile_813: -1884618397
-      Crypt level tile_814: -1001226363
       Crypt level tile_815: 1130729192
       Crypt level tile_816: 1534866115
       Crypt level tile_817: 540493364
@@ -22266,8 +18882,6 @@ TextureImporter:
       Crypt level tile_842: 2066531913
       Crypt level tile_843: 1729828807
       Crypt level tile_844: -1683857547
-      Crypt level tile_845: -710855766
-      Crypt level tile_846: -420677818
       Crypt level tile_847: -1009262406
       Crypt level tile_848: -1256835697
       Crypt level tile_849: -1079339321
@@ -22342,10 +18956,6 @@ TextureImporter:
       Crypt level tile_910: 1132485467
       Crypt level tile_911: -424531902
       Crypt level tile_912: 270563466
-      Crypt level tile_913: 669432781
-      Crypt level tile_914: -1708116016
-      Crypt level tile_915: 1252553399
-      Crypt level tile_916: 1480960409
       Crypt level tile_917: 1280264623
       Crypt level tile_918: -1002071701
       Crypt level tile_919: 1664961543
@@ -22381,11 +18991,7 @@ TextureImporter:
       Crypt level tile_946: -459053728
       Crypt level tile_947: 1522995233
       Crypt level tile_948: 1184386254
-      Crypt level tile_949: -550496860
       Crypt level tile_95: -1329515870
-      Crypt level tile_950: 1997021477
-      Crypt level tile_951: 1122901281
-      Crypt level tile_952: -1927257358
       Crypt level tile_953: -2002154901
       Crypt level tile_954: 57411091
       Crypt level tile_955: -1206111763
@@ -22410,10 +19016,6 @@ TextureImporter:
       Crypt level tile_972: 402061948
       Crypt level tile_973: 130505341
       Crypt level tile_974: -1416655319
-      Crypt level tile_975: 793941975
-      Crypt level tile_976: -1360208805
-      Crypt level tile_977: 762613180
-      Crypt level tile_978: 1458122272
       Crypt level tile_979: -472979488
       Crypt level tile_98: 824876018
       Crypt level tile_980: 1614456214
@@ -22437,6 +19039,241 @@ TextureImporter:
       Crypt level tile_997: -1219391757
       Crypt level tile_998: 1394271687
       Crypt level tile_999: 756789701
+      Crypt_Floor Hole Black: 2144121369
+      Crypt_Floor Hole Down (1): -1907645913
+      Crypt_Floor Hole Down (2): -437890367
+      Crypt_Floor Hole Down (3): 1677706567
+      Crypt_Floor Hole Down (4): -568547174
+      Crypt_Floor Hole DownLeft: 1463695684
+      Crypt_Floor Hole DownRight: -1667495074
+      Crypt_Floor Hole Edge (1): -2023318803
+      Crypt_Floor Hole Edge (2): -1916186100
+      Crypt_Floor Hole Edge (3): -1788282898
+      Crypt_Floor Hole Edge (4): -365108167
+      Crypt_Floor Hole EdgeDown (1): -415606492
+      Crypt_Floor Hole EdgeDown (2): 837777878
+      Crypt_Floor Hole EdgeDown (3): 2005633384
+      Crypt_Floor Hole EdgeDown (4): 1231662317
+      Crypt_Floor Hole Left (1): -439745400
+      Crypt_Floor Hole Left (2): 1341060459
+      Crypt_Floor Hole Left (3): 1173326333
+      Crypt_Floor Hole Left (4): -2022875291
+      Crypt_Floor Hole Right (2): 1952082820
+      Crypt_Floor Hole Right (3): -203183616
+      Crypt_Floor Hole Right (4): 1803265424
+      Crypt_Floor Hole Up (1): 1332090460
+      Crypt_Floor Hole Up (2): -291673523
+      Crypt_Floor Hole Up (3): 1278639506
+      Crypt_Floor Hole Up (4): -191704635
+      Crypt_Floor Hole UpLeft: -578077176
+      Crypt_Floor Hole UpRight: -1346082800
+      Crypt_Floor HoleRight (1): -397524868
+      Crypt_Floor Red Bricks (1): 726990709
+      Crypt_Floor Red Bricks (2): -1398650562
+      Crypt_Floor Red Bricks (3): 2096870588
+      Crypt_Floor Red Bricks (4): -1132025986
+      Crypt_Floor Red Bricks Big (1): 1731473107
+      Crypt_Floor Red Bricks Big (2): 1188381988
+      Crypt_Floor Red Bricks Big (3): 1672614957
+      Crypt_Floor Red Bricks Big (4): -2111483888
+      Crypt_Floor Red Bricks Big Rust (1): 1546230325
+      Crypt_Floor Red Bricks Big Rust (2): 736449524
+      Crypt_Floor Red Bricks Big Rust (3): -406072829
+      Crypt_Floor Red Bricks Big Rust (4): -316305113
+      Crypt_Floor Red Bricks Broken (1): 1997021477
+      Crypt_Floor Red Bricks Broken (2): 1122901281
+      Crypt_Floor Red Bricks Broken (3): -1360208805
+      Crypt_Floor Red Bricks Broken (4): 762613180
+      Crypt_Floor Red Bricks Broken Down (1): 821908589
+      Crypt_Floor Red Bricks Broken Down (2): -234826571
+      Crypt_Floor Red Bricks Broken DownLeft: 1088445187
+      Crypt_Floor Red Bricks Broken DownRight: -546306202
+      Crypt_Floor Red Bricks Broken Left (1): -550496860
+      Crypt_Floor Red Bricks Broken Left (2): 793941975
+      Crypt_Floor Red Bricks Broken Right (1): -1927257358
+      Crypt_Floor Red Bricks Broken Right (2): 1458122272
+      Crypt_Floor Red Bricks Broken Up (1): -1708116016
+      Crypt_Floor Red Bricks Broken Up (2)U: 1252553399
+      Crypt_Floor Red Bricks Broken UpLeft: 669432781
+      Crypt_Floor Red Bricks Broken UpRight: 1480960409
+      Crypt_Floor Red Bricks Prebroken (1): -1884618397
+      Crypt_Floor Red Bricks Prebroken (2): -1001226363
+      Crypt_Floor Red Bricks Prebroken (3): -710855766
+      Crypt_Floor Red Bricks Prebroken (4): -420677818
+      Crypt_Floor Red Smooth (1): -190412265
+      Crypt_Floor Red Smooth (2): -598313988
+      Crypt_Floor Red Smooth (3): 1835006306
+      Crypt_Floor Red Smooth (4): 664056698
+      Crypt_Floor Red Smooth (5): -1797906653
+      Crypt_Floor Red Smooth (6): -1602218539
+      Crypt_Floor Red Smooth Rust (1): 542592746
+      Crypt_Floor Red Smooth Rust (2): -56298996
+      Crypt_Floor Red Smooth Rust (3): -1091434666
+      Crypt_Floor Red Smooth Rust (4): 1832608334
+      Crypt_Floor Red Smooth Rust (5): 882118127
+      Crypt_Floor Red Smooth Rust (6): -933949645
+      Crypt_Interactive Ladder Wall: -2059171661
+      Crypt_Interactive Ladder Wall Close: -1941801480
+      Crypt_Interactive Ladder floor: -1948875974
+      Crypt_Roof Back DownToSide: -1031715507
+      Crypt_Roof Back SideToUp Colomn: 707781019
+      Crypt_Roof Back SideToUp Colomn Flip: -371932760
+      Crypt_Roof Back Up (1): 459496368
+      Crypt_Roof Back Up (2): -240002368
+      Crypt_Roof Back Up (3): 1341830500
+      Crypt_Roof Back Up (4): 547175384
+      Crypt_Roof Back UpDownToSide: 1571009886
+      Crypt_Roof Back UpEnd: -2010409826
+      Crypt_Roof Back UpEnd Colomn: 1812078796
+      Crypt_Roof Back UpEnd Colomn Flip: 1645255889
+      Crypt_Roof Black: -222983583
+      Crypt_Roof Front (1): -33427797
+      Crypt_Roof Front (2): 435367413
+      Crypt_Roof Front (3): -134086835
+      Crypt_Roof Front (4): -1675462543
+      Crypt_Roof Front (6): 1907127064
+      Crypt_Roof Front (7): -736256893
+      Crypt_Roof Front (8): 2092636053
+      Crypt_Roof Front Colomn: -1324283628
+      Crypt_Roof Front Colomn Flip: -1921851561
+      Crypt_Roof Front UpToSide: 1823927866
+      Crypt_Roof Front UpToSide Colomn Edge: -804675012
+      Crypt_Roof Side (1): 606897049
+      Crypt_Roof Side (2): -1474250758
+      Crypt_Roof Side (3): 1591981827
+      Crypt_Roof SideToDown: -187336002
+      Crypt_Roof UpToSide Close: 1418581561
+      Crypt_Wall Bricks (1): 958564308
+      Crypt_Wall Bricks (10): 38147962
+      Crypt_Wall Bricks (11): 608095967
+      Crypt_Wall Bricks (12): -327858681
+      Crypt_Wall Bricks (13): 1317694482
+      Crypt_Wall Bricks (14): 1985304781
+      Crypt_Wall Bricks (15): -450829494
+      Crypt_Wall Bricks (16): -1330471462
+      Crypt_Wall Bricks (17): -855775784
+      Crypt_Wall Bricks (18): -1447602609
+      Crypt_Wall Bricks (19): -492714496
+      Crypt_Wall Bricks (2): 1747719373
+      Crypt_Wall Bricks (20): 1139033946
+      Crypt_Wall Bricks (21): -226885316
+      Crypt_Wall Bricks (22): 749595780
+      Crypt_Wall Bricks (23): -138377878
+      Crypt_Wall Bricks (24): 2048325380
+      Crypt_Wall Bricks (25): 1577516202
+      Crypt_Wall Bricks (26): -1764132677
+      Crypt_Wall Bricks (27): -817080905
+      Crypt_Wall Bricks (28): -69167388
+      Crypt_Wall Bricks (29): 1840239198
+      Crypt_Wall Bricks (3): 1854222914
+      Crypt_Wall Bricks (30): 1407713470
+      Crypt_Wall Bricks (4): 2037670853
+      Crypt_Wall Bricks (5): -1618814137
+      Crypt_Wall Bricks (6): -1765256744
+      Crypt_Wall Bricks (7): -1682801555
+      Crypt_Wall Bricks (8): -581428305
+      Crypt_Wall Bricks (9): 723055951
+      Crypt_Wall Cage (1): 1669686973
+      Crypt_Wall Cage (2): -399406615
+      Crypt_Wall Cage (3): 527218684
+      Crypt_Wall Cage (4): -63731174
+      Crypt_Wall Cage (5): -2084950439
+      Crypt_Wall Cage (6): -206926877
+      Crypt_Wall Cage Slim (1): 1148679031
+      Crypt_Wall Cage Slim (2): 52430227
+      Crypt_Wall Cage Slim (3): -471582747
+      Crypt_Wall Cage Slim Hole (1): 1677007100
+      Crypt_Wall Cage Slim Hole (2): -1900817817
+      Crypt_Wall Cage Slim Hole (3): -160315755
+      Crypt_Wall Cage Slim v2 (1): -919553299
+      Crypt_Wall Cage Slim v2 (2): -1308367978
+      Crypt_Wall Cage Slim v2 (3): -785761046
+      Crypt_Wall Colomn (1): -2055357029
+      Crypt_Wall Colomn (1) Flip: 1321988741
+      Crypt_Wall Colomn (2): -106926093
+      Crypt_Wall Colomn (2) Flip: -70979152
+      Crypt_Wall Colomn (3): 1768831243
+      Crypt_Wall Colomn (3) Flip: 1992896292
+      Crypt_Wall Colomn Edge (1): -1173878260
+      Crypt_Wall Colomn Edge (2): 640208459
+      Crypt_Wall Colomn Edge (3): -756240558
+      Crypt_Wall Sarcophagus Empty (1): 1946502108
+      Crypt_Wall Sarcophagus Empty (10): 430093236
+      Crypt_Wall Sarcophagus Empty (12): 1768054203
+      Crypt_Wall Sarcophagus Empty (13): -1498721080
+      Crypt_Wall Sarcophagus Empty (2): -128921958
+      Crypt_Wall Sarcophagus Empty (3): -2027297427
+      Crypt_Wall Sarcophagus Empty (4): 1674717754
+      Crypt_Wall Sarcophagus Empty (5): 1911362097
+      Crypt_Wall Sarcophagus Empty (6): -125165762
+      Crypt_Wall Sarcophagus Empty (7): -427105814
+      Crypt_Wall Sarcophagus Empty (8): 490622447
+      Crypt_Wall Sarcophagus Empty (9): -1016271342
+      Crypt_Wall Sarcophagus Open (1): 1473816418
+      Crypt_Wall Sarcophagus Open (10): 383900124
+      Crypt_Wall Sarcophagus Open (11): 385835164
+      Crypt_Wall Sarcophagus Open (12): -624789855
+      Crypt_Wall Sarcophagus Open (2): 2103360935
+      Crypt_Wall Sarcophagus Open (3): 1116632975
+      Crypt_Wall Sarcophagus Open (4): 1586615040
+      Crypt_Wall Sarcophagus Open (5): -342486264
+      Crypt_Wall Sarcophagus Open (6): -906764712
+      Crypt_Wall Sarcophagus Open (7): -808617844
+      Crypt_Wall Sarcophagus Open (8): -7096287
+      Crypt_Wall Sarcophagus Open (9): -1300917218
+      Crypt_Wall Sarcophagus Open v2 (1): 1440939161
+      Crypt_Wall Sarcophagus Open v2 (10): -501770798
+      Crypt_Wall Sarcophagus Open v2 (11): -656567730
+      Crypt_Wall Sarcophagus Open v2 (12): -1741608969
+      Crypt_Wall Sarcophagus Open v2 (2): 1227192600
+      Crypt_Wall Sarcophagus Open v2 (3): 1117215013
+      Crypt_Wall Sarcophagus Open v2 (4): -1233255805
+      Crypt_Wall Sarcophagus Open v2 (5): -1248309930
+      Crypt_Wall Sarcophagus Open v2 (6): 1178511072
+      Crypt_Wall Sarcophagus Open v2 (7): -1009468446
+      Crypt_Wall Sarcophagus Open v2 (8): -943955201
+      Crypt_Wall Sarcophagus Open v2 (9): -666174641
+      Crypt_Wall Sarcophagus Open v3 (1): -2094883971
+      Crypt_Wall Sarcophagus Open v3 (10): -787987299
+      Crypt_Wall Sarcophagus Open v3 (11): -1616932951
+      Crypt_Wall Sarcophagus Open v3 (12): 363360959
+      Crypt_Wall Sarcophagus Open v3 (2): -1090016568
+      Crypt_Wall Sarcophagus Open v3 (3): 1622209046
+      Crypt_Wall Sarcophagus Open v3 (4): -1348954213
+      Crypt_Wall Sarcophagus Open v3 (5): 959723864
+      Crypt_Wall Sarcophagus Open v3 (6): -1112527921
+      Crypt_Wall Sarcophagus Open v3 (7): -1640256377
+      Crypt_Wall Sarcophagus Open v3 (8): 1789550017
+      Crypt_Wall Sarcophagus Open v3 (9): -1271846793
+      Crypt_Wall Sarcophagus Open v4 (): -735199382
+      Crypt_Wall Sarcophagus Open v4 (1): 943233159
+      Crypt_Wall Sarcophagus Open v4 (10): -1868778616
+      Crypt_Wall Sarcophagus Open v4 (11): -2054397283
+      Crypt_Wall Sarcophagus Open v4 (12): -1036862592
+      Crypt_Wall Sarcophagus Open v4 (2): 1217323162
+      Crypt_Wall Sarcophagus Open v4 (3): -468969651
+      Crypt_Wall Sarcophagus Open v4 (4): 284987894
+      Crypt_Wall Sarcophagus Open v4 (5): 28671415
+      Crypt_Wall Sarcophagus Open v4 (6): 94611795
+      Crypt_Wall Sarcophagus Open v4 (7): 1601925300
+      Crypt_Wall Sarcophagus Open v4 (9): -898935916
+      "Crypt_Wall \u0441\u0430\u0440\u043A\u043E\u0444\u0430\u0433 Empty": 1946502108
+      Crypt_WallBorder Back End: -1447446949
+      Crypt_WallBorder Front (1): -671533621
+      Crypt_WallBorder Front (2): -1655804454
+      Crypt_WallBorder Front (3): -820213833
+      Crypt_WallBorder Front (4): 201756411
+      Crypt_WallBorder Front Colomn: 329971570
+      Crypt_WallBorder Front Colomn Edge: -231384402
+      Crypt_WallBorder Front Colomn Flip: -1600502202
+      Crypt_WallBorder Front UpToSide: 2049569396
+      Crypt_WallBorder Front UpToSide Colomn: 425597789
+      Crypt_WallBorder Side (1): -2115213431
+      Crypt_WallBorder Side (2): 469989321
+      Crypt_WallBorder Side (3): -1612323647
+      Crypt_WallBorder Side (4): -1098840148
+      Crypt_WallBorder Side (5): -1585634858
+      Crypt_WallBorder SideToDown: -1020961498
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

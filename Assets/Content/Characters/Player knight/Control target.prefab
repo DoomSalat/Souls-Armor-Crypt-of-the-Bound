@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188791302813421959}
-  - component: {fileID: 4014243181726193494}
   - component: {fileID: 3417028125926466085}
   - component: {fileID: 4504751727156421818}
+  - component: {fileID: 4014243181726193494}
+  - component: {fileID: 3714237911204195846}
   m_Layer: 0
   m_Name: Control target
   m_TagString: Untagged
@@ -34,18 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4014243181726193494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7871687388810177914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0b5dd13c886ae43b2ceb866fcb3456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &3417028125926466085
 Rigidbody2D:
   serializedVersion: 5
@@ -94,3 +83,27 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 1
   m_Frequency: 4.7
+--- !u!114 &4014243181726193494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7871687388810177914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0b5dd13c886ae43b2ceb866fcb3456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3714237911204195846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7871687388810177914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6727ff39ea8ea544689cc00b7d715d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
