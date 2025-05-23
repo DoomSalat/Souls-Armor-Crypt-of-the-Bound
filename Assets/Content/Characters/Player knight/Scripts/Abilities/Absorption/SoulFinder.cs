@@ -6,7 +6,6 @@ public class SoulFinder : MonoBehaviour
 	[SerializeField, MinValue(0f)] private float _searchRadius = 5f;
 	[SerializeField] private LayerMask _soulLayerMask;
 	[SerializeField, MinValue(1)] private int _maxBuffer = 10;
-	[SerializeField] private Color _gizmosColor = new Color(1f, 0.5f, 0f, 0.3f);
 
 	public event System.Action<ISoul> OnSoulFound;
 
@@ -17,9 +16,9 @@ public class SoulFinder : MonoBehaviour
 		_colliderBuffer = new Collider2D[_maxBuffer];
 	}
 
-	private void OnDrawGizmos()
+	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = _gizmosColor;
+		Gizmos.color = Color.orange;
 		Gizmos.DrawWireSphere(transform.position, _searchRadius);
 	}
 

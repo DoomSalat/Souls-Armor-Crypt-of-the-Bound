@@ -1,0 +1,60 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+public class TimeController : MonoBehaviour
+{
+	public static TimeController Instance { get; private set; }
+
+	[SerializeField, MinValue(0f)] private float _defaultTimeScale = 1f;
+
+	private float _currentTimeScale;
+
+	private void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+
+		_currentTimeScale = _defaultTimeScale;
+		Time.timeScale = _currentTimeScale;
+	}
+
+	public void SetTimeScale(float scale)
+	{
+		_currentTimeScale = Mathf.Max(0f, scale);
+		Time.timeScale = _currentTimeScale;
+	}
+
+	public void ResetTimeScale()
+	{
+		SetTimeScale(_defaultTimeScale);
+	}
+
+	public float GetCurrentTimeScale() => _currentTimeScale;
+
+	public void SlowTime(float factor = 0.5f)
+	{
+		SetTimeScale(_defaultTimeScale * factor);
+	}
+
+	public void SpeedUpTime(float factor = 2f)
+	{
+		SetTimeScale(_defaultTimeScale * factor);
+	}
+
+	public void StopTime()
+	{
+		SetTimeScale(0f);
+	}
+
+	public void ResumeTime()
+	{
+		ResetTimeScale();
+	}
+}

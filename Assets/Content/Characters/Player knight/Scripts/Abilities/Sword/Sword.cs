@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Sword : MonoBehaviour, IKnockbackProvider
 {
+	private const float MinKnockbackMagnitude = 0.001f;
+
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private Rigidbody2DLocalAxisLimiter _localAxisLimiter;
 	[SerializeField, MinValue(0)] private float _knockbackForceMultiplier = 2f;
@@ -53,7 +55,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		}
 	}
 
-	private void OnDrawGizmos()
+	private void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, _followRadius);
@@ -69,9 +71,9 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 
 	private void UpdateFollowPosition()
 	{
-		float distanceToPocket = Vector2.Distance(transform.position, _parentPocket.position);
+		float sqrDistanceToPocket = (transform.position - _parentPocket.position).sqrMagnitude;
 		bool wasInRadius = _isInRadius;
-		_isInRadius = distanceToPocket <= _followRadius;
+		_isInRadius = sqrDistanceToPocket <= _followRadius * _followRadius;
 
 		if (_isInRadius && wasInRadius == false)
 		{
@@ -138,11 +140,11 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		Vector2 closestPointOnWeapon = hitCollider.ClosestPoint(other.bounds.center);
 		Vector2 knockbackDirection = (closestPointOnWeapon - closestPointOnEnemy).normalized;
 
-		if (knockbackDirection.sqrMagnitude < 0.001f)
+		if (knockbackDirection.sqrMagnitude < MinKnockbackMagnitude)
 		{
 			knockbackDirection = (other.bounds.center - hitCollider.bounds.center).normalized;
 
-			if (knockbackDirection.sqrMagnitude < 0.001f && _rigidbody != null)
+			if (knockbackDirection.sqrMagnitude < MinKnockbackMagnitude)
 			{
 				knockbackDirection = _rigidbody.linearVelocity.normalized;
 			}

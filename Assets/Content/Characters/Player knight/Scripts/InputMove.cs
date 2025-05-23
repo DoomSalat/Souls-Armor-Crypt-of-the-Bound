@@ -12,7 +12,6 @@ public class InputMove : MonoBehaviour
 	private Vector2 _moveInput;
 
 	public InputReader InputReader => _inputReader;
-	public Vector2 GetInputDirection() => _moveInput;
 
 	private void Awake()
 	{
@@ -40,6 +39,8 @@ public class InputMove : MonoBehaviour
 	{
 		_rigidbody.linearVelocity = Vector2.zero;
 	}
+
+	public Vector2 GetInputDirection() => _moveInput;
 
 	private void OnMovePerformed(InputAction.CallbackContext context)
 	{

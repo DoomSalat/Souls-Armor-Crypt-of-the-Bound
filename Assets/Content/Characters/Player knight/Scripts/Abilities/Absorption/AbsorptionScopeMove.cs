@@ -26,7 +26,7 @@ public class AbsorptionScopeMove : MonoBehaviour
 		if (_isFollowing == false)
 			return;
 
-		Vector3 mouseScreenPosition = InputReader.GetMousePosition();
+		Vector3 mouseScreenPosition = InputUtilits.GetMouseClampPosition();
 
 		Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 		mouseWorldPosition = (Vector2)mouseWorldPosition;

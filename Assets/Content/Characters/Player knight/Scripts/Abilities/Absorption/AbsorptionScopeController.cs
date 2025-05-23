@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
 
 public class AbsorptionScopeController : MonoBehaviour
@@ -22,7 +21,7 @@ public class AbsorptionScopeController : MonoBehaviour
 
 	public bool IsPointInActivationZone()
 	{
-		_cachedMousePosition = InputReader.GetMousePosition();
+		_cachedMousePosition = InputUtilits.GetMouseClampPosition();
 		_cachedWorldPosition = _mainCamera.ScreenToWorldPoint(_cachedMousePosition);
 
 		return _activationCollider.OverlapPoint(_cachedWorldPosition);

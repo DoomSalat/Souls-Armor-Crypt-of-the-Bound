@@ -1,80 +1,61 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(InputMove))]
 public class StepsMove : MonoBehaviour
 {
-	[SerializeField] private float _stepInterval = 0.5f;
-	[SerializeField] private float _stepDuration = 0.2f;
+	[SerializeField] private float _stopDuration = 0.5f;
+	[SerializeField] private float _moveDuration = 0.2f;
 
 	private InputMove _inputMove;
 	private int _legsCount = 2;
-	private float _stepTimer;
 	private bool _canStep = true;
-	private Coroutine _stepCoroutine;
 
-	private WaitForSeconds _stepDurationWait;
+	private Coroutine _stepRoutine;
+	private WaitForSeconds _waitMoveDuration;
+	private WaitForSeconds _waitForStopDuration;
 
 	private void Awake()
 	{
 		_inputMove = GetComponent<InputMove>();
-		_stepDurationWait = new WaitForSeconds(_stepDuration);
-	}
 
-	private void Update()
-	{
-		if (_legsCount == 0)
-			return;
-
-		_stepTimer += Time.deltaTime;
-
-		if (_stepTimer >= _stepInterval)
-		{
-			_canStep = true;
-		}
+		_waitMoveDuration = new WaitForSeconds(_moveDuration);
+		_waitForStopDuration = new WaitForSeconds(_stopDuration);
 	}
 
 	public void Move()
 	{
-		if (_legsCount == 0 || _canStep == false)
+		if (IsCanMove() == false)
 			return;
 
 		Vector2 direction = _inputMove.GetInputDirection();
+
 		if (direction == Vector2.zero)
 		{
-			_inputMove.Stop();
+			Stop();
 			return;
 		}
 
-		_inputMove.Move();
-		_canStep = false;
-		_stepTimer = 0f;
+		if (_canStep)
+			_inputMove.Move();
 
-		if (_stepCoroutine != null)
-			StopCoroutine(_stepCoroutine);
-
-		_stepCoroutine = StartCoroutine(StepRoutine());
+		if (_stepRoutine == null)
+		{
+			_stepRoutine = StartCoroutine(StepDuration());
+		}
 	}
 
 	public void Stop()
 	{
+		if (_stepRoutine != null)
+		{
+			StopCoroutine(_stepRoutine);
+			_stepRoutine = null;
+		}
+
 		_inputMove.Stop();
 		_canStep = true;
-		_stepTimer = 0f;
-
-		if (_stepCoroutine != null)
-		{
-			StopCoroutine(_stepCoroutine);
-			_stepCoroutine = null;
-		}
-	}
-
-	private IEnumerator StepRoutine()
-	{
-		yield return _stepDurationWait;
-
-		_inputMove.Stop();
-		_stepCoroutine = null;
 	}
 
 	public void LoseLeg()
@@ -92,5 +73,22 @@ public class StepsMove : MonoBehaviour
 		{
 			Debug.LogWarning("Рыцарь потерял все ноги и не может двигаться!");
 		}
+	}
+
+	private IEnumerator StepDuration()
+	{
+		_canStep = true;
+		yield return _waitMoveDuration;
+
+		_canStep = false;
+		_inputMove.Stop();
+		yield return _waitForStopDuration;
+
+		_stepRoutine = null;
+	}
+
+	private bool IsCanMove()
+	{
+		return _legsCount > 0;
 	}
 }
