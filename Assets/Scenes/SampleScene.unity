@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725ff5a92da715a49aa49d4219a551b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _globalCamera: {fileID: 1721201128}
+  _mainCamera: {fileID: 1721201128}
   _playerMobCamera: {fileID: 5275364722384445036}
 --- !u!4 &13033464
 Transform:
@@ -37016,11 +37016,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6834423181380004260, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.6971946
+      value: 7.5883737
       objectReference: {fileID: 0}
     - target: {fileID: 6834423181380004260, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.0188274
+      value: 4.354001
       objectReference: {fileID: 0}
     - target: {fileID: 6919753140184837834, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: _inputReader
@@ -37032,11 +37032,11 @@ PrefabInstance:
       objectReference: {fileID: 428139725}
     - target: {fileID: 9035619767246192354, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.6971946
+      value: 7.5883737
       objectReference: {fileID: 0}
     - target: {fileID: 9035619767246192354, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.0188274
+      value: 4.354001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

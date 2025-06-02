@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using Sirenix.OdinInspector;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -17,12 +18,13 @@ public class PlayerStateMachine : MonoBehaviour
 		_currentState?.FixedUpdate();
 	}
 
-	public void InitializeStates(StepsMove movement, SwordController swordController, AbsorptionScopeController absorptionScope)
+	public void InitializeStates(StepsMove stepsMove, SwordController swordController,
+		AbsorptionScopeController absorptionScopeController, AbsorptionScope absorptionScope, InputReader inputReader)
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
-			{ typeof(MovementState), new MovementState(movement, swordController) },
-			{ typeof(AbsorptionState), new AbsorptionState(absorptionScope) }
+			{ typeof(MovementState), new MovementState(stepsMove, swordController, inputReader) },
+			{ typeof(AbsorptionState), new AbsorptionState(absorptionScopeController, absorptionScope, inputReader) }
 		};
 	}
 
@@ -49,6 +51,11 @@ public class PlayerStateMachine : MonoBehaviour
 
 	public PlayerState GetState() => _currentState;
 
+	public T GetState<T>() where T : PlayerState
+	{
+		return _states[typeof(T)] as T;
+	}
+
 	public void OnMousePerformed(InputAction.CallbackContext context)
 	{
 		_currentState?.OnMousePerformed(context);
@@ -67,5 +74,12 @@ public class PlayerStateMachine : MonoBehaviour
 	public void EnterAbsorptionState()
 	{
 		SetState<AbsorptionState>();
+	}
+
+	private void SetState(PlayerState newState)
+	{
+		_currentState?.Exit();
+		_currentState = newState;
+		_currentState.Enter();
 	}
 }

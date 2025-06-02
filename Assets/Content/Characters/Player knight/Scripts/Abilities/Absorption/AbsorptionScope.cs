@@ -9,6 +9,9 @@ public class AbsorptionScope : MonoBehaviour
 	[SerializeField, Required] private SoulFinder _finder;
 	[SerializeField, Required] private AbsorptionScopeAnimation _animator;
 
+	public event System.Action<ISoul> SoulFounded;
+	public event System.Action HideCompleted;
+
 	private void OnEnable()
 	{
 		_animator.HideCompleted += OnHideCompleted;
@@ -27,7 +30,6 @@ public class AbsorptionScope : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_movement.Move();
-
 		_activatorCollider.UpdateCollider(_target.position);
 	}
 
@@ -36,33 +38,33 @@ public class AbsorptionScope : MonoBehaviour
 		transform.position = _target.position;
 		_activatorCollider.UpdateCollider(_target.position);
 		_movement.SetFollowing(true);
-
 		_animator.PlayAppear();
 	}
 
 	public void Hide()
 	{
-		bool findTarget = _finder.TryFindSoul();
-
-		if (findTarget)
-		{
-			_movement.SetFollowing(false);
-		}
-
-		_animator.SetTarget(findTarget);
+		_finder.TryFindSoul(out ISoul findTargetSoul);
+		_animator.SetTarget(findTargetSoul != null);
 		_animator.PlayDissapear();
+
+		SoulFounded?.Invoke(findTargetSoul);
+
+		if (findTargetSoul != null)
+		{
+			_movement.SetTarget(findTargetSoul.Transform);
+		}
 	}
 
 	private void Deactive()
 	{
 		_movement.SetFollowing(false);
 		transform.position = _target.position;
-
 		_animator.PlayDissapear();
 	}
 
 	private void OnHideCompleted()
 	{
+		HideCompleted?.Invoke();
 		Deactive();
 	}
 }

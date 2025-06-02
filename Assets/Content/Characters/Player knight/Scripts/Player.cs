@@ -7,7 +7,8 @@ public class Player : MonoBehaviour, IDamagable
 {
 	[SerializeField, Required] private InputMove _inputMove;
 	[SerializeField, Required] private StepsMove _stepsMove;
-	[SerializeField, Required] private AbsorptionScopeController _absorptionScope;
+	[SerializeField, Required] private AbsorptionScopeController _absorptionScopeController;
+	[SerializeField, Required] private AbsorptionScope _absorptionScope;
 	[SerializeField, Required] private SwordController _swordController;
 
 	private InputReader _inputReader;
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour, IDamagable
 	{
 		_inputReader = _inputMove.InputReader;
 		_stateMachine = GetComponent<PlayerStateMachine>();
-		_stateMachine.InitializeStates(_stepsMove, _swordController, _absorptionScope);
+		_stateMachine.InitializeStates(_stepsMove, _swordController, _absorptionScopeController, _absorptionScope, _inputReader);
 	}
 
 	private void Start()
@@ -30,8 +31,8 @@ public class Player : MonoBehaviour, IDamagable
 		_inputReader.InputActions.Player.Mouse.performed += OnMousePerformed;
 		_inputReader.InputActions.Player.Mouse.canceled += OnMouseCanceled;
 
-		_absorptionScope.OnActivated += EnterAbsorptionState;
-		_absorptionScope.OnDeactivated += EnterMovementState;
+		_absorptionScopeController.Activated += EnterAbsorptionState;
+		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
 	}
 
 	private void OnDisable()
@@ -39,8 +40,8 @@ public class Player : MonoBehaviour, IDamagable
 		_inputReader.InputActions.Player.Mouse.performed -= OnMousePerformed;
 		_inputReader.InputActions.Player.Mouse.canceled -= OnMouseCanceled;
 
-		_absorptionScope.OnActivated -= EnterAbsorptionState;
-		_absorptionScope.OnDeactivated -= EnterMovementState;
+		_absorptionScopeController.Activated -= EnterAbsorptionState;
+		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
 	}
 
 	private void OnMousePerformed(InputAction.CallbackContext context)
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour, IDamagable
 
 	private void ChooseCurrentState()
 	{
-		if (_absorptionScope.IsPointInActivationZone())
+		if (_absorptionScopeController.IsPointInActivationZone())
 			EnterAbsorptionState();
 		else
 			EnterMovementState();

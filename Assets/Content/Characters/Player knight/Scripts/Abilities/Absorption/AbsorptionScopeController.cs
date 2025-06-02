@@ -11,8 +11,8 @@ public class AbsorptionScopeController : MonoBehaviour
 	private Vector3 _cachedMousePosition;
 	private Vector3 _cachedWorldPosition;
 
-	public event Action OnActivated;
-	public event Action OnDeactivated;
+	public event Action Activated;
+	public event Action Deactivated;
 
 	private void Awake()
 	{
@@ -30,12 +30,11 @@ public class AbsorptionScopeController : MonoBehaviour
 	public void Activate()
 	{
 		_absorptionScope.Activate();
-		OnActivated?.Invoke();
+		Activated?.Invoke();
 	}
 
-	public void Deactivate()
+	public void FindSoul()
 	{
 		_absorptionScope.Hide();
-		OnDeactivated?.Invoke();
 	}
 }

@@ -9,11 +9,21 @@ public class InputReader : MonoBehaviour
 
 	private void OnEnable()
 	{
-		InputActions.Enable();
+		Enable();
 	}
 
 	private void OnDisable()
 	{
+		Disable();
+	}
+
+	public void Disable()
+	{
 		InputActions.Disable();
+	}
+
+	public void Enable()
+	{
+		InputActions.Enable();
 	}
 }

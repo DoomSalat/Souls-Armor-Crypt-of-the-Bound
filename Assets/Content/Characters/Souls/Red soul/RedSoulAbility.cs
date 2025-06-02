@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class RedSoulAbility : MonoBehaviour, ISoul
 {
+	public Transform Transform => transform;
+
 	public IAbility GetAbility()
 	{
-		throw new System.NotImplementedException();
+		return null;
 	}
 
 	public SoulType GetSoulType()
 	{
-		throw new System.NotImplementedException();
+		return SoulType.Red;
 	}
 }

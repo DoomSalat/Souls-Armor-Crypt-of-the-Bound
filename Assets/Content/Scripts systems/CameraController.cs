@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
 
 	public static CameraController Instance { get; private set; }
 
-	[SerializeField, Required] private CinemachineCamera _globalCamera;
+	[SerializeField, Required] private CinemachineCamera _mainCamera;
 	[SerializeField, Required] private CinemachineCamera _playerMobCamera;
 
 	private void Awake()
@@ -23,24 +23,19 @@ public class CameraController : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		_globalCamera.Priority = ChoosePriotity;
+		_mainCamera.Priority = ChoosePriotity;
 		_playerMobCamera.Priority = 0;
 	}
 
 	public void SwitchToGlobalCamera()
 	{
-		_globalCamera.Priority = ChoosePriotity;
+		_mainCamera.Priority = ChoosePriotity;
 		_playerMobCamera.Priority = 0;
 	}
 
 	public void SwitchToPlayerMobCamera()
 	{
-		_globalCamera.Priority = 0;
+		_mainCamera.Priority = 0;
 		_playerMobCamera.Priority = ChoosePriotity;
-	}
-
-	public void SetPlayerMobCameraTarget(Transform mob)
-	{
-		//_playerMobCamera.LookAt = midPoint;
 	}
 }

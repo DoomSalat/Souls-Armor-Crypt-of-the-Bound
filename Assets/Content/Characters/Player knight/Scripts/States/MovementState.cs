@@ -5,11 +5,18 @@ public class MovementState : PlayerState
 {
 	private readonly StepsMove _movement;
 	private readonly SwordController _swordController;
+	private readonly InputReader _inputReader;
 
-	public MovementState(StepsMove movement, SwordController swordController)
+	public MovementState(StepsMove movement, SwordController swordController, InputReader inputReader)
 	{
 		_movement = movement;
 		_swordController = swordController;
+		_inputReader = inputReader;
+	}
+
+	public override void Enter()
+	{
+		_inputReader.Enable();
 	}
 
 	public override void FixedUpdate()

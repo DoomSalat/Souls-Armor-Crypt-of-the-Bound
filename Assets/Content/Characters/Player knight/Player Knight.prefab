@@ -1272,8 +1272,8 @@ MonoBehaviour:
     Weight: 1
     Radius: 0.5
   - Object: {fileID: 0}
-    Weight: 2
-    Radius: 0.5
+    Weight: 3
+    Radius: 0.7
   m_LegacyTargets: []
 --- !u!114 &3168333269345429765
 MonoBehaviour:
@@ -1407,7 +1407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputMove: {fileID: 6641814470964126569}
   _stepsMove: {fileID: 6648270921230140908}
-  _absorptionScope: {fileID: 6919753140184837834}
+  _absorptionScopeController: {fileID: 6919753140184837834}
+  _absorptionScope: {fileID: 3934235178878853373}
   _swordController: {fileID: 7149026230936474766}
 --- !u!114 &5863840458522902431
 MonoBehaviour:

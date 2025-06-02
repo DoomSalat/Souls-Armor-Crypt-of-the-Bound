@@ -7,8 +7,6 @@ public class SoulFinder : MonoBehaviour
 	[SerializeField] private LayerMask _soulLayerMask;
 	[SerializeField, MinValue(1)] private int _maxBuffer = 10;
 
-	public event System.Action<ISoul> OnSoulFound;
-
 	private readonly Collider2D[] _colliderBuffer;
 
 	public SoulFinder()
@@ -22,8 +20,10 @@ public class SoulFinder : MonoBehaviour
 		Gizmos.DrawWireSphere(transform.position, _searchRadius);
 	}
 
-	public bool TryFindSoul()
+	public bool TryFindSoul(out ISoul soul)
 	{
+		soul = null;
+
 		System.Array.Clear(_colliderBuffer, 0, _colliderBuffer.Length);
 #pragma warning disable CS0618 // Type or member is obsolete
 		var hitsCount = Physics2D.OverlapCircleNonAlloc(transform.position, _searchRadius, _colliderBuffer, _soulLayerMask);
@@ -32,11 +32,10 @@ public class SoulFinder : MonoBehaviour
 		if (hitsCount == 0)
 			return false;
 
-		ISoul nearestSoul = FindNearest();
+		soul = FindNearest();
 
-		if (nearestSoul != null)
+		if (soul != null)
 		{
-			OnSoulFound?.Invoke(nearestSoul);
 			return true;
 		}
 
