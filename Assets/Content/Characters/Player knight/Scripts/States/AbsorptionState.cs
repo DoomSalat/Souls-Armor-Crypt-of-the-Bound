@@ -28,7 +28,7 @@ public class AbsorptionState : PlayerState
 
 	public override void OnMouseCanceled(InputAction.CallbackContext context)
 	{
-		_absorptionScopeController.FindSoul();
+		_absorptionScopeController.StartSoulSearch();
 	}
 
 	public override void Exit()

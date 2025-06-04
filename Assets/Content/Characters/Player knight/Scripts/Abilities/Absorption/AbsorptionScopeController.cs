@@ -12,7 +12,6 @@ public class AbsorptionScopeController : MonoBehaviour
 	private Vector3 _cachedWorldPosition;
 
 	public event Action Activated;
-	public event Action Deactivated;
 
 	private void Awake()
 	{
@@ -33,8 +32,9 @@ public class AbsorptionScopeController : MonoBehaviour
 		Activated?.Invoke();
 	}
 
-	public void FindSoul()
+	public void StartSoulSearch()
 	{
+		_absorptionScope.SearchSoul();
 		_absorptionScope.Hide();
 	}
 }

@@ -41,11 +41,10 @@ public class AbsorptionScope : MonoBehaviour
 		_animator.PlayAppear();
 	}
 
-	public void Hide()
+	public void SearchSoul()
 	{
 		_finder.TryFindSoul(out ISoul findTargetSoul);
 		_animator.SetTarget(findTargetSoul != null);
-		_animator.PlayDissapear();
 
 		SoulFounded?.Invoke(findTargetSoul);
 
@@ -53,6 +52,11 @@ public class AbsorptionScope : MonoBehaviour
 		{
 			_movement.SetTarget(findTargetSoul.Transform);
 		}
+	}
+
+	public void Hide()
+	{
+		_animator.PlayDissapear();
 	}
 
 	private void Deactive()
