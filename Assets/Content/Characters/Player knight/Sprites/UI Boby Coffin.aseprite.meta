@@ -160,7 +160,7 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 496
-      height: 288
+      height: 304
     spriteID: bc23a8e127caef14eb484c56cea87571
     spriteBone: []
     spriteOutline: []
@@ -189,9 +189,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 16
-        y: 48
+        y: 80
         width: 496
-        height: 288
+        height: 304
       spriteId: 5f14e7057803b6842a2ffb86b3cf74bc
     linkedCells: []
     tileCells: []

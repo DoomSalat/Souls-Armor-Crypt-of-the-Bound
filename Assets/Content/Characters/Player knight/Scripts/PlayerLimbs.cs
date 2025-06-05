@@ -1,0 +1,145 @@
+using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+public class PlayerLimbs : MonoBehaviour
+{
+	[SerializeField, Required] private InventoryController _inventoryController;
+
+	private Dictionary<LimbType, LimbInfo> _limbs;
+
+	public event System.Action Dead;
+	public event System.Action BodyLosted; // Когда тело потеряно, регенерация невозможна
+	public event System.Action ExtremitiesLosted;
+
+	public Dictionary<LimbType, bool> LimbStates => GetLimbStates();
+
+	private void Awake()
+	{
+		Initialize();
+	}
+
+	private void OnEnable()
+	{
+		_inventoryController.InventorySoul.SoulPlaced += Regenerate;
+	}
+
+	private void OnDisable()
+	{
+		_inventoryController.InventorySoul.SoulPlaced -= Regenerate;
+	}
+
+	private void Initialize()
+	{
+		_limbs = new Dictionary<LimbType, LimbInfo>();
+
+		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
+		{
+			_limbs[limbType] = new LimbInfo(true, SoulType.None);
+		}
+	}
+
+	[ContextMenu(nameof(ActivateInventory))]
+	public void ActivateInventory()
+	{
+		_inventoryController.Activate(LimbStates);
+	}
+
+	[ContextMenu(nameof(DeactivateInventory))]
+	public void DeactivateInventory()
+	{
+		_inventoryController.Deactivate();
+	}
+
+	public void TakeDamage()
+	{
+		var availableExtremities = GetAvailableExtremities();
+
+		if (availableExtremities.Count > 0)
+		{
+			var randomLimb = availableExtremities[UnityEngine.Random.Range(0, availableExtremities.Count)];
+			LoseLimb(randomLimb);
+
+			if (availableExtremities.Count == 1) // Если осталась одна конечность, то все конечности потеряны
+			{
+				ExtremitiesLosted?.Invoke();
+			}
+
+			return;
+		}
+
+		if (_limbs[LimbType.Body].IsPresent)
+		{
+			LoseLimb(LimbType.Body);
+			BodyLosted?.Invoke();
+			Debug.Log("Тело потеряно! Регенерация заблокирована!");
+
+			return;
+		}
+
+		if (_limbs[LimbType.Head].IsPresent)
+		{
+			LoseLimb(LimbType.Head);
+			Dead?.Invoke();
+		}
+
+		Debug.Log("Все конечности уже потеряны! Нанести урон невозможно!");
+	}
+
+	public void ResetToDefault()
+	{
+		foreach (var limb in _limbs.Keys)
+		{
+			_limbs[limb] = new LimbInfo(true, SoulType.None);
+		}
+	}
+
+	private void Regenerate(LimbType limbType, SoulType soulType)
+	{
+		if (_limbs[LimbType.Body].IsPresent == false)
+		{
+			Debug.LogWarning("Невозможно регенерировать конечность: тело потеряно!");
+			return;
+		}
+
+		_limbs[limbType] = new LimbInfo(true, soulType);
+		Debug.Log($"Регенерировали {limbType} с душой {soulType}");
+
+		DeactivateInventory();
+	}
+
+	private void LoseLimb(LimbType limbType)
+	{
+		_limbs[limbType] = new LimbInfo(false, SoulType.None);
+		Debug.Log($"Потеряли {limbType}");
+	}
+
+	private List<LimbType> GetAvailableExtremities()
+	{
+		var extremities = new List<LimbType>();
+
+		var extremityTypes = new[]
+		{
+			LimbType.LeftArm,
+			LimbType.RightArm,
+			LimbType.LeftLeg,
+			LimbType.RightLeg
+		};
+
+		foreach (var limb in extremityTypes)
+		{
+			if (_limbs[limb].IsPresent)
+			{
+				extremities.Add(limb);
+			}
+		}
+
+		return extremities;
+	}
+
+	private Dictionary<LimbType, bool> GetLimbStates()
+	{
+		return _limbs.ToDictionary(pair => pair.Key, pair => pair.Value.IsPresent);
+	}
+}

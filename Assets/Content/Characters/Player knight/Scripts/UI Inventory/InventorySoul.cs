@@ -12,7 +12,7 @@ public class InventorySoul : MonoBehaviour, IDraggable
 	private RectTransform _rectTransform;
 	private RectTransform[] _slotsRectTransform;
 
-	public event Action<SoulType, LimbType> OnSoulPlaced;
+	public event Action<LimbType, SoulType> SoulPlaced;
 
 	private void Awake()
 	{
@@ -100,7 +100,7 @@ public class InventorySoul : MonoBehaviour, IDraggable
 
 	private void PlaceSoul(LimbType limbType)
 	{
-		OnSoulPlaced?.Invoke(_soulType, limbType);
+		SoulPlaced?.Invoke(limbType, _soulType);
 		Debug.Log($"Soul {_soulType} placed on {limbType}");
 	}
 }

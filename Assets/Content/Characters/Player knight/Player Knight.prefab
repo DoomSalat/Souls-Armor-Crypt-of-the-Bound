@@ -1302,6 +1302,7 @@ GameObject:
   - component: {fileID: 5863840458522902431}
   - component: {fileID: 6641814470964126569}
   - component: {fileID: 6648270921230140908}
+  - component: {fileID: 8954013109217506612}
   m_Layer: 0
   m_Name: Player Knight
   m_TagString: Untagged
@@ -1410,6 +1411,7 @@ MonoBehaviour:
   _absorptionScopeController: {fileID: 6919753140184837834}
   _absorptionScope: {fileID: 3934235178878853373}
   _swordController: {fileID: 7149026230936474766}
+  _limbsState: {fileID: 8954013109217506612}
 --- !u!114 &5863840458522902431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,6 +1452,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stopDuration: 0.25
   _moveDuration: 0.5
+--- !u!114 &8954013109217506612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850915946614116720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8626eb226575b364ea854f935e25c97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryController: {fileID: 0}
 --- !u!1 &4917125427920721215
 GameObject:
   m_ObjectHideFlags: 0

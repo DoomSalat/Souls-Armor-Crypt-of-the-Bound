@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IDamagable
 	[SerializeField, Required] private AbsorptionScopeController _absorptionScopeController;
 	[SerializeField, Required] private AbsorptionScope _absorptionScope;
 	[SerializeField, Required] private SwordController _swordController;
+	[SerializeField, Required] private PlayerLimbs _limbsState;
 
 	private InputReader _inputReader;
 	private PlayerStateMachine _stateMachine;
@@ -33,6 +34,9 @@ public class Player : MonoBehaviour, IDamagable
 
 		_absorptionScopeController.Activated += EnterAbsorptionState;
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
+
+		_limbsState.Dead += HandleDeath;
+		_limbsState.BodyLosted += HandleBodyLoss;
 	}
 
 	private void OnDisable()
@@ -42,6 +46,25 @@ public class Player : MonoBehaviour, IDamagable
 
 		_absorptionScopeController.Activated -= EnterAbsorptionState;
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
+
+		_limbsState.Dead -= HandleDeath;
+		_limbsState.BodyLosted -= HandleBodyLoss;
+	}
+
+	public void TakeDamage(DamageData damageData)
+	{
+		Debug.Log($"Take damage: {gameObject.name}");
+		_limbsState.TakeDamage();
+	}
+
+	public void EnterAbsorptionState()
+	{
+		_stateMachine.EnterAbsorptionState();
+	}
+
+	public void EnterMovementState()
+	{
+		_stateMachine.EnterMovementState();
 	}
 
 	private void OnMousePerformed(InputAction.CallbackContext context)
@@ -63,18 +86,13 @@ public class Player : MonoBehaviour, IDamagable
 		_stateMachine.OnMouseCanceled(context);
 	}
 
-	public void TakeDamage(DamageData damageData)
+	private void HandleDeath()
 	{
-		Debug.Log($"Take damage: {gameObject.name}");
+		Debug.Log("Игрок умер!");
 	}
 
-	public void EnterAbsorptionState()
+	private void HandleBodyLoss()
 	{
-		_stateMachine.EnterAbsorptionState();
-	}
 
-	public void EnterMovementState()
-	{
-		_stateMachine.EnterMovementState();
 	}
 }
