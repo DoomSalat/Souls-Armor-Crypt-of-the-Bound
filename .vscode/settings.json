@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Souls Armor Crypt of the Bound.sln"
+	"dotnet.defaultSolution": "Souls Armor Crypt of the Bound.sln"
 }

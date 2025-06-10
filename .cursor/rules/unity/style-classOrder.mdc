@@ -1,0 +1,131 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Code Style - Class Order
+priority: 88
+language: csharp
+
+rules:
+  # Проверка порядка: константы должны быть первыми
+  - trigger:
+      regex: 'class\s+\w+[^{]*\{[^}]*?(?:private|public|protected)\s+(?!const)[^}]*?const\s+'
+    action: suggest
+    message: |
+      ❌ Константы должны быть в начале класса!
+      
+      ✅ Правильный порядок:
+      1. Константы
+      2. [SerializeField] приватные поля
+      3. Приватные поля
+      4. Конструктор
+      5. Автосвойства
+      6. Unity методы (Start, Update...)
+      7. Публичные методы
+      8. Приватные методы
+
+  # Проверка порядка: сериализованные поля после констант
+  - trigger:
+      regex: 'class\s+\w+[^{]*\{[^}]*?(?:public|protected)\s+(?!const)[^}]*?\[SerializeField\]'
+    action: suggest
+    message: |
+      ❌ [SerializeField] поля должны идти после констант, но перед другими полями!
+      
+      ✅ Используй порядок:
+      const → [SerializeField] private → private → constructor → properties
+
+  # Проверка порядка: публичные поля не рекомендуются
+  - trigger:
+      regex: 'public\s+(?!class|interface|enum|struct|const)\w+\s+\w+\s*[=;]'
+    action: suggest
+    message: |
+      ⚠️ Избегай публичных полей! Используй автосвойства или [SerializeField] приватные поля.
+      
+      ❌ Плохо: public int health;
+      ✅ Хорошо: public int Health { get; set; }
+      ✅ Хорошо: [SerializeField] private int _health;
+
+  # Проверка пустых строк между секциями
+  - trigger:
+      regex: '(\[SerializeField\][^}]*?\n\s*private\s+(?!\[SerializeField\]))|(\;\n\s*public\s+(?!class))|(\}\n\s*public\s+\w+\s+\w+\s*\()'
+    action: suggest
+    message: |
+      ❌ Добавь пустую строку между секциями класса!
+      
+      Каждая секция должна отделяться пустой строкой:
+      - Между константами и полями
+      - Между полями и конструктором
+      - Между приватными и публичными методами
+
+  # Проверка порядка Unity методов
+  - trigger:
+      regex: 'public\s+\w+\s+\w+\s*\([^}]*?\n[^}]*?(?:private\s+)?(?:void\s+)?(Awake|Start|Update|FixedUpdate|OnEnable|OnDisable)\s*\('
+    action: suggest
+    message: |
+      ❌ Unity методы должны идти перед пользовательскими методами!
+      
+      ✅ Порядок Unity методов:
+      1. Awake()
+      2. OnEnable() / OnDisable()
+      3. Start()
+      4. Update() / FixedUpdate()
+      5. Остальные Unity callbacks
+
+  # Проверка стиля приватных полей
+  - trigger:
+      regex: 'private\s+\w+\s+[a-z][a-zA-Z0-9]*(?![_A-Z])\s*[=;]'
+    action: suggest
+    message: |
+      ❌ Приватные поля должны начинаться с подчёркивания!
+      
+      ❌ Плохо: private int health;
+      ✅ Хорошо: private int _health;
+      ✅ Хорошо: [SerializeField] private int _health;
+
+  # Проверка группировки методов
+  - trigger:
+      regex: 'private\s+\w+\s+\w+\s*\([^}]*?\n[^}]*?public\s+\w+\s+\w+\s*\([^}]*?\n[^}]*?private\s+\w+\s+\w+\s*\('
+    action: suggest
+    message: |
+      ❌ Группируй методы по видимости!
+      
+      ✅ Сначала все публичные методы, потом все приватные
+      ❌ Не смешивай: public → private → public → private
+      ✅ Делай: public → public → private → private
+
+  # Проверка магических чисел - должны быть заменены на константы
+  - trigger:
+      regex: '(?:=|==|!=|<=|>=|<|>|\+|\-|\*|\/|\()\s*([1-9]\d*(?:\.\d+)?f?)\s*(?![;,)\]\}])'
+    action: suggest
+    message: |
+      ❌ Замени магические числа на именованные константы!
+      
+      ❌ Плохо: 
+      if (health < 100)
+      
+      ✅ Хорошо: 
+      private const int MaxHealth = 100;
+      if (health < MaxHealth)
+      
+      ❌ Плохо: 
+      transform.Translate(0, 5.5f, 0);
+      
+      ✅ Хорошо: 
+      private const float JumpHeight = 5.5f;
+      transform.Translate(0, JumpHeight, 0);
+      
+      Исключения: 0, null, -1 (стандартные значения)
+
+  # Проверка отсутствия констант при наличии повторяющихся значений
+  - trigger:
+      regex: '(\b(?:[1-9]\d*(?:\.\d+)?)\b).*\n.*\1'
+    action: suggest
+    message: |
+      ❌ Повторяющиеся числа должны быть вынесены в константы!
+      
+      Если одно и то же число используется несколько раз - создай константу:
+      
+      ✅ private const int DamageAmount = 25;
+
+      ✅ private const float SpeedMultiplier = 1.5f;

@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Code Style - Newlines
+priority: 90
+language: csharp
+
+rules:
+  # Запрет действий на той же строке без скобок
+  - trigger:
+      regex: '(if|for|while|else)\s*\([^)]*\)\s*[a-zA-Z_]'
+    action: reject
+    message: "❌ Действие должно быть на новой строке. Используй:\nif (condition)\n    action();"
+
+  # Запрет скобок на той же строке
+  - trigger:
+      regex: '(if|for|while|else|try|catch|finally)\s*(\([^)]*\))?\s*\{'
+    action: suggest
+    replacement: |
+      $1$2
+      {
+    message: "❌ Скобки должны быть на новой строке"
+
+  # Запрет множественных действий в case без скобок
+  - trigger:
+      regex: 'case\s+[^:]+:\s*\n\s*[^b\s][^\n]*\n\s*[^b\s][^\n]*\n'
+    action: suggest
+    replacement: |
+      // case должен содержать только 1 действие + break
+      // Выноси сложную логику в отдельный метод
+    message: "❌ case может содержать только 1 действие. Сложную логику выноси в метод"
+
+  # Принуждение к одному из двух форматов
+  - trigger:
+      regex: '(if|for|while)\s*\([^)]*\)\s*\{[^}]*\}(?!\s*else)'
+    action: suggest
+
+    message: "✅ Используй:\n1) if (condition)\n    action();\n2) if (condition)\n{\n    action1();\n    action2();\n}"

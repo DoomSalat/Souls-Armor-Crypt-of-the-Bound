@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Code Style - Class Naming
+priority: 85
+language: csharp
+
+rules:
+  # Запрет дублирования имени класса в методах
+  - trigger:
+      regex: 'class\s+(\w+).*\n.*public\s+\w+\s+\1\w*\s*\('
+    action: suggest
+    message: |
+      ❌ Метод не должен повторять имя класса!
+      
+      ❌ Плохо: class Player { public void PlayerMove() }
+      ✅ Хорошо: class Player { public void Move() }
+      
+      Имя функции должно отражать суть действия, а не класс.
+
+  # Запрет дублирования имени класса в полях
+  - trigger:
+      regex: 'class\s+(\w+).*\n.*(?:public|private|protected)\s+\w+\s+\1\w*[^(]'
+    action: suggest
+    message: |
+      ❌ Поле не должно повторять имя класса!
+      
+      ❌ Плохо: class Player { private int playerHealth; }
+      ✅ Хорошо: class Player { private int _health; }
+
+  # Проверка осмысленности имён методов
+  - trigger:
+      regex: 'public\s+\w+\s+(Do\w*|Action\w*|Handle\w*|Process\w*)\s*\('
+    action: suggest
+    message: |
+      ⚠️ Имя функции должно отражать конкретное действие!
+      
+      ❌ Избегай: DoSomething(), Action(), Handle(), Process()
+      ✅ Используй: Move(), Attack(), Heal(), Calculate()
+
+  # Запрет односимвольных имён переменных (кроме циклов)
+  - trigger:
+      regex: '(?<!for\s*\(\s*\w+\s+)[a-zA-Z]\s+[a-z]\s*[=;]'
+    action: suggest
+    message: |
+      ❌ Избегай односимвольных имён переменных!
+      
+      ❌ Плохо: int x = 5;
+      ✅ Хорошо: int damage = 5;
+      
+      Исключение: переменные циклов (i, j, k)
+
+  # Запрет методов с "And" в названии
+  - trigger:
+      regex: 'public\s+\w+\s+\w*And\w*\s*\('
+    action: reject
+    message: |
+      ❌ Метод с "And" в названии нарушает принцип единственной ответственности!
+      
+      ❌ Плохо: MoveAndAttack()
+      ✅ Хорошо: Move(), Attack() - два отдельных метода
+      
+
+
+      Разделяй сложные операции на простые методы.
