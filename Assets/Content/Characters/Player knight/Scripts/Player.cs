@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour, IDamagable
 {
 	[SerializeField, Required] private InputMove _inputMove;
-	[SerializeField, Required] private StepsMove _stepsMove;
 	[SerializeField, Required] private AbsorptionScopeController _absorptionScopeController;
 	[SerializeField, Required] private AbsorptionScope _absorptionScope;
 	[SerializeField, Required] private SwordController _swordController;
 	[SerializeField, Required] private PlayerLimbs _limbsState;
+	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
 
 	private InputReader _inputReader;
 	private PlayerStateMachine _stateMachine;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour, IDamagable
 	{
 		_inputReader = _inputMove.InputReader;
 		_stateMachine = GetComponent<PlayerStateMachine>();
-		_stateMachine.InitializeStates(_stepsMove, _swordController, _absorptionScopeController, _absorptionScope, _inputReader);
+		_stateMachine.InitializeStates(_inputMove, _swordController, _absorptionScopeController, _absorptionScope, _inputReader, _playerKnightAnimator);
 	}
 
 	private void Start()

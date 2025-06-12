@@ -1,0 +1,14 @@
+using UnityEngine;
+
+public class PlayerKnightAnimatorData : MonoBehaviour
+{
+	public static class Params
+	{
+		public static readonly int isMove = Animator.StringToHash(nameof(isMove));
+		public static readonly int direction = Animator.StringToHash(nameof(direction));
+
+		public static readonly int isCapture = Animator.StringToHash(nameof(isCapture));
+		public static readonly int abdorptionActive = Animator.StringToHash(nameof(abdorptionActive));
+		public static readonly int abdorptionDeactive = Animator.StringToHash(nameof(abdorptionDeactive));
+	}
+}

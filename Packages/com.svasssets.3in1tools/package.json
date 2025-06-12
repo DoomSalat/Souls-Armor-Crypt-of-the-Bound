@@ -1,0 +1,16 @@
+{
+	"name": "com.svasssets.3in1tools",
+	"displayName": "3 in 1 Animation Tools",
+	"version": "1.0.0",
+	"unity": "2020.3",
+	"description": "Animation tools for Unity",
+	"keywords": [
+		"animation",
+		"tools",
+		"motion",
+		"tracer"
+	],
+	"author": {
+		"name": "SV Assets"
+	}
+}

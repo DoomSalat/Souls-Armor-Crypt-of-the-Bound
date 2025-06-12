@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 [RequireComponent(typeof(ParticleSystem))]
 public class ParticleAttractor : MonoBehaviour
 {
-	private const float MinVelocityThreshold = 0.2f;
 	private const float SlowdownLerpFactor = 0.4f;
 	private const float FinalStopProgress = 0.95f;
 	private const float NewParticleLifetimeRatio = 0.98f;
@@ -14,6 +13,39 @@ public class ParticleAttractor : MonoBehaviour
 	private const float FingerprintPositionMultiplier = 1000f;
 	private const float FingerprintLifetimeMultiplier = 1000000f;
 	private const uint FingerprintHashMultiplier = 31;
+
+	// Timing Constants
+	private const float DefaultUpdateInterval = 0.016f;
+	private const float SlowdownCompletionThreshold = 0.7f;
+	private const float TrailFadeMinTime = 0.02f;
+	private const float ForcedTimeoutMultiplier = 0.5f;
+
+	// Velocity Constants
+	private const float ParticleStoppedThreshold = 0.01f;
+	private const float SlowdownVelocityThreshold = 0.15f;
+
+	// Progress Constants
+	private const float TrailFadeProgressThreshold = 0.6f;
+
+	private const float HighSpeedThreshold = 2.0f;
+
+	// Mathematical Constants
+	private const float Half = 0.5f;
+	private const float RandomSeedMultiplier = 1000f;
+	private const int QuadraticCoefficientMultiplier = 2;
+	private const int QuadraticDiscriminantMultiplier = 4;
+	private const float IntersectionParameterMin = 0f;
+	private const float IntersectionParameterMax = 1f;
+
+	// Noise Constants
+	private const float NoiseCenter = 0.5f;
+
+	// Gizmos Constants
+	private const float GizmosCubeSize = 0.2f;
+	private const float GizmosRayLength = 2f;
+
+	// Common Values
+	private const float InvalidTime = -1f;
 
 	[Title("Attraction Settings")]
 	[SerializeField, Required] private Transform _target;
@@ -27,7 +59,7 @@ public class ParticleAttractor : MonoBehaviour
 
 	[Title("Target Reach Behavior")]
 	[SerializeField] private bool _stopWhenTargetReached = true;
-	[SerializeField, ShowIf(nameof(_stopWhenTargetReached)), MinValue(0.01f)] private float _targetReachDistance = 0.5f;
+	[SerializeField, ShowIf(nameof(_stopWhenTargetReached)), MinValue(0.01f)] private float _targetReachDistance = Half;
 	[SerializeField, ShowIf(nameof(_stopWhenTargetReached))] private bool _attractToCenter = true;
 	[SerializeField] private bool _destroyOnTargetReach = false;
 	[SerializeField, ShowIf("@_stopWhenTargetReached || _destroyOnTargetReach"), MinValue(0.01f)] private float _fadeOutTime = 0.2f;
@@ -37,64 +69,45 @@ public class ParticleAttractor : MonoBehaviour
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 5f)] private float _noiseScale = 1f;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 3f)] private float _noiseIntensity = 1f;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 2f)] private float _noiseSpeed = 1f;
-	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0f, 1f)] private float _trajectorySmoothing = 0.5f;
+	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0f, 1f)] private float _trajectorySmoothing = Half;
 
 	[Title("Optimization")]
-	[SerializeField, MinValue(1)] private int _updateFrequency = 1;
+	[SerializeField, MinValue(0.001f)] private float _updateInterval = DefaultUpdateInterval;
 
 	private ParticleSystem _particleSystem;
 	private ParticleSystem.Particle[] _particles;
-	private int _frameCounter = 0;
+	private float _lastUpdateTime = 0f;
 
-	private Vector3[] _particleNoiseOffsets;
-	private float[] _particleNoiseSeeds;
-	private bool[] _particlesInDestructionState;
-	private uint[] _particleFingerprints;
-	private bool[] _particlesInSlowdownState;
-	private float[] _particleSlowdownStartTime;
-	private Vector3[] _particleInitialVelocity;
-	private bool[] _particlesFullyStopped;
+	private ParticleData[] _particleData;
 
-	public Transform Target
+	[System.Flags]
+	private enum ParticleState
 	{
-		get => _target;
-		set => _target = value;
+		None = 0,
+		MarkedForRecycling = 1 << 0,
+		InSlowdown = 1 << 1,
+		WaitingForTrailFade = 1 << 2
 	}
 
-	public float AttractionStrength
+	private struct ParticleData
 	{
-		get => _attractionStrength;
-		set => _attractionStrength = Mathf.Max(0f, value);
-	}
+		public ParticleState state;
+		public uint fingerprint;
+		public float slowdownStartTime;
+		public Vector3 initialVelocity;
+		public float trailFadeStartTime;
+		public Vector3 noiseOffset;
+		public float noiseSeed;
+		public Vector3 previousPosition;
 
-	public bool DestroyOnTargetReach
-	{
-		get => _destroyOnTargetReach;
-		set => _destroyOnTargetReach = value;
-	}
-
-	public bool UseTrajectoryDistortion
-	{
-		get => _useTrajectoryDistortion;
-		set => _useTrajectoryDistortion = value;
-	}
-
-	public float NoiseIntensity
-	{
-		get => _noiseIntensity;
-		set => _noiseIntensity = Mathf.Clamp(value, 0.1f, 3f);
-	}
-
-	public bool AttractToCenter
-	{
-		get => _attractToCenter;
-		set => _attractToCenter = value;
+		public bool HasState(ParticleState flag) => (state & flag) == flag;
+		public void AddState(ParticleState flag) => state |= flag;
+		public void RemoveState(ParticleState flag) => state &= ~flag;
 	}
 
 	private void Awake()
 	{
 		_particleSystem = GetComponent<ParticleSystem>();
-		ConfigureParticleSystem();
 	}
 
 	private void OnValidate()
@@ -111,15 +124,6 @@ public class ParticleAttractor : MonoBehaviour
 		ApplyAttraction();
 	}
 
-	private void ConfigureParticleSystem()
-	{
-		if (_particleSystem != null)
-		{
-			var main = _particleSystem.main;
-			main.simulationSpace = ParticleSystemSimulationSpace.World;
-		}
-	}
-
 	private bool ShouldUpdate()
 	{
 		if (_particleSystem == null || _target == null)
@@ -128,12 +132,12 @@ public class ParticleAttractor : MonoBehaviour
 		if (!Application.isPlaying && !_particleSystem.isPlaying)
 			return false;
 
-		_frameCounter++;
-		if (_frameCounter < _updateFrequency)
+		float currentTime = Time.time;
+		if (currentTime - _lastUpdateTime < _updateInterval)
 			return false;
 
-		_frameCounter = 0;
-		return _particleSystem.particleCount > 0;
+		_lastUpdateTime = currentTime;
+		return true;
 	}
 
 	private void ApplyAttraction()
@@ -158,43 +162,45 @@ public class ParticleAttractor : MonoBehaviour
 		if (_particles == null || _particles.Length < particleCount)
 		{
 			_particles = new ParticleSystem.Particle[particleCount];
-			_particleNoiseOffsets = new Vector3[particleCount];
-			_particleNoiseSeeds = new float[particleCount];
-			_particlesInDestructionState = new bool[particleCount];
-			_particleFingerprints = new uint[particleCount];
-			_particlesInSlowdownState = new bool[particleCount];
-			_particleSlowdownStartTime = new float[particleCount];
-			_particleInitialVelocity = new Vector3[particleCount];
-			_particlesFullyStopped = new bool[particleCount];
+			_particleData = new ParticleData[particleCount];
 
-			InitializeParticleArrays(particleCount);
+			InitializeParticleData(particleCount);
 		}
 	}
 
-	private void InitializeParticleArrays(int particleCount)
+	private void InitializeParticleData(int particleCount)
 	{
 		for (int i = 0; i < particleCount; i++)
 		{
-			_particleNoiseSeeds[i] = Random.Range(0f, 1000f);
-			_particleNoiseOffsets[i] = Random.insideUnitSphere * _noiseScale;
-			_particlesInDestructionState[i] = false;
-			_particleFingerprints[i] = 0;
-			_particlesInSlowdownState[i] = false;
-			_particleSlowdownStartTime[i] = -1f;
-			_particleInitialVelocity[i] = Vector3.zero;
-			_particlesFullyStopped[i] = false;
+			_particleData[i] = new ParticleData
+			{
+				state = ParticleState.None,
+				fingerprint = 0,
+				slowdownStartTime = InvalidTime,
+				initialVelocity = Vector3.zero,
+				trailFadeStartTime = InvalidTime,
+				noiseOffset = Random.insideUnitSphere * _noiseScale,
+				noiseSeed = Random.Range(0, RandomSeedMultiplier),
+				previousPosition = Vector3.zero
+			};
 		}
 	}
 
 	private void ProcessParticle(ref ParticleSystem.Particle particle, Vector3 targetPosition, int particleIndex)
 	{
-		Vector3 directionToTarget = targetPosition - particle.position;
+		Vector3 particlePosition = GetParticleWorldPosition(particle);
+		Vector3 directionToTarget = targetPosition - particlePosition;
 		float distanceToTarget = directionToTarget.magnitude;
-		bool isInTargetZone = distanceToTarget <= _targetReachDistance;
+		bool isInTargetZone = IsParticleInTargetZone(ref particle, targetPosition, distanceToTarget, particleIndex);
 
 		HandleTargetZoneLogic(ref particle, isInTargetZone, particleIndex);
 		HandleSlowdownLogic(ref particle, targetPosition, particleIndex);
-		HandleDestructionLogic(ref particle, particleIndex);
+		HandleTrailFadeLogic(ref particle, particleIndex);
+
+		if (particleIndex < _particleData.Length)
+		{
+			_particleData[particleIndex].previousPosition = particlePosition;
+		}
 
 		if (ShouldSkipAttraction(particleIndex))
 			return;
@@ -205,34 +211,100 @@ public class ParticleAttractor : MonoBehaviour
 		ApplyAttractionForce(ref particle, directionToTarget, distanceToTarget, particleIndex);
 	}
 
-	private void HandleTargetZoneLogic(ref ParticleSystem.Particle particle, bool isInTargetZone, int particleIndex)
+	private Vector3 GetParticleWorldPosition(ParticleSystem.Particle particle)
 	{
-		if (!isInTargetZone || particleIndex >= _particlesInDestructionState.Length)
-			return;
-
-		if (_destroyOnTargetReach)
+		var main = _particleSystem.main;
+		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
 		{
-			_particlesInDestructionState[particleIndex] = true;
+			return transform.TransformPoint(particle.position);
+		}
+		return particle.position;
+	}
+
+	private bool IsParticleInTargetZone(ref ParticleSystem.Particle particle, Vector3 targetPosition, float distanceToTarget, int particleIndex)
+	{
+		if (distanceToTarget <= _targetReachDistance)
+			return true;
+
+		if (particleIndex < _particleData.Length && particle.velocity.magnitude > HighSpeedThreshold)
+		{
+			ref var data = ref _particleData[particleIndex];
+
+			if (data.previousPosition != Vector3.zero)
+			{
+				if (LineIntersectsSphere(data.previousPosition, particle.position, targetPosition, _targetReachDistance))
+				{
+					return true;
+				}
+			}
 		}
 
-		if (_stopWhenTargetReached && particleIndex < _particlesInSlowdownState.Length)
+		return false;
+	}
+
+	private bool LineIntersectsSphere(Vector3 lineStart, Vector3 lineEnd, Vector3 sphereCenter, float sphereRadius)
+	{
+		Vector3 rayDirection = lineEnd - lineStart;
+		Vector3 sphereToLineStart = lineStart - sphereCenter;
+
+		float quadraticA = Vector3.Dot(rayDirection, rayDirection);
+		float quadraticB = QuadraticCoefficientMultiplier * Vector3.Dot(sphereToLineStart, rayDirection);
+		float quadraticC = Vector3.Dot(sphereToLineStart, sphereToLineStart) - sphereRadius * sphereRadius;
+
+		float discriminant = quadraticB * quadraticB - QuadraticDiscriminantMultiplier * quadraticA * quadraticC;
+
+		if (discriminant < 0)
+			return false;
+
+		discriminant = Mathf.Sqrt(discriminant);
+		float intersectionParam1 = (-quadraticB - discriminant) / (QuadraticCoefficientMultiplier * quadraticA);
+		float intersectionParam2 = (-quadraticB + discriminant) / (QuadraticCoefficientMultiplier * quadraticA);
+
+		return (intersectionParam1 >= IntersectionParameterMin && intersectionParam1 <= IntersectionParameterMax) ||
+			   (intersectionParam2 >= IntersectionParameterMin && intersectionParam2 <= IntersectionParameterMax) ||
+			   (intersectionParam1 < IntersectionParameterMin && intersectionParam2 > IntersectionParameterMax);
+	}
+
+	private void HandleTargetZoneLogic(ref ParticleSystem.Particle particle, bool isInTargetZone, int particleIndex)
+	{
+		if (!isInTargetZone || particleIndex >= _particleData.Length)
+			return;
+
+		ref var data = ref _particleData[particleIndex];
+		bool alreadyMarkedForRecycling = data.HasState(ParticleState.MarkedForRecycling);
+
+		if (_destroyOnTargetReach && !alreadyMarkedForRecycling)
+		{
+			data.AddState(ParticleState.MarkedForRecycling);
+			particle.remainingLifetime = Mathf.Min(particle.remainingLifetime, _fadeOutTime);
+		}
+
+		if (_stopWhenTargetReached && !alreadyMarkedForRecycling)
 		{
 			StartSlowdownIfNeeded(ref particle, particleIndex);
+			data.AddState(ParticleState.MarkedForRecycling);
 		}
 	}
 
 	private void StartSlowdownIfNeeded(ref ParticleSystem.Particle particle, int particleIndex)
 	{
-		if (_particlesInSlowdownState[particleIndex])
+		ref var data = ref _particleData[particleIndex];
+
+		if (data.HasState(ParticleState.InSlowdown))
 			return;
 
-		particle.remainingLifetime = _fadeOutTime;
-		_particlesInSlowdownState[particleIndex] = true;
+		particle.remainingLifetime = Mathf.Min(particle.remainingLifetime, _fadeOutTime);
+		data.AddState(ParticleState.InSlowdown);
 	}
 
 	private void HandleSlowdownLogic(ref ParticleSystem.Particle particle, Vector3 targetPosition, int particleIndex)
 	{
-		if (particleIndex >= _particlesInSlowdownState.Length || !_particlesInSlowdownState[particleIndex])
+		if (particleIndex >= _particleData.Length)
+			return;
+
+		ref var data = ref _particleData[particleIndex];
+
+		if (!data.HasState(ParticleState.InSlowdown))
 			return;
 
 		ApplySlowdownToParticle(ref particle, targetPosition, particleIndex);
@@ -241,47 +313,33 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void CheckSlowdownCompletion(ref ParticleSystem.Particle particle, int particleIndex)
 	{
-		if (particleIndex >= _particleSlowdownStartTime.Length || _particleSlowdownStartTime[particleIndex] < 0f)
+		ref var data = ref _particleData[particleIndex];
+
+		if (data.slowdownStartTime < 0)
 			return;
 
-		float elapsedTime = Time.fixedTime - _particleSlowdownStartTime[particleIndex];
-		if (elapsedTime >= _fadeOutTime)
+		float elapsedTime = Time.fixedTime - data.slowdownStartTime;
+		bool timeElapsed = elapsedTime >= (_fadeOutTime * SlowdownCompletionThreshold);
+		bool particleSlowed = particle.velocity.magnitude < SlowdownVelocityThreshold;
+
+		if ((timeElapsed && particleSlowed) || elapsedTime >= _fadeOutTime)
 		{
-			RemoveParticle(ref particle, particleIndex);
-		}
-	}
-
-	private void RemoveParticle(ref ParticleSystem.Particle particle, int particleIndex)
-	{
-		particle.remainingLifetime = 0f;
-		particle.velocity = Vector3.zero;
-		_particlesFullyStopped[particleIndex] = true;
-		_particleSystem.SetParticles(_particles, _particleSystem.particleCount);
-	}
-
-	private void HandleDestructionLogic(ref ParticleSystem.Particle particle, int particleIndex)
-	{
-		if (particleIndex >= _particlesInDestructionState.Length || !_particlesInDestructionState[particleIndex])
-			return;
-
-		if (_destroyOnTargetReach)
-		{
-			particle.remainingLifetime = Mathf.Min(particle.remainingLifetime, _fadeOutTime);
+			if (!data.HasState(ParticleState.WaitingForTrailFade))
+			{
+				StartTrailFadeWaiting(particleIndex);
+			}
 		}
 	}
 
 	private bool ShouldSkipAttraction(int particleIndex)
 	{
-		bool inSlowdown = particleIndex < _particlesInSlowdownState.Length && _particlesInSlowdownState[particleIndex];
-		bool inDestruction = particleIndex < _particlesInDestructionState.Length && _particlesInDestructionState[particleIndex];
-		bool fullyStopped = particleIndex < _particlesFullyStopped.Length && _particlesFullyStopped[particleIndex];
+		if (particleIndex >= _particleData.Length)
+			return false;
 
-		if (fullyStopped && particleIndex < _particlesFullyStopped.Length)
-		{
-			_particles[particleIndex].velocity = Vector3.zero;
-		}
-
-		return inSlowdown || inDestruction || fullyStopped;
+		var data = _particleData[particleIndex];
+		return data.HasState(ParticleState.MarkedForRecycling) ||
+			   data.HasState(ParticleState.InSlowdown) ||
+			   data.HasState(ParticleState.WaitingForTrailFade);
 	}
 
 	private void ApplyAttractionForce(ref ParticleSystem.Particle particle, Vector3 directionToTarget, float distanceToTarget, int particleIndex)
@@ -290,13 +348,19 @@ public class ParticleAttractor : MonoBehaviour
 		Vector3 finalDirection = ApplyTrajectoryDistortion(baseDirection, particle, particleIndex);
 		float attractionForce = CalculateAttractionForce(particle, distanceToTarget);
 		Vector3 acceleration = finalDirection * attractionForce * Time.deltaTime;
-		particle.velocity = Vector3.Lerp(particle.velocity, particle.velocity + acceleration, 1f - _damping);
+
+		var main = _particleSystem.main;
+		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
+		{
+			acceleration = transform.InverseTransformDirection(acceleration);
+		}
+
+		particle.velocity = Vector3.Lerp(particle.velocity, particle.velocity + acceleration, 1 - _damping);
 	}
 
 	private void ApplySlowdownToParticle(ref ParticleSystem.Particle particle, Vector3 targetPosition, int particleIndex)
 	{
-		if (particleIndex >= _particleSlowdownStartTime.Length || particleIndex >= _particleInitialVelocity.Length)
-			return;
+		ref var data = ref _particleData[particleIndex];
 
 		InitializeSlowdownIfNeeded(particle, particleIndex);
 
@@ -317,24 +381,29 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void InitializeSlowdownIfNeeded(ParticleSystem.Particle particle, int particleIndex)
 	{
-		if (_particleSlowdownStartTime[particleIndex] > 0f)
+		ref var data = ref _particleData[particleIndex];
+
+		if (data.slowdownStartTime > 0)
 			return;
 
-		_particleSlowdownStartTime[particleIndex] = Time.fixedTime;
-		_particleInitialVelocity[particleIndex] = particle.velocity;
+		data.slowdownStartTime = Time.fixedTime;
+		data.initialVelocity = particle.velocity;
 	}
 
 	private float CalculateSlowdownProgress(int particleIndex)
 	{
-		float elapsedTime = Time.fixedTime - _particleSlowdownStartTime[particleIndex];
+		var data = _particleData[particleIndex];
+		float elapsedTime = Time.fixedTime - data.slowdownStartTime;
 		return Mathf.Clamp01(elapsedTime / _fadeOutTime);
 	}
 
 	private void ApplyProgressiveSlowdown(ref ParticleSystem.Particle particle, Vector3 directionToTarget, float slowdownProgress, int particleIndex)
 	{
+		ref var data = ref _particleData[particleIndex];
+
 		if (_attractToCenter)
 		{
-			float targetSpeed = _particleInitialVelocity[particleIndex].magnitude * (1f - slowdownProgress);
+			float targetSpeed = data.initialVelocity.magnitude * (1 - slowdownProgress);
 			Vector3 targetVelocity = directionToTarget * targetSpeed;
 			particle.velocity = Vector3.Lerp(particle.velocity, targetVelocity, SlowdownLerpFactor);
 		}
@@ -347,17 +416,25 @@ public class ParticleAttractor : MonoBehaviour
 		{
 			particle.velocity = Vector3.zero;
 		}
+
+		if (particle.velocity.magnitude < SlowdownVelocityThreshold && slowdownProgress > TrailFadeProgressThreshold)
+		{
+			if (!data.HasState(ParticleState.WaitingForTrailFade))
+			{
+				StartTrailFadeWaiting(particleIndex);
+			}
+		}
 	}
 
 	private float CalculateAttractionForce(ParticleSystem.Particle particle, float distance)
 	{
-		float normalizedLifetime = 1f - (particle.remainingLifetime / particle.startLifetime);
+		float normalizedLifetime = 1 - (particle.remainingLifetime / particle.startLifetime);
 		float lifetimeMultiplier = _attractionOverLifetime.Evaluate(normalizedLifetime);
 		float baseForce = _attractionStrength * lifetimeMultiplier;
 
 		if (_useDistanceBasedAttraction)
 		{
-			float distanceMultiplier = 1f / (distance * distance + 1f);
+			float distanceMultiplier = 1 / (distance * distance + 1);
 			return baseForce * distanceMultiplier;
 		}
 
@@ -366,17 +443,18 @@ public class ParticleAttractor : MonoBehaviour
 
 	private Vector3 ApplyTrajectoryDistortion(Vector3 baseDirection, ParticleSystem.Particle particle, int particleIndex)
 	{
-		if (!_useTrajectoryDistortion || particleIndex >= _particleNoiseSeeds.Length)
+		if (!_useTrajectoryDistortion || particleIndex >= _particleData.Length)
 			return baseDirection;
 
-		float particleTime = Time.time * _noiseSpeed + _particleNoiseSeeds[particleIndex];
+		var data = _particleData[particleIndex];
+		float particleTime = Time.time * _noiseSpeed + data.noiseSeed;
 
-		float noiseX = Mathf.PerlinNoise(particleTime, 0f) - 0.5f;
-		float noiseY = Mathf.PerlinNoise(0f, particleTime) - 0.5f;
-		float noiseZ = Mathf.PerlinNoise(particleTime, particleTime) - 0.5f;
+		float noiseX = Mathf.PerlinNoise(particleTime, 0) - NoiseCenter;
+		float noiseY = Mathf.PerlinNoise(0, particleTime) - NoiseCenter;
+		float noiseZ = Mathf.PerlinNoise(particleTime, particleTime) - NoiseCenter;
 
 		Vector3 noiseDirection = new Vector3(noiseX, noiseY, noiseZ) * _noiseIntensity;
-		Vector3 personalOffset = _particleNoiseOffsets[particleIndex] * NoiseOffsetMultiplier;
+		Vector3 personalOffset = data.noiseOffset * NoiseOffsetMultiplier;
 		Vector3 distortedDirection = baseDirection + noiseDirection + personalOffset;
 		Vector3 finalDirection = Vector3.Lerp(baseDirection, distortedDirection.normalized, _trajectorySmoothing);
 
@@ -385,7 +463,7 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void CheckForDeadParticlesAndResetStates()
 	{
-		if (_particlesInDestructionState == null || _particles == null || _particleFingerprints == null)
+		if (_particleData == null || _particles == null)
 			return;
 
 		int currentParticleCount = _particleSystem.particleCount;
@@ -394,9 +472,9 @@ public class ParticleAttractor : MonoBehaviour
 		bool needsUpdate = false;
 		for (int i = 0; i < currentParticleCount && i < _particles.Length; i++)
 		{
-			if (ProcessParticleFingerprint(i, out bool wasInDestruction))
+			if (ProcessParticleFingerprint(i, out bool wasMarkedForRecycling))
 			{
-				if (wasInDestruction)
+				if (wasMarkedForRecycling && !_particleData[i].HasState(ParticleState.MarkedForRecycling))
 				{
 					_particles[i].remainingLifetime = _particles[i].startLifetime;
 					needsUpdate = true;
@@ -412,15 +490,9 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void ResizeArraysIfNeeded(int currentParticleCount)
 	{
-		if (_particlesInDestructionState.Length != currentParticleCount)
+		if (_particleData.Length != currentParticleCount)
 		{
-			_particlesInDestructionState = new bool[currentParticleCount];
-			_particleFingerprints = new uint[currentParticleCount];
-			_particlesInSlowdownState = new bool[currentParticleCount];
-			_particleSlowdownStartTime = new float[currentParticleCount];
-			_particleInitialVelocity = new Vector3[currentParticleCount];
-			_particlesFullyStopped = new bool[currentParticleCount];
-
+			_particleData = new ParticleData[currentParticleCount];
 			InitializeResizedArrays(currentParticleCount);
 		}
 	}
@@ -429,23 +501,30 @@ public class ParticleAttractor : MonoBehaviour
 	{
 		for (int j = 0; j < currentParticleCount; j++)
 		{
-			_particlesInSlowdownState[j] = false;
-			_particleSlowdownStartTime[j] = -1f;
-			_particleInitialVelocity[j] = Vector3.zero;
-			_particlesFullyStopped[j] = false;
+			_particleData[j] = new ParticleData
+			{
+				state = ParticleState.None,
+				fingerprint = 0,
+				slowdownStartTime = InvalidTime,
+				initialVelocity = Vector3.zero,
+				trailFadeStartTime = InvalidTime,
+				noiseOffset = Random.insideUnitSphere * _noiseScale,
+				noiseSeed = Random.Range(0, RandomSeedMultiplier),
+				previousPosition = Vector3.zero
+			};
 		}
 	}
 
-	private bool ProcessParticleFingerprint(int i, out bool wasInDestruction)
+	private bool ProcessParticleFingerprint(int i, out bool wasMarkedForRecycling)
 	{
 		uint currentFingerprint = CreateParticleFingerprint(_particles[i]);
-		wasInDestruction = _particlesInDestructionState[i];
+		wasMarkedForRecycling = _particleData[i].HasState(ParticleState.MarkedForRecycling);
 
-		if (_particleFingerprints[i] == currentFingerprint)
+		if (_particleData[i].fingerprint == currentFingerprint)
 			return false;
 
-		_particleFingerprints[i] = currentFingerprint;
-		_particlesInDestructionState[i] = false;
+		_particleData[i].fingerprint = currentFingerprint;
+		_particleData[i].state = ParticleState.None;
 
 		float lifetimeRatio = _particles[i].remainingLifetime / _particles[i].startLifetime;
 		bool isActuallyNewParticle = lifetimeRatio > NewParticleLifetimeRatio;
@@ -460,19 +539,17 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void ResetParticleStates(int i)
 	{
-		if (i < _particlesInSlowdownState.Length)
+		_particleData[i] = new ParticleData
 		{
-			_particlesInSlowdownState[i] = false;
-		}
-		if (i < _particleSlowdownStartTime.Length)
-		{
-			_particleSlowdownStartTime[i] = -1f;
-			_particleInitialVelocity[i] = Vector3.zero;
-		}
-		if (i < _particlesFullyStopped.Length)
-		{
-			_particlesFullyStopped[i] = false;
-		}
+			state = ParticleState.None,
+			fingerprint = _particleData[i].fingerprint,
+			slowdownStartTime = InvalidTime,
+			initialVelocity = Vector3.zero,
+			trailFadeStartTime = InvalidTime,
+			noiseOffset = _particleData[i].noiseOffset,
+			noiseSeed = _particleData[i].noiseSeed,
+			previousPosition = Vector3.zero
+		};
 	}
 
 	private uint CreateParticleFingerprint(ParticleSystem.Particle particle)
@@ -483,6 +560,68 @@ public class ParticleAttractor : MonoBehaviour
 		hash = hash * FingerprintHashMultiplier + (uint)(particle.position.y * FingerprintPositionMultiplier);
 		hash = hash * FingerprintHashMultiplier + (uint)(particle.position.z * FingerprintPositionMultiplier);
 		return hash;
+	}
+
+	private void HandleTrailFadeLogic(ref ParticleSystem.Particle particle, int particleIndex)
+	{
+		if (particleIndex >= _particleData.Length)
+			return;
+
+		ref var data = ref _particleData[particleIndex];
+
+		if (!data.HasState(ParticleState.WaitingForTrailFade))
+			return;
+
+		if (data.trailFadeStartTime > 0)
+		{
+			bool particleCompletelyStoppped = particle.velocity.magnitude < ParticleStoppedThreshold;
+			float waitTime = Time.fixedTime - data.trailFadeStartTime;
+			bool forcedTimeout = waitTime > (_fadeOutTime * ForcedTimeoutMultiplier);
+
+			if (IsTrailReadyForRecycling(particleIndex) || (particleCompletelyStoppped && forcedTimeout))
+			{
+				RecycleParticleImmediately(ref particle, particleIndex);
+				data.RemoveState(ParticleState.WaitingForTrailFade);
+			}
+		}
+	}
+
+	private void StartTrailFadeWaiting(int particleIndex)
+	{
+		if (particleIndex >= _particleData.Length)
+			return;
+
+		ref var data = ref _particleData[particleIndex];
+		data.AddState(ParticleState.WaitingForTrailFade);
+		data.trailFadeStartTime = Time.fixedTime;
+
+		if (particleIndex < _particles.Length)
+		{
+			_particles[particleIndex].velocity = Vector3.zero;
+		}
+	}
+
+	private bool IsTrailReadyForRecycling(int particleIndex)
+	{
+		var trails = _particleSystem.trails;
+		if (!trails.enabled)
+		{
+			return true;
+		}
+
+		var data = _particleData[particleIndex];
+		float elapsedTime = Time.fixedTime - data.trailFadeStartTime;
+		bool particleStopped = _particles[particleIndex].velocity.magnitude < ParticleStoppedThreshold;
+		bool minTimeElapsed = elapsedTime >= TrailFadeMinTime;
+
+		return particleStopped && minTimeElapsed;
+	}
+
+	private void RecycleParticleImmediately(ref ParticleSystem.Particle particle, int particleIndex)
+	{
+		particle.remainingLifetime = 0;
+		particle.velocity = Vector3.zero;
+		ResetParticleStates(particleIndex);
 	}
 
 	private void OnDrawGizmos()
@@ -497,12 +636,12 @@ public class ParticleAttractor : MonoBehaviour
 		Gizmos.DrawLine(transform.position, _target.position);
 
 		Vector3 direction = (_target.position - transform.position).normalized;
-		Gizmos.DrawRay(transform.position, direction * 2f);
+		Gizmos.DrawRay(transform.position, direction * GizmosRayLength);
 
 		if (_destroyOnTargetReach)
 		{
 			Gizmos.color = Color.red;
-			Gizmos.DrawWireCube(_target.position, Vector3.one * 0.2f);
+			Gizmos.DrawWireCube(_target.position, Vector3.one * GizmosCubeSize);
 		}
 	}
 

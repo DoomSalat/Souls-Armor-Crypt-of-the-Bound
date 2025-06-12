@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SVassets.AnimationCrafter
 {
-	[Icon("Assets/3 in 1 Animation Tools/Editor/Icons/icon new-01.png")]
+	[Icon("Packages/com.svasssets.3in1tools/Editor/Icons/icon new-01.png")]
 	[AddComponentMenu("SV Assets/3 in 1 Tools/Motion Path")]
 	[System.Serializable]
 	public class MotionPath : MonoBehaviour

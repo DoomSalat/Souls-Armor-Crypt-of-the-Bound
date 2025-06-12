@@ -482,7 +482,6 @@ GameObject:
   - component: {fileID: 5980012152104037873}
   - component: {fileID: 5863840458522902431}
   - component: {fileID: 6641814470964126569}
-  - component: {fileID: 6648270921230140908}
   - component: {fileID: 8954013109217506612}
   m_Layer: 0
   m_Name: Player Knight
@@ -588,11 +587,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputMove: {fileID: 6641814470964126569}
-  _stepsMove: {fileID: 6648270921230140908}
   _absorptionScopeController: {fileID: 6919753140184837834}
   _absorptionScope: {fileID: 3934235178878853373}
   _swordController: {fileID: 7149026230936474766}
   _limbsState: {fileID: 8954013109217506612}
+  _playerKnightAnimator: {fileID: 7560247265248486455}
 --- !u!114 &5863840458522902431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,22 +616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3c1fb6dd3418b4483be6fe065c60e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1.1
+  _speed: 1.3
   _inputReader: {fileID: 0}
---- !u!114 &6648270921230140908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4850915946614116720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6230b96c719cf242a673b37f010d3c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stopDuration: 0.25
-  _moveDuration: 0.5
 --- !u!114 &8954013109217506612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,6 +759,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5622260151226317109}
     m_Modifications:
+    - target: {fileID: 505177472224500555, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2167419119238695007, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -814,6 +803,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2411103884132925476, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5410323701280131581, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_Name
       value: Knight (anim)
@@ -828,6 +821,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2167419119238695007, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
   m_PrefabInstance: {fileID: 4815673236811561708}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7560247265248486455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3044382356803886811, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+  m_PrefabInstance: {fileID: 4815673236811561708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5718aa118af4842b3aed7adc11dfe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5818068842105436808
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,12 @@
       "dependencies": {},
       "hash": "845f7521c4695bc30d9efe0c3168b616cc51454a"
     },
+    "com.svasssets.3in1tools": {
+      "version": "file:com.svasssets.3in1tools",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "10.2.0",
       "depth": 0,

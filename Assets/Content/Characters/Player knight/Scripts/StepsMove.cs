@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(InputMove))]
 public class StepsMove : MonoBehaviour

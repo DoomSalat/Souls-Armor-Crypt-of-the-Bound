@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using Sirenix.OdinInspector;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -18,12 +17,16 @@ public class PlayerStateMachine : MonoBehaviour
 		_currentState?.FixedUpdate();
 	}
 
-	public void InitializeStates(StepsMove stepsMove, SwordController swordController,
-		AbsorptionScopeController absorptionScopeController, AbsorptionScope absorptionScope, InputReader inputReader)
+	public void InitializeStates(InputMove inputMove,
+								SwordController swordController,
+								AbsorptionScopeController absorptionScopeController,
+								AbsorptionScope absorptionScope,
+								InputReader inputReader,
+								PlayerKnightAnimator playerKnightAnimator)
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
-			{ typeof(MovementState), new MovementState(stepsMove, swordController, inputReader) },
+			{ typeof(MovementState), new MovementState(inputMove, swordController, inputReader, playerKnightAnimator) },
 			{ typeof(AbsorptionState), new AbsorptionState(absorptionScopeController, absorptionScope, inputReader) }
 		};
 	}
