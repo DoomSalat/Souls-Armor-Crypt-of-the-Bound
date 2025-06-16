@@ -34,7 +34,7 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_animator.SetBool(PlayerKnightAnimatorData.Params.isCapture, isCapture);
 	}
 
-	public void SetAbdorptionActive()
+	public void AbdorptionActive()
 	{
 		SetDirection(1);
 		SetMove(false);
@@ -42,7 +42,7 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionActive);
 	}
 
-	public void SetAbdorptionDeactive()
+	public void AbdorptionDeactive()
 	{
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionDeactive);
 	}

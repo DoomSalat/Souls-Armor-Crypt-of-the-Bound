@@ -10,16 +10,16 @@ public class AbsorptionScope : MonoBehaviour
 	[SerializeField, Required] private AbsorptionScopeAnimation _animator;
 
 	public event System.Action<ISoul> SoulFounded;
-	public event System.Action HideCompleted;
+	public event System.Action SoulTargeted;
 
 	private void OnEnable()
 	{
-		_animator.HideCompleted += OnHideCompleted;
+		_animator.TargetLooked += OnSoulTarget;
 	}
 
 	private void OnDisable()
 	{
-		_animator.HideCompleted -= OnHideCompleted;
+		_animator.TargetLooked -= OnSoulTarget;
 	}
 
 	private void Start()
@@ -66,9 +66,8 @@ public class AbsorptionScope : MonoBehaviour
 		_animator.PlayDissapear();
 	}
 
-	private void OnHideCompleted()
+	private void OnSoulTarget()
 	{
-		HideCompleted?.Invoke();
-		Deactive();
+		SoulTargeted?.Invoke();
 	}
 }

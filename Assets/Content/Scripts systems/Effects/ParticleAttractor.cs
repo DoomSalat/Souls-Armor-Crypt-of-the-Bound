@@ -51,6 +51,7 @@ public class ParticleAttractor : MonoBehaviour
 	[SerializeField, Required] private Transform _target;
 	[SerializeField, MinValue(0f)] private float _attractionStrength = 10f;
 	[SerializeField, Range(0f, 1f)] private float _damping = 0.1f;
+	[SerializeField] private bool _ignoreZAxis = false;
 
 	[Title("Lifetime Behavior")]
 	[SerializeField] private AnimationCurve _attractionOverLifetime = AnimationCurve.Linear(0f, 0f, 1f, 1f);
@@ -108,6 +109,19 @@ public class ParticleAttractor : MonoBehaviour
 	private void Awake()
 	{
 		_particleSystem = GetComponent<ParticleSystem>();
+
+		if (_particleSystem.main.prewarm && Application.isPlaying)
+		{
+			PreWarmSystem();
+		}
+	}
+
+	private void OnEnable()
+	{
+		if (_particleSystem != null && _particleSystem.main.prewarm && Application.isPlaying)
+		{
+			PreWarmSystem();
+		}
 	}
 
 	private void OnValidate()
@@ -116,7 +130,7 @@ public class ParticleAttractor : MonoBehaviour
 			_particleSystem = GetComponent<ParticleSystem>();
 	}
 
-	private void LateUpdate()
+	private void FixedUpdate()
 	{
 		if (!ShouldUpdate())
 			return;
@@ -132,11 +146,19 @@ public class ParticleAttractor : MonoBehaviour
 		if (!Application.isPlaying && !_particleSystem.isPlaying)
 			return false;
 
-		float currentTime = Time.time;
-		if (currentTime - _lastUpdateTime < _updateInterval)
+		float currentTime = Time.unscaledTime;
+		float deltaTime = currentTime - _lastUpdateTime;
+		if (deltaTime < _updateInterval)
 			return false;
 
-		_lastUpdateTime = currentTime;
+		if (deltaTime > _updateInterval * 3f)
+		{
+			_lastUpdateTime = currentTime - _updateInterval;
+		}
+		else
+		{
+			_lastUpdateTime = currentTime;
+		}
 		return true;
 	}
 
@@ -345,9 +367,17 @@ public class ParticleAttractor : MonoBehaviour
 	private void ApplyAttractionForce(ref ParticleSystem.Particle particle, Vector3 directionToTarget, float distanceToTarget, int particleIndex)
 	{
 		Vector3 baseDirection = directionToTarget / distanceToTarget;
+
+		if (_ignoreZAxis)
+		{
+			baseDirection.z = 0f;
+			baseDirection = baseDirection.normalized;
+		}
+
 		Vector3 finalDirection = ApplyTrajectoryDistortion(baseDirection, particle, particleIndex);
 		float attractionForce = CalculateAttractionForce(particle, distanceToTarget);
-		Vector3 acceleration = finalDirection * attractionForce * Time.deltaTime;
+		float safeDeltaTime = Mathf.Min(Time.deltaTime, 0.05f);
+		Vector3 acceleration = finalDirection * attractionForce * safeDeltaTime;
 
 		var main = _particleSystem.main;
 		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
@@ -355,7 +385,8 @@ public class ParticleAttractor : MonoBehaviour
 			acceleration = transform.InverseTransformDirection(acceleration);
 		}
 
-		particle.velocity = Vector3.Lerp(particle.velocity, particle.velocity + acceleration, 1 - _damping);
+		float frameIndependentDamping = 1f - Mathf.Pow(_damping, safeDeltaTime / DefaultUpdateInterval);
+		particle.velocity = Vector3.Lerp(particle.velocity, particle.velocity + acceleration, frameIndependentDamping);
 	}
 
 	private void ApplySlowdownToParticle(ref ParticleSystem.Particle particle, Vector3 targetPosition, int particleIndex)
@@ -403,9 +434,16 @@ public class ParticleAttractor : MonoBehaviour
 
 		if (_attractToCenter)
 		{
+			if (_ignoreZAxis)
+			{
+				directionToTarget.z = 0f;
+				directionToTarget = directionToTarget.normalized;
+			}
+
 			float targetSpeed = data.initialVelocity.magnitude * (1 - slowdownProgress);
 			Vector3 targetVelocity = directionToTarget * targetSpeed;
-			particle.velocity = Vector3.Lerp(particle.velocity, targetVelocity, SlowdownLerpFactor);
+			float frameIndependentLerpFactor = 1f - Mathf.Pow(1f - SlowdownLerpFactor, Time.deltaTime / DefaultUpdateInterval);
+			particle.velocity = Vector3.Lerp(particle.velocity, targetVelocity, frameIndependentLerpFactor);
 		}
 		else
 		{
@@ -447,11 +485,11 @@ public class ParticleAttractor : MonoBehaviour
 			return baseDirection;
 
 		var data = _particleData[particleIndex];
-		float particleTime = Time.time * _noiseSpeed + data.noiseSeed;
+		float smoothTime = Time.fixedTime * _noiseSpeed + data.noiseSeed;
 
-		float noiseX = Mathf.PerlinNoise(particleTime, 0) - NoiseCenter;
-		float noiseY = Mathf.PerlinNoise(0, particleTime) - NoiseCenter;
-		float noiseZ = Mathf.PerlinNoise(particleTime, particleTime) - NoiseCenter;
+		float noiseX = Mathf.PerlinNoise(smoothTime, 0) - NoiseCenter;
+		float noiseY = Mathf.PerlinNoise(0, smoothTime) - NoiseCenter;
+		float noiseZ = Mathf.PerlinNoise(smoothTime, smoothTime) - NoiseCenter;
 
 		Vector3 noiseDirection = new Vector3(noiseX, noiseY, noiseZ) * _noiseIntensity;
 		Vector3 personalOffset = data.noiseOffset * NoiseOffsetMultiplier;
@@ -652,5 +690,23 @@ public class ParticleAttractor : MonoBehaviour
 
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere(_target.position, _minDistance);
+	}
+
+	private void PreWarmSystem()
+	{
+		if (_particleSystem == null || _target == null)
+			return;
+
+		float originalSimulationTime = _particleSystem.main.duration;
+		float simulationStep = _updateInterval;
+
+		for (float time = 0; time < originalSimulationTime; time += simulationStep)
+		{
+			_particleSystem.Simulate(simulationStep, true, false, true);
+			ApplyAttraction();
+		}
+
+		_particleSystem.Simulate(0, true, false, true);
+		_particleSystem.Play();
 	}
 }

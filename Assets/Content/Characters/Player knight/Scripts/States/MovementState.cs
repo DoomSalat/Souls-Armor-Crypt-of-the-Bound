@@ -8,7 +8,7 @@ public class MovementState : PlayerState
 	private readonly InputReader _inputReader;
 	private readonly PlayerKnightAnimator _playerKnightAnimator;
 
-	public MovementState(InputMove inputMove, SwordController swordController, InputReader inputReader, PlayerKnightAnimator playerKnightAnimator)
+	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader)
 	{
 		_inputMove = inputMove;
 		_swordController = swordController;

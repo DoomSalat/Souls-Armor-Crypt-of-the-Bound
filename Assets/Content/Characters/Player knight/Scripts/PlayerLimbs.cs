@@ -13,6 +13,8 @@ public class PlayerLimbs : MonoBehaviour
 	public event System.Action BodyLosted; // Когда тело потеряно, регенерация невозможна
 	public event System.Action ExtremitiesLosted;
 
+	public InventoryController InventoryController => _inventoryController;
+
 	public Dictionary<LimbType, bool> LimbStates => GetLimbStates();
 
 	private void Awake()

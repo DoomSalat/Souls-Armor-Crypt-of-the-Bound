@@ -19,7 +19,7 @@ public class Player : MonoBehaviour, IDamagable
 	{
 		_inputReader = _inputMove.InputReader;
 		_stateMachine = GetComponent<PlayerStateMachine>();
-		_stateMachine.InitializeStates(_inputMove, _swordController, _absorptionScopeController, _absorptionScope, _inputReader, _playerKnightAnimator);
+		_stateMachine.InitializeStates(_inputMove, _swordController, _absorptionScopeController, _absorptionScope, _inputReader, _playerKnightAnimator, _limbsState);
 	}
 
 	private void Start()

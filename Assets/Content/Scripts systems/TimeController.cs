@@ -57,4 +57,10 @@ public class TimeController : MonoBehaviour
 	{
 		ResetTimeScale();
 	}
+
+	[Button]
+	public void DebugTimeScale(float timeScale)
+	{
+		SetTimeScale(timeScale);
+	}
 }
