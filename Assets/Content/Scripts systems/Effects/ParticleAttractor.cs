@@ -47,32 +47,32 @@ public class ParticleAttractor : MonoBehaviour
 	// Common Values
 	private const float InvalidTime = -1f;
 
-	[Title("Attraction Settings")]
-	[SerializeField, Required] private Transform _target;
+	[Header("Attraction Settings")]
+	[SerializeField] private Transform _target;
 	[SerializeField, MinValue(0f)] private float _attractionStrength = 10f;
 	[SerializeField, Range(0f, 1f)] private float _damping = 0.1f;
 	[SerializeField] private bool _ignoreZAxis = false;
 
-	[Title("Lifetime Behavior")]
+	[Header("Lifetime Behavior")]
 	[SerializeField] private AnimationCurve _attractionOverLifetime = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 	[SerializeField] private bool _useDistanceBasedAttraction = true;
 	[SerializeField, ShowIf(nameof(_useDistanceBasedAttraction)), MinValue(0.01f)] private float _minDistance = 0.1f;
 
-	[Title("Target Reach Behavior")]
+	[Header("Target Reach Behavior")]
 	[SerializeField] private bool _stopWhenTargetReached = true;
-	[SerializeField, ShowIf(nameof(_stopWhenTargetReached)), MinValue(0.01f)] private float _targetReachDistance = Half;
+	[SerializeField, ShowIf(nameof(_stopWhenTargetReached)), MinValue(0.01f)] private float _targetReachDistance = 0.5f;
 	[SerializeField, ShowIf(nameof(_stopWhenTargetReached))] private bool _attractToCenter = true;
 	[SerializeField] private bool _destroyOnTargetReach = false;
-	[SerializeField, ShowIf("@_stopWhenTargetReached || _destroyOnTargetReach"), MinValue(0.01f)] private float _fadeOutTime = 0.2f;
+	[SerializeField, ShowIf("@_stopWhenTargetReached || _destroyOnTargetReach"), MinValue(0.01f)] private float _fadeOutTime = 0.8f;
 
-	[Title("Trajectory Distortion")]
+	[Header("Trajectory Distortion")]
 	[SerializeField] private bool _useTrajectoryDistortion = true;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 5f)] private float _noiseScale = 1f;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 3f)] private float _noiseIntensity = 1f;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0.1f, 2f)] private float _noiseSpeed = 1f;
 	[SerializeField, ShowIf(nameof(_useTrajectoryDistortion)), Range(0f, 1f)] private float _trajectorySmoothing = Half;
 
-	[Title("Optimization")]
+	[Header("Optimization")]
 	[SerializeField, MinValue(0.001f)] private float _updateInterval = DefaultUpdateInterval;
 
 	private ParticleSystem _particleSystem;
@@ -132,10 +132,56 @@ public class ParticleAttractor : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (!ShouldUpdate())
+		if (Application.isPlaying)
+		{
+			UpdateParticles();
+		}
+	}
+
+	private void LateUpdate()
+	{
+		if (Application.isEditor)
+		{
+			UpdateParticles();
+		}
+	}
+
+	public void SetTarget(Transform target)
+	{
+		_target = target;
+	}
+
+	public void SetStrength(float strength)
+	{
+		_attractionStrength = strength;
+	}
+
+	public void SetReachDistance(float reachDistance)
+	{
+		_targetReachDistance = reachDistance;
+	}
+
+	public void SetFadeOutTime(float fadeOutTime)
+	{
+		_fadeOutTime = fadeOutTime;
+	}
+
+	private void UpdateParticles()
+	{
+		if (ShouldUpdate() == false)
 			return;
 
 		ApplyAttraction();
+	}
+
+	private float GetCurrentTime()
+	{
+		return Application.isPlaying ? Time.fixedTime : Time.unscaledTime;
+	}
+
+	private float GetDeltaTime()
+	{
+		return Application.isPlaying ? Time.fixedDeltaTime : Time.deltaTime;
 	}
 
 	private bool ShouldUpdate()
@@ -143,11 +189,12 @@ public class ParticleAttractor : MonoBehaviour
 		if (_particleSystem == null || _target == null)
 			return false;
 
-		if (!Application.isPlaying && !_particleSystem.isPlaying)
+		if (Application.isPlaying && _particleSystem.particleCount == 0)
 			return false;
 
 		float currentTime = Time.unscaledTime;
 		float deltaTime = currentTime - _lastUpdateTime;
+
 		if (deltaTime < _updateInterval)
 			return false;
 
@@ -159,6 +206,7 @@ public class ParticleAttractor : MonoBehaviour
 		{
 			_lastUpdateTime = currentTime;
 		}
+
 		return true;
 	}
 
@@ -208,11 +256,43 @@ public class ParticleAttractor : MonoBehaviour
 		}
 	}
 
+	private void CheckAndResetParticleState(ref ParticleSystem.Particle particle, int particleIndex)
+	{
+		if (particleIndex >= _particleData.Length)
+			return;
+
+		uint currentFingerprint = CreateParticleFingerprint(particle);
+
+		if (_particleData[particleIndex].fingerprint != currentFingerprint)
+		{
+			bool wasMarkedForRecycling = _particleData[particleIndex].HasState(ParticleState.MarkedForRecycling);
+			_particleData[particleIndex].fingerprint = currentFingerprint;
+
+			float lifetimeRatio = particle.remainingLifetime / particle.startLifetime;
+			bool isActuallyNewParticle = lifetimeRatio > NewParticleLifetimeRatio;
+
+			if (isActuallyNewParticle || wasMarkedForRecycling)
+			{
+				ResetParticleStates(particleIndex);
+			}
+		}
+	}
+
 	private void ProcessParticle(ref ParticleSystem.Particle particle, Vector3 targetPosition, int particleIndex)
 	{
+		CheckAndResetParticleState(ref particle, particleIndex);
+
 		Vector3 particlePosition = GetParticleWorldPosition(particle);
 		Vector3 directionToTarget = targetPosition - particlePosition;
-		float distanceToTarget = directionToTarget.magnitude;
+
+		Vector3 distanceVector = directionToTarget;
+		if (_ignoreZAxis)
+		{
+			distanceVector.z = 0f;
+		}
+
+		float distanceToTarget = distanceVector.magnitude;
+
 		bool isInTargetZone = IsParticleInTargetZone(ref particle, targetPosition, distanceToTarget, particleIndex);
 
 		HandleTargetZoneLogic(ref particle, isInTargetZone, particleIndex);
@@ -254,7 +334,17 @@ public class ParticleAttractor : MonoBehaviour
 
 			if (data.previousPosition != Vector3.zero)
 			{
-				if (LineIntersectsSphere(data.previousPosition, particle.position, targetPosition, _targetReachDistance))
+				Vector3 lineStart = data.previousPosition;
+				Vector3 lineEnd = particle.position;
+				Vector3 sphereCenter = targetPosition;
+
+				if (_ignoreZAxis)
+				{
+					lineStart.z = sphereCenter.z;
+					lineEnd.z = sphereCenter.z;
+				}
+
+				if (LineIntersectsSphere(lineStart, lineEnd, sphereCenter, _targetReachDistance))
 				{
 					return true;
 				}
@@ -340,7 +430,7 @@ public class ParticleAttractor : MonoBehaviour
 		if (data.slowdownStartTime < 0)
 			return;
 
-		float elapsedTime = Time.fixedTime - data.slowdownStartTime;
+		float elapsedTime = GetCurrentTime() - data.slowdownStartTime;
 		bool timeElapsed = elapsedTime >= (_fadeOutTime * SlowdownCompletionThreshold);
 		bool particleSlowed = particle.velocity.magnitude < SlowdownVelocityThreshold;
 
@@ -376,7 +466,7 @@ public class ParticleAttractor : MonoBehaviour
 
 		Vector3 finalDirection = ApplyTrajectoryDistortion(baseDirection, particle, particleIndex);
 		float attractionForce = CalculateAttractionForce(particle, distanceToTarget);
-		float safeDeltaTime = Mathf.Min(Time.deltaTime, 0.05f);
+		float safeDeltaTime = Mathf.Min(GetDeltaTime(), 0.05f);
 		Vector3 acceleration = finalDirection * attractionForce * safeDeltaTime;
 
 		var main = _particleSystem.main;
@@ -417,14 +507,14 @@ public class ParticleAttractor : MonoBehaviour
 		if (data.slowdownStartTime > 0)
 			return;
 
-		data.slowdownStartTime = Time.fixedTime;
+		data.slowdownStartTime = GetCurrentTime();
 		data.initialVelocity = particle.velocity;
 	}
 
 	private float CalculateSlowdownProgress(int particleIndex)
 	{
 		var data = _particleData[particleIndex];
-		float elapsedTime = Time.fixedTime - data.slowdownStartTime;
+		float elapsedTime = GetCurrentTime() - data.slowdownStartTime;
 		return Mathf.Clamp01(elapsedTime / _fadeOutTime);
 	}
 
@@ -442,7 +532,7 @@ public class ParticleAttractor : MonoBehaviour
 
 			float targetSpeed = data.initialVelocity.magnitude * (1 - slowdownProgress);
 			Vector3 targetVelocity = directionToTarget * targetSpeed;
-			float frameIndependentLerpFactor = 1f - Mathf.Pow(1f - SlowdownLerpFactor, Time.deltaTime / DefaultUpdateInterval);
+			float frameIndependentLerpFactor = 1f - Mathf.Pow(1f - SlowdownLerpFactor, GetDeltaTime() / DefaultUpdateInterval);
 			particle.velocity = Vector3.Lerp(particle.velocity, targetVelocity, frameIndependentLerpFactor);
 		}
 		else
@@ -485,7 +575,7 @@ public class ParticleAttractor : MonoBehaviour
 			return baseDirection;
 
 		var data = _particleData[particleIndex];
-		float smoothTime = Time.fixedTime * _noiseSpeed + data.noiseSeed;
+		float smoothTime = GetCurrentTime() * _noiseSpeed + data.noiseSeed;
 
 		float noiseX = Mathf.PerlinNoise(smoothTime, 0) - NoiseCenter;
 		float noiseY = Mathf.PerlinNoise(0, smoothTime) - NoiseCenter;
@@ -613,7 +703,7 @@ public class ParticleAttractor : MonoBehaviour
 		if (data.trailFadeStartTime > 0)
 		{
 			bool particleCompletelyStoppped = particle.velocity.magnitude < ParticleStoppedThreshold;
-			float waitTime = Time.fixedTime - data.trailFadeStartTime;
+			float waitTime = GetCurrentTime() - data.trailFadeStartTime;
 			bool forcedTimeout = waitTime > (_fadeOutTime * ForcedTimeoutMultiplier);
 
 			if (IsTrailReadyForRecycling(particleIndex) || (particleCompletelyStoppped && forcedTimeout))
@@ -631,7 +721,7 @@ public class ParticleAttractor : MonoBehaviour
 
 		ref var data = ref _particleData[particleIndex];
 		data.AddState(ParticleState.WaitingForTrailFade);
-		data.trailFadeStartTime = Time.fixedTime;
+		data.trailFadeStartTime = GetCurrentTime();
 
 		if (particleIndex < _particles.Length)
 		{
@@ -648,7 +738,7 @@ public class ParticleAttractor : MonoBehaviour
 		}
 
 		var data = _particleData[particleIndex];
-		float elapsedTime = Time.fixedTime - data.trailFadeStartTime;
+		float elapsedTime = GetCurrentTime() - data.trailFadeStartTime;
 		bool particleStopped = _particles[particleIndex].velocity.magnitude < ParticleStoppedThreshold;
 		bool minTimeElapsed = elapsedTime >= TrailFadeMinTime;
 

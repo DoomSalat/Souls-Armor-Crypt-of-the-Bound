@@ -78,6 +78,9 @@ namespace BlockAnimationSystem
 
 		private void UpdateTransform(bool instant = false)
 		{
+			if (_targetObjects == null || _targetObjects.Length == 0)
+				return;
+
 			_activeTarget = SelectActiveTarget();
 			UpdatePosition(instant);
 			UpdateRotation(instant);

@@ -68,6 +68,7 @@ public class AbsorptionState : PlayerState
 		}
 
 		_animator.SetCapture(true);
+		_animator.AbdorptionSoulsCapture();
 
 		_waitingForSoulTargeted = true;
 		_inputReader.Disable();
@@ -75,7 +76,7 @@ public class AbsorptionState : PlayerState
 
 	private void OnSoulTargeted()
 	{
-		if (!_waitingForSoulTargeted || _currentSoul == null)
+		if (_waitingForSoulTargeted == false || _currentSoul == null)
 			return;
 
 		_waitingForSoulTargeted = false;

@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerKnightAnimator : MonoBehaviour
 {
+	[SerializeField] private PlayerKnightAnimatorEvents _events;
+
 	private Animator _animator;
 
 	public event System.Action AbdorptionAnimationEnded;
@@ -40,16 +42,28 @@ public class PlayerKnightAnimator : MonoBehaviour
 		SetMove(false);
 
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionActive);
+
+		_events.SwitchMainAbsorptionTo(0);
+		_events.DeactivateAbsorptionAttractor();
+		_events.PlayAbsorptionBody();
+	}
+
+	public void AbdorptionSoulsCapture()
+	{
+		_events.SwitchMainAbsorptionTo(1);
+		_events.ActivateAbsorptionAttractor(true);
 	}
 
 	public void AbdorptionDeactive()
 	{
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionDeactive);
+		_events.DeactivateAbsorptionAttractor();
 	}
 
 	public void AbdorptionAnimationEnd()
 	{
 		AbdorptionAnimationEnded?.Invoke();
+		_events.StopAbsorptionBody();
 	}
 
 	public void AllowStepMove()
