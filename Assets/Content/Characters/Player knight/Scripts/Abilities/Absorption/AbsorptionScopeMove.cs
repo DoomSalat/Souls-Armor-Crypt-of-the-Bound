@@ -12,10 +12,22 @@ public class AbsorptionScopeMove : MonoBehaviour
 	[SerializeField, MinValue(0.01f)] private float _smoothingDistance = 0.5f;
 	[SerializeField, Range(0f, 1f)] private float _minSpeedFactor = 0.1f;
 
+	[Header("Predictive Targeting")]
+	[SerializeField, MinValue(0f)] private float _minLeadDistance = 0.3f;
+	[SerializeField, MinValue(0f)] private float _maxLeadDistance = 2f;
+	[SerializeField, MinValue(0f)] private float _leadMultiplier = 0.8f;
+	[SerializeField, MinValue(0.01f)] private float _minTargetSpeed = 0.1f;
+	[SerializeField, MinValue(1f)] private float _speedBoostMultiplier = 1.5f;
+	[SerializeField, MinValue(1f)] private float _maxSpeedForMaxLead = 10f;
+
 	private Rigidbody2D _rigidbody;
 	private Camera _mainCamera;
 	private bool _isFollowing = false;
 	private Transform _target;
+
+	private Vector2 _previousTargetPosition;
+	private Vector2 _targetVelocity;
+	private bool _hasValidPreviousPosition = false;
 
 	private void Awake()
 	{
@@ -43,6 +55,7 @@ public class AbsorptionScopeMove : MonoBehaviour
 	{
 		_isFollowing = follow;
 		_target = null;
+		_hasValidPreviousPosition = false;
 
 		if (follow == false)
 		{
@@ -54,6 +67,12 @@ public class AbsorptionScopeMove : MonoBehaviour
 	{
 		_target = target;
 		_isFollowing = false;
+		_hasValidPreviousPosition = false;
+
+		if (_target != null)
+		{
+			_previousTargetPosition = _target.position;
+		}
 	}
 
 	private bool CanMove()
@@ -64,11 +83,64 @@ public class AbsorptionScopeMove : MonoBehaviour
 	private Vector2 GetTargetPosition()
 	{
 		if (_target != null)
-			return _target.position;
+		{
+			Vector2 currentTargetPosition = _target.position;
+
+			UpdateTargetVelocity(currentTargetPosition);
+
+			Vector2 predictiveOffset = CalculatePredictiveOffset();
+
+			return currentTargetPosition + predictiveOffset;
+		}
 
 		Vector3 mouseScreenPosition = InputUtilits.GetMouseClampPosition();
 		Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 		return mouseWorldPosition;
+	}
+
+	private void UpdateTargetVelocity(Vector2 currentTargetPosition)
+	{
+		if (_hasValidPreviousPosition)
+		{
+			_targetVelocity = (currentTargetPosition - _previousTargetPosition) / Time.fixedDeltaTime;
+		}
+		else
+		{
+			_targetVelocity = Vector2.zero;
+			_hasValidPreviousPosition = true;
+		}
+
+		_previousTargetPosition = currentTargetPosition;
+	}
+
+	private Vector2 CalculatePredictiveOffset()
+	{
+		float targetSpeed = _targetVelocity.magnitude;
+
+		if (targetSpeed < _minTargetSpeed)
+		{
+			return Vector2.zero;
+		}
+
+		Vector2 targetDirection = _targetVelocity.normalized;
+
+		float speedProgress = Mathf.Clamp01((targetSpeed - _minTargetSpeed) / (_maxSpeedForMaxLead - _minTargetSpeed));
+		float leadDistance = Mathf.Lerp(_minLeadDistance, _maxLeadDistance, speedProgress * _leadMultiplier);
+
+		Vector2 predictiveOffset = targetDirection * leadDistance;
+
+		Vector2 currentPosition = _rigidbody.position;
+		Vector2 currentTargetPosition = _target.position;
+		float distanceToTarget = (currentTargetPosition - currentPosition).magnitude;
+
+		float maxOffsetMagnitude = Mathf.Max(distanceToTarget * 0.5f, _maxLeadDistance);
+
+		if (predictiveOffset.magnitude > maxOffsetMagnitude)
+		{
+			predictiveOffset = predictiveOffset.normalized * maxOffsetMagnitude;
+		}
+
+		return predictiveOffset;
 	}
 
 	private bool IsReachedTarget(float distanceToTarget)
@@ -84,7 +156,22 @@ public class AbsorptionScopeMove : MonoBehaviour
 
 	private Vector2 CalculateNewPosition(Vector2 currentPosition, Vector2 targetPosition, float distanceToTarget)
 	{
-		return Vector3.MoveTowards(currentPosition, targetPosition, _moveSpeed * Time.fixedDeltaTime);
+		float adaptiveSpeed = CalculateAdaptiveSpeed();
+
+		return Vector3.MoveTowards(currentPosition, targetPosition, adaptiveSpeed * Time.fixedDeltaTime);
+	}
+
+	private float CalculateAdaptiveSpeed()
+	{
+		float targetSpeed = _targetVelocity.magnitude;
+
+		if (targetSpeed > _minTargetSpeed)
+		{
+			float speedBoost = 1f + (targetSpeed * _speedBoostMultiplier / _moveSpeed);
+			return _moveSpeed * speedBoost;
+		}
+
+		return _moveSpeed;
 	}
 
 	private void ApplyVelocity(Vector2 currentPosition, Vector2 newPosition, float distanceToTarget)

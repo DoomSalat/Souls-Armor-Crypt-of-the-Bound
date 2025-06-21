@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class Soul : MonoBehaviour, IDamagable
 	[SerializeField] private Transform _target;
 	[Space]
 	[SerializeField, Required] private TargetFollower _targetFollower;
+	[SerializeField, Required] private SoulAttractor _soulAttractor;
+	[SerializeField, Required] private SoulAnimator _soulAnimator;
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private HitBox _hitBox;
 	[SerializeField, Required] private HurtBox _hurtBox;
@@ -22,7 +25,10 @@ public class Soul : MonoBehaviour, IDamagable
 
 	private bool _isDead = false;
 	private bool _isDying = false;
+	private bool _isAttracted = false;
+	private bool _isEndAttraction = false;
 	private Vector3 _lockDeadEyePos;
+	private event System.Action _attractionCompleted;
 
 	private void Awake()
 	{
@@ -30,6 +36,16 @@ public class Soul : MonoBehaviour, IDamagable
 
 		_waitKnockStop = new WaitUntil(() => _rigidbody.linearVelocity.sqrMagnitude <= _stopThreshold);
 		_waitFixedKnockStop = new WaitForFixedUpdate();
+	}
+
+	private void OnEnable()
+	{
+		_soulAttractor.AttractionCompleted += OnAttractionCompletedInternal;
+	}
+
+	private void OnDisable()
+	{
+		_soulAttractor.AttractionCompleted -= OnAttractionCompletedInternal;
 	}
 
 	private void Update()
@@ -41,6 +57,18 @@ public class Soul : MonoBehaviour, IDamagable
 			else
 			{
 				_eye.LookAt(_lockDeadEyePos, _eyeKnockbackSpeedMultiplier);
+			}
+		}
+
+		if (_isAttracted)
+		{
+			if (_isEndAttraction == false)
+			{
+				_soulAnimator.AbsorptionDirection(_rigidbody.linearVelocity);
+			}
+			else
+			{
+				_soulAnimator.AbsorptionDirection(Vector2.up);
 			}
 		}
 	}
@@ -61,6 +89,33 @@ public class Soul : MonoBehaviour, IDamagable
 
 		ApplyKnockback(damageData);
 		StartCoroutine(WaitForStop());
+	}
+
+	public void StartAttraction(Transform target, Action AttractionCompleted)
+	{
+		_attractionCompleted = AttractionCompleted;
+
+		_hitBox.gameObject.SetActive(false);
+		_hurtBox.gameObject.SetActive(false);
+		_targetFollower.enabled = false;
+
+		_isAttracted = true;
+		_soulAnimator.AbsorptionDirection(_rigidbody.linearVelocity);
+
+		_soulAttractor.StartAttraction(target);
+	}
+
+	public void OnAbsorptionCompleted()
+	{
+		Debug.Log("Soul absorption completed");
+	}
+
+	private void OnAttractionCompletedInternal()
+	{
+		_isEndAttraction = true;
+
+		_attractionCompleted?.Invoke();
+		_attractionCompleted = null;
 	}
 
 	private void ApplyKnockback(DamageData damageData)

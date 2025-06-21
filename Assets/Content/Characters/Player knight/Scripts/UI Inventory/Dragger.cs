@@ -19,6 +19,9 @@ public class Dragger : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointe
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		if (enabled == false)
+			return;
+
 		if (_draggedObject != null)
 		{
 			Vector2 localPoint;
@@ -37,6 +40,9 @@ public class Dragger : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointe
 
 	public void OnDrag(PointerEventData eventData)
 	{
+		if (enabled == false)
+			return;
+
 		if (_isDragging && _draggedObject != null)
 		{
 			Vector2 localPoint;
@@ -56,6 +62,9 @@ public class Dragger : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointe
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
+		if (enabled == false)
+			return;
+
 		if (_isDragging && _draggedObject != null)
 		{
 			_draggedObject.OnDragEnd();

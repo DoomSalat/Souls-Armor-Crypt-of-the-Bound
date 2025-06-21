@@ -37,6 +37,9 @@ public class InventoryController : MonoBehaviour
 	{
 		gameObject.SetActive(true);
 		_canvasGroup.interactable = true;
+
+		ResetSoulPosition();
+
 		_inventoryData.UpdateSlotsState(limbStates);
 		_inventoryAnimator.Activate();
 	}
@@ -55,5 +58,15 @@ public class InventoryController : MonoBehaviour
 	{
 		gameObject.SetActive(false);
 		_canvasGroup.interactable = false;
+	}
+
+	private void ResetSoulPosition()
+	{
+		RectTransform soulRectTransform = _inventorySoul.GetComponent<RectTransform>();
+
+		if (soulRectTransform != null)
+		{
+			soulRectTransform.anchoredPosition = Vector2.zero;
+		}
 	}
 }

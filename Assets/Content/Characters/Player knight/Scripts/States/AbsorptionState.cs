@@ -9,14 +9,24 @@ public class AbsorptionState : PlayerState
 	private readonly AbsorptionScope _absorptionScope;
 	private readonly InputReader _inputReader;
 	private readonly PlayerLimbs _playerLimbs;
+	private readonly Transform _soulAbsorptionTarget;
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
-	private bool _waitingForSoulTargeted = false;
 	private bool _waitingForInventoryCompletion = false;
+
+	private float _absorptionDelay = 0.5f;
 
 	public event System.Action AbsorptionCompleted;
 
-	public AbsorptionState(PlayerKnightAnimator playerKnightAnimator, AbsorptionScopeController absorptionScopeController, AbsorptionScope absorptionScope, InputReader inputReader, PlayerLimbs playerLimbs)
+	public event System.Action AbsorptionStarted;
+	public event System.Action InventoryClosed;
+
+	public AbsorptionState(PlayerKnightAnimator playerKnightAnimator,
+							AbsorptionScopeController absorptionScopeController,
+							AbsorptionScope absorptionScope,
+							InputReader inputReader,
+							PlayerLimbs playerLimbs,
+							Transform soulAbsorptionTarget)
 	{
 		_animator = playerKnightAnimator;
 		_absorptionScopeController = absorptionScopeController;
@@ -24,16 +34,15 @@ public class AbsorptionState : PlayerState
 		_inputReader = inputReader;
 		_playerLimbs = playerLimbs;
 		_coroutineRunner = absorptionScopeController;
+		_soulAbsorptionTarget = soulAbsorptionTarget;
 	}
 
 	public override void Enter()
 	{
 		_absorptionScopeController.Activate();
-		_absorptionScope.SoulFounded += OnSoulFounded;
+		_absorptionScope.SoulFounded += OnSoulFound;
 		_absorptionScope.SoulTargeted += OnSoulTargeted;
 		_animator.AbdorptionAnimationEnded += OnAbsorptionAnimationEnded;
-
-		_waitingForSoulTargeted = false;
 
 		_animator.SetCapture(false);
 		_animator.AbdorptionActive();
@@ -46,16 +55,15 @@ public class AbsorptionState : PlayerState
 
 	public override void Exit()
 	{
-		_absorptionScope.SoulFounded -= OnSoulFounded;
+		_absorptionScope.SoulFounded -= OnSoulFound;
 		_absorptionScope.SoulTargeted -= OnSoulTargeted;
 		_animator.AbdorptionAnimationEnded -= OnAbsorptionAnimationEnded;
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 
-		_waitingForSoulTargeted = false;
 		_animator.SetCapture(false);
 	}
 
-	private void OnSoulFounded(ISoul soul)
+	private void OnSoulFound(ISoul soul)
 	{
 		_currentSoul = soul;
 
@@ -70,22 +78,24 @@ public class AbsorptionState : PlayerState
 		_animator.SetCapture(true);
 		_animator.AbdorptionSoulsCapture();
 
-		_waitingForSoulTargeted = true;
+		AbsorptionStarted?.Invoke();
+
 		_inputReader.Disable();
+	}
+
+	private void OnAttractionCompleted()
+	{
+		_coroutineRunner.StartCoroutine(StartAbsorptionProcess());
 	}
 
 	private void OnSoulTargeted()
 	{
-		if (_waitingForSoulTargeted == false || _currentSoul == null)
-			return;
-
-		_waitingForSoulTargeted = false;
-		_coroutineRunner.StartCoroutine(StartAbsorptionProcess());
+		_currentSoul.StartAttraction(_soulAbsorptionTarget, OnAttractionCompleted);
 	}
 
 	private IEnumerator StartAbsorptionProcess()
 	{
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(_absorptionDelay);
 		_absorptionScope.Hide();
 
 		_playerLimbs.ActivateInventory();
@@ -95,6 +105,8 @@ public class AbsorptionState : PlayerState
 
 		yield return new WaitUntil(() => _waitingForInventoryCompletion == false);
 
+		_currentSoul.OnAbsorptionCompleted();
+
 		_animator.AbdorptionDeactive();
 	}
 
@@ -102,6 +114,8 @@ public class AbsorptionState : PlayerState
 	{
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
+
+		InventoryClosed?.Invoke();
 	}
 
 	private void OnAbsorptionAnimationEnded()

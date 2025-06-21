@@ -146,6 +146,30 @@ public class ParticleAttractor : MonoBehaviour
 		}
 	}
 
+	private void OnDrawGizmosSelected()
+	{
+		if (_target == null)
+			return;
+
+		Gizmos.color = _destroyOnTargetReach ? Color.red : Color.yellow;
+		Gizmos.DrawWireSphere(_target.position, _targetReachDistance);
+
+		Gizmos.color = _useTrajectoryDistortion ? Color.cyan : Color.red;
+		Gizmos.DrawLine(transform.position, _target.position);
+
+		Vector3 direction = (_target.position - transform.position).normalized;
+		Gizmos.DrawRay(transform.position, direction * GizmosRayLength);
+
+		if (_destroyOnTargetReach)
+		{
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireCube(_target.position, Vector3.one * GizmosCubeSize);
+		}
+
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(_target.position, _minDistance);
+	}
+
 	public void SetTarget(Transform target)
 	{
 		_target = target;
@@ -750,36 +774,6 @@ public class ParticleAttractor : MonoBehaviour
 		particle.remainingLifetime = 0;
 		particle.velocity = Vector3.zero;
 		ResetParticleStates(particleIndex);
-	}
-
-	private void OnDrawGizmos()
-	{
-		if (_target == null)
-			return;
-
-		Gizmos.color = _destroyOnTargetReach ? Color.red : Color.yellow;
-		Gizmos.DrawWireSphere(_target.position, _targetReachDistance);
-
-		Gizmos.color = _useTrajectoryDistortion ? Color.cyan : Color.red;
-		Gizmos.DrawLine(transform.position, _target.position);
-
-		Vector3 direction = (_target.position - transform.position).normalized;
-		Gizmos.DrawRay(transform.position, direction * GizmosRayLength);
-
-		if (_destroyOnTargetReach)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireCube(_target.position, Vector3.one * GizmosCubeSize);
-		}
-	}
-
-	private void OnDrawGizmosSelected()
-	{
-		if (_target == null)
-			return;
-
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(_target.position, _minDistance);
 	}
 
 	private void PreWarmSystem()

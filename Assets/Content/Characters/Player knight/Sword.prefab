@@ -306,6 +306,7 @@ MonoBehaviour:
   _vibrato: 60
   _randomness: 90
   _fadeOut: 0
+  _playOnStart: 1
 --- !u!1 &8994604414275861531
 GameObject:
   m_ObjectHideFlags: 0

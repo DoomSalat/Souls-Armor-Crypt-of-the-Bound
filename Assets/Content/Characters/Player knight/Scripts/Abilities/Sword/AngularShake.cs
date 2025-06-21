@@ -3,18 +3,23 @@ using DG.Tweening;
 
 public class AngularShake : MonoBehaviour
 {
-	[SerializeField] private float _strength = 15f; // Максимальный угол тряски (градусы)
-	[SerializeField] private float _duration = 0.5f; // Длительность одной тряски
-	[SerializeField] private int _vibrato = 10;     // Кол-во "вибраций" за _duration
-	[SerializeField] private float _randomness = 90f; // Расброс направления в градусах
+	[SerializeField] private float _strength = 15f;
+	[SerializeField] private float _duration = 0.5f;
+	[SerializeField] private int _vibrato = 10;
+	[SerializeField] private float _randomness = 90f;
 	[SerializeField] private bool _fadeOut = true;
+	[Space]
+	[SerializeField] private bool _playOnStart = false;
 
 	private Tween _shakeTween;
 	private Quaternion _initialRotate;
 
 	private void Start()
 	{
-		Play();
+		if (_playOnStart)
+		{
+			Play();
+		}
 	}
 
 	private void OnDestroy()

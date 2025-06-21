@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b473e06aebb931f40a8865d7f04590ff
+guid: 16ff48091235f3d40b1cfde0e6eb3eb6
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638851897646981266
+  platformSettingsDirtyTick: 638860062284830490
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Particles souls
+  - name: UI Coffin effects
     originalName: 
-    pivot: {x: 0.5, y: -0.25}
+    pivot: {x: 1.0982144, y: -0.20487805}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 5
-      height: 4
-    spriteID: a0459022aa374db4ca2dbc4a39559f49
+      width: 112
+      height: 205
+    spriteID: b76283319c4a1a24088554bf9a66be9f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -149,7 +149,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
   spriteSheetImportData:
-  - name: Particles souls_0
+  - name: UI Coffin effects (2)
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -159,9 +159,30 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 5
-      height: 4
-    spriteID: b0e199ceda3038c4c9a2a8b7576e6f83
+      width: 61
+      height: 208
+    spriteID: aa3ac723654957044bcac93e81224ffc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: UI Coffin effects (1)
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 48
+      width: 19
+      height: 127
+    spriteID: 41bc197f4962e5740b75b1f64f87b514
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -174,25 +195,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2721340173
+      value0: 3451571383
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Particles souls
+    name: UI Coffin effects
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Particles souls
+    - name: UI Coffin effects
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 4
-        y: 6
-        width: 7
-        height: 5
-      spriteId: a0459022aa374db4ca2dbc4a39559f49
+        x: 5
+        y: 40
+        width: 112
+        height: 208
+      spriteId: b76283319c4a1a24088554bf9a66be9f
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -262,5 +283,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 16, y: 16}
-  previousTextureSize: {x: 16, y: 16}
+  canvasSize: {x: 256, y: 256}
+  previousTextureSize: {x: 128, y: 256}
