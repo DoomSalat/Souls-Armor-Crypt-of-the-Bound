@@ -11,6 +11,7 @@ public class Soul : MonoBehaviour, IDamagable
 	[SerializeField, Required] private TargetFollower _targetFollower;
 	[SerializeField, Required] private SoulAttractor _soulAttractor;
 	[SerializeField, Required] private SoulAnimator _soulAnimator;
+	[SerializeField, Required] private SoulAnimatorEvent _soulAnimatorEvent;
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private HitBox _hitBox;
 	[SerializeField, Required] private HurtBox _hurtBox;
@@ -41,11 +42,18 @@ public class Soul : MonoBehaviour, IDamagable
 	private void OnEnable()
 	{
 		_soulAttractor.AttractionCompleted += OnAttractionCompletedInternal;
+		_soulAnimatorEvent.EndDeathExplosion += OnEndDeathExplosion;
 	}
 
 	private void OnDisable()
 	{
 		_soulAttractor.AttractionCompleted -= OnAttractionCompletedInternal;
+		_soulAnimatorEvent.EndDeathExplosion -= OnEndDeathExplosion;
+	}
+
+	private void OnEndDeathExplosion()
+	{
+		Dead();
 	}
 
 	private void Update()
@@ -107,7 +115,7 @@ public class Soul : MonoBehaviour, IDamagable
 
 	public void OnAbsorptionCompleted()
 	{
-		Debug.Log("Soul absorption completed");
+		_soulAnimator.PlayDeath();
 	}
 
 	private void OnAttractionCompletedInternal()
@@ -136,6 +144,8 @@ public class Soul : MonoBehaviour, IDamagable
 
 		_isDying = true;
 		_rigidbody.linearVelocity = Vector2.zero;
+
+		gameObject.SetActive(false);
 	}
 
 	private IEnumerator WaitForStop()

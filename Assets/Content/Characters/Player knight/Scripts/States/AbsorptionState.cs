@@ -98,6 +98,7 @@ public class AbsorptionState : PlayerState
 		yield return new WaitForSeconds(_absorptionDelay);
 		_absorptionScope.Hide();
 
+		TimeController.Instance.StopTime();
 		_playerLimbs.ActivateInventory();
 
 		_waitingForInventoryCompletion = true;
@@ -115,6 +116,7 @@ public class AbsorptionState : PlayerState
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
 
+		TimeController.Instance.ResumeTime();
 		InventoryClosed?.Invoke();
 	}
 

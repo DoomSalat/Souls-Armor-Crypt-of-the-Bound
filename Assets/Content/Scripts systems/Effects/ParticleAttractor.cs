@@ -60,6 +60,7 @@ public class ParticleAttractor : MonoBehaviour
 
 	[Header("Target Reach Behavior")]
 	[SerializeField] private bool _stopWhenTargetReached = true;
+	[SerializeField, MinValue(0f)] private float _stopWhenTargetReachedDelay = 0f;
 	[SerializeField, ShowIf(nameof(_stopWhenTargetReached)), MinValue(0.01f)] private float _targetReachDistance = 0.5f;
 	[SerializeField, ShowIf(nameof(_stopWhenTargetReached))] private bool _attractToCenter = true;
 	[SerializeField] private bool _destroyOnTargetReach = false;
@@ -80,6 +81,8 @@ public class ParticleAttractor : MonoBehaviour
 	private float _lastUpdateTime = 0f;
 
 	private ParticleData[] _particleData;
+
+	private float _playStartTime = 0f;
 
 	[System.Flags]
 	private enum ParticleState
@@ -168,6 +171,18 @@ public class ParticleAttractor : MonoBehaviour
 
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere(_target.position, _minDistance);
+	}
+
+	[ContextMenu(nameof(Play))]
+	public void Play()
+	{
+		_particleSystem.Play();
+		_playStartTime = GetCurrentTime();
+	}
+
+	public void Stop()
+	{
+		_particleSystem.Stop();
 	}
 
 	public void SetTarget(Transform target)
@@ -317,9 +332,14 @@ public class ParticleAttractor : MonoBehaviour
 
 		float distanceToTarget = distanceVector.magnitude;
 
+		bool canStopWhenReached = _stopWhenTargetReachedDelay == 0 || (GetCurrentTime() - _playStartTime) >= _stopWhenTargetReachedDelay;
 		bool isInTargetZone = IsParticleInTargetZone(ref particle, targetPosition, distanceToTarget, particleIndex);
 
-		HandleTargetZoneLogic(ref particle, isInTargetZone, particleIndex);
+		if (canStopWhenReached)
+		{
+			HandleTargetZoneLogic(ref particle, isInTargetZone, particleIndex);
+		}
+
 		HandleSlowdownLogic(ref particle, targetPosition, particleIndex);
 		HandleTrailFadeLogic(ref particle, particleIndex);
 

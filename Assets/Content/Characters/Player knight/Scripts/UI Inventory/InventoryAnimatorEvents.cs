@@ -15,11 +15,11 @@ public class InventoryAnimatorEvents : MonoBehaviour
 	[SerializeField] private float _activationDelay = 0.5f;
 
 	private Coroutine _draggerTimerRoutine;
-	private WaitForSeconds _waitForCanDrag;
+	private WaitForSecondsRealtime _waitForCanDrag;
 
 	private void Awake()
 	{
-		_waitForCanDrag = new WaitForSeconds(_activationDelay);
+		_waitForCanDrag = new WaitForSecondsRealtime(_activationDelay);
 	}
 
 	private void Start()

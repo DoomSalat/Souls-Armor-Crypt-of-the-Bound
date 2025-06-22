@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerKnightAnimatorData : MonoBehaviour
+public static class PlayerKnightAnimatorData
 {
 	public static class Params
 	{

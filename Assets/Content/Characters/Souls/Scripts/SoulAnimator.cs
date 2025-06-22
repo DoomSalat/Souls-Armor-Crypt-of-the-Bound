@@ -1,3 +1,4 @@
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,18 +10,37 @@ public class SoulAnimator : MonoBehaviour
 
 	private bool _isAbsorptionActive = false;
 
+	private Animator _animator;
+
+	private void Awake()
+	{
+		_animator = GetComponent<Animator>();
+	}
+
+	public void PlayDiscontinuity()
+	{
+		_animator.Play(SoulAnimatorData.Params.Discontinuity);
+	}
+
 	public void AbsorptionDirection(Vector3 movementDirection)
 	{
 		if (_isAbsorptionActive == false)
 		{
 			_angularShake.Play();
+			PlayDiscontinuity();
+
 			_isAbsorptionActive = true;
 		}
 
 		_smoothRotate.LookAt(movementDirection, 1, true);
 	}
 
-	public void AbsorptionEnded()
+	public void PlayDeath()
+	{
+		_animator.Play(SoulAnimatorData.Params.Death);
+	}
+
+	public void Reset()
 	{
 		_isAbsorptionActive = false;
 		_angularShake.Stop();
