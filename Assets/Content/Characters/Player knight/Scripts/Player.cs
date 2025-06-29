@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerStateMachine))]
-public class Player : MonoBehaviour, IDamagable
+public class Player : MonoBehaviour, IDamageable
 {
 	[SerializeField, Required] private InputMove _inputMove;
 	[SerializeField, Required] private AbsorptionScopeController _absorptionScopeController;
 	[SerializeField, Required] private AbsorptionScope _absorptionScope;
+	[SerializeField, Required] private AbsorptionCooldown _absorptionCooldown;
 	[SerializeField, Required] private SwordController _swordController;
 	[SerializeField, Required] private PlayerLimbs _limbsState;
 	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
@@ -28,7 +29,8 @@ public class Player : MonoBehaviour, IDamagable
 										_inputReader,
 										_playerKnightAnimator,
 										_limbsState,
-										_soulAbsorptionTarget);
+										_soulAbsorptionTarget,
+										_absorptionCooldown);
 	}
 
 	private void Start()
@@ -84,7 +86,7 @@ public class Player : MonoBehaviour, IDamagable
 
 	private void ChooseCurrentState()
 	{
-		if (_absorptionScopeController.IsPointInActivationZone())
+		if (_absorptionScopeController.IsPointInActivationZone() && _absorptionCooldown.IsOnCooldown == false)
 			EnterAbsorptionState();
 		else
 			EnterMovementState();

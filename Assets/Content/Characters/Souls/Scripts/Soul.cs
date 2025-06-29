@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Soul : MonoBehaviour, IDamagable
+public class Soul : MonoBehaviour, IDamageable
 {
 	[SerializeField] private Transform _target;
 	[Space]

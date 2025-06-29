@@ -5,16 +5,20 @@ public class InventoryData : MonoBehaviour
 {
 	[SerializeField] private InventorySlot[] _inventorySlotsArray;
 
-	private Dictionary<LimbType, InventorySlot> _inventorySlots = new Dictionary<LimbType, InventorySlot>();
+	private Dictionary<LimbType, List<InventorySlot>> _inventorySlots = new Dictionary<LimbType, List<InventorySlot>>();
 
 	private void Awake()
 	{
 		foreach (var slot in _inventorySlotsArray)
 		{
-			if (slot != null)
+			LimbType limbType = slot.GetLimbType();
+
+			if (!_inventorySlots.ContainsKey(limbType))
 			{
-				_inventorySlots[slot.GetLimbType()] = slot;
+				_inventorySlots[limbType] = new List<InventorySlot>();
 			}
+
+			_inventorySlots[limbType].Add(slot);
 		}
 	}
 
@@ -22,15 +26,18 @@ public class InventoryData : MonoBehaviour
 	{
 		foreach (var state in limbStates)
 		{
-			if (_inventorySlots.TryGetValue(state.Key, out InventorySlot slot))
+			if (_inventorySlots.TryGetValue(state.Key, out List<InventorySlot> slots))
 			{
-				if (state.Value)
+				foreach (var slot in slots)
 				{
-					slot.Activate();
-				}
-				else
-				{
-					slot.Deactivate();
+					if (state.Value)
+					{
+						slot.Activate();
+					}
+					else
+					{
+						slot.Deactivate();
+					}
 				}
 			}
 		}

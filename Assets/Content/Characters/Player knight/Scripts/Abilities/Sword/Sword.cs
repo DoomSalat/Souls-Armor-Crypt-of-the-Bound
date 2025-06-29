@@ -1,160 +1,103 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Sword : MonoBehaviour, IKnockbackProvider
 {
-	private const float MinKnockbackMagnitude = 0.001f;
-
 	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private Rigidbody2DLocalAxisLimiter _localAxisLimiter;
-	[SerializeField, MinValue(0)] private float _knockbackForceMultiplier = 2f;
-
-	[Header("Follow deactivation")]
-	[SerializeField, MinValue(0)] private float _deactiveDamping = 1f;
-	[SerializeField, MinValue(0)] private float _followRadius = 2f;
-	[SerializeField, MinValue(0)] private float _springForce = 10f;
-	[SerializeField, MinValue(0)] private float _dampingForce = 5f;
-
-	private Rigidbody2D _rigidbody;
-	private Transform _parentPocket;
-	[ShowInInspector, ReadOnly] private Vector2 _pocketOffset;
-	private float _currentSpeed;
-	private Vector2 _previousPosition;
-	private float _rigidbodySaveDampingLinear;
-
-	private bool _isActive;
-	private bool _isInRadius;
-	private bool _hasValidOffset;
-
-	private void Awake()
-	{
-		_rigidbody = GetComponent<Rigidbody2D>();
-		_parentPocket = transform.parent;
-		_rigidbodySaveDampingLinear = _rigidbody.linearDamping;
-	}
+	[SerializeField, Required] private SwordFollow _followSystem;
+	[SerializeField, Required] private SwordParticleController _particleController;
+	[SerializeField, Required] private SwordSpeedTracker _speedTracker;
+	[SerializeField, Required] private SwordKnockbackProvider _knockbackProvider;
+	[SerializeField, Required] private SwordWallBounce _wallBounce;
 
 	private void Start()
 	{
 		DeactiveFollow();
 	}
 
+	private void OnEnable()
+	{
+		_followSystem.EnteredRadius += OnEnteredRadius;
+		_followSystem.ExitedRadius += OnExitedRadius;
+		_wallBounce.OnBounceEnded += OnBounceEnded;
+	}
+
+	private void OnDisable()
+	{
+		_followSystem.EnteredRadius -= OnEnteredRadius;
+		_followSystem.ExitedRadius -= OnExitedRadius;
+		_wallBounce.OnBounceEnded -= OnBounceEnded;
+	}
+
 	private void FixedUpdate()
 	{
-		if (_isActive)
+		if (_wallBounce.IsBouncing)
 		{
-			Vector2 currentPosition = _rigidbody.position;
-			_currentSpeed = (currentPosition - _previousPosition).magnitude / Time.fixedDeltaTime;
-			_previousPosition = currentPosition;
+			_followSystem.UpdatePocketOffset();
+			return;
+		}
 
+		if (_followSystem.IsActive)
+		{
+			_speedTracker.UpdateSpeed();
 			_localAxisLimiter.UpdateLimit();
 		}
 		else
 		{
-			UpdateFollowPosition();
+			_followSystem.UpdateFollowPosition();
 		}
-	}
-
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, _followRadius);
 	}
 
 	public void UpdateLook(Transform target)
 	{
-		if (_isActive)
+		if (_followSystem.IsActive)
 			_eye.LookAt(target.position);
 		else
 			_eye.LookAt();
 	}
 
-	private void UpdateFollowPosition()
-	{
-		float sqrDistanceToPocket = (transform.position - _parentPocket.position).sqrMagnitude;
-		bool wasInRadius = _isInRadius;
-		_isInRadius = sqrDistanceToPocket <= _followRadius * _followRadius;
-
-		if (_isInRadius && wasInRadius == false)
-		{
-			UpdatePocketOffset();
-		}
-
-		if (_isInRadius && _hasValidOffset)
-		{
-			Vector2 targetPosition = _parentPocket.TransformPoint(_pocketOffset);
-			Vector2 currentPosition = _rigidbody.position;
-			Vector2 direction = (targetPosition - currentPosition).normalized;
-			float distance = Vector2.Distance(currentPosition, targetPosition);
-
-			Vector2 springForce = direction * distance * _springForce;
-			Vector2 dampingForce = -_rigidbody.linearVelocity * _dampingForce;
-
-			_rigidbody.AddForce(springForce + dampingForce, ForceMode2D.Force);
-		}
-	}
-
-	private void UpdatePocketOffset()
-	{
-		_pocketOffset = _parentPocket.InverseTransformPoint(transform.position);
-		_hasValidOffset = true;
-	}
-
 	public void ActiveFollow()
 	{
-		_isActive = true;
-		_rigidbody.linearDamping = _rigidbodySaveDampingLinear;
-		_rigidbody.linearVelocity = Vector2.zero;
-
-		transform.SetParent(null);
-		_hasValidOffset = false;
+		_followSystem.Activate();
+		_speedTracker.ResetSpeed();
+		_particleController.EnableParticles();
 	}
 
 	public void DeactiveFollow()
 	{
-		_isActive = false;
-		_rigidbody.linearDamping = _deactiveDamping;
-		_rigidbody.linearVelocity = Vector2.zero;
+		_followSystem.Deactivate();
+		_speedTracker.ResetSpeed();
 
-		transform.SetParent(_parentPocket);
-
-		if (_isInRadius)
+		if (_followSystem.IsInRadius == false)
 		{
-			UpdatePocketOffset();
-		}
-		else
-		{
-			_hasValidOffset = false;
+			_particleController.DisableParticles();
 		}
 	}
 
 	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)
 	{
-		direction = CalculateKnockbackDirection(hitCollider, other);
-		force = CalculateKnockbackForce();
+		_knockbackProvider.CalculateKnockback(hitCollider, other, out direction, out force);
 	}
 
-	private Vector2 CalculateKnockbackDirection(Collider2D hitCollider, Collider2D other)
+	private void OnEnteredRadius()
 	{
-		Vector2 closestPointOnEnemy = other.ClosestPoint(hitCollider.bounds.center);
-		Vector2 closestPointOnWeapon = hitCollider.ClosestPoint(other.bounds.center);
-		Vector2 knockbackDirection = (closestPointOnWeapon - closestPointOnEnemy).normalized;
+		_particleController.EnableParticles();
+	}
 
-		if (knockbackDirection.sqrMagnitude < MinKnockbackMagnitude)
+	private void OnExitedRadius()
+	{
+		if (_followSystem.IsActive == false)
 		{
-			knockbackDirection = (other.bounds.center - hitCollider.bounds.center).normalized;
-
-			if (knockbackDirection.sqrMagnitude < MinKnockbackMagnitude)
-			{
-				knockbackDirection = _rigidbody.linearVelocity.normalized;
-			}
+			_particleController.DisableParticles();
 		}
-
-		return knockbackDirection;
 	}
 
-	private float CalculateKnockbackForce()
+	private void OnBounceEnded(float recoveryTime, Ease recoveryEase)
 	{
-		return _currentSpeed * _knockbackForceMultiplier;
+		_localAxisLimiter.SyncPosition();
+		_speedTracker.ResetSpeed();
 	}
 }

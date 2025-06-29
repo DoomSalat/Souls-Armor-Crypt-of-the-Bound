@@ -10,6 +10,7 @@ public class AbsorptionState : PlayerState
 	private readonly InputReader _inputReader;
 	private readonly PlayerLimbs _playerLimbs;
 	private readonly Transform _soulAbsorptionTarget;
+	private readonly AbsorptionCooldown _absorptionCooldown;
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
 	private bool _waitingForInventoryCompletion = false;
@@ -26,7 +27,8 @@ public class AbsorptionState : PlayerState
 							AbsorptionScope absorptionScope,
 							InputReader inputReader,
 							PlayerLimbs playerLimbs,
-							Transform soulAbsorptionTarget)
+							Transform soulAbsorptionTarget,
+							AbsorptionCooldown absorptionCooldown)
 	{
 		_animator = playerKnightAnimator;
 		_absorptionScopeController = absorptionScopeController;
@@ -35,6 +37,7 @@ public class AbsorptionState : PlayerState
 		_playerLimbs = playerLimbs;
 		_coroutineRunner = absorptionScopeController;
 		_soulAbsorptionTarget = soulAbsorptionTarget;
+		_absorptionCooldown = absorptionCooldown;
 	}
 
 	public override void Enter()
@@ -122,6 +125,11 @@ public class AbsorptionState : PlayerState
 
 	private void OnAbsorptionAnimationEnded()
 	{
+		if (_currentSoul != null)
+		{
+			_absorptionCooldown.StartCooldown();
+		}
+
 		AbsorptionCompleted?.Invoke();
 	}
 }

@@ -27,6 +27,11 @@ public class Rigidbody2DLocalAxisLimiter : MonoBehaviour
 		_lastPosition = correctedPosition;
 	}
 
+	public void SyncPosition()
+	{
+		_lastPosition = _rigidbody.position;
+	}
+
 	private Vector2 ApplyAxisSpeedFactors(Vector2 delta)
 	{
 		if (_localXSpeedFactor < DefaultSpeedFactor)

@@ -6,11 +6,12 @@ using UnityEngine;
 public class PlayerLimbs : MonoBehaviour
 {
 	[SerializeField, Required] private InventoryController _inventoryController;
+	[SerializeField, Required] private PlayerLimbsVisual _limbsVisual;
 
 	private Dictionary<LimbType, LimbInfo> _limbs;
 
 	public event System.Action Dead;
-	public event System.Action BodyLosted; // Когда тело потеряно, регенерация невозможна
+	public event System.Action BodyLosted; // When body lost, regeneration is impossible
 	public event System.Action ExtremitiesLosted;
 
 	public InventoryController InventoryController => _inventoryController;
@@ -60,10 +61,10 @@ public class PlayerLimbs : MonoBehaviour
 
 		if (availableExtremities.Count > 0)
 		{
-			var randomLimb = availableExtremities[UnityEngine.Random.Range(0, availableExtremities.Count)];
+			var randomLimb = availableExtremities[Random.Range(0, availableExtremities.Count)];
 			LoseLimb(randomLimb);
 
-			if (availableExtremities.Count == 1) // Если осталась одна конечность, то все конечности потеряны
+			if (availableExtremities.Count == 1)
 			{
 				ExtremitiesLosted?.Invoke();
 			}
@@ -75,7 +76,7 @@ public class PlayerLimbs : MonoBehaviour
 		{
 			LoseLimb(LimbType.Body);
 			BodyLosted?.Invoke();
-			Debug.Log("Тело потеряно! Регенерация заблокирована!");
+			Debug.Log("Body lost! Regeneration blocked!");
 
 			return;
 		}
@@ -86,7 +87,7 @@ public class PlayerLimbs : MonoBehaviour
 			Dead?.Invoke();
 		}
 
-		Debug.Log("Все конечности уже потеряны! Нанести урон невозможно!");
+		Debug.Log("All extremities lost! Cannot take damage!");
 	}
 
 	public void ResetToDefault()
@@ -101,12 +102,14 @@ public class PlayerLimbs : MonoBehaviour
 	{
 		if (_limbs[LimbType.Body].IsPresent == false)
 		{
-			Debug.LogWarning("Невозможно регенерировать конечность: тело потеряно!");
+			Debug.LogWarning("Cannot regenerate limb: body lost!");
 			return;
 		}
 
 		_limbs[limbType] = new LimbInfo(true, soulType);
-		Debug.Log($"Регенерировали {limbType} с душой {soulType}");
+		//Debug.Log($"Restore {limbType} with soul {soulType}");
+
+		_limbsVisual.PlayRestore(limbType);
 
 		DeactivateInventory();
 	}
@@ -114,7 +117,9 @@ public class PlayerLimbs : MonoBehaviour
 	private void LoseLimb(LimbType limbType)
 	{
 		_limbs[limbType] = new LimbInfo(false, SoulType.None);
-		Debug.Log($"Потеряли {limbType}");
+		Debug.Log($"Lose {limbType}");
+
+		_limbsVisual.PlayLose(limbType);
 	}
 
 	private List<LimbType> GetAvailableExtremities()
