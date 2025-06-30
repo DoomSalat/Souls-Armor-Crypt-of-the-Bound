@@ -1,4 +1,9 @@
-public interface IPoolReference
+using UnityEngine;
+
+namespace CustomPool
 {
-	void SetPool(object pool);
+	public interface IPoolReference
+	{
+		void SetPool(object pool);
+	}
 }

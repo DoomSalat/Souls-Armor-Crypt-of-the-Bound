@@ -745,6 +745,7 @@ MonoBehaviour:
   _swordController: {fileID: 7149026230936474766}
   _limbsState: {fileID: 8954013109217506612}
   _playerKnightAnimator: {fileID: 7560247265248486455}
+  _playerHandsTarget: {fileID: 8745585745961318219}
   _soulAbsorptionTarget: {fileID: 2460850382712382977}
 --- !u!114 &5863840458522902431
 MonoBehaviour:
@@ -1110,6 +1111,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.70000017
       objectReference: {fileID: 0}
+    - target: {fileID: 4290306109832187303, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: _playerLimbs
+      value: 
+      objectReference: {fileID: 8954013109217506612}
+    - target: {fileID: 4290306109832187303, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: _swordController
+      value: 
+      objectReference: {fileID: 7149026230936474766}
     - target: {fileID: 5410323701280131581, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_Name
       value: Knight (anim)
@@ -1169,6 +1178,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5718aa118af4842b3aed7adc11dfe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8745585745961318219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4290306109832187303, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+  m_PrefabInstance: {fileID: 4815673236811561708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3cfa93a1da11248a6ca0bb032c2b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5818068842105436808

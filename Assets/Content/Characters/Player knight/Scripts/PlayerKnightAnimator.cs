@@ -21,6 +21,11 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_animator.SetFloat(PlayerKnightAnimatorData.Params.direction, direction);
 	}
 
+	public int GetDirection()
+	{
+		return Mathf.RoundToInt(_animator.GetFloat(PlayerKnightAnimatorData.Params.direction));
+	}
+
 	public void SetMove(bool isMove)
 	{
 		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, isMove);

@@ -5,13 +5,16 @@ using DG.Tweening;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Sword : MonoBehaviour, IKnockbackProvider
 {
-	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private Rigidbody2DLocalAxisLimiter _localAxisLimiter;
 	[SerializeField, Required] private SwordFollow _followSystem;
 	[SerializeField, Required] private SwordParticleController _particleController;
 	[SerializeField, Required] private SwordSpeedTracker _speedTracker;
 	[SerializeField, Required] private SwordKnockbackProvider _knockbackProvider;
 	[SerializeField, Required] private SwordWallBounce _wallBounce;
+	[SerializeField, Required] private SwordAttackZoneScaler _attackZoneScaler;
+
+	[Header("Visualization")]
+	[SerializeField, Required] private SmoothLook _eye;
 
 	private void Start()
 	{
@@ -75,6 +78,16 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		{
 			_particleController.DisableParticles();
 		}
+	}
+
+	public void SetAttackZoneScale(int scaleIndex)
+	{
+		_attackZoneScaler.SetAttackZoneScale(scaleIndex);
+	}
+
+	public int GetAttackZoneScaleCount()
+	{
+		return _attackZoneScaler.GetScaleCount();
 	}
 
 	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)

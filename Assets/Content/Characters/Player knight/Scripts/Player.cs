@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, IDamageable
 	[SerializeField, Required] private SwordController _swordController;
 	[SerializeField, Required] private PlayerLimbs _limbsState;
 	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
+	[SerializeField, Required] private PlayerHandsTarget _playerHandsTarget;
 	[Space]
 	[SerializeField, Required] private Transform _soulAbsorptionTarget;
 
@@ -30,7 +31,8 @@ public class Player : MonoBehaviour, IDamageable
 										_playerKnightAnimator,
 										_limbsState,
 										_soulAbsorptionTarget,
-										_absorptionCooldown);
+										_absorptionCooldown,
+										_playerHandsTarget);
 	}
 
 	private void Start()

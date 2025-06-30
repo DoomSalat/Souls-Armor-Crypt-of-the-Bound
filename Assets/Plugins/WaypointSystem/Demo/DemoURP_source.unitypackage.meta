@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 50a0fd672b98dd04cae35081925dd302
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 317953
+  packageName: Waypoint Marker System
+  packageVersion: 2.0
+  assetPath: Assets/WaypointSystem/Demo/DemoURP_source.unitypackage
+  uploadId: 755843

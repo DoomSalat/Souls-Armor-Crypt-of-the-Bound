@@ -1,6 +1,9 @@
-public interface IPool
+namespace CustomPool
 {
-	void ReturnToPool();
-	void OnSpawnFromPool();
-	void OnReturnToPool();
+	public interface IPool
+	{
+		void ReturnToPool();
+		void OnSpawnFromPool();
+		void OnReturnToPool();
+	}
 }

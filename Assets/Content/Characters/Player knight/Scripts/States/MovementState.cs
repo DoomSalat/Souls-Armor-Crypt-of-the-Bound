@@ -7,13 +7,15 @@ public class MovementState : PlayerState
 	private readonly SwordController _swordController;
 	private readonly InputReader _inputReader;
 	private readonly PlayerKnightAnimator _playerKnightAnimator;
+	private readonly PlayerHandsTarget _playerHandsTarget;
 
-	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader)
+	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader, PlayerHandsTarget playerHandsTarget)
 	{
 		_inputMove = inputMove;
 		_swordController = swordController;
 		_inputReader = inputReader;
 		_playerKnightAnimator = playerKnightAnimator;
+		_playerHandsTarget = playerHandsTarget;
 	}
 
 	public override void Enter()
@@ -24,6 +26,7 @@ public class MovementState : PlayerState
 	public override void Update()
 	{
 		UpdateAnimationDirection();
+		_playerHandsTarget.UpdateLook();
 	}
 
 	public override void FixedUpdate()
@@ -40,11 +43,13 @@ public class MovementState : PlayerState
 	public override void OnMousePerformed(InputAction.CallbackContext context)
 	{
 		_swordController.Activate();
+		_playerHandsTarget.ActivateLook();
 	}
 
 	public override void OnMouseCanceled(InputAction.CallbackContext context)
 	{
 		_swordController.Deactivate();
+		_playerHandsTarget.DeactivateLook();
 	}
 
 	private void HandleMovement()

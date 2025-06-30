@@ -6,6 +6,7 @@ public class SwordCollision : MonoBehaviour
 	[SerializeField, Required] private SwordSpeedTracker _speedTracker;
 	[SerializeField, Required] private Collider2D _hitBox;
 	[SerializeField, Required] private Collider2D _wall;
+	[SerializeField, Required] private SwordBladeVisualizer _bladeVisualizer;
 
 	[Space]
 	[SerializeField, MinValue(0f)] private float _speedThreshold = 5f;
@@ -15,6 +16,7 @@ public class SwordCollision : MonoBehaviour
 	private void Start()
 	{
 		UpdateCollisionObjects();
+		UpdateBladeVisualization();
 	}
 
 	private void FixedUpdate()
@@ -30,6 +32,7 @@ public class SwordCollision : MonoBehaviour
 		if (wasHighSpeed != _isHighSpeed)
 		{
 			UpdateCollisionObjects();
+			UpdateBladeVisualization();
 		}
 	}
 
@@ -40,5 +43,16 @@ public class SwordCollision : MonoBehaviour
 
 		if (_wall != null)
 			_wall.enabled = !_isHighSpeed;
+	}
+
+	private void UpdateBladeVisualization()
+	{
+		if (_bladeVisualizer == null)
+			return;
+
+		if (_isHighSpeed)
+			_bladeVisualizer.StartMovingVisualization();
+		else
+			_bladeVisualizer.StopMovingVisualization();
 	}
 }

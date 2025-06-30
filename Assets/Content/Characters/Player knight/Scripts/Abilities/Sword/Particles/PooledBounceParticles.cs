@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using CustomPool;
 
 [RequireComponent(typeof(ParticleSystem))]
 public class PooledBounceParticles : MonoBehaviour, IPool, IPoolReference

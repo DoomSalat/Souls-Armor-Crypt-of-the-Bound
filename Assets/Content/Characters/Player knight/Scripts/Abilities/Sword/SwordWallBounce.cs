@@ -109,17 +109,7 @@ public class SwordWallBounce : MonoBehaviour
 		Tween moveTween = _rigidbody.DOMove(targetPosition, _bounceDuration)
 			.SetEase(_bounceEase);
 
-		float rotationDirection;
-		if (Mathf.Abs(bounceDirection.y) > Mathf.Abs(bounceDirection.x))
-		{
-			rotationDirection = bounceDirection.y > 0 ? -1f : 1f;
-		}
-		else
-		{
-			rotationDirection = bounceDirection.x > 0 ? 1f : -1f;
-		}
-
-		float rotationAmount = rotationDirection * Random.Range(_rotationSpeed * Half, _rotationSpeed);
+		float rotationAmount = CalculateRotationAmount(wall, bounceDirection);
 
 		Tween rotateTween = transform.DORotate(Vector3.forward * rotationAmount, _bounceDuration, RotateMode.LocalAxisAdd)
 			.SetEase(_bounceEase);
@@ -153,6 +143,28 @@ public class SwordWallBounce : MonoBehaviour
 		}
 
 		return directionFromWall;
+	}
+
+	private float CalculateRotationAmount(Collider2D wall, Vector2 bounceDirection)
+	{
+		Vector2 swordCenter = _collider.bounds.center;
+		Vector2 impactPoint = wall.ClosestPoint(swordCenter);
+
+		Vector2 impactVector = impactPoint - swordCenter;
+		Vector2 localImpactVector = transform.InverseTransformDirection(impactVector);
+
+		float rotationDirection;
+
+		if (localImpactVector.y > 0)
+		{
+			rotationDirection = -1f;
+		}
+		else
+		{
+			rotationDirection = 1f;
+		}
+
+		return rotationDirection * _rotationSpeed;
 	}
 
 	private float CalculatePenetrationDepth(Collider2D wall)

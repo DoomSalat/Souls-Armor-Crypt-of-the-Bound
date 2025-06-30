@@ -27,11 +27,12 @@ public class PlayerStateMachine : MonoBehaviour
 								PlayerKnightAnimator playerKnightAnimator,
 								PlayerLimbs playerLimbs,
 								Transform soulAbsorptionTarget,
-								AbsorptionCooldown absorptionCooldown)
+								AbsorptionCooldown absorptionCooldown,
+								PlayerHandsTarget playerHandsTarget)
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
-			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader) },
+			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget) },
 			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) }
 		};
 
