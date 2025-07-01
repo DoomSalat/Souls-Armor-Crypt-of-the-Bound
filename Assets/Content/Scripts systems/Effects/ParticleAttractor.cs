@@ -171,6 +171,22 @@ public class ParticleAttractor : MonoBehaviour
 
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere(_target.position, _minDistance);
+
+		var main = _particleSystem.main;
+		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
+		{
+			Vector3 localTarget = transform.InverseTransformPoint(_target.position);
+			Vector3 scale = transform.lossyScale;
+			if (scale.x < 0) localTarget.x = -localTarget.x;
+			if (scale.y < 0) localTarget.y = -localTarget.y;
+			if (scale.z < 0) localTarget.z = -localTarget.z;
+
+			Vector3 worldLocalTarget = transform.TransformPoint(localTarget);
+
+			Gizmos.color = Color.green;
+			Gizmos.DrawWireCube(worldLocalTarget, Vector3.one * (GizmosCubeSize * 0.7f));
+			Gizmos.DrawLine(transform.position, worldLocalTarget);
+		}
 	}
 
 	[ContextMenu(nameof(Play))]
@@ -321,8 +337,10 @@ public class ParticleAttractor : MonoBehaviour
 	{
 		CheckAndResetParticleState(ref particle, particleIndex);
 
-		Vector3 particlePosition = GetParticleWorldPosition(particle);
-		Vector3 directionToTarget = targetPosition - particlePosition;
+		Vector3 particlePosition, localTargetPosition;
+		GetParticleAndTargetPositions(particle, targetPosition, out particlePosition, out localTargetPosition);
+
+		Vector3 directionToTarget = localTargetPosition - particlePosition;
 
 		Vector3 distanceVector = directionToTarget;
 		if (_ignoreZAxis)
@@ -333,14 +351,14 @@ public class ParticleAttractor : MonoBehaviour
 		float distanceToTarget = distanceVector.magnitude;
 
 		bool canStopWhenReached = _stopWhenTargetReachedDelay == 0 || (GetCurrentTime() - _playStartTime) >= _stopWhenTargetReachedDelay;
-		bool isInTargetZone = IsParticleInTargetZone(ref particle, targetPosition, distanceToTarget, particleIndex);
+		bool isInTargetZone = IsParticleInTargetZone(ref particle, localTargetPosition, distanceToTarget, particleIndex);
 
 		if (canStopWhenReached)
 		{
 			HandleTargetZoneLogic(ref particle, isInTargetZone, particleIndex);
 		}
 
-		HandleSlowdownLogic(ref particle, targetPosition, particleIndex);
+		HandleSlowdownLogic(ref particle, localTargetPosition, particleIndex);
 		HandleTrailFadeLogic(ref particle, particleIndex);
 
 		if (particleIndex < _particleData.Length)
@@ -351,7 +369,8 @@ public class ParticleAttractor : MonoBehaviour
 		if (ShouldSkipAttraction(particleIndex))
 			return;
 
-		if (distanceToTarget < _minDistance)
+		float adjustedMinDistance = GetScaleAdjustedRadius(_minDistance);
+		if (distanceToTarget < adjustedMinDistance)
 			return;
 
 		ApplyAttractionForce(ref particle, directionToTarget, distanceToTarget, particleIndex);
@@ -365,6 +384,41 @@ public class ParticleAttractor : MonoBehaviour
 			return transform.TransformPoint(particle.position);
 		}
 		return particle.position;
+	}
+
+	private void GetParticleAndTargetPositions(ParticleSystem.Particle particle, Vector3 worldTargetPosition, out Vector3 particlePosition, out Vector3 targetPosition)
+	{
+		var main = _particleSystem.main;
+
+		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
+		{
+			particlePosition = particle.position;
+			targetPosition = transform.InverseTransformPoint(worldTargetPosition);
+
+			Vector3 scale = transform.lossyScale;
+			if (scale.x < 0) targetPosition.x = -targetPosition.x;
+			if (scale.y < 0) targetPosition.y = -targetPosition.y;
+			if (scale.z < 0) targetPosition.z = -targetPosition.z;
+		}
+		else
+		{
+			particlePosition = particle.position;
+			targetPosition = worldTargetPosition;
+		}
+	}
+
+	private float GetScaleAdjustedRadius(float originalRadius)
+	{
+		var main = _particleSystem.main;
+
+		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
+		{
+			Vector3 scale = transform.lossyScale;
+			float avgScale = (Mathf.Abs(scale.x) + Mathf.Abs(scale.y) + Mathf.Abs(scale.z)) / 3f;
+			return originalRadius / avgScale;
+		}
+
+		return originalRadius;
 	}
 
 	private bool IsParticleInTargetZone(ref ParticleSystem.Particle particle, Vector3 targetPosition, float distanceToTarget, int particleIndex)
@@ -388,7 +442,9 @@ public class ParticleAttractor : MonoBehaviour
 					lineEnd.z = sphereCenter.z;
 				}
 
-				if (LineIntersectsSphere(lineStart, lineEnd, sphereCenter, _targetReachDistance))
+				float adjustedRadius = GetScaleAdjustedRadius(_targetReachDistance);
+
+				if (LineIntersectsSphere(lineStart, lineEnd, sphereCenter, adjustedRadius))
 				{
 					return true;
 				}
@@ -512,12 +568,6 @@ public class ParticleAttractor : MonoBehaviour
 		float attractionForce = CalculateAttractionForce(particle, distanceToTarget);
 		float safeDeltaTime = Mathf.Min(GetDeltaTime(), 0.05f);
 		Vector3 acceleration = finalDirection * attractionForce * safeDeltaTime;
-
-		var main = _particleSystem.main;
-		if (main.simulationSpace == ParticleSystemSimulationSpace.Local)
-		{
-			acceleration = transform.InverseTransformDirection(acceleration);
-		}
 
 		float frameIndependentDamping = 1f - Mathf.Pow(_damping, safeDeltaTime / DefaultUpdateInterval);
 		particle.velocity = Vector3.Lerp(particle.velocity, particle.velocity + acceleration, frameIndependentDamping);

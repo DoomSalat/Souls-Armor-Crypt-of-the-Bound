@@ -45403,6 +45403,42 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.42
       objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[0].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945642002215314800, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _attractionOverLifetime.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3926146615971301456, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.70000017
