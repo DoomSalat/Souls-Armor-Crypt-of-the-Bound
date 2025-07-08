@@ -1,5 +1,6 @@
 public enum LimbType
 {
+	None = -1,
 	Head,
 	Body,
 	LeftLeg,

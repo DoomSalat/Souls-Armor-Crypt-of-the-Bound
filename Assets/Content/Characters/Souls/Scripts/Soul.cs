@@ -3,7 +3,7 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Soul : MonoBehaviour, IDamageable
 {
 	[SerializeField] private Transform _target;
@@ -21,6 +21,8 @@ public class Soul : MonoBehaviour, IDamageable
 	[SerializeField, MinValue(0.01f)] private float _eyeKnockbackSpeedMultiplier = 3;
 
 	private Rigidbody2D _rigidbody;
+	private Collider2D _collider;
+
 	private WaitUntil _waitKnockStop;
 	private WaitForFixedUpdate _waitFixedKnockStop;
 
@@ -34,6 +36,7 @@ public class Soul : MonoBehaviour, IDamageable
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
+		_collider = GetComponent<Collider2D>();
 
 		_waitKnockStop = new WaitUntil(() => _rigidbody.linearVelocity.sqrMagnitude <= _stopThreshold);
 		_waitFixedKnockStop = new WaitForFixedUpdate();
@@ -105,6 +108,7 @@ public class Soul : MonoBehaviour, IDamageable
 
 		_hitBox.gameObject.SetActive(false);
 		_hurtBox.gameObject.SetActive(false);
+		_collider.enabled = false;
 		_targetFollower.enabled = false;
 
 		_isAttracted = true;
@@ -144,7 +148,6 @@ public class Soul : MonoBehaviour, IDamageable
 
 		_isDying = true;
 		_rigidbody.linearVelocity = Vector2.zero;
-
 		gameObject.SetActive(false);
 	}
 

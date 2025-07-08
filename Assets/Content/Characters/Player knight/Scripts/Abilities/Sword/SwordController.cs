@@ -46,6 +46,9 @@ public class SwordController : MonoBehaviour
 
 	public void Activate()
 	{
+		if (_isControlled)
+			return;
+
 		_springJoint.enabled = true;
 		_isControlled = true;
 		_sword.ActiveFollow();
@@ -53,6 +56,9 @@ public class SwordController : MonoBehaviour
 
 	public void Deactivate()
 	{
+		if (_isControlled == false)
+			return;
+
 		_sword.DeactiveFollow();
 		_isControlled = false;
 		_springJoint.enabled = false;

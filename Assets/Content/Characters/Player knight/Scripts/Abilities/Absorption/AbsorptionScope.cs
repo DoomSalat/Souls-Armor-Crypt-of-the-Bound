@@ -15,11 +15,13 @@ public class AbsorptionScope : MonoBehaviour
 	private void OnEnable()
 	{
 		_animator.TargetLooked += OnSoulTarget;
+		_animator.Hidden += OnHide;
 	}
 
 	private void OnDisable()
 	{
 		_animator.TargetLooked -= OnSoulTarget;
+		_animator.Hidden -= OnHide;
 	}
 
 	private void Start()
@@ -69,5 +71,10 @@ public class AbsorptionScope : MonoBehaviour
 	private void OnSoulTarget()
 	{
 		SoulTargeted?.Invoke();
+	}
+
+	private void OnHide()
+	{
+		Deactive();
 	}
 }

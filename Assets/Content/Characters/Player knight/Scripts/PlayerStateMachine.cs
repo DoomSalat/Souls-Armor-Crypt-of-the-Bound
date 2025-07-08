@@ -32,7 +32,7 @@ public class PlayerStateMachine : MonoBehaviour
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
-			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget) },
+			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs) },
 			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) }
 		};
 

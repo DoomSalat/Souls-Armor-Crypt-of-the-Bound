@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerKnightAnimator))]
@@ -18,16 +19,30 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	[SerializeField] private float _absorptionAttractorReachDistanceDeactive = 0.25f;
 	[SerializeField] private float _absorptionAttractorFadeOutTimeDeactive = 0.3f;
 
+	[Header("Fall legs")]
+	[SerializeField] private float _fallLegsDuration = 0.5f;
+	[SerializeField] private float _fallLegsHeight = 0.3f;
+
+	private float _currentHeight;
+	private Tween _fallLegsTween;
+
 	private ParticleAttractor _absorptionAttractor;
 
 	private void Awake()
 	{
 		_absorptionAttractor = _particleAbsorptionSwitcher.GetComponent<ParticleAttractor>();
+
+		_currentHeight = transform.localPosition.y;
 	}
 
 	private void Start()
 	{
 		DeactivateAbsorptionAttractor();
+	}
+
+	private void OnDestroy()
+	{
+		_fallLegsTween?.Kill();
 	}
 
 	public void PlayAbsorptionBody()
@@ -84,5 +99,18 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	public void DeactivateAbsorptionAttractor()
 	{
 		_absorptionAttractor.SetTarget(null);
+	}
+
+	public void PlayFallLegs()
+	{
+		_fallLegsTween?.Kill();
+		_fallLegsTween = transform.DOLocalMoveY(_fallLegsHeight, _fallLegsDuration)
+			.SetEase(Ease.OutBounce);
+	}
+
+	public void PlayGetUpLegs()
+	{
+		_fallLegsTween?.Kill();
+		transform.localPosition = new Vector3(transform.localPosition.x, _currentHeight, transform.localPosition.z);
 	}
 }

@@ -13,6 +13,8 @@ public class PlayerLimbs : MonoBehaviour
 	public event System.Action Dead;
 	public event System.Action BodyLosted; // When body lost, regeneration is impossible
 	public event System.Action ExtremitiesLosted;
+	public event System.Action LegsLosted;
+	public event System.Action LegsRestored;
 
 	public InventoryController InventoryController => _inventoryController;
 
@@ -98,6 +100,11 @@ public class PlayerLimbs : MonoBehaviour
 		}
 	}
 
+	public bool HasLegs()
+	{
+		return _limbs[LimbType.LeftLeg].IsPresent || _limbs[LimbType.RightLeg].IsPresent;
+	}
+
 	private void Regenerate(LimbType limbType, SoulType soulType)
 	{
 		if (_limbs[LimbType.Body].IsPresent == false)
@@ -106,10 +113,17 @@ public class PlayerLimbs : MonoBehaviour
 			return;
 		}
 
+		bool wasLegless = HasLegs() == false;
+
 		_limbs[limbType] = new LimbInfo(true, soulType);
 		//Debug.Log($"Restore {limbType} with soul {soulType}");
 
 		_limbsVisual.PlayRestore(limbType);
+
+		if (wasLegless && HasLegs() && (limbType == LimbType.LeftLeg || limbType == LimbType.RightLeg))
+		{
+			LegsRestored?.Invoke();
+		}
 
 		DeactivateInventory();
 	}
@@ -120,6 +134,11 @@ public class PlayerLimbs : MonoBehaviour
 		Debug.Log($"Lose {limbType}");
 
 		_limbsVisual.PlayLose(limbType);
+
+		if (HasLegs() == false)
+		{
+			LegsLosted?.Invoke();
+		}
 	}
 
 	private List<LimbType> GetAvailableExtremities()

@@ -50,6 +50,8 @@ public class Player : MonoBehaviour, IDamageable
 
 		_limbsState.Dead += HandleDeath;
 		_limbsState.BodyLosted += HandleBodyLoss;
+		_limbsState.LegsLosted += HandleLegsLoss;
+		_limbsState.LegsRestored += HandleLegsRestore;
 	}
 
 	private void OnDisable()
@@ -62,6 +64,8 @@ public class Player : MonoBehaviour, IDamageable
 
 		_limbsState.Dead -= HandleDeath;
 		_limbsState.BodyLosted -= HandleBodyLoss;
+		_limbsState.LegsLosted -= HandleLegsLoss;
+		_limbsState.LegsRestored -= HandleLegsRestore;
 	}
 
 	public void TakeDamage(DamageData damageData)
@@ -101,11 +105,23 @@ public class Player : MonoBehaviour, IDamageable
 
 	private void HandleDeath()
 	{
-		Debug.Log("Игрок умер!");
+		Debug.Log("Player died!");
 	}
 
 	private void HandleBodyLoss()
 	{
 
+	}
+
+	private void HandleLegsLoss()
+	{
+		Debug.Log("Player legs lost!");
+		_playerKnightAnimator.FallLegs();
+	}
+
+	private void HandleLegsRestore()
+	{
+		Debug.Log("Player legs restored!");
+		_playerKnightAnimator.GetUpLegs();
 	}
 }

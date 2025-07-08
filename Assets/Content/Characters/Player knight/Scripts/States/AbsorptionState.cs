@@ -38,6 +38,9 @@ public class AbsorptionState : PlayerState
 		_coroutineRunner = absorptionScopeController;
 		_soulAbsorptionTarget = soulAbsorptionTarget;
 		_absorptionCooldown = absorptionCooldown;
+
+		var mousePos = InputUtilits.GetMouseClampPosition();
+		Camera.main.ScreenToWorldPoint(mousePos);
 	}
 
 	public override void Enter()

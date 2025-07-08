@@ -11,7 +11,8 @@ public class SwordCollision : MonoBehaviour
 	[Space]
 	[SerializeField, MinValue(0f)] private float _speedThreshold = 5f;
 
-	[ShowInInspector, ReadOnly] private bool _isHighSpeed;
+	[ShowInInspector, ReadOnly] private float _currentSpeed;
+	private bool _isHighSpeed;
 
 	private void Start()
 	{
@@ -27,7 +28,8 @@ public class SwordCollision : MonoBehaviour
 	private void CheckSpeedAndUpdateCollision()
 	{
 		bool wasHighSpeed = _isHighSpeed;
-		_isHighSpeed = _speedTracker.CurrentSpeed >= _speedThreshold;
+		_currentSpeed = _speedTracker.CurrentSpeed;
+		_isHighSpeed = _currentSpeed >= _speedThreshold;
 
 		if (wasHighSpeed != _isHighSpeed)
 		{

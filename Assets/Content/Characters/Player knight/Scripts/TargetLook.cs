@@ -5,13 +5,15 @@ using UnityEngine.Events;
 
 public class TargetLook : MonoBehaviour
 {
+	private static readonly float DefaultZOffset = float.NaN;
+	private const float HalfAngle = 180f;
+	private const string AnimPrefix = "_rotation";
+
 	[SerializeField] private Vector2 _handFaceDirection = Vector2.right;
 
 	[Header("Animation Settings")]
 	[SerializeField, MinValue(0)] private float _rotationDuration = 0.3f;
-	[SerializeField, MinValue(0)] private float _positionDuration = 0.2f;
 	[SerializeField] private Ease _rotationEase = Ease.OutQuart;
-	[SerializeField] private Ease _positionEase = Ease.OutQuart;
 
 	[Header("Z Position Settings")]
 	[SerializeField] private float _activeZOffset = -0.01f;
@@ -53,7 +55,12 @@ public class TargetLook : MonoBehaviour
 		_target = target;
 	}
 
-	public void ActivateTracking(float customZOffset = 999f)
+	public void ActivateTracking()
+	{
+		ActivateTracking(DefaultZOffset);
+	}
+
+	public void ActivateTracking(float customZOffset)
 	{
 		_isTrackingActive = true;
 		AnimateToActivePosition(customZOffset);
@@ -88,17 +95,14 @@ public class TargetLook : MonoBehaviour
 
 	private void InitializeTweenId()
 	{
-		var instanceId = GetInstanceID().ToString();
-		_tweenId = $"TargetLook_{instanceId}";
+		_tweenId = $"{nameof(TargetLook)}_{GetInstanceID()}";
 	}
 
-	private void AnimateToActivePosition(float customZOffset = 999f)
+	private void AnimateToActivePosition(float customZOffset)
 	{
-		KillTweens();
-
 		var newPosition = _originalPosition;
 
-		if (customZOffset != 999f)
+		if (float.IsNaN(customZOffset) == false)
 		{
 			newPosition.z += customZOffset;
 		}
@@ -107,18 +111,14 @@ public class TargetLook : MonoBehaviour
 			newPosition.z += _activeZOffset;
 		}
 
-		_handTransform.DOLocalMove(newPosition, _positionDuration)
-			.SetEase(_positionEase)
-			.SetId(_tweenId);
+		_handTransform.localPosition = newPosition;
 	}
 
 	private void AnimateToOriginalTransform()
 	{
 		KillTweens();
 
-		_handTransform.DOLocalMove(_originalPosition, _positionDuration)
-			.SetEase(_positionEase)
-			.SetId(_tweenId);
+		_handTransform.localPosition = _originalPosition;
 
 		_handTransform.DOLocalRotateQuaternion(_originalRotation, _rotationDuration)
 			.SetEase(_rotationEase)
@@ -139,11 +139,11 @@ public class TargetLook : MonoBehaviour
 
 		if (isFlippedX && isFlippedY)
 		{
-			finalAngle = finalAngle + 180f;
+			finalAngle = finalAngle + HalfAngle;
 		}
 		else if (isFlippedX)
 		{
-			finalAngle = 180f - finalAngle;
+			finalAngle = HalfAngle - finalAngle;
 		}
 		else if (isFlippedY)
 		{
@@ -152,16 +152,16 @@ public class TargetLook : MonoBehaviour
 
 		var targetRotation = Quaternion.Euler(0, 0, finalAngle);
 
-		DOTween.Kill(_tweenId + "_rotation");
+		DOTween.Kill(_tweenId + AnimPrefix);
 
 		_handTransform.DOLocalRotateQuaternion(targetRotation, _rotationDuration)
 			.SetEase(_rotationEase)
-			.SetId(_tweenId + "_rotation");
+			.SetId(_tweenId + AnimPrefix);
 	}
 
 	private void KillTweens()
 	{
 		DOTween.Kill(_tweenId);
-		DOTween.Kill(_tweenId + "_rotation");
+		DOTween.Kill(_tweenId + AnimPrefix);
 	}
 }

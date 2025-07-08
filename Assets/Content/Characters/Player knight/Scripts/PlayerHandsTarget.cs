@@ -1,9 +1,9 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System;
 
 public class PlayerHandsTarget : MonoBehaviour
 {
-	[SerializeField, Required] private PlayerLimbs _playerLimbs;
 	[SerializeField, Required] private SwordController _swordController;
 	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
 
@@ -13,15 +13,8 @@ public class PlayerHandsTarget : MonoBehaviour
 	[SerializeField] private float _sideOffsetY = 1f;
 
 	private Transform _swordTransform;
-	private HandType _currentActiveHand = HandType.None;
+	private LimbType _currentActiveHand = LimbType.None;
 	private bool _isLogicActive;
-
-	private enum HandType
-	{
-		None,
-		Left,
-		Right
-	}
 
 	private enum Direction
 	{
@@ -36,9 +29,15 @@ public class PlayerHandsTarget : MonoBehaviour
 		_swordTransform = _swordController.transform;
 	}
 
+	public LimbType GetCurrentHand()
+	{
+		return DetermineNearestHand();
+	}
+
 	public void ActivateLook()
 	{
 		_isLogicActive = true;
+		UpdateHandControl();
 	}
 
 	public void DeactivateLook()
@@ -49,20 +48,14 @@ public class PlayerHandsTarget : MonoBehaviour
 
 	public void UpdateLook()
 	{
-		if (_isLogicActive && IsSwordControlActive())
+		if (_isLogicActive)
 		{
 			UpdateHandControl();
 		}
-		else if (_isLogicActive == false)
+		else
 		{
 			DeactivateHandControl();
 		}
-	}
-
-	private bool IsSwordControlActive()
-	{
-		var limbStates = _playerLimbs.LimbStates;
-		return limbStates[LimbType.LeftArm] && limbStates[LimbType.RightArm] && limbStates[LimbType.Sword];
 	}
 
 	private void UpdateHandControl()
@@ -73,7 +66,7 @@ public class PlayerHandsTarget : MonoBehaviour
 		{
 			SetActiveHand(nearestHand);
 		}
-		else if (_currentActiveHand != HandType.None)
+		else if (_currentActiveHand != LimbType.None)
 		{
 			UpdateActiveHandZPosition();
 		}
@@ -90,7 +83,7 @@ public class PlayerHandsTarget : MonoBehaviour
 		}
 	}
 
-	private HandType DetermineNearestHand()
+	private LimbType DetermineNearestHand()
 	{
 		var playerDirection = GetPlayerDirection();
 		var swordPosition = _swordTransform.position;
@@ -100,25 +93,30 @@ public class PlayerHandsTarget : MonoBehaviour
 		switch (playerDirection)
 		{
 			case Direction.Down:
-				return relativePosition.x > 0 ? HandType.Left : HandType.Right;
+				return relativePosition.x > 0 ? LimbType.RightArm : LimbType.LeftArm;
 
 			case Direction.Up:
-				return relativePosition.x > 0 ? HandType.Right : HandType.Left;
+				return relativePosition.x > 0 ? LimbType.LeftArm : LimbType.RightArm;
 
 			case Direction.Right:
-				return relativePosition.y > _sideOffsetY ? HandType.Left : HandType.Right;
+				return relativePosition.y > _sideOffsetY ? LimbType.RightArm : LimbType.LeftArm;
 
 			case Direction.Left:
-				return relativePosition.y > _sideOffsetY ? HandType.Right : HandType.Left;
+				return relativePosition.y > _sideOffsetY ? LimbType.LeftArm : LimbType.RightArm;
 
 			default:
-				return HandType.None;
+				return LimbType.None;
 		}
 	}
 
 	private float CalculateHandZOffset()
 	{
 		var playerDirection = GetPlayerDirection();
+
+		if (playerDirection == Direction.Up)
+		{
+			return 0f;
+		}
 
 		if (playerDirection != Direction.Left && playerDirection != Direction.Right)
 		{
@@ -127,12 +125,12 @@ public class PlayerHandsTarget : MonoBehaviour
 
 		var relativePosition = _swordTransform.position - transform.position;
 
-		if (playerDirection == Direction.Right && relativePosition.y > _sideOffsetY && _currentActiveHand == HandType.Left)
+		if (playerDirection == Direction.Right && relativePosition.y > _sideOffsetY && _currentActiveHand == LimbType.RightArm)
 		{
 			return 0f;
 		}
 
-		if (playerDirection == Direction.Left && relativePosition.y > _sideOffsetY && _currentActiveHand == HandType.Right)
+		if (playerDirection == Direction.Left && relativePosition.y > _sideOffsetY && _currentActiveHand == LimbType.LeftArm)
 		{
 			return 0f;
 		}
@@ -146,16 +144,16 @@ public class PlayerHandsTarget : MonoBehaviour
 		return (Direction)directionValue;
 	}
 
-	private void SetActiveHand(HandType newActiveHand)
+	private void SetActiveHand(LimbType newActiveHand)
 	{
-		if (_currentActiveHand != HandType.None)
+		if (_currentActiveHand != LimbType.None)
 		{
 			DeactivateCurrentHand();
 		}
 
 		_currentActiveHand = newActiveHand;
 
-		if (_currentActiveHand != HandType.None)
+		if (_currentActiveHand != LimbType.None)
 		{
 			ActivateCurrentHand();
 		}
@@ -178,8 +176,6 @@ public class PlayerHandsTarget : MonoBehaviour
 		}
 	}
 
-
-
 	private void DeactivateCurrentHand()
 	{
 		var handTracker = GetHandTracker(_currentActiveHand);
@@ -188,15 +184,15 @@ public class PlayerHandsTarget : MonoBehaviour
 
 	private void DeactivateHandControl()
 	{
-		if (_currentActiveHand != HandType.None)
+		if (_currentActiveHand != LimbType.None)
 		{
 			DeactivateCurrentHand();
-			_currentActiveHand = HandType.None;
+			_currentActiveHand = LimbType.None;
 		}
 	}
 
-	private TargetLook GetHandTracker(HandType handType)
+	private TargetLook GetHandTracker(LimbType limbType)
 	{
-		return handType == HandType.Left ? _leftHandTracker : _rightHandTracker;
+		return limbType == LimbType.LeftArm ? _leftHandTracker : _rightHandTracker;
 	}
 }

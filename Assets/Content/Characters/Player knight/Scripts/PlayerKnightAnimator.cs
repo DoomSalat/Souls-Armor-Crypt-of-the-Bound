@@ -1,11 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerKnightAnimator : MonoBehaviour
 {
+	private const float ShortMoveDuration = 0.005f;
+
 	[SerializeField] private PlayerKnightAnimatorEvents _events;
 
 	private Animator _animator;
+
+	private Coroutine _shortMoveRoutine;
+	private WaitForSecondsRealtime _shortMoveWait;
 
 	public event System.Action AbdorptionAnimationEnded;
 
@@ -14,6 +20,7 @@ public class PlayerKnightAnimator : MonoBehaviour
 	private void Awake()
 	{
 		_animator = GetComponent<Animator>();
+		_shortMoveWait = new WaitForSecondsRealtime(ShortMoveDuration);
 	}
 
 	public void SetDirection(int direction)
@@ -34,6 +41,16 @@ public class PlayerKnightAnimator : MonoBehaviour
 		{
 			DisallowStepMove();
 		}
+	}
+
+	public void PlayShortMove()
+	{
+		if (_shortMoveRoutine != null)
+		{
+			StopCoroutine(_shortMoveRoutine);
+		}
+
+		_shortMoveRoutine = StartCoroutine(PlayShortMoveCoroutine());
 	}
 
 	public void SetCapture(bool isCapture)
@@ -79,5 +96,22 @@ public class PlayerKnightAnimator : MonoBehaviour
 	public void DisallowStepMove()
 	{
 		IsStepMove = false;
+	}
+
+	public void FallLegs()
+	{
+		_events.PlayFallLegs();
+	}
+
+	public void GetUpLegs()
+	{
+		_events.PlayGetUpLegs();
+	}
+
+	private IEnumerator PlayShortMoveCoroutine()
+	{
+		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, true);
+		yield return _shortMoveWait;
+		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, false);
 	}
 }

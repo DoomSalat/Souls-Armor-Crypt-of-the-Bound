@@ -6,6 +6,7 @@ public class AbsorptionScopeAnimation : MonoBehaviour
 	private Animator _animator;
 
 	public event System.Action TargetLooked;
+	public event System.Action Hidden;
 
 	private void Awake()
 	{
@@ -41,6 +42,7 @@ public class AbsorptionScopeAnimation : MonoBehaviour
 	public void Hide()
 	{
 		gameObject.SetActive(false);
+		Hidden?.Invoke();
 
 		_animator.SetBool(AbsorptionScopeAnimationData.Params.IsTarget, false);
 		_animator.ResetTrigger(AbsorptionScopeAnimationData.Params.Dissapear);
