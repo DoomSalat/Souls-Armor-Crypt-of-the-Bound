@@ -35,6 +35,11 @@ public class InputMove : MonoBehaviour
 		_rigidbody.linearVelocity = _moveInput * _speed * speedMultiplier;
 	}
 
+	public void Move(Vector2 direction, float speedMultiplier = 1)
+	{
+		_rigidbody.linearVelocity = direction * _speed * speedMultiplier;
+	}
+
 	public void Stop()
 	{
 		_rigidbody.linearVelocity = Vector2.zero;

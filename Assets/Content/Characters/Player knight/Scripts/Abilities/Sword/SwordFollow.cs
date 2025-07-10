@@ -6,6 +6,7 @@ public class SwordFollow : MonoBehaviour
 {
 	[SerializeField, MinValue(0)] private float _deactiveDamping = 1f;
 	[SerializeField, MinValue(0)] private float _followRadius = 2f;
+	[SerializeField, MinValue(0)] private float _stopFollowRadius = 4f;
 	[SerializeField, MinValue(0)] private float _springForce = 6f;
 	[SerializeField, MinValue(0)] private float _dampingForce = 8f;
 
@@ -15,11 +16,11 @@ public class SwordFollow : MonoBehaviour
 	private float _rigidbodySaveDampingLinear;
 
 	private bool _isActive;
-	private bool _isInRadius;
+	private bool _isFollowing;
 	private bool _hasValidOffset;
 
 	public bool IsActive => _isActive;
-	public bool IsInRadius => _isInRadius;
+	public bool IsFollowing => _isFollowing;
 	public Vector2 PocketOffset => _pocketOffset;
 
 	public event System.Action EnteredRadius;
@@ -35,8 +36,11 @@ public class SwordFollow : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = Color.red;
+		Gizmos.color = Color.green;
 		Gizmos.DrawWireSphere(transform.position, _followRadius);
+
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, _stopFollowRadius);
 	}
 
 	public void UpdateFollowPosition()
@@ -45,20 +49,24 @@ public class SwordFollow : MonoBehaviour
 			return;
 
 		float sqrDistanceToPocket = (transform.position - _parentPocket.position).sqrMagnitude;
-		bool wasInRadius = _isInRadius;
-		_isInRadius = sqrDistanceToPocket <= _followRadius * _followRadius;
+		float followRadiusSqr = _followRadius * _followRadius;
+		float stopFollowRadiusSqr = _stopFollowRadius * _stopFollowRadius;
 
-		if (_isInRadius && wasInRadius == false)
+		bool wasFollowing = _isFollowing;
+
+		if (_isFollowing == false && sqrDistanceToPocket <= followRadiusSqr)
 		{
+			_isFollowing = true;
 			UpdatePocketOffset();
 			EnteredRadius?.Invoke();
 		}
-		else if (_isInRadius == false && wasInRadius == true)
+		else if (_isFollowing == true && sqrDistanceToPocket > stopFollowRadiusSqr)
 		{
+			_isFollowing = false;
 			ExitedRadius?.Invoke();
 		}
 
-		if (_isInRadius && _hasValidOffset)
+		if (_isFollowing && _hasValidOffset)
 		{
 			Vector2 targetPosition = _parentPocket.TransformPoint(_pocketOffset);
 			Vector2 currentPosition = _rigidbody.position;
@@ -90,7 +98,8 @@ public class SwordFollow : MonoBehaviour
 
 		transform.SetParent(_parentPocket);
 
-		if (_isInRadius)
+		float sqrDistanceToPocket = (transform.position - _parentPocket.position).sqrMagnitude;
+		if (sqrDistanceToPocket <= _followRadius * _followRadius)
 		{
 			UpdatePocketOffset();
 		}

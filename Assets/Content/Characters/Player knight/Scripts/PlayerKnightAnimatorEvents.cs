@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerKnightAnimatorEvents : MonoBehaviour
 {
 	[SerializeField] private ParticleSystem[] _particlesAbsorptionBody;
+	[SerializeField] private ParticleSystem[] _particlesHeadState;
 
 	[Header("Absorption main")]
 	[SerializeField] private ParticleSystemSwitcher _particleAbsorptionSwitcher;
@@ -38,6 +39,7 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	private void Start()
 	{
 		DeactivateAbsorptionAttractor();
+		StopHeadStateParticles();
 	}
 
 	private void OnDestroy()
@@ -112,5 +114,21 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	{
 		_fallLegsTween?.Kill();
 		transform.localPosition = new Vector3(transform.localPosition.x, _currentHeight, transform.localPosition.z);
+	}
+
+	public void PlayHeadStateParticles()
+	{
+		foreach (var particle in _particlesHeadState)
+		{
+			particle.gameObject.SetActive(true);
+		}
+	}
+
+	public void StopHeadStateParticles()
+	{
+		foreach (var particle in _particlesHeadState)
+		{
+			particle.gameObject.SetActive(false);
+		}
 	}
 }

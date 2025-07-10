@@ -10,5 +10,6 @@ public static class PlayerKnightAnimatorData
 		public static readonly int isCapture = Animator.StringToHash(nameof(isCapture));
 		public static readonly int abdorptionActive = Animator.StringToHash(nameof(abdorptionActive));
 		public static readonly int abdorptionDeactive = Animator.StringToHash(nameof(abdorptionDeactive));
+		public static readonly int headed = Animator.StringToHash(nameof(headed));
 	}
 }

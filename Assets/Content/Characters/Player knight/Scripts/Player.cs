@@ -19,6 +19,8 @@ public class Player : MonoBehaviour, IDamageable
 	private InputReader _inputReader;
 	private PlayerStateMachine _stateMachine;
 
+	private bool _isHead;
+
 	private void Awake()
 	{
 		_inputReader = _inputMove.InputReader;
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour, IDamageable
 		_inputReader.InputActions.Player.Mouse.performed += OnMousePerformed;
 		_inputReader.InputActions.Player.Mouse.canceled += OnMouseCanceled;
 
-		_absorptionScopeController.Activated += EnterAbsorptionState;
+		_absorptionScopeController.Activated += EnterAbsorptionStateClick;
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
 
 		_limbsState.Dead += HandleDeath;
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour, IDamageable
 		_inputReader.InputActions.Player.Mouse.performed -= OnMousePerformed;
 		_inputReader.InputActions.Player.Mouse.canceled -= OnMouseCanceled;
 
-		_absorptionScopeController.Activated -= EnterAbsorptionState;
+		_absorptionScopeController.Activated -= EnterAbsorptionStateClick;
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
 
 		_limbsState.Dead -= HandleDeath;
@@ -84,8 +86,24 @@ public class Player : MonoBehaviour, IDamageable
 		_stateMachine.EnterMovementState();
 	}
 
+	public void EnterMovementHeadState()
+	{
+		_stateMachine.EnterMovementHeadState();
+	}
+
+	private void EnterAbsorptionStateClick()
+	{
+		if (_isHead)
+			return;
+
+		EnterAbsorptionState();
+	}
+
 	private void OnMousePerformed(InputAction.CallbackContext context)
 	{
+		if (_isHead)
+			return;
+
 		ChooseCurrentState();
 		_stateMachine.OnMousePerformed(context);
 	}
@@ -110,18 +128,17 @@ public class Player : MonoBehaviour, IDamageable
 
 	private void HandleBodyLoss()
 	{
-
+		_isHead = true;
+		EnterMovementHeadState();
 	}
 
 	private void HandleLegsLoss()
 	{
-		Debug.Log("Player legs lost!");
 		_playerKnightAnimator.FallLegs();
 	}
 
 	private void HandleLegsRestore()
 	{
-		Debug.Log("Player legs restored!");
 		_playerKnightAnimator.GetUpLegs();
 	}
 }

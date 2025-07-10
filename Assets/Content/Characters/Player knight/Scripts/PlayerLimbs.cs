@@ -78,7 +78,6 @@ public class PlayerLimbs : MonoBehaviour
 		{
 			LoseLimb(LimbType.Body);
 			BodyLosted?.Invoke();
-			Debug.Log("Body lost! Regeneration blocked!");
 
 			return;
 		}
@@ -89,7 +88,6 @@ public class PlayerLimbs : MonoBehaviour
 			Dead?.Invoke();
 		}
 
-		Debug.Log("All extremities lost! Cannot take damage!");
 	}
 
 	public void ResetToDefault()
@@ -131,7 +129,7 @@ public class PlayerLimbs : MonoBehaviour
 	private void LoseLimb(LimbType limbType)
 	{
 		_limbs[limbType] = new LimbInfo(false, SoulType.None);
-		Debug.Log($"Lose {limbType}");
+		//Debug.Log($"Lose {limbType}");
 
 		_limbsVisual.PlayLose(limbType);
 

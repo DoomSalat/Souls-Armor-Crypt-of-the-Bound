@@ -56,7 +56,7 @@ namespace BlockAnimationSystem
 			ApplyAllChanges();
 		}
 
-		private void Update()
+		private void LateUpdate()
 		{
 			UpdateGroupNames();
 			ApplyAllChanges();

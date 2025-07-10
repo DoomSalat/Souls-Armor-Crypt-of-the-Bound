@@ -74,7 +74,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_followSystem.Deactivate();
 		_speedTracker.ResetSpeed();
 
-		if (_followSystem.IsInRadius == false)
+		if (_followSystem.IsFollowing == false)
 		{
 			_particleController.DisableParticles();
 		}

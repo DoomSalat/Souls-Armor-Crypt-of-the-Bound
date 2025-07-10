@@ -5,6 +5,14 @@ using UnityEngine;
 public class PlayerKnightAnimator : MonoBehaviour
 {
 	private const float ShortMoveDuration = 0.005f;
+	private const float NormalSpeed = 1.0f;
+	private const int DefaultDirection = 1;
+	private const int AbsorptionCaptureIndex = 1;
+
+	private const int DirectionDown = 1;
+	private const int DirectionUp = 2;
+	private const int DirectionLeft = 3;
+	private const int DirectionRight = 4;
 
 	[SerializeField] private PlayerKnightAnimatorEvents _events;
 
@@ -33,8 +41,23 @@ public class PlayerKnightAnimator : MonoBehaviour
 		return Mathf.RoundToInt(_animator.GetFloat(PlayerKnightAnimatorData.Params.direction));
 	}
 
+	public int GetDirectionIndex(Vector2 direction)
+	{
+		if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+		{
+			return direction.y > 0 ? DirectionUp : DirectionDown;
+		}
+		else
+		{
+			return direction.x > 0 ? DirectionRight : DirectionLeft;
+		}
+	}
+
 	public void SetMove(bool isMove)
 	{
+		if (_animator.GetBool(PlayerKnightAnimatorData.Params.isMove) == isMove)
+			return;
+
 		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, isMove);
 
 		if (isMove == false)
@@ -60,7 +83,7 @@ public class PlayerKnightAnimator : MonoBehaviour
 
 	public void AbdorptionActive()
 	{
-		SetDirection(1);
+		SetDirection(DefaultDirection);
 		SetMove(false);
 
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionActive);
@@ -70,9 +93,14 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_events.PlayAbsorptionBody();
 	}
 
+	public void PlayHeaded()
+	{
+		_animator.SetTrigger(PlayerKnightAnimatorData.Params.headed);
+	}
+
 	public void AbdorptionSoulsCapture()
 	{
-		_events.SwitchMainAbsorptionTo(1);
+		_events.SwitchMainAbsorptionTo(AbsorptionCaptureIndex);
 		_events.ActivateAbsorptionAttractor(true);
 	}
 
@@ -86,6 +114,16 @@ public class PlayerKnightAnimator : MonoBehaviour
 	{
 		AbdorptionAnimationEnded?.Invoke();
 		_events.StopAbsorptionBody();
+	}
+
+	public void SetSpeed(float speed)
+	{
+		_animator.speed = speed;
+	}
+
+	public void ResetSpeed()
+	{
+		SetSpeed(NormalSpeed);
 	}
 
 	public void AllowStepMove()
@@ -106,6 +144,16 @@ public class PlayerKnightAnimator : MonoBehaviour
 	public void GetUpLegs()
 	{
 		_events.PlayGetUpLegs();
+	}
+
+	public void PlayHeadStateParticles()
+	{
+		_events.PlayHeadStateParticles();
+	}
+
+	public void StopHeadStateParticles()
+	{
+		_events.StopHeadStateParticles();
 	}
 
 	private IEnumerator PlayShortMoveCoroutine()

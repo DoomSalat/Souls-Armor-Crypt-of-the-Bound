@@ -33,7 +33,8 @@ public class PlayerStateMachine : MonoBehaviour
 		_states = new Dictionary<System.Type, PlayerState>
 		{
 			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs) },
-			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) }
+			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) },
+			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader) }
 		};
 
 		StatesInitialized?.Invoke();
@@ -85,6 +86,11 @@ public class PlayerStateMachine : MonoBehaviour
 	public void EnterAbsorptionState()
 	{
 		SetState<AbsorptionState>();
+	}
+
+	public void EnterMovementHeadState()
+	{
+		SetState<MovementHeadState>();
 	}
 
 	private void SetState(PlayerState newState)

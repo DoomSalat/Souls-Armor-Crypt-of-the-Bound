@@ -53,8 +53,6 @@ public class PlayerLimbsVisual : MonoBehaviour
 
 		StopParticles(limbData);
 		LoseAnimation(limbData);
-
-		Debug.Log($"Playing lose animation for {limbType}");
 	}
 
 	public void PlayRestore(LimbType limbType)

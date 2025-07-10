@@ -958,6 +958,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 3697920619520812659, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+      propertyPath: _followRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697920619520812659, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+      propertyPath: _stopFollowRadius
+      value: 6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4043194614689393334, guid: 7374b60a3adf1b84394202db70569935, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.21165001
