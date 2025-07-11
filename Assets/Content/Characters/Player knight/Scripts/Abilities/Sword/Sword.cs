@@ -11,6 +11,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	[SerializeField, Required] private SwordSpeedTracker _speedTracker;
 	[SerializeField, Required] private SwordKnockbackProvider _knockbackProvider;
 	[SerializeField, Required] private SwordWallBounce _wallBounce;
+	[SerializeField, Required] private SwordPlayerDetector _playerDetector;
 	[SerializeField, Required] private SwordAttackZoneScaler _attackZoneScaler;
 
 	[Header("Visualization")]
@@ -23,15 +24,15 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 
 	private void OnEnable()
 	{
-		_followSystem.EnteredRadius += OnEnteredRadius;
-		_followSystem.ExitedRadius += OnExitedRadius;
+		_playerDetector.EnteredRadius += OnEnteredRadius;
+		_playerDetector.ExitedRadius += OnExitedRadius;
 		_wallBounce.OnBounceEnded += OnBounceEnded;
 	}
 
 	private void OnDisable()
 	{
-		_followSystem.EnteredRadius -= OnEnteredRadius;
-		_followSystem.ExitedRadius -= OnExitedRadius;
+		_playerDetector.EnteredRadius -= OnEnteredRadius;
+		_playerDetector.ExitedRadius -= OnExitedRadius;
 		_wallBounce.OnBounceEnded -= OnBounceEnded;
 	}
 
@@ -52,6 +53,8 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		{
 			_followSystem.UpdateFollowPosition();
 		}
+
+		ControllParticlesShow();
 	}
 
 	public void UpdateLook(Transform target)
@@ -66,18 +69,13 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	{
 		_followSystem.Activate();
 		_speedTracker.ResetSpeed();
-		_particleController.EnableParticles();
 	}
 
 	public void DeactiveFollow()
 	{
 		_followSystem.Deactivate();
 		_speedTracker.ResetSpeed();
-
-		if (_followSystem.IsFollowing == false)
-		{
-			_particleController.DisableParticles();
-		}
+		_followSystem.UpdatePocketOffset();
 	}
 
 	public void SetAttackZoneScale(int scaleIndex)
@@ -97,20 +95,29 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 
 	private void OnEnteredRadius()
 	{
-		_particleController.EnableParticles();
+		_followSystem.SetFollowingState(true);
 	}
 
 	private void OnExitedRadius()
 	{
-		if (_followSystem.IsActive == false)
-		{
-			_particleController.DisableParticles();
-		}
+		_followSystem.SetFollowingState(false);
 	}
 
 	private void OnBounceEnded(float recoveryTime, Ease recoveryEase)
 	{
 		_localAxisLimiter.SyncPosition();
 		_speedTracker.ResetSpeed();
+	}
+
+	private void ControllParticlesShow()
+	{
+		if (_followSystem.IsActive || _followSystem.IsFollowing)
+		{
+			_particleController.EnableParticles();
+		}
+		else
+		{
+			_particleController.DisableParticles();
+		}
 	}
 }

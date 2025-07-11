@@ -68,6 +68,11 @@ public class PlayerStateMachine : MonoBehaviour
 		return _states[typeof(T)] as T;
 	}
 
+	public bool IsCurrentState<T>() where T : PlayerState
+	{
+		return _currentState is T;
+	}
+
 	public void OnMousePerformed(InputAction.CallbackContext context)
 	{
 		_currentState?.OnMousePerformed(context);

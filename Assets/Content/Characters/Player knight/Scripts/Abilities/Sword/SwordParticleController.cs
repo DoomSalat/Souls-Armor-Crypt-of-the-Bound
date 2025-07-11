@@ -9,11 +9,17 @@ public class SwordParticleController : MonoBehaviour
 
 	public void EnableParticles()
 	{
+		if (IsPlaying)
+			return;
+
 		_controlledParticles.Play();
 	}
 
 	public void DisableParticles()
 	{
+		if (IsPlaying == false)
+			return;
+
 		_controlledParticles.Stop();
 	}
 }

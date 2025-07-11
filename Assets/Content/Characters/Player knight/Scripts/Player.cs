@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerStateMachine))]
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
 	[SerializeField, Required] private InputMove _inputMove;
 	[SerializeField, Required] private AbsorptionScopeController _absorptionScopeController;
@@ -14,22 +14,25 @@ public class Player : MonoBehaviour, IDamageable
 	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
 	[SerializeField, Required] private PlayerHandsTarget _playerHandsTarget;
 	[Space]
+	[SerializeField, Required] private PlayerInputHandler _inputHandler;
+	[SerializeField, Required] private PlayerDamage _damageHandler;
+	[Space]
 	[SerializeField, Required] private Transform _soulAbsorptionTarget;
 
-	private InputReader _inputReader;
 	private PlayerStateMachine _stateMachine;
-
-	private bool _isHead;
 
 	private void Awake()
 	{
-		_inputReader = _inputMove.InputReader;
 		_stateMachine = GetComponent<PlayerStateMachine>();
+
+		_damageHandler.Initialize(_limbsState, _playerKnightAnimator);
+		_inputHandler.Initialize(_stateMachine, _inputMove, _absorptionScopeController);
+
 		_stateMachine.InitializeStates(_inputMove,
 										_swordController,
 										_absorptionScopeController,
 										_absorptionScope,
-										_inputReader,
+										_inputMove.InputReader,
 										_playerKnightAnimator,
 										_limbsState,
 										_soulAbsorptionTarget,
@@ -44,66 +47,30 @@ public class Player : MonoBehaviour, IDamageable
 
 	private void OnEnable()
 	{
-		_inputReader.InputActions.Player.Mouse.performed += OnMousePerformed;
-		_inputReader.InputActions.Player.Mouse.canceled += OnMouseCanceled;
+		_inputHandler.MousePerformed += OnMousePerformed;
+		_inputHandler.MouseCanceled += OnMouseCanceled;
+		_inputHandler.AbsorptionActivated += OnAbsorptionActivated;
 
-		_absorptionScopeController.Activated += EnterAbsorptionStateClick;
+		_damageHandler.Dead += HandleDead;
+		_damageHandler.BodyLost += HandleBodyLost;
+
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
-
-		_limbsState.Dead += HandleDeath;
-		_limbsState.BodyLosted += HandleBodyLoss;
-		_limbsState.LegsLosted += HandleLegsLoss;
-		_limbsState.LegsRestored += HandleLegsRestore;
 	}
 
 	private void OnDisable()
 	{
-		_inputReader.InputActions.Player.Mouse.performed -= OnMousePerformed;
-		_inputReader.InputActions.Player.Mouse.canceled -= OnMouseCanceled;
+		_inputHandler.MousePerformed -= OnMousePerformed;
+		_inputHandler.MouseCanceled -= OnMouseCanceled;
+		_inputHandler.AbsorptionActivated -= OnAbsorptionActivated;
 
-		_absorptionScopeController.Activated -= EnterAbsorptionStateClick;
+		_damageHandler.Dead -= HandleDead;
+		_damageHandler.BodyLost -= HandleBodyLost;
+
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
-
-		_limbsState.Dead -= HandleDeath;
-		_limbsState.BodyLosted -= HandleBodyLoss;
-		_limbsState.LegsLosted -= HandleLegsLoss;
-		_limbsState.LegsRestored -= HandleLegsRestore;
-	}
-
-	public void TakeDamage(DamageData damageData)
-	{
-		Debug.Log($"Take damage: {gameObject.name}");
-		_limbsState.TakeDamage();
-	}
-
-	public void EnterAbsorptionState()
-	{
-		_stateMachine.EnterAbsorptionState();
-	}
-
-	public void EnterMovementState()
-	{
-		_stateMachine.EnterMovementState();
-	}
-
-	public void EnterMovementHeadState()
-	{
-		_stateMachine.EnterMovementHeadState();
-	}
-
-	private void EnterAbsorptionStateClick()
-	{
-		if (_isHead)
-			return;
-
-		EnterAbsorptionState();
 	}
 
 	private void OnMousePerformed(InputAction.CallbackContext context)
 	{
-		if (_isHead)
-			return;
-
 		ChooseCurrentState();
 		_stateMachine.OnMousePerformed(context);
 	}
@@ -121,24 +88,33 @@ public class Player : MonoBehaviour, IDamageable
 		_stateMachine.OnMouseCanceled(context);
 	}
 
-	private void HandleDeath()
+	private void OnAbsorptionActivated()
 	{
-		Debug.Log("Player died!");
+		EnterAbsorptionState();
 	}
 
-	private void HandleBodyLoss()
+	private void HandleDead()
 	{
-		_isHead = true;
+
+	}
+
+	private void HandleBodyLost()
+	{
 		EnterMovementHeadState();
 	}
 
-	private void HandleLegsLoss()
+	public void EnterAbsorptionState()
 	{
-		_playerKnightAnimator.FallLegs();
+		_stateMachine.EnterAbsorptionState();
 	}
 
-	private void HandleLegsRestore()
+	public void EnterMovementState()
 	{
-		_playerKnightAnimator.GetUpLegs();
+		_stateMachine.EnterMovementState();
+	}
+
+	public void EnterMovementHeadState()
+	{
+		_stateMachine.EnterMovementHeadState();
 	}
 }

@@ -630,6 +630,8 @@ GameObject:
   - component: {fileID: 5622260151226317109}
   - component: {fileID: 27753600235402605}
   - component: {fileID: 7457979793913768143}
+  - component: {fileID: 8425065640337170352}
+  - component: {fileID: 8251905907222872888}
   - component: {fileID: 5980012152104037873}
   - component: {fileID: 5863840458522902431}
   - component: {fileID: 6641814470964126569}
@@ -726,6 +728,30 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &8425065640337170352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850915946614116720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8532e41b524729548afbe43aa48ebfc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8251905907222872888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850915946614116720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486d0a8c5985ec4480370a3a3bde324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5980012152104037873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,6 +772,9 @@ MonoBehaviour:
   _limbsState: {fileID: 8954013109217506612}
   _playerKnightAnimator: {fileID: 7560247265248486455}
   _playerHandsTarget: {fileID: 8745585745961318219}
+  _inputHandler: {fileID: 8425065640337170352}
+  _damageHandler: {fileID: 8251905907222872888}
+  _stateMachine: {fileID: 5863840458522902431}
   _soulAbsorptionTarget: {fileID: 2460850382712382977}
 --- !u!114 &5863840458522902431
 MonoBehaviour:
@@ -1063,9 +1092,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5622260151226317109}
     m_Modifications:
+    - target: {fileID: 904706601250682828, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7983487
+      objectReference: {fileID: 0}
     - target: {fileID: 2094008054424960298, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_Name
       value: '[Target] Absorbation'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157888816037470469, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6021955
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157888816037470469, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.79834867
       objectReference: {fileID: 0}
     - target: {fileID: 2167419119238695007, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_LocalPosition.x
