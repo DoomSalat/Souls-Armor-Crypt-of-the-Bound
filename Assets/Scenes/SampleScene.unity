@@ -234,6 +234,10 @@ PrefabInstance:
       propertyPath: _durationAfterReturn
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2240984736122013345, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3391697509359365476, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.28
@@ -321,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_Name
       value: Soul (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -6044,6 +6052,10 @@ PrefabInstance:
       propertyPath: _durationAfterReturn
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2240984736122013345, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3391697509359365476, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.14
@@ -6131,6 +6143,10 @@ PrefabInstance:
     - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_Name
       value: Soul (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -6624,6 +6640,10 @@ PrefabInstance:
       propertyPath: _durationAfterReturn
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2240984736122013345, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3391697509359365476, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.14
@@ -6711,6 +6731,10 @@ PrefabInstance:
     - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_Name
       value: Soul (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -45129,7 +45153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2035647821
 Transform:
   m_ObjectHideFlags: 0
@@ -45286,6 +45310,10 @@ PrefabInstance:
       propertyPath: _durationAfterReturn
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2240984736122013345, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3391697509359365476, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.41
@@ -45328,7 +45356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5885745146485329820, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5957789021434574804, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: _target

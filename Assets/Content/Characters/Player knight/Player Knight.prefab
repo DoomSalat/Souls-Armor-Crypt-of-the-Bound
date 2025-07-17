@@ -774,8 +774,9 @@ MonoBehaviour:
   _playerHandsTarget: {fileID: 8745585745961318219}
   _inputHandler: {fileID: 8425065640337170352}
   _damageHandler: {fileID: 8251905907222872888}
-  _stateMachine: {fileID: 5863840458522902431}
   _soulAbsorptionTarget: {fileID: 2460850382712382977}
+  _bodyCollider: {fileID: 7457979793913768143}
+  _hurtBoxCollider: {fileID: 8400442654283922249}
 --- !u!114 &5863840458522902431
 MonoBehaviour:
   m_ObjectHideFlags: 0

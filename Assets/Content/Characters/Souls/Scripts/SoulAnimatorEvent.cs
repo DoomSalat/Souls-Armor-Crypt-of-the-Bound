@@ -11,7 +11,8 @@ public class SoulAnimatorEvent : MonoBehaviour
 	private Coroutine _deathExplosionRoutine;
 	private WaitForSeconds _waitParticleDeathEndDelay;
 
-	public event System.Action EndDeathExplosion;
+	public event System.Action DeathExplosionStarted;
+	public event System.Action DeathExplosionEnded;
 
 	private void Awake()
 	{
@@ -25,7 +26,7 @@ public class SoulAnimatorEvent : MonoBehaviour
 			StopCoroutine(_deathExplosionRoutine);
 		}
 
-		_deathExplosionRoutine = StartCoroutine(PlayDeathExplosionCoroutine());
+		_deathExplosionRoutine = StartCoroutine(DeathExplosion());
 	}
 
 	public void Reset()
@@ -33,11 +34,12 @@ public class SoulAnimatorEvent : MonoBehaviour
 		_deathExplosionRoutine = null;
 	}
 
-	private IEnumerator PlayDeathExplosionCoroutine()
+	private IEnumerator DeathExplosion()
 	{
+		DeathExplosionStarted?.Invoke();
 		_particleExplosion.Play();
 		yield return _waitParticleDeathEndDelay;
 
-		EndDeathExplosion?.Invoke();
+		DeathExplosionEnded?.Invoke();
 	}
 }

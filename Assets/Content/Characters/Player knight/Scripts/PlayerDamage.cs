@@ -43,13 +43,11 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 	public void TakeDamage(DamageData damageData)
 	{
-		Debug.Log($"Take damage: {gameObject.name}");
 		_limbsState.TakeDamage();
 	}
 
 	private void OnDead()
 	{
-		Debug.Log("Player died!");
 		Dead?.Invoke();
 	}
 

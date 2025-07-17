@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -124,6 +123,7 @@ public class ParticleReverseSystem : MonoBehaviour
 	private void ProcessParticles()
 	{
 		int count = _particleSystem.particleCount;
+
 		if (count == 0)
 		{
 			_isActive = false;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class PlayerStateMachine : MonoBehaviour
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
+			{ typeof(EmptyState), new EmptyState(inputMove) },
 			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs) },
 			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) },
 			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader) }
@@ -96,6 +98,11 @@ public class PlayerStateMachine : MonoBehaviour
 	public void EnterMovementHeadState()
 	{
 		SetState<MovementHeadState>();
+	}
+
+	public void EnterEmptyState()
+	{
+		SetState<EmptyState>();
 	}
 
 	private void SetState(PlayerState newState)

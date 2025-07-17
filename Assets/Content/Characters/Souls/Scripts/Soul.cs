@@ -11,47 +11,50 @@ public class Soul : MonoBehaviour, IDamageable
 	[SerializeField, Required] private TargetFollower _targetFollower;
 	[SerializeField, Required] private SoulAttractor _soulAttractor;
 	[SerializeField, Required] private SoulAnimator _soulAnimator;
-	[SerializeField, Required] private SoulAnimatorEvent _soulAnimatorEvent;
-	[SerializeField, Required] private SmoothLook _eye;
 	[SerializeField, Required] private HitBox _hitBox;
 	[SerializeField, Required] private HurtBox _hurtBox;
-	[SerializeField, MinValue(0)] private float _knockbackMultiplier = 5f;
-	[SerializeField, MinValue(0)] private float _maxKnockback = 100f;
-	[SerializeField, MinValue(0)] private float _stopThreshold = 0.01f;
-	[SerializeField, MinValue(0.01f)] private float _eyeKnockbackSpeedMultiplier = 3;
+
+	[Header("Knockback")]
+	[SerializeField, Required] private KnockbackReceiver _knockbackReceiver;
+	[SerializeField, MinValue(0)] private float _attackKnockbackForce = 10f;
 
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
 
-	private WaitUntil _waitKnockStop;
-	private WaitForFixedUpdate _waitFixedKnockStop;
-
 	private bool _isDead = false;
-	private bool _isDying = false;
 	private bool _isAttracted = false;
 	private bool _isEndAttraction = false;
-	private Vector3 _lockDeadEyePos;
 	private event System.Action _attractionCompleted;
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_collider = GetComponent<Collider2D>();
-
-		_waitKnockStop = new WaitUntil(() => _rigidbody.linearVelocity.sqrMagnitude <= _stopThreshold);
-		_waitFixedKnockStop = new WaitForFixedUpdate();
 	}
 
 	private void OnEnable()
 	{
 		_soulAttractor.AttractionCompleted += OnAttractionCompletedInternal;
-		_soulAnimatorEvent.EndDeathExplosion += OnEndDeathExplosion;
+
+		_soulAnimator.DeathExplosionStarted += OnStartDeathExplosion;
+		_soulAnimator.DeathExplosionEnded += OnEndDeathExplosion;
+
+		_hitBox.TargetHitted += OnHitTarget;
 	}
 
 	private void OnDisable()
 	{
 		_soulAttractor.AttractionCompleted -= OnAttractionCompletedInternal;
-		_soulAnimatorEvent.EndDeathExplosion -= OnEndDeathExplosion;
+
+		_soulAnimator.DeathExplosionStarted -= OnStartDeathExplosion;
+		_soulAnimator.DeathExplosionEnded -= OnEndDeathExplosion;
+
+		_hitBox.TargetHitted -= OnHitTarget;
+	}
+
+	private void OnStartDeathExplosion()
+	{
+		_rigidbody.linearVelocity = Vector2.zero;
 	}
 
 	private void OnEndDeathExplosion()
@@ -61,16 +64,6 @@ public class Soul : MonoBehaviour, IDamageable
 
 	private void Update()
 	{
-		if (_isDying == false)
-		{
-			if (_isDead == false)
-				_eye.LookAt(_rigidbody.linearVelocity);
-			else
-			{
-				_eye.LookAt(_lockDeadEyePos, _eyeKnockbackSpeedMultiplier);
-			}
-		}
-
 		if (_isAttracted)
 		{
 			if (_isEndAttraction == false)
@@ -92,23 +85,19 @@ public class Soul : MonoBehaviour, IDamageable
 
 	public void TakeDamage(DamageData damageData)
 	{
-		Debug.Log($"Take damage: {gameObject.name}");
-
 		_isDead = true;
 		_hitBox.gameObject.SetActive(false);
 		_hurtBox.gameObject.SetActive(false);
 
-		ApplyKnockback(damageData);
-		StartCoroutine(WaitForStop());
+		_knockbackReceiver.ApplyKnockback(damageData);
+		DieAnimation();
 	}
 
 	public void StartAttraction(Transform target, Action AttractionCompleted)
 	{
 		_attractionCompleted = AttractionCompleted;
 
-		_hitBox.gameObject.SetActive(false);
-		_hurtBox.gameObject.SetActive(false);
-		_collider.enabled = false;
+		DisableCollisions();
 		_targetFollower.enabled = false;
 
 		_isAttracted = true;
@@ -130,39 +119,58 @@ public class Soul : MonoBehaviour, IDamageable
 		_attractionCompleted = null;
 	}
 
-	private void ApplyKnockback(DamageData damageData)
+	private void OnHitTarget(Collider2D targetCollider, DamageData damageData)
 	{
-		_rigidbody.linearVelocity = Vector2.zero;
+		if (_isDead || _isAttracted)
+			return;
 
-		if (damageData.KnockbackForce > 0)
+		Vector3 targetPosition = targetCollider.transform.position;
+		_knockbackReceiver.ApplyKnockbackFromPosition(targetPosition, _attackKnockbackForce);
+
+		StartCoroutine(DisableTargetFollowerTemporarily());
+	}
+
+	private IEnumerator DisableTargetFollowerTemporarily()
+	{
+		_targetFollower.enabled = false;
+
+		while (_knockbackReceiver.IsKnockedBack)
 		{
-			float knockback = Mathf.Min(damageData.KnockbackForce * _knockbackMultiplier, _maxKnockback);
-
-			_rigidbody.AddForce(damageData.KnockbackDirection * damageData.KnockbackForce * _knockbackMultiplier, ForceMode2D.Impulse);
+			yield return null;
 		}
+
+		if (_isDead == false && _isAttracted == false)
+		{
+			_targetFollower.enabled = true;
+		}
+	}
+
+	private void DisableCollisions()
+	{
+		_hitBox.gameObject.SetActive(false);
+		_hurtBox.gameObject.SetActive(false);
+		_collider.enabled = false;
+	}
+
+	private void EnableCollisions()
+	{
+		_hitBox.gameObject.SetActive(true);
+		_hurtBox.gameObject.SetActive(true);
+		_collider.enabled = true;
+	}
+
+	private void DieAnimation()
+	{
+		DisableCollisions();
+		_targetFollower.enabled = false;
+
+		_soulAnimator.PlayDeath();
 	}
 
 	private void Dead()
 	{
-		Debug.Log($"{gameObject.name} is Dead.");
-
-		_isDying = true;
 		_rigidbody.linearVelocity = Vector2.zero;
+		_soulAnimator.Reset();
 		gameObject.SetActive(false);
-	}
-
-	private IEnumerator WaitForStop()
-	{
-		if (_knockbackMultiplier <= 0)
-		{
-			Dead();
-			yield break;
-		}
-
-		yield return _waitFixedKnockStop;
-		_lockDeadEyePos = _rigidbody.linearVelocity;
-		yield return _waitKnockStop;
-
-		Dead();
 	}
 }

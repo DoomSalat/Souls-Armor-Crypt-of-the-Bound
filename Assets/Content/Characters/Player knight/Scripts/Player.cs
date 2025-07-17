@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
 	[Space]
 	[SerializeField, Required] private Transform _soulAbsorptionTarget;
 
+	[Header("Colliders")]
+	[SerializeField, Required] private Collider2D _bodyCollider;
+	[SerializeField, Required] private HurtBox _hurtBoxCollider;
+
 	private PlayerStateMachine _stateMachine;
 
 	private void Awake()
@@ -69,6 +73,26 @@ public class Player : MonoBehaviour
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
 	}
 
+	public void EnterAbsorptionState()
+	{
+		_stateMachine.EnterAbsorptionState();
+	}
+
+	public void EnterMovementState()
+	{
+		_stateMachine.EnterMovementState();
+	}
+
+	public void EnterMovementHeadState()
+	{
+		_stateMachine.EnterMovementHeadState();
+	}
+
+	public void EnterEmptyState()
+	{
+		_stateMachine.EnterEmptyState();
+	}
+
 	private void OnMousePerformed(InputAction.CallbackContext context)
 	{
 		ChooseCurrentState();
@@ -88,6 +112,18 @@ public class Player : MonoBehaviour
 		_stateMachine.OnMouseCanceled(context);
 	}
 
+	private void DisableColliders()
+	{
+		_bodyCollider.enabled = false;
+		_hurtBoxCollider.gameObject.SetActive(false);
+	}
+
+	private void EnableColliders()
+	{
+		_bodyCollider.enabled = true;
+		_hurtBoxCollider.gameObject.SetActive(true);
+	}
+
 	private void OnAbsorptionActivated()
 	{
 		EnterAbsorptionState();
@@ -95,26 +131,12 @@ public class Player : MonoBehaviour
 
 	private void HandleDead()
 	{
-
+		DisableColliders();
+		EnterEmptyState();
 	}
 
 	private void HandleBodyLost()
 	{
 		EnterMovementHeadState();
-	}
-
-	public void EnterAbsorptionState()
-	{
-		_stateMachine.EnterAbsorptionState();
-	}
-
-	public void EnterMovementState()
-	{
-		_stateMachine.EnterMovementState();
-	}
-
-	public void EnterMovementHeadState()
-	{
-		_stateMachine.EnterMovementHeadState();
 	}
 }

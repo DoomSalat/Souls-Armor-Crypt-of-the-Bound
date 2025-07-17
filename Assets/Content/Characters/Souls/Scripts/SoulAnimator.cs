@@ -1,4 +1,3 @@
-using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,14 +6,40 @@ public class SoulAnimator : MonoBehaviour
 {
 	[SerializeField, Required] private AngularShake _angularShake;
 	[SerializeField, Required] private SmoothRotate _smoothRotate;
+	[SerializeField, Required] private SoulAnimatorEvent _soulAnimatorEvent;
 
 	private bool _isAbsorptionActive = false;
 
 	private Animator _animator;
 
+	public event System.Action DeathExplosionStarted;
+	public event System.Action DeathExplosionEnded;
+
 	private void Awake()
 	{
 		_animator = GetComponent<Animator>();
+	}
+
+	private void OnEnable()
+	{
+		_soulAnimatorEvent.DeathExplosionStarted += OnDeathExplosionStarted;
+		_soulAnimatorEvent.DeathExplosionEnded += OnDeathExplosionEnded;
+	}
+
+	private void OnDisable()
+	{
+		_soulAnimatorEvent.DeathExplosionStarted -= OnDeathExplosionStarted;
+		_soulAnimatorEvent.DeathExplosionEnded -= OnDeathExplosionEnded;
+	}
+
+	private void OnDeathExplosionStarted()
+	{
+		DeathExplosionStarted?.Invoke();
+	}
+
+	private void OnDeathExplosionEnded()
+	{
+		DeathExplosionEnded?.Invoke();
 	}
 
 	public void PlayDiscontinuity()
@@ -38,6 +63,9 @@ public class SoulAnimator : MonoBehaviour
 	public void PlayDeath()
 	{
 		_animator.Play(SoulAnimatorData.Params.Death);
+
+		_angularShake.Play();
+		_smoothRotate.ResetRotation();
 	}
 
 	public void Reset()

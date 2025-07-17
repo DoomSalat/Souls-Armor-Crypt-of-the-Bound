@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D), typeof(FactionTag))]
@@ -11,6 +12,8 @@ public class HitBox : MonoBehaviour
 	private Collider2D _collider;
 	private FactionTag _ownerFaction;
 	private IKnockbackProvider _knockbackProvider;
+
+	public event Action<Collider2D, DamageData> TargetHitted;
 
 	private void Awake()
 	{
@@ -57,6 +60,7 @@ public class HitBox : MonoBehaviour
 			);
 
 			hurtBox.ApplyDamage(damageData);
+			TargetHitted?.Invoke(other, damageData);
 		}
 	}
 
