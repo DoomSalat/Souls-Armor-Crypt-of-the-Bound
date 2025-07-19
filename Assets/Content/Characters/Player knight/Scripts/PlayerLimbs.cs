@@ -41,7 +41,7 @@ public class PlayerLimbs : MonoBehaviour
 
 		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
 		{
-			_limbs[limbType] = new LimbInfo(true, SoulType.None);
+			_limbs[limbType] = new LimbInfo(true, SoulType.Blue);
 		}
 	}
 
@@ -94,7 +94,8 @@ public class PlayerLimbs : MonoBehaviour
 	{
 		foreach (var limb in _limbs.Keys)
 		{
-			_limbs[limb] = new LimbInfo(true, SoulType.None);
+			// Reset all limbs with blue souls for testing
+			_limbs[limb] = new LimbInfo(true, SoulType.Blue);
 		}
 	}
 

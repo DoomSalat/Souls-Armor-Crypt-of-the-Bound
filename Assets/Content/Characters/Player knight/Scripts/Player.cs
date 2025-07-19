@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 	[Space]
 	[SerializeField, Required] private PlayerInputHandler _inputHandler;
 	[SerializeField, Required] private PlayerDamage _damageHandler;
+	[SerializeField, Required] private AbilityInitializer _abilityInitializer;
 	[Space]
 	[SerializeField, Required] private Transform _soulAbsorptionTarget;
 
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
 	{
 		_stateMachine = GetComponent<PlayerStateMachine>();
 
-		_damageHandler.Initialize(_limbsState, _playerKnightAnimator);
+		_damageHandler.Initialize(_limbsState, _playerKnightAnimator, _abilityInitializer);
 		_inputHandler.Initialize(_stateMachine, _inputMove, _absorptionScopeController);
 
 		_stateMachine.InitializeStates(_inputMove,

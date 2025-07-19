@@ -1,5 +1,12 @@
+using UnityEngine;
+
 public interface IAbility
 {
-	void Activate(Player player);
-	void Deactivate(Player player);
+	public bool HasVisualEffects { get; }
+
+	void Initialize();
+	void Activate();
+	void Deactivate();
+
+	void InitializeVisualEffects(Transform effectsParent);
 }

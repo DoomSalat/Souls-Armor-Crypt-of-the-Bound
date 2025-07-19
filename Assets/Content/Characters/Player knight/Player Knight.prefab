@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1128700583176244948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 566258248231469757}
+  m_Layer: 0
+  m_Name: Abilities soul
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &566258248231469757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128700583176244948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7038547055260695697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1734183935012821075
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +805,7 @@ MonoBehaviour:
   _playerHandsTarget: {fileID: 8745585745961318219}
   _inputHandler: {fileID: 8425065640337170352}
   _damageHandler: {fileID: 8251905907222872888}
+  _abilityInitializer: {fileID: 1028614110593521453}
   _soulAbsorptionTarget: {fileID: 2460850382712382977}
   _bodyCollider: {fileID: 7457979793913768143}
   _hurtBoxCollider: {fileID: 8400442654283922249}
@@ -933,6 +965,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377d63fac3b3a8542a4deb97a07b402e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7426938341995514048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5465794605480597828}
+  m_Layer: 0
+  m_Name: Damage body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5465794605480597828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7426938341995514048}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5080318798482343496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7583149857418652732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5080318798482343496}
+  m_Layer: 0
+  m_Name: Limbs effecs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5080318798482343496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583149857418652732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5465794605480597828}
+  m_Father: {fileID: 7038547055260695697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9036742837647860710
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +1037,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7038547055260695697}
+  - component: {fileID: 1028614110593521453}
   m_Layer: 0
   m_Name: Ability pocket
   m_TagString: Untagged
@@ -966,8 +1062,31 @@ Transform:
   - {fileID: 565088543649250528}
   - {fileID: 4666434745552530191}
   - {fileID: 7991172701810250863}
+  - {fileID: 566258248231469757}
+  - {fileID: 5080318798482343496}
   m_Father: {fileID: 5622260151226317109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028614110593521453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036742837647860710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b287bcd600bb7444af8b2ff4146f1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soulAbilityData:
+  - {fileID: 11400000, guid: 64f3772634cf81b4ebee00eb4682e761, type: 2}
+  _abilitySpawnParent: {fileID: 566258248231469757}
+  _headEffectsParent: {fileID: 0}
+  _bodyEffectsParent: {fileID: 5465794605480597828}
+  _leftArmEffectsParent: {fileID: 0}
+  _rightArmEffectsParent: {fileID: 0}
+  _leftLegEffectsParent: {fileID: 0}
+  _rightLegEffectsParent: {fileID: 0}
 --- !u!1001 &4596988974686164566
 PrefabInstance:
   m_ObjectHideFlags: 0
