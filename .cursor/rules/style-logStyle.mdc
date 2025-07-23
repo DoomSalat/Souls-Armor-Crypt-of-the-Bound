@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 name: Unity Code Style - Logging & Comments
 priority: 83
@@ -76,4 +76,24 @@ rules:
       
       ✅ Лучше писать комментарии только к сложной или неочевидной логике.
       Хорошо названные переменные и методы часто не нуждаются в комментариях.
+
+  # Запрет summary для публичных функций
+  - trigger:
+      regex: '///\s*<summary>[^{]*public\s+(?:\w+\s+)?\w+\s*\('
+    action: reject
+    message: |
+      ❌ Не писать summary для публичных функций!
+      
+      ❌ Плохо:
+      /// <summary>
+      /// Handles player movement
+      /// </summary>
+      public void Move(Vector2 direction)
+      
+      ✅ Хорошо:
+      // Используй обычные комментарии только для сложной логики
+      public void Move(Vector2 direction)
+      
+      Имя метода должно быть самодокументируемым.
+      Используй комментарии только для объяснения сложной или неочевидной логики.
 
