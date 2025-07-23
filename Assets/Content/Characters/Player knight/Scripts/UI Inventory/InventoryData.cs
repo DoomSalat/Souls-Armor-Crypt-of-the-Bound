@@ -22,7 +22,7 @@ public class InventoryData : MonoBehaviour
 		}
 	}
 
-	public void UpdateSlotsState(Dictionary<LimbType, bool> limbStates)
+	public void UpdateSlotsState(Dictionary<LimbType, LimbInfo> limbStates)
 	{
 		foreach (var state in limbStates)
 		{
@@ -30,9 +30,10 @@ public class InventoryData : MonoBehaviour
 			{
 				foreach (var slot in slots)
 				{
-					if (state.Value)
+					if (state.Value.IsPresent)
 					{
 						slot.Activate();
+						slot.SetItem(state.Value.SoulType);
 					}
 					else
 					{

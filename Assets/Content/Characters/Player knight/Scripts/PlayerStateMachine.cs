@@ -35,7 +35,7 @@ public class PlayerStateMachine : MonoBehaviour
 		{
 			{ typeof(EmptyState), new EmptyState(inputMove) },
 			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs) },
-			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown) },
+			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown, swordController) },
 			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader) }
 		};
 

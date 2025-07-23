@@ -45,7 +45,7 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 	public void TakeDamage(DamageData damageData)
 	{
-		if (_limbsState.LimbStates[LimbType.Body] == false)
+		if (_limbsState.LimbStates[LimbType.Body].IsPresent == false)
 		{
 			_limbsState.TakeDamage();
 			return;
@@ -61,7 +61,7 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 		_limbsState.TakeDamage();
 
-		if (ability != null && _limbsState.LimbStates[LimbType.Body])
+		if (ability != null && _limbsState.LimbStates[LimbType.Body].IsPresent)
 			ability.Activate();
 	}
 

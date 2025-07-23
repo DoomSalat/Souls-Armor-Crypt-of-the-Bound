@@ -226,6 +226,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Ability Absorption Scope Souled
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 0
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 10, y: 10, z: 10, w: 10}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d8841d585b0c81478aba36676b60f61
+      internalID: 901220663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -241,6 +263,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Ability Absorption Scope: 1414034567
+      Ability Absorption Scope Souled: 901220663
       Ability Scope: 4816431205329212710
       Marker: -596062541
       Player guard_0: 1737851302510637667

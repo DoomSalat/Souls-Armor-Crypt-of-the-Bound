@@ -59,7 +59,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 515ea2a39b7dd8c40af8419e0fe8542f, type: 2}
-  - {fileID: 2100000, guid: 462c7f050bf2b77418cc6fe852e0e970, type: 2}
+  - {fileID: 2100000, guid: a49de0e53fb06cc469dc5770e488f0e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5448,6 +5448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6516840665194775135}
   - component: {fileID: 9052679098303307441}
+  - component: {fileID: 6965340389062645367}
   m_Layer: 8
   m_Name: ISoul (Yellow)
   m_TagString: Untagged
@@ -5506,6 +5507,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &6965340389062645367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7484585964037301526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e34acc4062dcc347a593e07ca62339c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soulComponent: {fileID: 5957789021434574804}
 --- !u!1 &8320337604442209894
 GameObject:
   m_ObjectHideFlags: 0

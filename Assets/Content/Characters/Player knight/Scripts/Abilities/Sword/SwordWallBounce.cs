@@ -54,6 +54,11 @@ public class SwordWallBounce : MonoBehaviour
 		_collider.isTrigger = true;
 	}
 
+	private void Start()
+	{
+		_particleSpawner.SetSoulType(SoulType.Blue);
+	}
+
 	private void OnTriggerStay2D(Collider2D other)
 	{
 		if (_canBounce == false || IsWallLayer(other) == false)
@@ -66,6 +71,11 @@ public class SwordWallBounce : MonoBehaviour
 	{
 		_bounceSequence?.Kill();
 		DOTween.Kill(this);
+	}
+
+	public void UpdateSoulType(SoulType soulType)
+	{
+		_particleSpawner.SetSoulType(soulType);
 	}
 
 	private bool IsWallLayer(Collider2D collider)

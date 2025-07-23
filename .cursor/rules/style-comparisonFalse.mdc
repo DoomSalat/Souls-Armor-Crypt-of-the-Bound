@@ -1,0 +1,47 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Code Style - Boolean Comparisons
+priority: 82
+language: csharp
+
+rules:
+  # Разрешение явных булевых сравнений
+  - trigger:
+      regex: 'if\s*\(\s*\w+\s*==\s*(true|false)\s*\)'
+    action: ignore
+    message: |
+      ✅ Явные булевые сравнения РАЗРЕШЕНЫ!
+      
+      ✅ Допустимо: if (isWork == false)
+      ⚠️ НЕ исправляй на: if (!isWork)
+      
+      Явные сравнения повышают читаемость кода для новичков.
+      Не предлагай автоматические исправления таких конструкций.
+
+  # Разрешение булевых сравнений в других конструкциях
+  - trigger:
+      regex: '(while|for)\s*\([^)]*\w+\s*==\s*(true|false)[^)]*\)'
+    action: ignore
+    message: |
+      ✅ Явные булевые сравнения в циклах РАЗРЕШЕНЫ!
+      
+      ✅ Допустимо: while (isRunning == false)
+      ✅ Допустимо: for (int i = 0; isActive == false; i++)
+      
+      Не предлагай исправления на краткую форму.
+
+  # Разрешение булевых сравнений в тернарном операторе
+  - trigger:
+      regex: '\w+\s*==\s*(true|false)\s*\?\s*[^:]+\s*:\s*'
+    action: ignore
+    message: |
+      ✅ Явные булевые сравнения в тернарном операторе РАЗРЕШЕНЫ!
+      
+      ✅ Допустимо: result = isWork == false ? "Stopped" : "Running";
+      
+      Явная форма может быть более читаемой в сложных выражениях.
+
+

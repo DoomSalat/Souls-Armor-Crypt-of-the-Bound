@@ -11,6 +11,7 @@ public class AbsorptionState : PlayerState
 	private readonly PlayerLimbs _playerLimbs;
 	private readonly Transform _soulAbsorptionTarget;
 	private readonly AbsorptionCooldown _absorptionCooldown;
+	private readonly SwordController _swordController;
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
 	private bool _waitingForInventoryCompletion = false;
@@ -28,7 +29,8 @@ public class AbsorptionState : PlayerState
 							InputReader inputReader,
 							PlayerLimbs playerLimbs,
 							Transform soulAbsorptionTarget,
-							AbsorptionCooldown absorptionCooldown)
+							AbsorptionCooldown absorptionCooldown,
+							SwordController swordController)
 	{
 		_animator = playerKnightAnimator;
 		_absorptionScopeController = absorptionScopeController;
@@ -38,6 +40,7 @@ public class AbsorptionState : PlayerState
 		_coroutineRunner = absorptionScopeController;
 		_soulAbsorptionTarget = soulAbsorptionTarget;
 		_absorptionCooldown = absorptionCooldown;
+		_swordController = swordController;
 
 		var mousePos = InputUtilits.GetMouseClampPosition();
 		Camera.main.ScreenToWorldPoint(mousePos);
@@ -73,8 +76,6 @@ public class AbsorptionState : PlayerState
 	{
 		_currentSoul = soul;
 
-		//Debug.Log($"Soul founded: {soul}");
-
 		if (soul == null)
 		{
 			_animator.AbdorptionDeactive();
@@ -105,7 +106,7 @@ public class AbsorptionState : PlayerState
 		_absorptionScope.Hide();
 
 		TimeController.Instance.StopTime();
-		_playerLimbs.ActivateInventory();
+		_playerLimbs.ActivateInventory(_currentSoul.GetSoulType());
 
 		_waitingForInventoryCompletion = true;
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced += OnInventoryCompleted;
@@ -121,6 +122,11 @@ public class AbsorptionState : PlayerState
 	{
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
+
+		if (limbType == LimbType.Sword)
+		{
+			_swordController.SetSoulType(soulType);
+		}
 
 		TimeController.Instance.ResumeTime();
 		InventoryClosed?.Invoke();

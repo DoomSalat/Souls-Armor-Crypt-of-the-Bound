@@ -7,6 +7,7 @@ public class InventorySoul : MonoBehaviour, IDraggable
 {
 	[SerializeField, Required] private InventorySlot[] _allSlots;
 	[Space]
+	[SerializeField, Required] private SoulMaterialApplier _soulMaterialApplier;
 	[SerializeField] private SoulType _soulType;
 
 	private RectTransform _rectTransform;
@@ -27,7 +28,7 @@ public class InventorySoul : MonoBehaviour, IDraggable
 
 	public void OnDragStart()
 	{
-		// Можно добавить визуальные эффекты при начале перетаскивания
+
 	}
 
 	public void OnDrag(Vector3 position)
@@ -43,6 +44,12 @@ public class InventorySoul : MonoBehaviour, IDraggable
 		{
 			PlaceSoul(bestSlot.GetLimbType());
 		}
+	}
+
+	public void ApplySoul(SoulType soulType)
+	{
+		_soulType = soulType;
+		_soulMaterialApplier.ApplySoul(soulType);
 	}
 
 	private InventorySlot FindBestOverlappingSlot()

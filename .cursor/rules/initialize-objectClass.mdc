@@ -1,0 +1,173 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Component Initialization - RequiredComponent
+priority: 75
+language: csharp
+
+rules:
+  # Проверка наличия RequiredComponent для MonoBehaviour (кроме управляющих классов)
+  - trigger:
+      regex: 'class\s+(?!.*(?:Player|Manager|Controller|Handler|System))\w+\s*:\s*MonoBehaviour\s*\{(?![^}]*RequiredComponent)'
+    action: suggest
+    message: |
+      ⚠️ MonoBehaviour должен указывать зависимости через RequiredComponent!
+      
+      ✅ Добавь над классом:
+      [RequiredComponent(typeof(Rigidbody), typeof(Collider))]
+      public class EnemyMovement : MonoBehaviour
+      
+      ❌ Исключения: Player, Manager, Controller, Handler, System классы
+
+  # Проверка получения компонентов в Awake()
+  - trigger:
+      regex: 'RequiredComponent\([^)]+\)[^{]*class[^{]*MonoBehaviour[^{]*\{(?![^}]*Awake)'
+    action: suggest
+    message: |
+      ❌ Компоненты с RequiredComponent должны получаться в Awake()!
+      
+      ✅ Обязательно добавь:
+      private void Awake()
+      {
+          _rigidbody = GetComponent<Rigidbody>();
+          _collider = GetComponent<Collider>();
+      }
+
+  # Проверка кэширования компонентов как приватных полей
+  - trigger:
+      regex: 'RequiredComponent\(typeof\((\w+)\)\)[^{]*class[^{]*\{(?![^}]*private\s+\1\s+_)'
+    action: suggest
+    message: |
+      ❌ Компонент из RequiredComponent должен быть сохранён как приватное поле!
+      
+      ✅ Правильно:
+      [RequiredComponent(typeof(Rigidbody))]
+      public class Movement : MonoBehaviour 
+      {
+          private Rigidbody _rigidbody;
+          
+          private void Awake()
+          {
+              _rigidbody = GetComponent<Rigidbody>();
+          }
+      }
+
+  # Проверка RequiredComponent для 3D коллизий
+  - trigger:
+      regex: 'class[^{]*MonoBehaviour[^{]*\{[^}]*(?:OnTrigger|OnCollision)(?:Enter|Stay|Exit)(?!2D)[^}]*\}(?![^{]*RequiredComponent[^{]*Collider(?!2D))'
+    action: suggest
+    message: |
+      ❌ Методы коллизий требуют RequiredComponent(typeof(Collider))!
+      
+      ✅ Для OnTriggerEnter/OnCollisionEnter добавь:
+      [RequiredComponent(typeof(Collider))]
+      public class CollisionHandler : MonoBehaviour
+      {
+          private Collider _collider;
+          
+          private void Awake()
+          {
+              _collider = GetComponent<Collider>();
+          }
+          
+          private void OnTriggerEnter(Collider other) { }
+      }
+
+  # Проверка RequiredComponent для 2D коллизий
+  - trigger:
+      regex: 'class[^{]*MonoBehaviour[^{]*\{[^}]*(?:OnTrigger|OnCollision)(?:Enter|Stay|Exit)2D[^}]*\}(?![^{]*RequiredComponent[^{]*Collider2D)'
+    action: suggest
+    message: |
+      ❌ Методы 2D коллизий требуют RequiredComponent(typeof(Collider2D))!
+      
+      ✅ Для OnTriggerEnter2D/OnCollisionEnter2D добавь:
+      [RequiredComponent(typeof(Collider2D))]
+      public class Collision2DHandler : MonoBehaviour
+      {
+          private Collider2D _collider2D;
+          
+          private void Awake()
+          {
+              _collider2D = GetComponent<Collider2D>();
+          }
+          
+          private void OnTriggerEnter2D(Collider2D other) { }
+      }
+
+  # Проверка смешанного использования 2D и 3D коллизий
+  - trigger:
+      regex: 'class[^{]*\{[^}]*(?:OnTrigger|OnCollision)(?:Enter|Stay|Exit)(?!2D)[^}]*(?:OnTrigger|OnCollision)(?:Enter|Stay|Exit)2D'
+    action: reject
+    message: |
+      ❌ ЗАПРЕЩЕНО смешивать 2D и 3D коллизии в одном классе!
+      
+      ✅ Разделяй на отдельные классы:
+      • CollisionHandler3D - для OnTriggerEnter, OnCollisionEnter
+      • CollisionHandler2D - для OnTriggerEnter2D, OnCollisionEnter2D
+      
+      Unity 2D и 3D физика работают независимо!
+
+  # Проверка использования GetComponent в Update/FixedUpdate
+  - trigger:
+      regex: '(?:void\s+(?:Update|FixedUpdate|LateUpdate)\s*\(\s*\)[^}]*GetComponent\s*<)'
+    action: reject
+    message: |
+      ❌ ЗАПРЕЩЕНО использовать GetComponent в Update/FixedUpdate!
+      
+      ✅ Кэшируй компоненты в Awake():
+      
+      private Rigidbody _rigidbody;
+      
+      private void Awake()
+      {
+          _rigidbody = GetComponent<Rigidbody>();
+      }
+      
+      private void FixedUpdate()
+      {
+          _rigidbody.AddForce(force);  // Используй кэшированный
+      }
+
+  # Подсказка правильной структуры класса
+  - trigger:
+      code: ["RequiredComponent"]
+    action: suggest
+    message: |
+      ✅ Шаблон правильной инициализации:
+      
+      [RequiredComponent(typeof(Rigidbody), typeof(Collider))]
+      public class ComponentExample : MonoBehaviour 
+      {
+          private Rigidbody _rigidbody;
+          private Collider _collider;
+          
+          private void Awake()
+          {
+              _rigidbody = GetComponent<Rigidbody>();
+              _collider = GetComponent<Collider>();
+          }
+          
+          // Unity методы используют кэшированные компоненты
+          private void FixedUpdate()
+          {
+              _rigidbody.AddForce(Vector3.up);
+          }
+      }
+
+  # Проверка отсутствия null-проверок для RequiredComponent
+  - trigger:
+      regex: 'RequiredComponent[^{]*class[^{]*\{[^}]*(?:if\s*\([^)]*GetComponent[^)]*!=\s*null|GetComponent[^;]*?\?\.'
+    action: suggest
+    message: |
+      ⚠️ RequiredComponent гарантирует наличие компонента - null-проверки не нужны!
+      
+      ❌ Лишнее: if (_rigidbody != null)
+      ❌ Лишнее: _rigidbody?.AddForce()
+      ✅ Просто: _rigidbody.AddForce()
+      
+      RequiredComponent обеспечивает наличие компонента на объекте.
+
+
+

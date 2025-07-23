@@ -11,14 +11,21 @@ public class SpawnerBounceParticles : MonoBehaviour
 	[SerializeField, Min(1)] private int _poolSize = DefaultPoolSize;
 	[SerializeField] private bool _prewarmPool = true;
 
+	[Header("Soul Color Settings")]
+	[SerializeField] private bool _useSoulColors = true;
+	[SerializeField] private SoulColorConfig _soulColorConfig = new SoulColorConfig();
+
 	[Header("Debug")]
 	[ShowInInspector, ReadOnly] private int _activeParticles;
 	[ShowInInspector, ReadOnly] private int _pooledParticles;
+	[ShowInInspector, ReadOnly] private SoulType _currentSoulType = SoulType.None;
 
 	private ObjectPool<PooledBounceParticles> _particlePool;
+	private Color _currentColor;
 
 	public int ActiveParticles => _particlePool?.CountActive ?? 0;
 	public int PooledParticles => _particlePool?.CountInactive ?? 0;
+	public SoulType CurrentSoulType => _currentSoulType;
 
 	private void Awake()
 	{
@@ -65,15 +72,60 @@ public class SpawnerBounceParticles : MonoBehaviour
 		}
 
 		PooledBounceParticles particle = _particlePool.Get();
-		if (particle != null)
+
+		if (_useSoulColors)
 		{
-			particle.PlayEffect(impactPoint, wallNormal);
+			particle.SetColor(_currentColor);
 		}
+
+		particle.PlayEffect(impactPoint, wallNormal);
 	}
 
 	public void SpawnEffect(Vector3 position)
 	{
 		SpawnWallImpactEffect(position, Vector3.up);
+	}
+
+	public void SetSoulType(SoulType soulType)
+	{
+		if (_currentSoulType == soulType)
+			return;
+
+		_currentSoulType = soulType;
+
+		if (_useSoulColors == false)
+			return;
+
+		Color newColor = GetColorForSoulType(soulType);
+		SetColorForAllParticles(newColor);
+	}
+
+	public void SetColorForAllParticles(Color color)
+	{
+		if (_particlePool == null)
+			return;
+
+		_currentColor = color;
+
+		var allParticles = FindObjectsByType<PooledBounceParticles>(FindObjectsSortMode.None);
+		foreach (var particle in allParticles)
+		{
+			if (particle.transform.parent == transform)
+			{
+				particle.SetColor(color);
+			}
+		}
+	}
+
+	private Color GetColorForSoulType(SoulType soulType)
+	{
+		if (_soulColorConfig != null)
+		{
+			return _soulColorConfig.GetColor(soulType);
+		}
+
+		Debug.LogWarning($"[{name}] SoulColorConfig not found! Using current color.");
+		return _currentColor;
 	}
 
 	[ContextMenu(nameof(PrewarmPool))]
@@ -111,5 +163,10 @@ public class SpawnerBounceParticles : MonoBehaviour
 
 		_particlePool = new ObjectPool<PooledBounceParticles>();
 		_particlePool.Initialize(_wallImpactParticlePrefab, transform, _poolSize, _poolSize * 2, true);
+
+		if (_useSoulColors)
+		{
+			SetSoulType(_currentSoulType);
+		}
 	}
 }

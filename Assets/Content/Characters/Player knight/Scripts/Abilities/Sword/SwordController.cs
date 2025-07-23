@@ -64,6 +64,11 @@ public class SwordController : MonoBehaviour
 		_springJoint.enabled = false;
 	}
 
+	public void SetSoulType(SoulType soulType)
+	{
+		_sword.SetSoulType(soulType);
+	}
+
 	private void DisableSpring()
 	{
 		DOTween.Kill(_springRecoveryTweenId);

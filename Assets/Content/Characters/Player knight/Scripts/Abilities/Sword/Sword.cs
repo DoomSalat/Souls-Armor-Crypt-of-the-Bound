@@ -17,6 +17,9 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	[Header("Visualization")]
 	[SerializeField, Required] private SmoothLook _eye;
 
+	[Header("Soul Type")]
+	[ShowInInspector, ReadOnly] private SoulType _currentSoulType = SoulType.None;
+
 	private void Start()
 	{
 		DeactiveFollow();
@@ -91,6 +94,16 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)
 	{
 		_knockbackProvider.CalculateKnockback(hitCollider, other, out direction, out force);
+	}
+
+	public void SetSoulType(SoulType soulType)
+	{
+		if (_currentSoulType == soulType)
+			return;
+
+		_currentSoulType = soulType;
+
+		_wallBounce.UpdateSoulType(soulType);
 	}
 
 	private void OnEnteredRadius()

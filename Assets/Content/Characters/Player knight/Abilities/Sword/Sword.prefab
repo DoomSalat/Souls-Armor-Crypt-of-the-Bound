@@ -5018,7 +5018,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -8754366177758666983, guid: 42a4929c95fbe714db6b90a1e9cc2d85, type: 3}
-  m_Color: {r: 0.36078432, g: 0.7960785, b: 0.8352942, a: 0.29411766}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5192,6 +5192,13 @@ MonoBehaviour:
   _wallImpactParticlePrefab: {fileID: -4862837459720194556, guid: 6494df24e85e0e447847b93c91f50e7a, type: 3}
   _poolSize: 5
   _prewarmPool: 1
+  _useSoulColors: 1
+  _soulColorConfig:
+    _noneColor: {r: 1, g: 1, b: 1, a: 1}
+    _blueColor: {r: 0.33333334, g: 0.6313726, b: 0.65882355, a: 1}
+    _redColor: {r: 0.7433963, g: 0.27978513, b: 0.2005767, a: 1}
+    _greenColor: {r: 0.48909488, g: 0.65882355, b: 0.33333334, a: 1}
+    _purpleColor: {r: 0.47741434, g: 0.33333334, b: 0.65882355, a: 1}
 --- !u!1 &2781621544135332391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5211,6 +5218,7 @@ GameObject:
   - component: {fileID: 7303083717309329832}
   - component: {fileID: 1775377272352095187}
   - component: {fileID: 5131635120793849663}
+  - component: {fileID: 3865415694921030250}
   m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
@@ -5441,6 +5449,29 @@ MonoBehaviour:
   _springRecoveryEase: 5
   _particleSpawner: {fileID: 1456853427921914876}
   _spawnParticlesOnBounce: 1
+--- !u!114 &3865415694921030250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781621544135332391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a65b7d8578c464a8d036c3090c8ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderers:
+  - {fileID: 646491158204573537}
+  - {fileID: 3751381912095369015}
+  _particleSystems:
+  - _particleSystem: {fileID: 5025448571691535649}
+    _applyToTrail: 1
+  _images: []
+  _rawImages: []
+  _UIParticles: []
+  _currentSoulType: 0
+  _applyOnStart: 0
 --- !u!1 &6511940863131969537
 GameObject:
   m_ObjectHideFlags: 0

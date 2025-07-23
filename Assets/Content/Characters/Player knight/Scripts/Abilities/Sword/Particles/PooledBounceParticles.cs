@@ -14,6 +14,7 @@ public class PooledBounceParticles : MonoBehaviour, IPool, IPoolReference
 	[SerializeField] private float _defaultDirectionAngle = DefaultDirection;
 
 	private ParticleSystem _particleSystem;
+	private ParticleSystem.MainModule _mainModule;
 	private ObjectPool<PooledBounceParticles> _pool;
 	private Coroutine _returnToPoolCoroutine;
 	private WaitWhile _waitForParticlesFinish;
@@ -24,9 +25,8 @@ public class PooledBounceParticles : MonoBehaviour, IPool, IPoolReference
 	private void Awake()
 	{
 		_particleSystem = GetComponent<ParticleSystem>();
-
-		var main = _particleSystem.main;
-		main.playOnAwake = false;
+		_mainModule = _particleSystem.main;
+		_mainModule.playOnAwake = false;
 
 		_waitForParticlesFinish = new WaitWhile(() => _particleSystem.isPlaying);
 		_waitForFinishDelay = new WaitForSeconds(DefaultFinishDelay);
@@ -107,6 +107,15 @@ public class PooledBounceParticles : MonoBehaviour, IPool, IPoolReference
 	public void SetPool(object pool)
 	{
 		_pool = pool as ObjectPool<PooledBounceParticles>;
+	}
+
+	/// <summary>
+	/// Устанавливает цвет частиц
+	/// </summary>
+	/// <param name="color">Новый цвет частиц</param>
+	public void SetColor(Color color)
+	{
+		_mainModule.startColor = color;
 	}
 
 	private void AlignToSurfaceNormal(Vector3 surfaceNormal)

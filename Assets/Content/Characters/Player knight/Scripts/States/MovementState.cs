@@ -177,12 +177,12 @@ public class MovementState : PlayerState
 	private bool IsHandAvailable(LimbType limbType)
 	{
 		var limbStates = _playerLimbs.LimbStates;
-		return limbStates.ContainsKey(limbType) && limbStates[limbType];
+		return limbStates.ContainsKey(limbType) && limbStates[limbType].IsPresent;
 	}
 
 	private bool IsLegAvailable(LimbType legType)
 	{
-		var available = _playerLimbs.LimbStates.ContainsKey(legType) && _playerLimbs.LimbStates[legType];
+		var available = _playerLimbs.LimbStates.ContainsKey(legType) && _playerLimbs.LimbStates[legType].IsPresent;
 		return available;
 	}
 

@@ -1,0 +1,49 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Tags - No GameObject Tags
+priority: 80
+language: csharp
+
+rules:
+  # Блокировка всех методов работы с тегами
+  - trigger:
+      regex: 'GameObject\.(FindWithTag|FindGameObjectsWithTag)'
+    action: reject
+    message: |
+      ❌ Запрещено использовать теги GameObject!
+      
+      ✅ Используй RoleComponent:
+      if (obj.TryGetComponent<RoleComponent>(out var role) && role.IsEnemy)
+      {
+          /* логика */
+      }
+
+  - trigger:
+      regex: '\.CompareTag\s*\('
+    action: reject
+    message: |
+      ❌ Запрещено использовать CompareTag!
+      
+      ✅ Используй RoleComponent:
+      if (other.TryGetComponent<RoleComponent>(out var role) && role.IsPlayer)
+      {
+          /* логика */
+      }
+
+  # Подсказка при создании RoleComponent
+  - trigger:
+      code: ["RoleComponent"]
+    action: suggest
+    message: |
+      ✅ RoleComponent шаблон:
+      public class RoleComponent : MonoBehaviour 
+      {
+          [SerializeField] private RoleType _roleType;
+          
+          public bool IsPlayer => _roleType == RoleType.Player;
+          public bool IsEnemy => _roleType == RoleType.Enemy;
+          public RoleType RoleType => _roleType;
+      }

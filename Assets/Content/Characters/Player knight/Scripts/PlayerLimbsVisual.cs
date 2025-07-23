@@ -57,6 +57,9 @@ public class PlayerLimbsVisual : MonoBehaviour
 
 	public void PlayRestore(LimbType limbType)
 	{
+		if (limbType == LimbType.Sword)
+			return;
+
 		if (_limbsMap.TryGetValue(limbType, out LimbVisualData limbData) == false)
 		{
 			Debug.LogWarning($"Limb visual data not found for {limbType}");

@@ -1,28 +1,32 @@
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerSoulMaterial))]
 public class PlayerLimbs : MonoBehaviour
 {
 	[SerializeField, Required] private InventoryController _inventoryController;
 	[SerializeField, Required] private PlayerLimbsVisual _limbsVisual;
 
+	private PlayerSoulMaterial _soulMaterials;
+
 	private Dictionary<LimbType, LimbInfo> _limbs;
 
 	public event System.Action Dead;
-	public event System.Action BodyLosted; // When body lost, regeneration is impossible
+	public event System.Action BodyLosted;
 	public event System.Action ExtremitiesLosted;
 	public event System.Action LegsLosted;
 	public event System.Action LegsRestored;
 
 	public InventoryController InventoryController => _inventoryController;
 
-	public Dictionary<LimbType, bool> LimbStates => GetLimbStates();
+	public Dictionary<LimbType, LimbInfo> LimbStates => _limbs;
 
 	private void Awake()
 	{
 		Initialize();
+
+		_soulMaterials = GetComponent<PlayerSoulMaterial>();
 	}
 
 	private void OnEnable()
@@ -41,14 +45,16 @@ public class PlayerLimbs : MonoBehaviour
 
 		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
 		{
-			_limbs[limbType] = new LimbInfo(true, SoulType.Blue);
+			if (limbType != LimbType.None)
+			{
+				_limbs[limbType] = new LimbInfo(true, SoulType.Blue);
+			}
 		}
 	}
 
-	[ContextMenu(nameof(ActivateInventory))]
-	public void ActivateInventory()
+	public void ActivateInventory(SoulType soulType)
 	{
-		_inventoryController.Activate(LimbStates);
+		_inventoryController.Activate(LimbStates, soulType);
 	}
 
 	[ContextMenu(nameof(DeactivateInventory))]
@@ -119,6 +125,8 @@ public class PlayerLimbs : MonoBehaviour
 
 		_limbsVisual.PlayRestore(limbType);
 
+		_soulMaterials.Apply(limbType, soulType);
+
 		if (wasLegless && HasLegs() && (limbType == LimbType.LeftLeg || limbType == LimbType.RightLeg))
 		{
 			LegsRestored?.Invoke();
@@ -133,6 +141,8 @@ public class PlayerLimbs : MonoBehaviour
 		//Debug.Log($"Lose {limbType}");
 
 		_limbsVisual.PlayLose(limbType);
+
+		_soulMaterials.ResetLimb(limbType);
 
 		if (HasLegs() == false)
 		{
@@ -163,8 +173,5 @@ public class PlayerLimbs : MonoBehaviour
 		return extremities;
 	}
 
-	private Dictionary<LimbType, bool> GetLimbStates()
-	{
-		return _limbs.ToDictionary(pair => pair.Key, pair => pair.Value.IsPresent);
-	}
+
 }

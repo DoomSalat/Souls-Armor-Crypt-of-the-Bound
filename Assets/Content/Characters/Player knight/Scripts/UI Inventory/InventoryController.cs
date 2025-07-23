@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UI.Inventory;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class InventoryController : MonoBehaviour
@@ -8,14 +9,18 @@ public class InventoryController : MonoBehaviour
 	[SerializeField, Required] private InventoryData _inventoryData;
 	[SerializeField, Required] private InventoryAnimator _inventoryAnimator;
 	[SerializeField, Required] private InventorySoul _inventorySoul;
+	[SerializeField, Required] private LimbVisualization _limbVisualization;
 
 	private CanvasGroup _canvasGroup;
+
+	private RectTransform _soulRectTransform;
 
 	public InventorySoul InventorySoul => _inventorySoul;
 
 	private void Awake()
 	{
 		_canvasGroup = GetComponent<CanvasGroup>();
+		_soulRectTransform = _inventorySoul.GetComponent<RectTransform>();
 	}
 
 	public void Start()
@@ -33,7 +38,7 @@ public class InventoryController : MonoBehaviour
 		_inventoryAnimator.DeactivateAnimationEnded -= Disable;
 	}
 
-	public void Activate(Dictionary<LimbType, bool> limbStates)
+	public void Activate(Dictionary<LimbType, LimbInfo> limbStates, SoulType soulType)
 	{
 		gameObject.SetActive(true);
 		_canvasGroup.interactable = true;
@@ -41,6 +46,10 @@ public class InventoryController : MonoBehaviour
 		ResetSoulPosition();
 
 		_inventoryData.UpdateSlotsState(limbStates);
+		_inventorySoul.ApplySoul(soulType);
+
+		_limbVisualization.UpdateLimbVisualization(limbStates);
+
 		_inventoryAnimator.Activate();
 	}
 
@@ -62,11 +71,6 @@ public class InventoryController : MonoBehaviour
 
 	private void ResetSoulPosition()
 	{
-		RectTransform soulRectTransform = _inventorySoul.GetComponent<RectTransform>();
-
-		if (soulRectTransform != null)
-		{
-			soulRectTransform.anchoredPosition = Vector2.zero;
-		}
+		_soulRectTransform.anchoredPosition = Vector2.zero;
 	}
 }

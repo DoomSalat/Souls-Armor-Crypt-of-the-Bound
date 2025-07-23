@@ -32,7 +32,6 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	private void Awake()
 	{
 		_absorptionAttractor = _particleAbsorptionSwitcher.GetComponent<ParticleAttractor>();
-
 		_currentHeight = transform.localPosition.y;
 	}
 

@@ -1,0 +1,79 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Unity Code Style - Logging & Comments
+priority: 83
+language: csharp
+
+rules:
+  # Запрет русских символов в Debug.Log
+  - trigger:
+      regex: 'Debug\.(Log|LogWarning|LogError)\s*\([^)]*[а-яё][^)]*\)'
+    action: reject
+    message: |
+      ❌ Все логи должны быть написаны НА АНГЛИЙСКОМ!
+      
+      ❌ Плохо: Debug.Log("Игрок умер");
+      ✅ Хорошо: Debug.Log("Player died");
+      
+      ❌ Плохо: Debug.LogError("Ошибка инициализации");
+      ✅ Хорошо: Debug.LogError("Initialization failed");
+
+  # Запрет русских символов в других видах логирования
+  - trigger:
+      regex: '(Console\.(WriteLine|Write)|print)\s*\([^)]*[а-яё][^)]*\)'
+    action: reject
+    message: |
+      ❌ Все виды логирования должны быть НА АНГЛИЙСКОМ!
+      
+      ❌ Плохо: print("Началась игра");
+      ✅ Хорошо: print("Game started");
+
+  # Запрет summary без прямых указаний
+  - trigger:
+      regex: '///\s*<summary>'
+    action: reject
+    message: |
+      ❌ Не писать summary без прямых указаний!
+      
+      Удали автоматически сгенерированные комментарии summary.
+      Пиши только самое важное или пояснения к неочевидной логике.
+
+  # Запрет region без прямых указаний
+  - trigger:
+      regex: '#region|#endregion'
+    action: reject
+    message: |
+      ❌ Не использовать region без прямых указаний!
+      
+      Убери автоматически сгенерированные region блоки.
+      Структурируй код через правильную организацию методов и классов.
+
+  # Запрет избыточных комментариев
+  - trigger:
+      regex: '//\s*(Start is called|Update is called|Awake is called|OnEnable is called)'
+    action: reject
+    message: |
+      ❌ Не писать очевидные комментарии!
+      
+      ❌ Плохо: // Start is called before the first frame update
+      ❌ Плохо: // Update is called once per frame
+      
+      Удали автоматически сгенерированные комментарии Unity.
+      Пиши только важные пояснения к неочевидной логике.
+
+  # Запрет избыточного комментирования простых операций
+  - trigger:
+      regex: '//\s*(Initialize|Create|Set|Get)\s+\w+'
+    action: suggest
+    message: |
+      ⚠️ Избегай очевидных комментариев к простым операциям!
+      
+      ❌ Избыточно: // Initialize player health
+                   _health = maxHealth;
+      
+      ✅ Лучше писать комментарии только к сложной или неочевидной логике.
+      Хорошо названные переменные и методы часто не нуждаются в комментариях.
+
