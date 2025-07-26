@@ -18,6 +18,8 @@ public class PlayerLimbs : MonoBehaviour
 	public event System.Action LegsLosted;
 	public event System.Action LegsRestored;
 
+	public event System.Action<LimbType> LimbStateChanged;
+
 	public InventoryController InventoryController => _inventoryController;
 
 	public Dictionary<LimbType, LimbInfo> LimbStates => _limbs;
@@ -100,7 +102,6 @@ public class PlayerLimbs : MonoBehaviour
 	{
 		foreach (var limb in _limbs.Keys)
 		{
-			// Reset all limbs with blue souls for testing
 			_limbs[limb] = new LimbInfo(true, SoulType.Blue);
 		}
 	}
@@ -119,13 +120,11 @@ public class PlayerLimbs : MonoBehaviour
 		}
 
 		bool wasLegless = HasLegs() == false;
-
 		_limbs[limbType] = new LimbInfo(true, soulType);
-		//Debug.Log($"Restore {limbType} with soul {soulType}");
 
 		_limbsVisual.PlayRestore(limbType);
-
 		_soulMaterials.Apply(limbType, soulType);
+		LimbStateChanged?.Invoke(limbType);
 
 		if (wasLegless && HasLegs() && (limbType == LimbType.LeftLeg || limbType == LimbType.RightLeg))
 		{
@@ -138,11 +137,10 @@ public class PlayerLimbs : MonoBehaviour
 	private void LoseLimb(LimbType limbType)
 	{
 		_limbs[limbType] = new LimbInfo(false, SoulType.None);
-		//Debug.Log($"Lose {limbType}");
 
 		_limbsVisual.PlayLose(limbType);
-
 		_soulMaterials.ResetLimb(limbType);
+		LimbStateChanged?.Invoke(limbType);
 
 		if (HasLegs() == false)
 		{

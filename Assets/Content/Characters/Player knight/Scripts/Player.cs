@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
 	{
 		_stateMachine = GetComponent<PlayerStateMachine>();
 
+		_abilityInitializer.Initialize(_limbsState);
 		_damageHandler.Initialize(_limbsState, _playerKnightAnimator, _abilityInitializer);
 		_inputHandler.Initialize(_stateMachine, _inputMove, _absorptionScopeController);
 
@@ -42,7 +43,8 @@ public class Player : MonoBehaviour
 										_limbsState,
 										_soulAbsorptionTarget,
 										_absorptionCooldown,
-										_playerHandsTarget);
+										_playerHandsTarget,
+										_abilityInitializer);
 	}
 
 	private void Start()

@@ -9,6 +9,7 @@ public class SwordSpeedTracker : MonoBehaviour
 	private Rigidbody2D _rigidbody;
 	private Vector2 _previousPosition;
 
+	public Rigidbody2D Rigidbody => _rigidbody;
 	public float CurrentSpeed => _currentSpeed;
 
 	private void Awake()

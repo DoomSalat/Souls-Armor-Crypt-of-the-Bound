@@ -12,6 +12,9 @@ public class MouseFollower : MonoBehaviour
 
 	private void Update()
 	{
+		if (enabled == false)
+			return;
+
 		if (Mouse.current.leftButton.isPressed)
 		{
 			Vector3 mouseScreenPos = InputUtilits.GetMouseClampPosition();

@@ -90,7 +90,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7871687388810177914}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a0b5dd13c886ae43b2ceb866fcb3456, type: 3}
   m_Name: 
@@ -107,5 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6727ff39ea8ea544689cc00b7d715d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mouseFollower: {fileID: 4014243181726193494}
   _springJoint: {fileID: 4504751727156421818}
   _sword: {fileID: 0}
+  _swordWallBounce: {fileID: 0}

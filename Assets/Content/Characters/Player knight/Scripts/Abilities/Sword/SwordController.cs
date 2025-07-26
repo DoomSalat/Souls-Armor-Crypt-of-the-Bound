@@ -6,7 +6,20 @@ using DG.Tweening;
 public class SwordController : MonoBehaviour
 {
 	private const float MinSpringFrequency = 0.01f;
+	private const string SpringRecoveryTweenId = "SpringRecovery_";
 
+	private const float TargetGizmoRadius = 0.1f;
+	private const float AnchorGizmoRadius = 0.05f;
+
+	private const float RotationTorqueForce = 2f;
+	private const float RandomHalf = 0.5f;
+
+	private const float JoystickDeadzone = 0.1f;
+	private const float JoystickSensitivityPower = 2f;
+
+	private float _lastRotationTime;
+
+	[SerializeField, Required] private MouseFollower _mouseFollower;
 	[SerializeField, Required] private SpringJoint2D _springJoint;
 	[SerializeField, Required] private Sword _sword;
 	[SerializeField, Required] private SwordWallBounce _swordWallBounce;
@@ -15,11 +28,14 @@ public class SwordController : MonoBehaviour
 	private string _springRecoveryTweenId;
 
 	private bool _isControlled;
+	private bool _isMouseControlled;
+
+	public bool IsControlled => _isControlled;
 
 	private void Awake()
 	{
 		_originalSpringFrequency = _springJoint.frequency;
-		_springRecoveryTweenId = "SpringRecovery_" + GetInstanceID();
+		_springRecoveryTweenId = SpringRecoveryTweenId + GetInstanceID();
 	}
 
 	private void OnEnable()
@@ -44,7 +60,18 @@ public class SwordController : MonoBehaviour
 		DOTween.Kill(_springRecoveryTweenId);
 	}
 
-	public void Activate()
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, TargetGizmoRadius);
+
+		Gizmos.color = Color.yellow;
+		Vector3 anchorPos = GetCenterTargetPosition();
+		Gizmos.DrawWireSphere(anchorPos, AnchorGizmoRadius);
+		Gizmos.DrawLine(anchorPos, transform.position);
+	}
+
+	public void Activate(Vector2 direction = default, float speed = 0)
 	{
 		if (_isControlled)
 			return;
@@ -52,6 +79,15 @@ public class SwordController : MonoBehaviour
 		_springJoint.enabled = true;
 		_isControlled = true;
 		_sword.ActiveFollow();
+
+		if (_isMouseControlled)
+		{
+			_mouseFollower.enabled = true;
+		}
+		else
+		{
+			MoveTarget(direction, speed);
+		}
 	}
 
 	public void Deactivate()
@@ -62,11 +98,51 @@ public class SwordController : MonoBehaviour
 		_sword.DeactiveFollow();
 		_isControlled = false;
 		_springJoint.enabled = false;
+		_mouseFollower.enabled = false;
 	}
 
 	public void SetSoulType(SoulType soulType)
 	{
 		_sword.SetSoulType(soulType);
+	}
+
+	public void SetMouseControlled(bool isMouseControlled)
+	{
+		_isMouseControlled = isMouseControlled;
+	}
+
+	public void MoveTarget(Vector2 direction, float speed)
+	{
+		Vector3 centerTargetPosition = GetCenterTargetPosition();
+
+		float joystickMagnitude = direction.magnitude;
+		if (joystickMagnitude < JoystickDeadzone)
+			return;
+
+		Vector3 targetDirection = new Vector3(direction.x, direction.y, 0).normalized;
+		float sensitivityCurve = Mathf.Pow(joystickMagnitude, JoystickSensitivityPower);
+
+		Vector3 targetPosition = centerTargetPosition + targetDirection * speed * sensitivityCurve;
+		transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
+
+		RandomRotateImpulse();
+	}
+
+	private Vector3 GetCenterTargetPosition()
+	{
+		return _sword.transform.TransformPoint(_springJoint.connectedAnchor);
+	}
+
+	private void RandomRotateImpulse()
+	{
+		float currentSecond = Mathf.Floor(Time.time);
+		if (currentSecond == _lastRotationTime)
+			return;
+
+		_lastRotationTime = currentSecond;
+
+		float force = Random.value > RandomHalf ? RotationTorqueForce : -RotationTorqueForce;
+		_sword.RotateImpulse(force);
 	}
 
 	private void DisableSpring()
@@ -79,6 +155,8 @@ public class SwordController : MonoBehaviour
 
 	private void EnableSpringWithDelay(float recoveryTime, Ease recoveryEase)
 	{
+		transform.position = GetCenterTargetPosition();
+
 		DOTween.Kill(_springRecoveryTweenId);
 		StartSpringRecovery(recoveryTime, recoveryEase);
 	}

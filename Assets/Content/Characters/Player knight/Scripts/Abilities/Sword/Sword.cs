@@ -72,6 +72,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	{
 		_followSystem.Activate();
 		_speedTracker.ResetSpeed();
+		_localAxisLimiter.SyncPosition();
 	}
 
 	public void DeactiveFollow()
@@ -79,6 +80,11 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_followSystem.Deactivate();
 		_speedTracker.ResetSpeed();
 		_followSystem.UpdatePocketOffset();
+	}
+
+	public void RotateImpulse(float angle)
+	{
+		_speedTracker.Rigidbody.AddTorque(angle, ForceMode2D.Impulse);
 	}
 
 	public void SetAttackZoneScale(int scaleIndex)

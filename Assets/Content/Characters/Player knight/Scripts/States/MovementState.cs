@@ -3,20 +3,29 @@ using UnityEngine.InputSystem;
 
 public class MovementState : PlayerState
 {
+	private const float JoystickMinMagnitude = 0.1f;
+	private const float DefaultSwordSpeed = 2f;
+	private const float DefaultLegSpeed = 1f;
+
 	private readonly InputMove _inputMove;
 	private readonly SwordController _swordController;
 	private readonly InputReader _inputReader;
 	private readonly PlayerKnightAnimator _playerKnightAnimator;
 	private readonly PlayerHandsTarget _playerHandsTarget;
 	private readonly PlayerLimbs _playerLimbs;
+	private readonly AbilityInitializer _abilityInitializer;
 
 	private bool _isSwordControlRequested;
 
 	private LimbType _currentLeg = LimbType.RightLeg;
 	private bool _previousIsStepMove = false;
 	private float _animationSpeedMultiplier = 2.0f;
+	private float _swordDeactivateDelay = 0.75f;
 
-	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader, PlayerHandsTarget playerHandsTarget, PlayerLimbs playerLimbs)
+	private bool _isMouseControlled = false;
+	private float _swordDeactivateTimer = 0f;
+
+	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader, PlayerHandsTarget playerHandsTarget, PlayerLimbs playerLimbs, AbilityInitializer abilityInitializer)
 	{
 		_inputMove = inputMove;
 		_swordController = swordController;
@@ -24,12 +33,14 @@ public class MovementState : PlayerState
 		_playerKnightAnimator = playerKnightAnimator;
 		_playerHandsTarget = playerHandsTarget;
 		_playerLimbs = playerLimbs;
+		_abilityInitializer = abilityInitializer;
 	}
 
 	public override void Enter()
 	{
 		_inputReader.Enable();
 		ResetStepCounter();
+		_swordController.SetMouseControlled(_isMouseControlled);
 	}
 
 	public override void Update()
@@ -37,6 +48,7 @@ public class MovementState : PlayerState
 		UpdateAnimationDirection();
 		_playerHandsTarget.UpdateLook();
 		UpdateSwordControl();
+		UpdateSwordDeactivateTimer();
 	}
 
 	public override void FixedUpdate()
@@ -53,22 +65,84 @@ public class MovementState : PlayerState
 
 	public override void OnMousePerformed(InputAction.CallbackContext context)
 	{
+		if (_isMouseControlled == false)
+			return;
+
 		_isSwordControlRequested = true;
-		_playerHandsTarget.ActivateLook();
 		UpdateSwordControl();
 	}
 
 	public override void OnMouseCanceled(InputAction.CallbackContext context)
 	{
+		if (_isMouseControlled == false)
+			return;
+
 		_isSwordControlRequested = false;
-		_playerHandsTarget.DeactivateLook();
-		DeactivateSwordControl();
+		UpdateSwordControl();
 	}
 
 	private void UpdateSwordControl()
 	{
-		if (_isSwordControlRequested == false)
+		if (_isMouseControlled)
 		{
+			MouseSwordControl();
+		}
+		else
+		{
+			JoystickSwordControl();
+		}
+	}
+
+	private void JoystickSwordControl()
+	{
+		Vector2 joystickInput = _inputReader.JoystickInput;
+
+		if (CanControlSwordJoystick(joystickInput) == false)
+		{
+			_playerHandsTarget.DeactivateLook();
+			StartSwordDeactivateTimer();
+			return;
+		}
+
+		_swordDeactivateTimer = 0f;
+		_playerHandsTarget.ActivateLook();
+
+		if (_swordController.IsControlled == false)
+		{
+			_swordController.Activate();
+		}
+
+		if (_swordController.IsControlled)
+		{
+			_swordController.MoveTarget(joystickInput, GetCurrentSwordSpeed());
+		}
+	}
+
+	private bool CanControlSwordJoystick(Vector2 joystickInput)
+	{
+		if (joystickInput.magnitude < JoystickMinMagnitude)
+		{
+			return false;
+		}
+
+		var currentHand = _playerHandsTarget.GetCurrentHand();
+		if (IsHandAvailable(currentHand) == false)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	private void MouseSwordControl()
+	{
+		if (_isSwordControlRequested)
+		{
+			_playerHandsTarget.ActivateLook();
+		}
+		else
+		{
+			_playerHandsTarget.DeactivateLook();
 			DeactivateSwordControl();
 			return;
 		}
@@ -81,6 +155,7 @@ public class MovementState : PlayerState
 		}
 		else
 		{
+			_playerHandsTarget.DeactivateLook();
 			DeactivateSwordControl();
 		}
 	}
@@ -122,7 +197,8 @@ public class MovementState : PlayerState
 				_playerKnightAnimator.SetSpeed(_animationSpeedMultiplier);
 			}
 
-			_inputMove.Move();
+			float legSpeedMultiplier = GetCurrentLegSpeed();
+			_inputMove.Move(legSpeedMultiplier);
 		}
 		else
 		{
@@ -133,7 +209,7 @@ public class MovementState : PlayerState
 
 	private void UpdateStepCounter()
 	{
-		if (_previousIsStepMove == true && _playerKnightAnimator.IsStepMove == false)
+		if (_previousIsStepMove && _playerKnightAnimator.IsStepMove == false)
 		{
 			SwitchToNextLeg();
 		}
@@ -188,12 +264,83 @@ public class MovementState : PlayerState
 
 	private void SwitchToNextLeg()
 	{
+		var ability = _abilityInitializer.GetCurrentLegAbility(_currentLeg);
+		if (ability is IAbilityLeg legAbility)
+		{
+			ability.Activate();
+		}
+
 		_currentLeg = _currentLeg == LimbType.LeftLeg ? LimbType.RightLeg : LimbType.LeftLeg;
+	}
+
+	private float GetCurrentSwordSpeed()
+	{
+		var currentHand = _playerHandsTarget.GetCurrentHand();
+
+		if (currentHand == LimbType.None)
+			return DefaultSwordSpeed;
+
+		if (IsHandAvailable(currentHand) == false)
+			return DefaultSwordSpeed;
+
+		var ability = _abilityInitializer.GetCurrentArmAbility(currentHand);
+
+		if (ability is IAbilityArm armAbility)
+		{
+			return armAbility.SwordSpeed;
+		}
+
+		return DefaultSwordSpeed;
+	}
+
+	private float GetCurrentLegSpeed()
+	{
+		if (IsLegAvailable(_currentLeg) == false)
+			return DefaultLegSpeed;
+
+		var ability = _abilityInitializer.GetCurrentLegAbility(_currentLeg);
+
+		if (ability is IAbilityLeg legAbility)
+		{
+			return legAbility.Speed;
+		}
+
+		return DefaultLegSpeed;
 	}
 
 	private void ResetStepCounter()
 	{
 		_currentLeg = LimbType.RightLeg;
 		_previousIsStepMove = false;
+	}
+
+	private void StartSwordDeactivateTimer()
+	{
+		if (_swordDeactivateTimer == 0f && _swordController.IsControlled)
+		{
+			_swordDeactivateTimer = Time.time;
+		}
+	}
+
+	private void UpdateSwordDeactivateTimer()
+	{
+		if (_swordDeactivateTimer > 0f && _swordController.IsControlled)
+		{
+			if (Time.time - _swordDeactivateTimer >= _swordDeactivateDelay)
+			{
+				DeactivateSwordControl();
+				_swordDeactivateTimer = 0f;
+			}
+		}
+	}
+
+	//Доработать как способность
+	public void SetMouseControlled(bool useMouseControl)
+	{
+		_isMouseControlled = useMouseControl;
+		_swordController.SetMouseControlled(_isMouseControlled);
+
+		_playerHandsTarget.DeactivateLook();
+		DeactivateSwordControl();
 	}
 }
