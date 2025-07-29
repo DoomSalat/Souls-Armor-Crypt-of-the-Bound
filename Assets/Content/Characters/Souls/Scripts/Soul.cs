@@ -4,15 +4,18 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class Soul : MonoBehaviour, IDamageable
+public class Soul : MonoBehaviour
 {
 	[SerializeField] private Transform _target;
 	[Space]
 	[SerializeField, Required] private TargetFollower _targetFollower;
 	[SerializeField, Required] private SoulAttractor _soulAttractor;
 	[SerializeField, Required] private SoulAnimator _soulAnimator;
+
+	[Header("Hit")]
 	[SerializeField, Required] private HitBox _hitBox;
 	[SerializeField, Required] private HurtBox _hurtBox;
+	[SerializeField, Required] private SoulDamage _soulDamage;
 
 	[Header("Knockback")]
 	[SerializeField, Required] private KnockbackReceiver _knockbackReceiver;
@@ -21,7 +24,6 @@ public class Soul : MonoBehaviour, IDamageable
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
 
-	private bool _isDead = false;
 	private bool _isAttracted = false;
 	private bool _isEndAttraction = false;
 	private event System.Action _attractionCompleted;
@@ -30,14 +32,13 @@ public class Soul : MonoBehaviour, IDamageable
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_collider = GetComponent<Collider2D>();
+
+		_soulDamage.Initialize(_rigidbody, _collider, _hitBox, _hurtBox, _soulAnimator, _targetFollower, _knockbackReceiver);
 	}
 
 	private void OnEnable()
 	{
 		_soulAttractor.AttractionCompleted += OnAttractionCompletedInternal;
-
-		_soulAnimator.DeathExplosionStarted += OnStartDeathExplosion;
-		_soulAnimator.DeathExplosionEnded += OnEndDeathExplosion;
 
 		_hitBox.TargetHitted += OnHitTarget;
 	}
@@ -46,20 +47,7 @@ public class Soul : MonoBehaviour, IDamageable
 	{
 		_soulAttractor.AttractionCompleted -= OnAttractionCompletedInternal;
 
-		_soulAnimator.DeathExplosionStarted -= OnStartDeathExplosion;
-		_soulAnimator.DeathExplosionEnded -= OnEndDeathExplosion;
-
 		_hitBox.TargetHitted -= OnHitTarget;
-	}
-
-	private void OnStartDeathExplosion()
-	{
-		_rigidbody.linearVelocity = Vector2.zero;
-	}
-
-	private void OnEndDeathExplosion()
-	{
-		Dead();
 	}
 
 	private void Update()
@@ -79,18 +67,8 @@ public class Soul : MonoBehaviour, IDamageable
 
 	private void FixedUpdate()
 	{
-		if (_isDead == false)
+		if (_soulDamage.IsDead == false)
 			_targetFollower.TryFollow(_target);
-	}
-
-	public void TakeDamage(DamageData damageData)
-	{
-		_isDead = true;
-		_hitBox.gameObject.SetActive(false);
-		_hurtBox.gameObject.SetActive(false);
-
-		_knockbackReceiver.ApplyKnockback(damageData);
-		DieAnimation();
 	}
 
 	public void StartAttraction(Transform target, Action AttractionCompleted)
@@ -99,6 +77,7 @@ public class Soul : MonoBehaviour, IDamageable
 
 		DisableCollisions();
 		_targetFollower.enabled = false;
+		_soulDamage.ClearStatus();
 
 		_isAttracted = true;
 		_soulAnimator.AbsorptionDirection(_rigidbody.linearVelocity);
@@ -121,7 +100,7 @@ public class Soul : MonoBehaviour, IDamageable
 
 	private void OnHitTarget(Collider2D targetCollider, DamageData damageData)
 	{
-		if (_isDead || _isAttracted)
+		if (_soulDamage.IsDead || _isAttracted)
 			return;
 
 		Vector3 targetPosition = targetCollider.transform.position;
@@ -139,7 +118,7 @@ public class Soul : MonoBehaviour, IDamageable
 			yield return null;
 		}
 
-		if (_isDead == false && _isAttracted == false)
+		if (_soulDamage.IsDead == false && _isAttracted == false)
 		{
 			_targetFollower.enabled = true;
 		}
@@ -148,29 +127,12 @@ public class Soul : MonoBehaviour, IDamageable
 	private void DisableCollisions()
 	{
 		_hitBox.gameObject.SetActive(false);
-		_hurtBox.gameObject.SetActive(false);
 		_collider.enabled = false;
 	}
 
 	private void EnableCollisions()
 	{
 		_hitBox.gameObject.SetActive(true);
-		_hurtBox.gameObject.SetActive(true);
 		_collider.enabled = true;
-	}
-
-	private void DieAnimation()
-	{
-		DisableCollisions();
-		_targetFollower.enabled = false;
-
-		_soulAnimator.PlayDeath();
-	}
-
-	private void Dead()
-	{
-		_rigidbody.linearVelocity = Vector2.zero;
-		_soulAnimator.Reset();
-		gameObject.SetActive(false);
 	}
 }

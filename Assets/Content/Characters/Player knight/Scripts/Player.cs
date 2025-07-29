@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
 	{
 		_stateMachine = GetComponent<PlayerStateMachine>();
 
+		_limbsState.Initialize();
 		_abilityInitializer.Initialize(_limbsState);
 		_damageHandler.Initialize(_limbsState, _playerKnightAnimator, _abilityInitializer);
 		_inputHandler.Initialize(_stateMachine, _inputMove, _absorptionScopeController);

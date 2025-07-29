@@ -208,6 +208,7 @@ Transform:
   - {fileID: 831476139}
   - {fileID: 13033464}
   - {fileID: 1199231492}
+  - {fileID: 1528849322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &64749258
@@ -330,6 +331,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7871828233092932414, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1036035276998138845, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
@@ -857,10 +862,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5782781348736507918, guid: fc1f9ac6f707af7439a8f61bd5557267, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     - target: {fileID: 5885745146485329820, guid: fc1f9ac6f707af7439a8f61bd5557267, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5957789021434574804, guid: fc1f9ac6f707af7439a8f61bd5557267, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1119663177}
     - target: {fileID: 7154621557268803403, guid: fc1f9ac6f707af7439a8f61bd5557267, type: 3}
       propertyPath: m_Name
       value: Soul Purple
@@ -6781,10 +6794,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5957789021434574804, guid: ad2bd48f286829f489dc300b202e125e, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1119663177}
     - target: {fileID: 7154621557268803403, guid: ad2bd48f286829f489dc300b202e125e, type: 3}
       propertyPath: m_Name
       value: Soul Green
       objectReference: {fileID: 0}
+    - target: {fileID: 7358245225179582597, guid: ad2bd48f286829f489dc300b202e125e, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7432,6 +7453,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871467050}
   m_CullTransparentMesh: 0
+--- !u!1 &953567051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953567052}
+  - component: {fileID: 953567053}
+  m_Layer: 0
+  m_Name: Poison spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &953567052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953567051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1528849322}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953567053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953567051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e908cdf2cd85b2428360dba48abf5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusPrefab: {fileID: 5274054335626974926, guid: d6d02526037366b49a08f308a0192f19, type: 3}
+  _poolSize: 20
 --- !u!1 &1014022846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7643,10 +7710,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4413483939754522091, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     - target: {fileID: 5885745146485329820, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5957789021434574804, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1119663177}
     - target: {fileID: 7154621557268803403, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
       propertyPath: m_Name
       value: Soul Yellow
@@ -8759,6 +8834,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520065561}
   m_CullTransparentMesh: 1
+--- !u!1 &1528849321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528849322}
+  - component: {fileID: 1528849323}
+  m_Layer: 0
+  m_Name: Status machine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528849322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528849321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 953567052}
+  m_Father: {fileID: 23903091}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1528849323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528849321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35846b4dee32554ea3cf7e1b41e0b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusSpawners:
+  - damageType: 2
+    spawner: {fileID: 953567053}
 --- !u!1 &1581841550
 GameObject:
   m_ObjectHideFlags: 0
@@ -45535,6 +45658,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2035647821}
     m_Modifications:
+    - target: {fileID: 843520491356446191, guid: 6e9e4843986d45749a384722cf18e24a, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     - target: {fileID: 3391697509359365476, guid: 6e9e4843986d45749a384722cf18e24a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.26
@@ -45579,6 +45706,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5957789021434574804, guid: 6e9e4843986d45749a384722cf18e24a, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1119663177}
     - target: {fileID: 7154621557268803403, guid: 6e9e4843986d45749a384722cf18e24a, type: 3}
       propertyPath: m_Name
       value: Soul Red
@@ -46397,6 +46528,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Soul
       objectReference: {fileID: 0}
+    - target: {fileID: 7871828233092932414, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: _statusMachine
+      value: 
+      objectReference: {fileID: 1528849323}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1036035276998138845, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}

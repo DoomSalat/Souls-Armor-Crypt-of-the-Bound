@@ -13,5 +13,4 @@ public class BlueLegAbility : MonoBehaviour, IAbilityLeg
 	public void Activate() { }
 	public void Deactivate() { }
 	public void InitializeVisualEffects(Transform effectsParent) { }
-
 }

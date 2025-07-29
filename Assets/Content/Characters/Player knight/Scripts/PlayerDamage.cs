@@ -65,6 +65,11 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 			ability.Activate();
 	}
 
+	public void StatusEnd(DamageType statusType)
+	{
+
+	}
+
 	private void OnDead()
 	{
 		Dead?.Invoke();

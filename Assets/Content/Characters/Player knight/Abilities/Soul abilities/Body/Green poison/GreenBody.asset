@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
+  m_Name: GreenBody
+  m_EditorClassIdentifier: 
+  _soulType: 4
+  _targetLimbType: 1
+  _abilityPrefab: {fileID: 8204141476866120900, guid: d3a3e3c4c3b294f4080580056d3507fd, type: 3}
+  _abilityDescription: Create poison souls 3 what poisons 1 damage enemy nearby

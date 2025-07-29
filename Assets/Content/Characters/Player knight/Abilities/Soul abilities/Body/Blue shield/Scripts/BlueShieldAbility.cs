@@ -4,8 +4,10 @@ using Sirenix.OdinInspector;
 
 public class BlueShieldAbility : MonoBehaviour, IAbilityBody
 {
-	[SerializeField, Required] private BlueShield _blueShield;
+	[SerializeField, Required] private BlueShield _blueShieldPrefab;
 	[SerializeField] private float _shieldDuration = 5f;
+
+	private BlueShield _blueShield;
 
 	private bool _isActive = false;
 	private Coroutine _timerRoutine;
@@ -16,6 +18,11 @@ public class BlueShieldAbility : MonoBehaviour, IAbilityBody
 	public void Initialize()
 	{
 		_waitForDeactive = new WaitForSeconds(_shieldDuration);
+	}
+
+	public void InitializeVisualEffects(Transform effectsParent)
+	{
+		_blueShield = Instantiate(_blueShieldPrefab, effectsParent.position, effectsParent.rotation, effectsParent);
 	}
 
 	public void Activate()
@@ -54,10 +61,6 @@ public class BlueShieldAbility : MonoBehaviour, IAbilityBody
 		_isActive = false;
 	}
 
-	public void InitializeVisualEffects(Transform effectsParent)
-	{
-		_blueShield = Instantiate(_blueShield, effectsParent.position, effectsParent.rotation, effectsParent);
-	}
 
 	private IEnumerator TimerActive()
 	{

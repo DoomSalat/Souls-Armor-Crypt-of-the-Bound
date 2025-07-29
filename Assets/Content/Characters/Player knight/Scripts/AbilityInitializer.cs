@@ -1,10 +1,11 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 public class AbilityInitializer : MonoBehaviour
 {
+	private const int LastIndex = 1;
+
 	[Header("Soul Ability Configuration")]
 	[SerializeField, Required] private SoulAbilitiesConfig _soulAbilitiesConfig;
 
@@ -21,52 +22,23 @@ public class AbilityInitializer : MonoBehaviour
 
 	private PlayerLimbs _playerLimbs;
 	private List<IAbility> _abilities = new List<IAbility>();
-	private Dictionary<(SoulType, LimbType), IAbility> _abilitiesByTypeAndLimb = new Dictionary<(SoulType, LimbType), IAbility>();
 	private Dictionary<LimbType, Transform> _limbEffectsParents = new Dictionary<LimbType, Transform>();
 
-	private readonly Dictionary<LimbType, LimbType> _genericLimbMap = new Dictionary<LimbType, LimbType>();
 	private readonly Dictionary<LimbType, IAbility> _currentAbilitiesCache = new Dictionary<LimbType, IAbility>();
-
-	public void Initialize(PlayerLimbs playerLimbs)
-	{
-		_playerLimbs = playerLimbs;
-		InitializeLimbTransforms();
-		InitializeLimbTypeMapping();
-		InitializeAbilities();
-
-		_playerLimbs.LimbStateChanged += OnLimbStateChanged;
-
-		RefreshCurrentAbilitiesCache();
-	}
 
 	private void OnDestroy()
 	{
 		_playerLimbs.LimbStateChanged -= OnLimbStateChanged;
 	}
 
-	private void OnLimbStateChanged(LimbType limbType)
+	public void Initialize(PlayerLimbs playerLimbs)
 	{
-		UpdateCurrentAbilityCache(limbType);
-	}
+		_playerLimbs = playerLimbs;
+		InitializeLimbTransforms();
 
-	private void UpdateCurrentAbilityCache(LimbType limbType)
-	{
-		_currentAbilitiesCache[limbType] = GetAbilitiesForLimbType(limbType);
-	}
+		_playerLimbs.LimbStateChanged += OnLimbStateChanged;
 
-	private void RefreshCurrentAbilitiesCache()
-	{
-		var limbTypes = new[]
-		{
-			LimbType.LeftLeg, LimbType.RightLeg,
-			LimbType.LeftArm, LimbType.RightArm,
-			LimbType.Head, LimbType.Body
-		};
-
-		foreach (var limbType in limbTypes)
-		{
-			_currentAbilitiesCache[limbType] = GetAbilitiesForLimbType(limbType);
-		}
+		RefreshCurrentAbilitiesCache();
 	}
 
 	public IAbility GetCurrentAbility(LimbType limbType)
@@ -92,24 +64,101 @@ public class AbilityInitializer : MonoBehaviour
 		};
 	}
 
-	public bool HasCurrentAbility(LimbType limbType)
-	{
-		return _currentAbilitiesCache.TryGetValue(limbType, out var ability) && ability != null;
-	}
-
-	public ReadOnlyDictionary<LimbType, IAbility> GetAllCurrentAbilities()
-	{
-		return new ReadOnlyDictionary<LimbType, IAbility>(_currentAbilitiesCache);
-	}
-
 	public void ClearAbilityCache(LimbType limbType)
 	{
 		_currentAbilitiesCache[limbType] = null;
 	}
 
-	public void ClearAllAbilitiesCache()
+	public IAbility GetAbilitiesForLimbType(LimbType limbType)
 	{
-		_currentAbilitiesCache.Clear();
+		if (_playerLimbs.LimbStates.TryGetValue(limbType, out var limbInfo) == false || limbInfo.IsPresent == false)
+			return null;
+
+		if (limbInfo.SoulType == SoulType.None)
+			return null;
+
+		return _currentAbilitiesCache.TryGetValue(limbType, out var ability) ? ability : null;
+	}
+
+	public Transform GetEffectsParentForLimb(LimbType limbType)
+	{
+		if (_limbEffectsParents.TryGetValue(limbType, out var effectsParent))
+			return effectsParent;
+
+		return _abilitySpawnParent;
+	}
+
+	private void OnLimbStateChanged(LimbType limbType)
+	{
+		if (_playerLimbs.LimbStates.TryGetValue(limbType, out var limbInfo) == false)
+		{
+			UpdateCurrentAbilityCache(limbType);
+			return;
+		}
+
+		var currentAbility = GetCurrentAbility(limbType);
+
+		if (limbInfo.IsPresent == false)
+		{
+			if (currentAbility != null)
+			{
+				RemoveLimbAbility(limbType);
+			}
+
+			return;
+		}
+
+		if (limbInfo.SoulType != SoulType.None)
+		{
+			if (currentAbility != null)
+			{
+				RemoveLimbAbility(limbType);
+			}
+
+			CreateLimbAbility(limbType, limbInfo.SoulType);
+		}
+		else if (limbInfo.SoulType == SoulType.None && currentAbility != null)
+		{
+			RemoveLimbAbility(limbType);
+		}
+	}
+
+	private void UpdateCurrentAbilityCache(LimbType limbType)
+	{
+		IAbility abilityForLimb = null;
+
+		if (_playerLimbs.LimbStates.TryGetValue(limbType, out var limbInfo) && limbInfo.IsPresent && limbInfo.SoulType != SoulType.None)
+		{
+			for (int i = _abilities.Count - LastIndex; i >= 0; i--)
+			{
+				var ability = _abilities[i];
+				if (ability is MonoBehaviour monoBehaviour)
+				{
+					if (monoBehaviour.name.Contains(limbType.ToString()))
+					{
+						abilityForLimb = ability;
+						break;
+					}
+				}
+			}
+		}
+
+		_currentAbilitiesCache[limbType] = abilityForLimb;
+	}
+
+	private void RefreshCurrentAbilitiesCache()
+	{
+		var limbTypes = new[]
+		{
+			LimbType.LeftLeg, LimbType.RightLeg,
+			LimbType.LeftArm, LimbType.RightArm,
+			LimbType.Head, LimbType.Body
+		};
+
+		foreach (var limbType in limbTypes)
+		{
+			_currentAbilitiesCache[limbType] = null;
+		}
 	}
 
 	private void InitializeLimbTransforms()
@@ -122,15 +171,80 @@ public class AbilityInitializer : MonoBehaviour
 		_limbEffectsParents[LimbType.RightLeg] = _rightLegEffectsParent;
 	}
 
-	private void InitializeLimbTypeMapping()
+	private List<LimbType> GetTargetLimbTypesForAbility(LimbType targetLimbType)
 	{
-		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
+		var limbTypes = new List<LimbType>();
+
+		switch (targetLimbType)
 		{
-			_genericLimbMap[limbType] = ConvertToGenericLimbType(limbType);
+			case LimbType.LeftArm:
+				limbTypes.Add(LimbType.LeftArm);
+				limbTypes.Add(LimbType.RightArm);
+				break;
+			case LimbType.LeftLeg:
+				limbTypes.Add(LimbType.LeftLeg);
+				limbTypes.Add(LimbType.RightLeg);
+				break;
+			default:
+				limbTypes.Add(targetLimbType);
+				break;
+		}
+
+		return limbTypes;
+	}
+
+	private void RemoveLimbAbility(LimbType limbType)
+	{
+		if (_limbEffectsParents.TryGetValue(limbType, out var effectsParent))
+		{
+			for (int i = effectsParent.childCount - LastIndex; i >= 0; i--)
+			{
+				var child = effectsParent.GetChild(i);
+				if (Application.isPlaying)
+					Destroy(child.gameObject);
+				else
+					DestroyImmediate(child.gameObject);
+			}
+		}
+
+		var currentAbility = GetCurrentAbility(limbType);
+		if (currentAbility == null)
+			return;
+
+		currentAbility.Deactivate();
+
+		if (currentAbility is MonoBehaviour monoBehaviour)
+		{
+			if (Application.isPlaying)
+				Destroy(monoBehaviour.gameObject);
+			else
+				DestroyImmediate(monoBehaviour.gameObject);
+		}
+
+		_abilities.Remove(currentAbility);
+		ClearAbilityCache(limbType);
+	}
+
+	private void CreateLimbAbility(LimbType limbType, SoulType soulType)
+	{
+		var soulData = FindSoulAbilityData(soulType, limbType);
+		if (soulData == null)
+			return;
+
+		var effectsParent = GetEffectsParentForLimb(limbType);
+		var limbTypeName = limbType.ToString();
+
+		var ability = soulData.CreateAbility(_abilitySpawnParent, effectsParent, limbTypeName);
+		ability.Initialize();
+
+		if (ability != null)
+		{
+			_abilities.Add(ability);
+			_currentAbilitiesCache[limbType] = ability;
 		}
 	}
 
-	private void InitializeAbilities()
+	private SoulAbilityData FindSoulAbilityData(SoulType soulType, LimbType limbType)
 	{
 		var allAbilities = _soulAbilitiesConfig.GetAllAbilities();
 
@@ -139,92 +253,14 @@ public class AbilityInitializer : MonoBehaviour
 			if (soulData == null)
 				continue;
 
-			var effectsParent = GetEffectsParentForLimb(soulData.TargetLimbType);
-			var ability = soulData.CreateAbility(_abilitySpawnParent, effectsParent);
-			ability.Initialize();
-
-			if (ability != null)
+			if (soulData.SoulType == soulType)
 			{
-				_abilities.Add(ability);
-				_abilitiesByTypeAndLimb[(soulData.SoulType, soulData.TargetLimbType)] = ability;
-			}
-		}
-	}
-
-	public IAbility GetAbilitiesForLimbType(LimbType limbType)
-	{
-		if (_playerLimbs.LimbStates.TryGetValue(limbType, out var limbInfo) == false || limbInfo.IsPresent == false)
-			return null;
-
-		if (limbInfo.SoulType == SoulType.None)
-			return null;
-
-		var genericLimbType = _genericLimbMap[limbType];
-
-		return _abilitiesByTypeAndLimb.TryGetValue((limbInfo.SoulType, genericLimbType), out var ability) ? ability : null;
-	}
-
-	public IAbility GetAbilityBySoulType(SoulType soulType)
-	{
-		foreach (var abilityEntry in _abilitiesByTypeAndLimb)
-		{
-			if (abilityEntry.Key.Item1 == soulType)
-			{
-				return abilityEntry.Value;
+				var targetLimbTypes = GetTargetLimbTypesForAbility(soulData.TargetLimbType);
+				if (targetLimbTypes.Contains(limbType))
+					return soulData;
 			}
 		}
 
 		return null;
-	}
-
-	public bool HasAbilityForLimbType(LimbType limbType)
-	{
-		if (_playerLimbs.LimbStates.TryGetValue(limbType, out var limbInfo) == false || limbInfo.IsPresent == false)
-			return false;
-
-		if (limbInfo.SoulType == SoulType.None)
-			return false;
-
-		var genericLimbType = _genericLimbMap[limbType];
-		return _abilitiesByTypeAndLimb.ContainsKey((limbInfo.SoulType, genericLimbType));
-	}
-
-	private LimbType ConvertToGenericLimbType(LimbType specificLimbType)
-	{
-		return specificLimbType switch
-		{
-			LimbType.LeftArm or LimbType.RightArm => LimbType.LeftArm,
-			LimbType.LeftLeg or LimbType.RightLeg => LimbType.LeftLeg,
-			_ => specificLimbType
-		};
-	}
-
-	public Transform GetEffectsParentForLimb(LimbType limbType)
-	{
-		if (_limbEffectsParents.TryGetValue(limbType, out var effectsParent))
-			return effectsParent;
-
-		return _abilitySpawnParent;
-	}
-
-	[ContextMenu(nameof(ReinitializeAbilities))]
-	private void ReinitializeAbilities()
-	{
-		foreach (var ability in _abilities)
-		{
-			if (ability is MonoBehaviour monoBehaviour)
-			{
-				if (Application.isPlaying)
-					Destroy(monoBehaviour.gameObject);
-				else
-					DestroyImmediate(monoBehaviour.gameObject);
-			}
-		}
-
-		_abilities.Clear();
-		_abilitiesByTypeAndLimb.Clear();
-
-		InitializeAbilities();
-		RefreshCurrentAbilitiesCache();
 	}
 }

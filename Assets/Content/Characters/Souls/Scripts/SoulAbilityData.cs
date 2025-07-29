@@ -17,9 +17,12 @@ public class SoulAbilityData : ScriptableObject
 	public GameObject AbilityPrefab => _abilityPrefab;
 	public string AbilityDescription => _abilityDescription;
 
-	public IAbility CreateAbility(Transform abilityParent, Transform effectsParent)
+	public IAbility CreateAbility(Transform abilityParent, Transform effectsParent, string limbTypeName)
 	{
 		GameObject abilityObject = Instantiate(_abilityPrefab, abilityParent);
+
+		abilityObject.name = $"({limbTypeName}) {_abilityPrefab.name}";
+
 		var abilityComponent = abilityObject.GetComponent<IAbility>();
 
 		if (abilityComponent.HasVisualEffects)

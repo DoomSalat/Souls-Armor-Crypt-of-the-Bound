@@ -14,4 +14,9 @@ public class FactionTag : MonoBehaviour
 			faction = Faction.Enemy;
 		}
 	}
+
+	public bool IsTagged(Faction factionToCheck)
+	{
+		return faction == factionToCheck;
+	}
 }

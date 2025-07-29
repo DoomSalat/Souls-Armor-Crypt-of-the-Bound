@@ -4,8 +4,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class TargetFollower : MonoBehaviour
 {
+	[SerializeField, ReadOnly] private Transform _target;
+
+	[Header("Lineal Movement")]
 	[SerializeField, MinValue(0)] private float _moveSpeed = 2f;
 	[SerializeField, MinValue(0)] private float _minDistance = 0.1f;
+
+	[Header("Force Movement")]
+	[SerializeField] private bool _useForceMovement = false;
+	[SerializeField, MinValue(0)] private float _acceleration = 10f;
+	[SerializeField, MinValue(0)] private float _maxSpeed = 15f;
 
 	private Rigidbody2D _rigidbody;
 	private Vector2 _moveDirection;
@@ -17,6 +25,8 @@ public class TargetFollower : MonoBehaviour
 
 	public void TryFollow(Transform target)
 	{
+		_target = target;
+
 		if (enabled == false)
 			return;
 
@@ -30,8 +40,21 @@ public class TargetFollower : MonoBehaviour
 		ApplyMovement();
 	}
 
+	public void SetMoveState(bool isForceMovement)
+	{
+		_useForceMovement = isForceMovement;
+	}
+
+	public void StopMovement()
+	{
+		_rigidbody.linearVelocity = Vector2.zero;
+	}
+
 	private void UpdateMoveDirection(Vector2 targetPosition)
 	{
+		if (enabled == false)
+			return;
+
 		Vector2 currentPosition = _rigidbody.position;
 		float distanceSqr = (targetPosition - currentPosition).sqrMagnitude;
 
@@ -47,11 +70,19 @@ public class TargetFollower : MonoBehaviour
 
 	private void ApplyMovement()
 	{
-		_rigidbody.linearVelocity = _moveDirection * _moveSpeed;
-	}
+		if (_useForceMovement)
+		{
+			Vector2 accelerationForce = _moveDirection * _acceleration;
+			_rigidbody.AddForce(accelerationForce);
 
-	private void StopMovement()
-	{
-		_rigidbody.linearVelocity = Vector2.zero;
+			if (_rigidbody.linearVelocity.magnitude > _maxSpeed)
+			{
+				_rigidbody.linearVelocity = _rigidbody.linearVelocity.normalized * _maxSpeed;
+			}
+		}
+		else
+		{
+			_rigidbody.linearVelocity = _moveDirection * _moveSpeed;
+		}
 	}
 }

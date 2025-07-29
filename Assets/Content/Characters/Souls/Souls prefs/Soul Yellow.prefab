@@ -5282,6 +5282,7 @@ GameObject:
   - component: {fileID: 2721364213782653316}
   - component: {fileID: 5885745146485329820}
   - component: {fileID: 5957789021434574804}
+  - component: {fileID: 4413483939754522091}
   - component: {fileID: 2549360879008636151}
   - component: {fileID: 2804703302713372882}
   m_Layer: 0
@@ -5385,8 +5386,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b56cb1285b87304c95d21333891222f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 0}
   _moveSpeed: 2
   _minDistance: 0.1
+  _useForceMovement: 0
+  _acceleration: 10
+  _maxSpeed: 15
 --- !u!114 &5957789021434574804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5405,8 +5410,23 @@ MonoBehaviour:
   _soulAnimator: {fileID: 2417870850633032961}
   _hitBox: {fileID: 1110035281069562493}
   _hurtBox: {fileID: 4754125618302045950}
+  _soulDamage: {fileID: 4413483939754522091}
   _knockbackReceiver: {fileID: 2804703302713372882}
   _attackKnockbackForce: 10
+--- !u!114 &4413483939754522091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154621557268803403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4675f5d319ee034cb485993cf745a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statusPoint: {fileID: 3391697509359365476}
+  _statusMachine: {fileID: 0}
 --- !u!114 &2549360879008636151
 MonoBehaviour:
   m_ObjectHideFlags: 0

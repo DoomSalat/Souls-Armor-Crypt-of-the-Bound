@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae3bf267df4520e43b7a3731c8ab7616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blueShield: {fileID: 5376748607506953633, guid: 2fe1d34c43cfac84892814045a969f67, type: 3}
+  _blueShieldPrefab: {fileID: 5376748607506953633, guid: 2fe1d34c43cfac84892814045a969f67, type: 3}
+  _shieldDuration: 5

@@ -7,6 +7,8 @@ public class PlayerLimbs : MonoBehaviour
 {
 	[SerializeField, Required] private InventoryController _inventoryController;
 	[SerializeField, Required] private PlayerLimbsVisual _limbsVisual;
+	[Space]
+	[SerializeField] private SoulType _defaultSoulType = SoulType.Blue;
 
 	private PlayerSoulMaterial _soulMaterials;
 
@@ -24,11 +26,15 @@ public class PlayerLimbs : MonoBehaviour
 
 	public Dictionary<LimbType, LimbInfo> LimbStates => _limbs;
 
-	private void Awake()
+	private void Start()
 	{
-		Initialize();
-
-		_soulMaterials = GetComponent<PlayerSoulMaterial>();
+		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
+		{
+			if (limbType != LimbType.None)
+			{
+				LimbStateChanged?.Invoke(limbType);
+			}
+		}
 	}
 
 	private void OnEnable()
@@ -41,15 +47,17 @@ public class PlayerLimbs : MonoBehaviour
 		_inventoryController.InventorySoul.SoulPlaced -= Regenerate;
 	}
 
-	private void Initialize()
+	public void Initialize()
 	{
+		_soulMaterials = GetComponent<PlayerSoulMaterial>();
+
 		_limbs = new Dictionary<LimbType, LimbInfo>();
 
 		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
 		{
 			if (limbType != LimbType.None)
 			{
-				_limbs[limbType] = new LimbInfo(true, SoulType.Blue);
+				_limbs[limbType] = new LimbInfo(true, _defaultSoulType);
 			}
 		}
 	}
@@ -95,14 +103,13 @@ public class PlayerLimbs : MonoBehaviour
 			LoseLimb(LimbType.Head);
 			Dead?.Invoke();
 		}
-
 	}
 
 	public void ResetToDefault()
 	{
 		foreach (var limb in _limbs.Keys)
 		{
-			_limbs[limb] = new LimbInfo(true, SoulType.Blue);
+			_limbs[limb] = new LimbInfo(true, _defaultSoulType);
 		}
 	}
 
