@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _swordSpeed: 1
+  _swordScaleIndex: 0

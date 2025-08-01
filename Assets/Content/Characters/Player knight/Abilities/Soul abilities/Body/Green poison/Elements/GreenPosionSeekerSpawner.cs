@@ -5,14 +5,15 @@ using Sirenix.OdinInspector;
 
 public class GreenPosionSeekerSpawner : MonoBehaviour
 {
-	private const int DefaultCapacity = 10;
-	private const int MaxSize = 50;
+	private const int DefaultCapacity = 5;
+	private const int MaxCapacity = 10;
 
 	[SerializeField] private GreenPoisonSeeker _greenPoisonSeekerPrefab;
 	[SerializeField, MinValue(0)] private int _spawnActivatedCount = 3;
 
 	private ObjectPool<GreenPoisonSeeker> _objectPool;
 	private List<GreenPoisonSeeker> _activeSeekers = new List<GreenPoisonSeeker>();
+	private Transform _seekerTarget;
 
 	private void OnDestroy()
 	{
@@ -33,6 +34,23 @@ public class GreenPosionSeekerSpawner : MonoBehaviour
 		InitializePool();
 	}
 
+	public void Initialize(Transform seekerTarget)
+	{
+		InitializePool();
+		_seekerTarget = seekerTarget;
+	}
+
+	public void SpawnSeekers()
+	{
+		int availableSlots = MaxCapacity - _activeSeekers.Count;
+		int spawnCount = Mathf.Min(_spawnActivatedCount, availableSlots);
+
+		for (int i = 0; i < spawnCount; i++)
+		{
+			SpawnSingleSeeker();
+		}
+	}
+
 	private void InitializePool()
 	{
 		_objectPool = new ObjectPool<GreenPoisonSeeker>(
@@ -42,25 +60,39 @@ public class GreenPosionSeekerSpawner : MonoBehaviour
 			actionOnDestroy: OnDestroyPoolObject,
 			collectionCheck: true,
 			defaultCapacity: DefaultCapacity,
-			maxSize: MaxSize
+			maxSize: MaxCapacity
 		);
 	}
 
 	private GreenPoisonSeeker CreateSeeker()
 	{
 		GreenPoisonSeeker seeker = Instantiate(_greenPoisonSeekerPrefab, transform.position, Quaternion.identity);
+		seeker.SeekerDestroyed += OnSeekerDestroyed;
 		return seeker;
 	}
 
 	private void OnTakeFromPool(GreenPoisonSeeker seeker)
 	{
+		if (_activeSeekers.Count >= MaxCapacity)
+		{
+			_objectPool.Release(seeker);
+			return;
+		}
+
 		seeker.gameObject.SetActive(true);
 		seeker.transform.SetParent(null);
 		seeker.transform.position = transform.position;
 		_activeSeekers.Add(seeker);
 
-		Vector2 randomDirection = Random.insideUnitCircle.normalized;
-		seeker.Initialize(randomDirection);
+		if (_seekerTarget != null)
+		{
+			seeker.Initialize(Vector2.zero, _seekerTarget);
+		}
+		else
+		{
+			Vector2 randomDirection = Random.insideUnitCircle.normalized;
+			seeker.Initialize(randomDirection);
+		}
 	}
 
 	private void OnReturnToPool(GreenPoisonSeeker seeker)
@@ -73,20 +105,24 @@ public class GreenPosionSeekerSpawner : MonoBehaviour
 	{
 		if (seeker != null)
 		{
+			seeker.SeekerDestroyed -= OnSeekerDestroyed;
 			Destroy(seeker.gameObject);
 		}
 	}
 
-	public void SpawnSeekers()
+	private void OnSeekerDestroyed(GreenPoisonSeeker seeker)
 	{
-		for (int i = 0; i < _spawnActivatedCount; i++)
+		if (seeker != null && _activeSeekers.Contains(seeker))
 		{
-			SpawnSingleSeeker();
+			_objectPool.Release(seeker);
 		}
 	}
 
 	private void SpawnSingleSeeker()
 	{
-		_objectPool.Get();
+		if (_activeSeekers.Count < MaxCapacity)
+		{
+			_objectPool.Get();
+		}
 	}
 }

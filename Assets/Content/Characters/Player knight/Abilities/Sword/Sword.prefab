@@ -5042,7 +5042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackZoneScales:
   - {x: 1.04, y: 1.1}
-  - {x: 1.09, y: 1.2}
+  - {x: 1.2, y: 1.6}
 --- !u!114 &3118046807568656252
 MonoBehaviour:
   m_ObjectHideFlags: 0

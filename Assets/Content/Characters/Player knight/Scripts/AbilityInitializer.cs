@@ -13,12 +13,12 @@ public class AbilityInitializer : MonoBehaviour
 	[SerializeField, Required] private Transform _abilitySpawnParent;
 
 	[Header("Limb Visual Effect Spawn Points")]
-	[SerializeField, Required] private Transform _headEffectsParent;
-	[SerializeField, Required] private Transform _bodyEffectsParent;
-	[SerializeField, Required] private Transform _leftArmEffectsParent;
-	[SerializeField, Required] private Transform _rightArmEffectsParent;
-	[SerializeField, Required] private Transform _leftLegEffectsParent;
-	[SerializeField, Required] private Transform _rightLegEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _headEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _bodyEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _leftArmEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _rightArmEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _leftLegEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _rightLegEffectsParent;
 
 	private PlayerLimbs _playerLimbs;
 	private List<IAbility> _abilities = new List<IAbility>();
@@ -163,12 +163,12 @@ public class AbilityInitializer : MonoBehaviour
 
 	private void InitializeLimbTransforms()
 	{
-		_limbEffectsParents[LimbType.Head] = _headEffectsParent;
-		_limbEffectsParents[LimbType.Body] = _bodyEffectsParent;
-		_limbEffectsParents[LimbType.LeftArm] = _leftArmEffectsParent;
-		_limbEffectsParents[LimbType.RightArm] = _rightArmEffectsParent;
-		_limbEffectsParents[LimbType.LeftLeg] = _leftLegEffectsParent;
-		_limbEffectsParents[LimbType.RightLeg] = _rightLegEffectsParent;
+		_limbEffectsParents[LimbType.Head] = _headEffectsParent.transform;
+		_limbEffectsParents[LimbType.Body] = _bodyEffectsParent.transform;
+		_limbEffectsParents[LimbType.LeftArm] = _leftArmEffectsParent.transform;
+		_limbEffectsParents[LimbType.RightArm] = _rightArmEffectsParent.transform;
+		_limbEffectsParents[LimbType.LeftLeg] = _leftLegEffectsParent.transform;
+		_limbEffectsParents[LimbType.RightLeg] = _rightLegEffectsParent.transform;
 	}
 
 	private List<LimbType> GetTargetLimbTypesForAbility(LimbType targetLimbType)

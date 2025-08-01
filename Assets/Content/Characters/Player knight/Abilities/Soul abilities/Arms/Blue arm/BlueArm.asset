@@ -15,4 +15,4 @@ MonoBehaviour:
   _soulType: 1
   _targetLimbType: 4
   _abilityPrefab: {fileID: 1301348624759801972, guid: ee20eac5d51fb4543a85d68171ce1bad, type: 3}
-  _abilityDescription: Standard sword speed for blue arm ability
+  _abilityDescription: Standard sword

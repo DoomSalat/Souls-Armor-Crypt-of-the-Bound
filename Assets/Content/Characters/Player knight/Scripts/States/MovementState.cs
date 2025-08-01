@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class MovementState : PlayerState
 {
 	private const float JoystickMinMagnitude = 0.1f;
-	private const float DefaultSwordSpeed = 2f;
 	private const float DefaultLegSpeed = 1f;
+	private const float DefaultLegAnimationSpeed = 1f;
 
 	private readonly InputMove _inputMove;
 	private readonly SwordController _swordController;
@@ -16,6 +16,9 @@ public class MovementState : PlayerState
 	private readonly AbilityInitializer _abilityInitializer;
 
 	private bool _isSwordControlRequested;
+
+	private LimbType _currentHand = LimbType.None;
+	private IAbilityArm _currentArmAbility;
 
 	private LimbType _currentLeg = LimbType.RightLeg;
 	private bool _previousIsStepMove = false;
@@ -60,7 +63,15 @@ public class MovementState : PlayerState
 	{
 		StopMovement();
 		DeactivateSwordControl();
+
+		if (_currentArmAbility != null)
+		{
+			_currentArmAbility.Deactivate();
+			_currentArmAbility = null;
+		}
+
 		_playerKnightAnimator.ResetSpeed();
+		_currentHand = LimbType.None;
 	}
 
 	public override void OnMousePerformed(InputAction.CallbackContext context)
@@ -107,6 +118,9 @@ public class MovementState : PlayerState
 		_swordDeactivateTimer = 0f;
 		_playerHandsTarget.ActivateLook();
 
+		var currentHand = _playerHandsTarget.GetCurrentHand();
+		SelectHand(currentHand);
+
 		if (_swordController.IsControlled == false)
 		{
 			_swordController.Activate();
@@ -114,7 +128,7 @@ public class MovementState : PlayerState
 
 		if (_swordController.IsControlled)
 		{
-			_swordController.MoveTarget(joystickInput, GetCurrentSwordSpeed());
+			_swordController.MoveTarget(joystickInput);
 		}
 	}
 
@@ -148,6 +162,7 @@ public class MovementState : PlayerState
 		}
 
 		var currentHand = _playerHandsTarget.GetCurrentHand();
+		SelectHand(currentHand);
 
 		if (IsHandAvailable(currentHand))
 		{
@@ -163,6 +178,14 @@ public class MovementState : PlayerState
 	private void DeactivateSwordControl()
 	{
 		_swordController.Deactivate();
+
+		if (_currentArmAbility != null)
+		{
+			_currentArmAbility.Deactivate();
+			_currentArmAbility = null;
+		}
+
+		_currentHand = LimbType.None;
 	}
 
 	private void HandleMovement()
@@ -197,8 +220,8 @@ public class MovementState : PlayerState
 				_playerKnightAnimator.SetSpeed(_animationSpeedMultiplier);
 			}
 
-			float legSpeedMultiplier = GetCurrentLegSpeed();
-			_inputMove.Move(legSpeedMultiplier);
+			_inputMove.Move(GetCurrentLegSpeed());
+			_playerKnightAnimator.SetSpeed(GetCurrentLegAnimationSpeed());
 		}
 		else
 		{
@@ -211,10 +234,26 @@ public class MovementState : PlayerState
 	{
 		if (_previousIsStepMove && _playerKnightAnimator.IsStepMove == false)
 		{
-			SwitchToNextLeg();
+			SwitchNextLeg();
+		}
+		else if (_previousIsStepMove == false && _playerKnightAnimator.IsStepMove)
+		{
+			ActivateCurrentLegAbility();
 		}
 
 		_previousIsStepMove = _playerKnightAnimator.IsStepMove;
+	}
+
+	private void ActivateCurrentLegAbility()
+	{
+		if (IsLegAvailable(_currentLeg))
+		{
+			var ability = _abilityInitializer.GetCurrentLegAbility(_currentLeg);
+			if (ability is IAbilityLeg legAbility)
+			{
+				legAbility.Activate();
+			}
+		}
 	}
 
 	private void StopMovement()
@@ -256,41 +295,40 @@ public class MovementState : PlayerState
 		return limbStates.ContainsKey(limbType) && limbStates[limbType].IsPresent;
 	}
 
+	private void SelectHand(LimbType newHand)
+	{
+		if (_currentHand == newHand)
+			return;
+
+		if (_currentArmAbility != null)
+		{
+			_currentArmAbility.Deactivate();
+		}
+
+		_currentHand = newHand;
+		_currentArmAbility = null;
+
+		if (_currentHand != LimbType.None && IsHandAvailable(_currentHand))
+		{
+			var ability = _abilityInitializer.GetCurrentArmAbility(_currentHand);
+			if (ability is IAbilityArm armAbility)
+			{
+				_currentArmAbility = armAbility;
+				armAbility.Activate();
+				armAbility.SetSwordSettings(_swordController);
+			}
+		}
+	}
+
 	private bool IsLegAvailable(LimbType legType)
 	{
 		var available = _playerLimbs.LimbStates.ContainsKey(legType) && _playerLimbs.LimbStates[legType].IsPresent;
 		return available;
 	}
 
-	private void SwitchToNextLeg()
+	private void SwitchNextLeg()
 	{
-		var ability = _abilityInitializer.GetCurrentLegAbility(_currentLeg);
-		if (ability is IAbilityLeg legAbility)
-		{
-			ability.Activate();
-		}
-
 		_currentLeg = _currentLeg == LimbType.LeftLeg ? LimbType.RightLeg : LimbType.LeftLeg;
-	}
-
-	private float GetCurrentSwordSpeed()
-	{
-		var currentHand = _playerHandsTarget.GetCurrentHand();
-
-		if (currentHand == LimbType.None)
-			return DefaultSwordSpeed;
-
-		if (IsHandAvailable(currentHand) == false)
-			return DefaultSwordSpeed;
-
-		var ability = _abilityInitializer.GetCurrentArmAbility(currentHand);
-
-		if (ability is IAbilityArm armAbility)
-		{
-			return armAbility.SwordSpeed;
-		}
-
-		return DefaultSwordSpeed;
 	}
 
 	private float GetCurrentLegSpeed()
@@ -306,6 +344,21 @@ public class MovementState : PlayerState
 		}
 
 		return DefaultLegSpeed;
+	}
+
+	private float GetCurrentLegAnimationSpeed()
+	{
+		if (IsLegAvailable(_currentLeg) == false)
+			return _animationSpeedMultiplier;
+
+		var ability = _abilityInitializer.GetCurrentLegAbility(_currentLeg);
+
+		if (ability is IAbilityLeg legAbility)
+		{
+			return DefaultLegAnimationSpeed / legAbility.DurationMultiplier;
+		}
+
+		return DefaultLegAnimationSpeed;
 	}
 
 	private void ResetStepCounter()

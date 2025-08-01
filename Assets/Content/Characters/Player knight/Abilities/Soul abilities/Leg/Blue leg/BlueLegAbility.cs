@@ -1,16 +1,13 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class BlueLegAbility : MonoBehaviour, IAbilityLeg
+public class BlueLegAbility : BaseLegAbility
 {
-	[Header("Blue Leg Settings")]
-	[SerializeField, MinValue(0)] private float _speed = 5f;
+	public override bool HasVisualEffects => false;
 
-	public float Speed => _speed;
-	public bool HasVisualEffects => false;
+	public override void Initialize() { }
+	public override void Activate() { }
 
-	public void Initialize() { }
-	public void Activate() { }
-	public void Deactivate() { }
-	public void InitializeVisualEffects(Transform effectsParent) { }
+	public override void Deactivate() { }
+	public override void InitializeVisualEffects(Transform effectsParent) { }
 }

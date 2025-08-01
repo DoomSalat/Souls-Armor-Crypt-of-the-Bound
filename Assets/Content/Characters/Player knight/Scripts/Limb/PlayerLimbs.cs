@@ -50,16 +50,9 @@ public class PlayerLimbs : MonoBehaviour
 	public void Initialize()
 	{
 		_soulMaterials = GetComponent<PlayerSoulMaterial>();
-
 		_limbs = new Dictionary<LimbType, LimbInfo>();
 
-		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
-		{
-			if (limbType != LimbType.None)
-			{
-				_limbs[limbType] = new LimbInfo(true, _defaultSoulType);
-			}
-		}
+		InstantiateDefaultLimbsSoul();
 	}
 
 	public void ActivateInventory(SoulType soulType)
@@ -178,5 +171,17 @@ public class PlayerLimbs : MonoBehaviour
 		return extremities;
 	}
 
+	private void InstantiateDefaultLimbsSoul()
+	{
+		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
+		{
+			if (limbType != LimbType.None)
+			{
+				_limbs[limbType] = new LimbInfo(true, _defaultSoulType);
+				_soulMaterials.Apply(limbType, _defaultSoulType);
 
+				LimbStateChanged?.Invoke(limbType);
+			}
+		}
+	}
 }

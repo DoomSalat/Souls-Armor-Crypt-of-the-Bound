@@ -46871,6 +46871,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 428139725}
     - target: {fileID: 8954013109217506612, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+      propertyPath: _defaultSoulType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8954013109217506612, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: _inventoryController
       value: 
       objectReference: {fileID: 1169730186}

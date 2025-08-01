@@ -92,11 +92,6 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_attackZoneScaler.SetAttackZoneScale(scaleIndex);
 	}
 
-	public int GetAttackZoneScaleCount()
-	{
-		return _attackZoneScaler.GetScaleCount();
-	}
-
 	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)
 	{
 		_knockbackProvider.CalculateKnockback(hitCollider, other, out direction, out force);

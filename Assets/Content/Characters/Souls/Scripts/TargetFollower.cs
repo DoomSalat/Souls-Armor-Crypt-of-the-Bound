@@ -17,6 +17,9 @@ public class TargetFollower : MonoBehaviour
 
 	private Rigidbody2D _rigidbody;
 	private Vector2 _moveDirection;
+	private bool _hasReachedTarget;
+
+	public event System.Action TargetReached;
 
 	private void Awake()
 	{
@@ -26,6 +29,7 @@ public class TargetFollower : MonoBehaviour
 	public void TryFollow(Transform target)
 	{
 		_target = target;
+		_hasReachedTarget = false;
 
 		if (enabled == false)
 			return;
@@ -61,6 +65,12 @@ public class TargetFollower : MonoBehaviour
 		if (distanceSqr <= _minDistance * _minDistance)
 		{
 			_moveDirection = Vector2.zero;
+
+			if (_hasReachedTarget == false)
+			{
+				_hasReachedTarget = true;
+				TargetReached?.Invoke();
+			}
 		}
 		else
 		{

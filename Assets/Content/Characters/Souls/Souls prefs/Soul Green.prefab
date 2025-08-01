@@ -5455,7 +5455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ce3e8f48be7ec4585c7268b24023f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackMultiplier: 1
+  _knockbackMultiplier: 2
   _maxKnockback: 30
   _knockbackDuration: 0.7
 --- !u!1 &7484585964037301526

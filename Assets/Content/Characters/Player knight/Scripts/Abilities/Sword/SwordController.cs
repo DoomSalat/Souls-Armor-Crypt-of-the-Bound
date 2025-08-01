@@ -19,8 +19,12 @@ public class SwordController : MonoBehaviour
 
 	private float _lastRotationTime;
 
+	[Header("Characteristics")]
 	[SerializeField, Required] private MouseFollower _mouseFollower;
 	[SerializeField, Required] private SpringJoint2D _springJoint;
+	[SerializeField] private float _speed = 1;
+
+	[Header("Components")]
 	[SerializeField, Required] private Sword _sword;
 	[SerializeField, Required] private SwordWallBounce _swordWallBounce;
 
@@ -71,7 +75,7 @@ public class SwordController : MonoBehaviour
 		Gizmos.DrawLine(anchorPos, transform.position);
 	}
 
-	public void Activate(Vector2 direction = default, float speed = 0)
+	public void Activate(Vector2 direction = default)
 	{
 		if (_isControlled)
 			return;
@@ -86,7 +90,7 @@ public class SwordController : MonoBehaviour
 		}
 		else
 		{
-			MoveTarget(direction, speed);
+			MoveTarget(direction);
 		}
 	}
 
@@ -111,7 +115,12 @@ public class SwordController : MonoBehaviour
 		_isMouseControlled = isMouseControlled;
 	}
 
-	public void MoveTarget(Vector2 direction, float speed)
+	public void SetIndexAttackZoneScale(int scaleIndex)
+	{
+		_sword.SetAttackZoneScale(scaleIndex);
+	}
+
+	public void MoveTarget(Vector2 direction)
 	{
 		Vector3 centerTargetPosition = GetCenterTargetPosition();
 
@@ -122,10 +131,15 @@ public class SwordController : MonoBehaviour
 		Vector3 targetDirection = new Vector3(direction.x, direction.y, 0).normalized;
 		float sensitivityCurve = Mathf.Pow(joystickMagnitude, JoystickSensitivityPower);
 
-		Vector3 targetPosition = centerTargetPosition + targetDirection * speed * sensitivityCurve;
+		Vector3 targetPosition = centerTargetPosition + targetDirection * _speed * sensitivityCurve;
 		transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
 
 		RandomRotateImpulse();
+	}
+
+	public void SetSwordSpeed(float speed)
+	{
+		_speed = speed;
 	}
 
 	private Vector3 GetCenterTargetPosition()
