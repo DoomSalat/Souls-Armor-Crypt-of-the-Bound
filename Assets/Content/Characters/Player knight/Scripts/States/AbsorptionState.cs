@@ -12,6 +12,7 @@ public class AbsorptionState : PlayerState
 	private readonly Transform _soulAbsorptionTarget;
 	private readonly AbsorptionCooldown _absorptionCooldown;
 	private readonly SwordController _swordController;
+
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
 	private bool _waitingForInventoryCompletion = false;
@@ -19,7 +20,6 @@ public class AbsorptionState : PlayerState
 	private float _absorptionDelay = 0.5f;
 
 	public event System.Action AbsorptionCompleted;
-
 	public event System.Action AbsorptionStarted;
 	public event System.Action InventoryClosed;
 
@@ -122,11 +122,6 @@ public class AbsorptionState : PlayerState
 	{
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
-
-		if (limbType == LimbType.Sword)
-		{
-			_swordController.SetSoulType(soulType);
-		}
 
 		TimeController.Instance.ResumeTime();
 		InventoryClosed?.Invoke();

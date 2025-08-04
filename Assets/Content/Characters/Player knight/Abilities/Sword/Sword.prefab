@@ -5043,6 +5043,8 @@ MonoBehaviour:
   _attackZoneScales:
   - {x: 1.04, y: 1.1}
   - {x: 1.2, y: 1.6}
+  _scaleDuration: 0.1
+  _scaleEase: 6
 --- !u!114 &3118046807568656252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5338,6 +5340,7 @@ MonoBehaviour:
   _wallBounce: {fileID: 5131635120793849663}
   _playerDetector: {fileID: 1375472286227213947}
   _attackZoneScaler: {fileID: 5224762290322751230}
+  _hitBox: {fileID: 2844672563833018958}
   _eye: {fileID: 319452641757712795}
 --- !u!114 &3746018895473431096
 MonoBehaviour:

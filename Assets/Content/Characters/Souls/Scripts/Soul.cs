@@ -40,14 +40,14 @@ public class Soul : MonoBehaviour
 	{
 		_soulAttractor.AttractionCompleted += OnAttractionCompletedInternal;
 
-		_hitBox.TargetHitted += OnHitTarget;
+		_hitBox.Hitted += OnHitTarget;
 	}
 
 	private void OnDisable()
 	{
 		_soulAttractor.AttractionCompleted -= OnAttractionCompletedInternal;
 
-		_hitBox.TargetHitted -= OnHitTarget;
+		_hitBox.Hitted -= OnHitTarget;
 	}
 
 	private void Update()

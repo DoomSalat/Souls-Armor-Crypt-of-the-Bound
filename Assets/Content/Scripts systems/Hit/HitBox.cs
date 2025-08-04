@@ -13,7 +13,7 @@ public class HitBox : MonoBehaviour
 	private FactionTag _ownerFaction;
 	private IKnockbackProvider _knockbackProvider;
 
-	public event Action<Collider2D, DamageData> TargetHitted;
+	public event Action<Collider2D, DamageData> Hitted;
 
 	private void Awake()
 	{
@@ -38,6 +38,9 @@ public class HitBox : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		if (enabled == false)
+			return;
+
 		if (other.TryGetComponent<HurtBox>(out var hurtBox) && CanDamage(hurtBox.Faction))
 		{
 			Vector2 direction = Vector2.zero;
@@ -60,7 +63,7 @@ public class HitBox : MonoBehaviour
 			);
 
 			hurtBox.ApplyDamage(damageData);
-			TargetHitted?.Invoke(other, damageData);
+			Hitted?.Invoke(other, damageData);
 		}
 	}
 

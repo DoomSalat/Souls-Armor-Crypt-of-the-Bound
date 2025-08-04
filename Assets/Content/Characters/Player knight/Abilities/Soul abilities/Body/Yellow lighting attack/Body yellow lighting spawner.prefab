@@ -44,6 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e9d61c39034174c91901ab3286b1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightningPrefab: {fileID: 7270306270451207091, guid: cc6aca2f6e0ab914ebcecbb119d7ea17, type: 3}
-  _defaultCapacity: 10
-  _maxSize: 20
+  _lightningPoolPrefab: {fileID: -102744247300715625, guid: cc6aca2f6e0ab914ebcecbb119d7ea17, type: 3}

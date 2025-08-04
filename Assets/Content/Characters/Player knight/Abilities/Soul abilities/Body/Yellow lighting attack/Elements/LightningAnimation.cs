@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using DG.Tweening;
 
 public class LightningAnimation : MonoBehaviour
@@ -13,12 +12,7 @@ public class LightningAnimation : MonoBehaviour
 
 	private Color _clearWhiteColor = new Color(1f, 1f, 1f, 0f);
 
-	private IObjectPool<LightningAnimation> _pool;
-
-	public void SetPool(IObjectPool<LightningAnimation> pool)
-	{
-		_pool = pool;
-	}
+	public event System.Action AnimationEnded;
 
 	public void PlayAnimation(Vector3 targetPosition, bool foundEnemy)
 	{
@@ -47,17 +41,15 @@ public class LightningAnimation : MonoBehaviour
 					.SetEase(Ease.InQuad)
 					.OnComplete(() =>
 					{
-						ReturnToPool();
+						AnimationEnded?.Invoke();
 					});
 			});
 	}
 
-	private void ReturnToPool()
+	public void Reset()
 	{
 		_lightningSprite.size = new Vector2(0f, _lightningSprite.size.y);
 		_lightningSprite.color = _clearWhiteColor;
 		transform.rotation = Quaternion.identity;
-
-		_pool?.Release(this);
 	}
 }

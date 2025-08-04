@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4636614938089213318
+--- !u!1 &7422840471191041890
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5758208942452798664}
-  - component: {fileID: 6465465426098879424}
-  - component: {fileID: 4977553485174549574}
-  - component: {fileID: 3132772460762570855}
-  - component: {fileID: 7159194836284741909}
-  - component: {fileID: 8842954570341920099}
+  - component: {fileID: 765041341938185739}
+  - component: {fileID: 7970242776230576133}
+  - component: {fileID: 5757880485045594323}
+  - component: {fileID: 6561172276312132832}
+  - component: {fileID: 4039919757941065532}
+  - component: {fileID: 4155405607564604027}
   m_Layer: 3
-  m_Name: Poison seeker
+  m_Name: Poison seeker (Arm)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5758208942452798664
+--- !u!4 &765041341938185739
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.46, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0.14761, y: -1.50109, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &6465465426098879424
+--- !u!50 &7970242776230576133
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,13 +63,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &4977553485174549574
+--- !u!58 &5757880485045594323
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -99,14 +99,14 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 4
---- !u!96 &3132772460762570855
+--- !u!96 &6561172276312132832
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -206,43 +206,44 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &7159194836284741909
+--- !u!114 &4039919757941065532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4d17ef0f9990ca46914bbe4d6e06c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 6465465426098879424}
-  _circleCollider: {fileID: 4977553485174549574}
-  _trail: {fileID: 3132772460762570855}
-  _targetFollower: {fileID: 8842954570341920099}
+  _rigidbody: {fileID: 7970242776230576133}
+  _circleCollider: {fileID: 5757880485045594323}
+  _trail: {fileID: 6561172276312132832}
+  _targetFollower: {fileID: 4155405607564604027}
   _speedSeek: 3.5
-  _lifeTime: 1.5
+  _lifeTime: 2
   _fadeOutDuration: 0.5
-  _colliderSeekRadius: 4
+  _colliderSeekRadius: 1
   _colliderShrinkAmount: 0.1
-  _initialTrailTime: 0.6
-  _followingTrailTime: 0.2
---- !u!114 &8842954570341920099
+  _initialTrailTime: 0.4
+  _followingTrailTime: 0.1
+  _trailTransitionDuration: 0.1
+--- !u!114 &4155405607564604027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636614938089213318}
+  m_GameObject: {fileID: 7422840471191041890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b56cb1285b87304c95d21333891222f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _moveSpeed: 5
+  _moveSpeed: 3
   _minDistance: 0.1
   _useForceMovement: 0
   _acceleration: 3

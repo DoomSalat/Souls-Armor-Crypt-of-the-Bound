@@ -3,7 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Sword : MonoBehaviour, IKnockbackProvider
+public class Sword : MonoBehaviour
 {
 	[SerializeField, Required] private Rigidbody2DLocalAxisLimiter _localAxisLimiter;
 	[SerializeField, Required] private SwordFollow _followSystem;
@@ -13,12 +13,14 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 	[SerializeField, Required] private SwordWallBounce _wallBounce;
 	[SerializeField, Required] private SwordPlayerDetector _playerDetector;
 	[SerializeField, Required] private SwordAttackZoneScaler _attackZoneScaler;
+	[SerializeField, Required] private HitBox _hitBox;
 
 	[Header("Visualization")]
 	[SerializeField, Required] private SmoothLook _eye;
 
-	[Header("Soul Type")]
+	[Header("Ability debug")]
 	[ShowInInspector, ReadOnly] private SoulType _currentSoulType = SoulType.None;
+	[ShowInInspector, ReadOnly] private IAbilitySword _currentSwordAbility;
 
 	private void Start()
 	{
@@ -30,6 +32,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_playerDetector.EnteredRadius += OnEnteredRadius;
 		_playerDetector.ExitedRadius += OnExitedRadius;
 		_wallBounce.OnBounceEnded += OnBounceEnded;
+		_hitBox.Hitted += OnEnemyHit;
 	}
 
 	private void OnDisable()
@@ -37,6 +40,7 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_playerDetector.EnteredRadius -= OnEnteredRadius;
 		_playerDetector.ExitedRadius -= OnExitedRadius;
 		_wallBounce.OnBounceEnded -= OnBounceEnded;
+		_hitBox.Hitted -= OnEnemyHit;
 	}
 
 	private void FixedUpdate()
@@ -92,11 +96,6 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_attackZoneScaler.SetAttackZoneScale(scaleIndex);
 	}
 
-	public void CalculateKnockback(Collider2D hitCollider, Collider2D other, out Vector2 direction, out float force)
-	{
-		_knockbackProvider.CalculateKnockback(hitCollider, other, out direction, out force);
-	}
-
 	public void SetSoulType(SoulType soulType)
 	{
 		if (_currentSoulType == soulType)
@@ -105,6 +104,11 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		_currentSoulType = soulType;
 
 		_wallBounce.UpdateSoulType(soulType);
+	}
+
+	public void SetSwordAbility(IAbilitySword swordAbility)
+	{
+		_currentSwordAbility = swordAbility;
 	}
 
 	private void OnEnteredRadius()
@@ -132,6 +136,14 @@ public class Sword : MonoBehaviour, IKnockbackProvider
 		else
 		{
 			_particleController.DisableParticles();
+		}
+	}
+
+	private void OnEnemyHit(Collider2D enemyCollider, DamageData damageData)
+	{
+		if (_currentSwordAbility != null)
+		{
+			_currentSwordAbility.Activate();
 		}
 	}
 }

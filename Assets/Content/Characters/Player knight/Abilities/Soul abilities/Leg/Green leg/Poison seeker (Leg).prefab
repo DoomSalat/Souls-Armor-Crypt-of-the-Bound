@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4039919757941065532}
   - component: {fileID: 4155405607564604027}
   m_Layer: 3
-  m_Name: Poison seeker hand
+  m_Name: Poison seeker (Leg)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4
+  m_Radius: 1
 --- !u!96 &6561172276312132832
 TrailRenderer:
   serializedVersion: 3
@@ -224,8 +224,9 @@ MonoBehaviour:
   _targetFollower: {fileID: 4155405607564604027}
   _speedSeek: 3.5
   _lifeTime: 2
+  _lifeTimeAttack: 5
   _fadeOutDuration: 0.5
-  _colliderSeekRadius: 1
+  _colliderSeekRadius: 0.5
   _colliderShrinkAmount: 0.1
   _initialTrailTime: 0.4
   _followingTrailTime: 0.1

@@ -19,6 +19,9 @@ public class AbilityInitializer : MonoBehaviour
 	[SerializeField, Required] private LimbEffectsData _rightArmEffectsParent;
 	[SerializeField, Required] private LimbEffectsData _leftLegEffectsParent;
 	[SerializeField, Required] private LimbEffectsData _rightLegEffectsParent;
+	[SerializeField, Required] private LimbEffectsData _swordEffectsParent;
+	[Space]
+	[SerializeField, Required] private Sword _sword;
 
 	private PlayerLimbs _playerLimbs;
 	private List<IAbility> _abilities = new List<IAbility>();
@@ -26,7 +29,15 @@ public class AbilityInitializer : MonoBehaviour
 
 	private readonly Dictionary<LimbType, IAbility> _currentAbilitiesCache = new Dictionary<LimbType, IAbility>();
 
-	private void OnDestroy()
+	private void OnEnable()
+	{
+		if (_playerLimbs == null)
+			return;
+
+		_playerLimbs.LimbStateChanged += OnLimbStateChanged;
+	}
+
+	private void OnDisable()
 	{
 		_playerLimbs.LimbStateChanged -= OnLimbStateChanged;
 	}
@@ -34,11 +45,11 @@ public class AbilityInitializer : MonoBehaviour
 	public void Initialize(PlayerLimbs playerLimbs)
 	{
 		_playerLimbs = playerLimbs;
+
 		InitializeLimbTransforms();
-
-		_playerLimbs.LimbStateChanged += OnLimbStateChanged;
-
 		RefreshCurrentAbilitiesCache();
+
+		OnEnable();
 	}
 
 	public IAbility GetCurrentAbility(LimbType limbType)
@@ -116,10 +127,24 @@ public class AbilityInitializer : MonoBehaviour
 			}
 
 			CreateLimbAbility(limbType, limbInfo.SoulType);
+			UpdateCurrentAbilityCache(limbType);
+
+			if (limbType == LimbType.Sword)
+			{
+				var newAbility = GetCurrentAbility(limbType);
+				_sword.SetSwordAbility(newAbility as IAbilitySword);
+			}
 		}
 		else if (limbInfo.SoulType == SoulType.None && currentAbility != null)
 		{
 			RemoveLimbAbility(limbType);
+			UpdateCurrentAbilityCache(limbType);
+
+			if (limbType == LimbType.Sword)
+			{
+				_sword.SetSwordAbility(null);
+				_sword.SetSoulType(SoulType.None);
+			}
 		}
 	}
 
@@ -152,7 +177,7 @@ public class AbilityInitializer : MonoBehaviour
 		{
 			LimbType.LeftLeg, LimbType.RightLeg,
 			LimbType.LeftArm, LimbType.RightArm,
-			LimbType.Head, LimbType.Body
+			LimbType.Head, LimbType.Body, LimbType.Sword
 		};
 
 		foreach (var limbType in limbTypes)
@@ -169,6 +194,7 @@ public class AbilityInitializer : MonoBehaviour
 		_limbEffectsParents[LimbType.RightArm] = _rightArmEffectsParent.transform;
 		_limbEffectsParents[LimbType.LeftLeg] = _leftLegEffectsParent.transform;
 		_limbEffectsParents[LimbType.RightLeg] = _rightLegEffectsParent.transform;
+		_limbEffectsParents[LimbType.Sword] = _swordEffectsParent.transform;
 	}
 
 	private List<LimbType> GetTargetLimbTypesForAbility(LimbType targetLimbType)
@@ -241,6 +267,15 @@ public class AbilityInitializer : MonoBehaviour
 		{
 			_abilities.Add(ability);
 			_currentAbilitiesCache[limbType] = ability;
+
+			if (limbType == LimbType.Sword && ability is IAbilitySword swordAbility)
+			{
+				var soulMaterial = SoulMaterialConfig.InstanceGame.GetMaterial(soulType);
+				if (soulMaterial != null)
+				{
+					_sword.SetSoulType(soulType);
+				}
+			}
 		}
 	}
 

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lightningSpawnerPrefab: {fileID: -7185084033761553858, guid: 60f3fae6d69ea0a4db418872efbcc235, type: 3}
-  _lightningRadius: 10
+  _lightningRadius: 2.5
   _enemyLayerMask:
     serializedVersion: 2
     m_Bits: 8

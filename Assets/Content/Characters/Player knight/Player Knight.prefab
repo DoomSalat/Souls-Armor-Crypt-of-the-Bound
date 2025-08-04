@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordTarget: {fileID: 0}
+  _swordTarget: {fileID: 565088543649250528}
 --- !u!1 &4620781308343583428
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,10 +862,10 @@ GameObject:
   - component: {fileID: 7457979793913768143}
   - component: {fileID: 8425065640337170352}
   - component: {fileID: 5980012152104037873}
+  - component: {fileID: 8954013109217506612}
   - component: {fileID: 8251905907222872888}
   - component: {fileID: 5863840458522902431}
   - component: {fileID: 6641814470964126569}
-  - component: {fileID: 8954013109217506612}
   - component: {fileID: 5742189195028187030}
   - component: {fileID: 6902791467551732057}
   m_Layer: 0
@@ -997,6 +997,21 @@ MonoBehaviour:
   _soulAbsorptionTarget: {fileID: 2460850382712382977}
   _bodyCollider: {fileID: 7457979793913768143}
   _hurtBoxCollider: {fileID: 8400442654283922249}
+--- !u!114 &8954013109217506612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850915946614116720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8626eb226575b364ea854f935e25c97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryController: {fileID: 0}
+  _limbsVisual: {fileID: 1507229470332080237}
+  _defaultSoulType: 1
 --- !u!114 &8251905907222872888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,21 +1050,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1.3
   _inputReader: {fileID: 0}
---- !u!114 &8954013109217506612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4850915946614116720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8626eb226575b364ea854f935e25c97b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inventoryController: {fileID: 0}
-  _limbsVisual: {fileID: 1507229470332080237}
-  _defaultSoulType: 1
 --- !u!114 &5742189195028187030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordTarget: {fileID: 0}
+  _swordTarget: {fileID: 565088543649250528}
 --- !u!1 &7426938341995514048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordTarget: {fileID: 0}
+  _swordTarget: {fileID: 565088543649250528}
 --- !u!1 &7583149857418652732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordTarget: {fileID: 0}
+  _swordTarget: {fileID: 565088543649250528}
 --- !u!1 &9036742837647860710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,21 +1461,25 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 674b079e089882c41b44c6f66e7afe7b, type: 2}
       - {fileID: 11400000, guid: a5739c97323191f49b739148e0fed7ac, type: 2}
       - {fileID: 11400000, guid: e92a5057eab0b3d43a099ae57348f768, type: 2}
+      - {fileID: 11400000, guid: e92a5057eab0b3d43a099ae57348f768, type: 2}
     - _soulType: 2
       _abilities:
       - {fileID: 11400000, guid: 04dd6a353cae8784aa65a6bcb83bace2, type: 2}
       - {fileID: 11400000, guid: a43a18bdbc584594294bc3adf3afd8ed, type: 2}
       - {fileID: 11400000, guid: 472536384ed232346b5a8ccbc62c093f, type: 2}
+      - {fileID: 11400000, guid: 246bc20189723e448b8e5879a530e2a6, type: 2}
     - _soulType: 3
       _abilities:
       - {fileID: 11400000, guid: c2be9f5c1a1e76d4284f099288bd9a4c, type: 2}
       - {fileID: 11400000, guid: 9d2ed82ec3bf44240b0f2556e34d34ca, type: 2}
       - {fileID: 11400000, guid: 583b9a35559a48b47b1b0cc75b190caa, type: 2}
+      - {fileID: 11400000, guid: 0cfb0a44ecd21114f81a3bf563588f94, type: 2}
     - _soulType: 4
       _abilities:
       - {fileID: 11400000, guid: 52ac3df636e2d4749bdf71b5e5373dd2, type: 2}
       - {fileID: 11400000, guid: a4a9608b7121d1849aacfca4a15c2a9a, type: 2}
       - {fileID: 11400000, guid: be291d07aa1568c4480b87d3cb01caaf, type: 2}
+      - {fileID: 11400000, guid: 146bf94a571616e498108116a6a4e808, type: 2}
   _abilitySpawnParent: {fileID: 9093137995265872880}
   _headEffectsParent: {fileID: 5719699592806408823}
   _bodyEffectsParent: {fileID: 5278656496818749270}
@@ -1483,6 +1487,8 @@ MonoBehaviour:
   _rightArmEffectsParent: {fileID: 5810449381830479625}
   _leftLegEffectsParent: {fileID: 342020225892527343}
   _rightLegEffectsParent: {fileID: 1380055723352258211}
+  _swordEffectsParent: {fileID: 439236044874112152}
+  _sword: {fileID: 4972086489707388878}
 --- !u!1001 &4596988974686164566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1570,7 +1576,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 138704622205312929, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 439236044874112152}
   m_SourcePrefab: {fileID: 100100000, guid: 7374b60a3adf1b84394202db70569935, type: 3}
 --- !u!4 &565088543649250528 stripped
 Transform:
@@ -1593,6 +1602,24 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3589131533407679560, guid: 7374b60a3adf1b84394202db70569935, type: 3}
   m_PrefabInstance: {fileID: 4596988974686164566}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4478563763440503287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 138704622205312929, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+  m_PrefabInstance: {fileID: 4596988974686164566}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &439236044874112152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478563763440503287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _swordTarget: {fileID: 565088543649250528}
 --- !u!114 &4972086489707388878 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8848358635647617432, guid: 7374b60a3adf1b84394202db70569935, type: 3}

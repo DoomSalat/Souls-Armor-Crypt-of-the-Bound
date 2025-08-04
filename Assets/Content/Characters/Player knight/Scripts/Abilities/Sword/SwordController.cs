@@ -105,11 +105,6 @@ public class SwordController : MonoBehaviour
 		_mouseFollower.enabled = false;
 	}
 
-	public void SetSoulType(SoulType soulType)
-	{
-		_sword.SetSoulType(soulType);
-	}
-
 	public void SetMouseControlled(bool isMouseControlled)
 	{
 		_isMouseControlled = isMouseControlled;

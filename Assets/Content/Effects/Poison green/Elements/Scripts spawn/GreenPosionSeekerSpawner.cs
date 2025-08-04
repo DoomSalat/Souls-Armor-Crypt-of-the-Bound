@@ -40,6 +40,11 @@ public class GreenPosionSeekerSpawner : MonoBehaviour
 		_seekerTarget = seekerTarget;
 	}
 
+	public void SetCount(int count)
+	{
+		_spawnActivatedCount = count;
+	}
+
 	public void SpawnSeekers()
 	{
 		int availableSlots = MaxCapacity - _activeSeekers.Count;
