@@ -1,13 +1,17 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class PlayerDamage : MonoBehaviour, IDamageable
 {
+	[SerializeField] private float _deadDelay = 2f;
+
 	private PlayerLimbs _limbsState;
 	private PlayerKnightAnimator _playerKnightAnimator;
 	private AbilityInitializer _abilityInitializer;
 
 	public event Action Dead;
+	public event Action DeadEnd;
 	public event Action BodyLost;
 	public event Action LegsLost;
 	public event Action LegsRestored;
@@ -73,6 +77,13 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 	private void OnDead()
 	{
 		Dead?.Invoke();
+		StartCoroutine(DeadCoroutine());
+	}
+
+	private IEnumerator DeadCoroutine()
+	{
+		yield return new WaitForSeconds(_deadDelay);
+		DeadEnd?.Invoke();
 	}
 
 	private void OnBodyLost()

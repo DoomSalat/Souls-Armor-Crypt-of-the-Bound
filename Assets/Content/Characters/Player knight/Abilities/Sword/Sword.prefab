@@ -5197,10 +5197,10 @@ MonoBehaviour:
   _useSoulColors: 1
   _soulColorConfig:
     _noneColor: {r: 1, g: 1, b: 1, a: 1}
-    _blueColor: {r: 0.33333334, g: 0.6313726, b: 0.65882355, a: 1}
-    _redColor: {r: 0.7433963, g: 0.27978513, b: 0.2005767, a: 1}
-    _greenColor: {r: 0.48909488, g: 0.65882355, b: 0.33333334, a: 1}
-    _purpleColor: {r: 0.47741434, g: 0.33333334, b: 0.65882355, a: 1}
+    _blueColor: {r: 0.36078432, g: 0.7960785, b: 0.8352942, a: 1}
+    _redColor: {r: 0.8352942, g: 0.36078432, b: 0.69411767, a: 1}
+    _greenColor: {r: 0.7019608, g: 0.8352942, b: 0.36078432, a: 1}
+    _purpleColor: {r: 0.36078432, g: 0.3921569, b: 0.8352942, a: 1}
 --- !u!1 &2781621544135332391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5340,6 +5340,7 @@ MonoBehaviour:
   _wallBounce: {fileID: 5131635120793849663}
   _playerDetector: {fileID: 1375472286227213947}
   _attackZoneScaler: {fileID: 5224762290322751230}
+  _swordCollision: {fileID: 1775377272352095187}
   _hitBox: {fileID: 2844672563833018958}
   _eye: {fileID: 319452641757712795}
 --- !u!114 &3746018895473431096
@@ -5426,7 +5427,7 @@ MonoBehaviour:
   _hitBox: {fileID: 3947382357334542642}
   _wall: {fileID: 2847683032277677317}
   _bladeVisualizer: {fileID: 3118046807568656252}
-  _speedThreshold: 5
+  _speedThreshold: 3
 --- !u!114 &5131635120793849663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5467,6 +5468,7 @@ MonoBehaviour:
   _spriteRenderers:
   - {fileID: 646491158204573537}
   - {fileID: 3751381912095369015}
+  _maskSpriteRenderersMask: []
   _particleSystems:
   - _particleSystem: {fileID: 5025448571691535649}
     _applyToTrail: 1
@@ -5474,7 +5476,6 @@ MonoBehaviour:
   _rawImages: []
   _UIParticles: []
   _currentSoulType: 0
-  _applyOnStart: 0
 --- !u!1 &6511940863131969537
 GameObject:
   m_ObjectHideFlags: 0

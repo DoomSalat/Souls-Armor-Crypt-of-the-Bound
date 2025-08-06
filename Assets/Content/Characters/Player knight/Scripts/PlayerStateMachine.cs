@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using System;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -68,7 +67,15 @@ public class PlayerStateMachine : MonoBehaviour
 
 	public T GetState<T>() where T : PlayerState
 	{
-		return _states[typeof(T)] as T;
+		if (_states == null)
+			return null;
+
+		if (_states.TryGetValue(typeof(T), out var state))
+		{
+			return state as T;
+		}
+
+		return null;
 	}
 
 	public bool IsCurrentState<T>() where T : PlayerState

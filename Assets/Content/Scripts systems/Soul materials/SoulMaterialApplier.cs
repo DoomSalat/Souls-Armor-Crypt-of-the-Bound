@@ -6,8 +6,11 @@ using Coffee.UIExtensions;
 
 public class SoulMaterialApplier : MonoBehaviour
 {
+	private const string ColorHueProperty = "_ColorHue";
+
 	[Header("Target Components")]
 	[SerializeField] private SpriteRenderer[] _spriteRenderers;
+	[SerializeField] private SpriteRenderer[] _maskSpriteRenderersMask;
 	[SerializeField] private ParticleSystemRender[] _particleSystems;
 	[Space]
 	[SerializeField] private Image[] _images;
@@ -17,26 +20,15 @@ public class SoulMaterialApplier : MonoBehaviour
 	[Header("Current State")]
 	[SerializeField, ReadOnly] private SoulType _currentSoulType = SoulType.None;
 
-	[Header("Options")]
-	[SerializeField] private bool _applyOnStart = false;
-
+	private Dictionary<SpriteRenderer, Material> _originalSpriteMaterials;
 	private Dictionary<ParticleSystem, Material> _originalParticleMaterials;
 	private Dictionary<UIParticle, List<Material>> _originalUIParticleMaterials;
-	private Dictionary<SpriteRenderer, Material> _originalSpriteMaterials;
 	private Dictionary<Image, Material> _originalImageMaterials;
 	private Dictionary<RawImage, Material> _originalRawImageMaterials;
 
 	private void Awake()
 	{
 		CacheOriginalMaterials();
-	}
-
-	private void Start()
-	{
-		if (_applyOnStart && _currentSoulType != SoulType.None)
-		{
-			ApplySoul(_currentSoulType);
-		}
 	}
 
 	public void ApplySoul(SoulType soulType)
@@ -47,6 +39,7 @@ public class SoulMaterialApplier : MonoBehaviour
 		var uiParticleMaterial = SoulMaterialConfig.InstanceUIParticle.GetMaterial(soulType);
 
 		ApplyToSprites(material);
+		ApplyToMasks(soulType);
 		ApplyToParticles(particleMaterial);
 		ApplyToImages(canvasMaterial);
 		ApplyToRawImages(canvasMaterial);
@@ -62,6 +55,7 @@ public class SoulMaterialApplier : MonoBehaviour
 		ResetImageMaterials();
 		ResetRawImageMaterials();
 		ResetUIParticleMaterials();
+		ResetMasks();
 
 		_currentSoulType = SoulType.None;
 	}
@@ -69,6 +63,16 @@ public class SoulMaterialApplier : MonoBehaviour
 	public SoulType GetCurrentSoulType()
 	{
 		return _currentSoulType;
+	}
+
+	public SpriteRenderer[] GetMaskSpriteRenderers()
+	{
+		return _maskSpriteRenderersMask;
+	}
+
+	public bool HasMaskComponents()
+	{
+		return _maskSpriteRenderersMask != null && _maskSpriteRenderersMask.Length > 0;
 	}
 
 	public void ApplySoulByIndex(int materialIndex)
@@ -329,6 +333,22 @@ public class SoulMaterialApplier : MonoBehaviour
 		}
 	}
 
+	private void ApplyToMasks(SoulType soulType)
+	{
+		if (_maskSpriteRenderersMask == null)
+			return;
+
+		float hueValue = GetColorHueForSoulType(soulType);
+
+		foreach (var sr in _maskSpriteRenderersMask)
+		{
+			if (sr != null && sr.sharedMaterial != null)
+			{
+				sr.sharedMaterial.SetFloat(ColorHueProperty, hueValue);
+			}
+		}
+	}
+
 	private void ResetParticleMaterials()
 	{
 		if (_originalParticleMaterials == null || _particleSystems == null)
@@ -377,10 +397,12 @@ public class SoulMaterialApplier : MonoBehaviour
 
 				foreach (var ps in particleSystems)
 				{
-					if (ps == null) continue;
+					if (ps == null)
+						continue;
 
 					var renderer = ps.GetComponent<ParticleSystemRenderer>();
-					if (renderer == null) continue;
+					if (renderer == null)
+						continue;
 
 					if (psData.ApplyToTrail && ps.trails.enabled && materialIndex + 1 < originalMaterials.Count)
 					{
@@ -447,6 +469,31 @@ public class SoulMaterialApplier : MonoBehaviour
 				kvp.Key.material = kvp.Value;
 			}
 		}
+	}
+
+	private void ResetMasks()
+	{
+		if (_maskSpriteRenderersMask == null)
+			return;
+
+		foreach (var sr in _maskSpriteRenderersMask)
+		{
+			if (sr != null && sr.sharedMaterial != null)
+			{
+				sr.sharedMaterial.SetFloat(ColorHueProperty, 0f);
+			}
+		}
+	}
+
+	private float GetColorHueForSoulType(SoulType soulType)
+	{
+		var material = SoulMaterialConfig.InstanceGame.GetMaterial(soulType);
+		if (material != null && material.HasProperty(ColorHueProperty))
+		{
+			return material.GetFloat(ColorHueProperty);
+		}
+
+		return 0f;
 	}
 
 #if UNITY_EDITOR

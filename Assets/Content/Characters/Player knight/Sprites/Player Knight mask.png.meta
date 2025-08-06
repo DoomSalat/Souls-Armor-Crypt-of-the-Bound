@@ -1,0 +1,854 @@
+fileFormatVersion: 2
+guid: e4d07840ca531d644844f79ec58021fa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3867297927419936907
+    second: Player Knight mask_0
+  - first:
+      213: 4358280494825964772
+    second: Player Knight mask_1
+  - first:
+      213: 3938237514375601748
+    second: Player Knight mask_2
+  - first:
+      213: 3856848452475119226
+    second: Player Knight mask_3
+  - first:
+      213: -6819984676350350690
+    second: Player Knight mask_4
+  - first:
+      213: 8195724501811749826
+    second: Player Knight mask_5
+  - first:
+      213: -1261848879692712101
+    second: Player Knight mask_6
+  - first:
+      213: -9020502295118643936
+    second: Player Knight mask_7
+  - first:
+      213: -8667057273184228596
+    second: Player Knight mask_8
+  - first:
+      213: 7783960824485550546
+    second: Player Knight mask_9
+  - first:
+      213: 6204007220876238115
+    second: Player Knight mask_10
+  - first:
+      213: -3773843146766239004
+    second: Player Knight mask_11
+  - first:
+      213: -1968455227618922842
+    second: Player Knight mask_12
+  - first:
+      213: -5355417400465289968
+    second: Player Knight mask_13
+  - first:
+      213: 6152523150989855957
+    second: Player Knight mask_14
+  - first:
+      213: 8873550126168155309
+    second: Player Knight mask_15
+  - first:
+      213: 5649647682738460862
+    second: Player Knight mask_16
+  - first:
+      213: -166385633005505342
+    second: Player Knight mask_17
+  - first:
+      213: 3810450379614142972
+    second: Player Knight mask_18
+  - first:
+      213: 5003918321984409854
+    second: Player Knight mask_19
+  - first:
+      213: 7417369802443604365
+    second: Player Knight mask_20
+  - first:
+      213: 3103714580763601539
+    second: Player Knight mask_21
+  - first:
+      213: 1919997219314591210
+    second: Player Knight mask_22
+  - first:
+      213: 1703213640741050134
+    second: Player Knight mask_23
+  - first:
+      213: -7307877250054718822
+    second: Player Knight mask_24
+  - first:
+      213: -7169621027718499028
+    second: Player Knight mask_25
+  - first:
+      213: 1964130740645441589
+    second: Player Knight mask_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player Knight mask_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 92
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b804874a9f66ba530800000000000000
+      internalID: 3867297927419936907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 92
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e48d95d409bb7c30800000000000000
+      internalID: 4358280494825964772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 92
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45e9975572e67a630800000000000000
+      internalID: 3938237514375601748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_3
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 92
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a766b4aab37468530800000000000000
+      internalID: 3856848452475119226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_4
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 93
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9aa788121c8a51a0800000000000000
+      internalID: -6819984676350350690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_5
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c36477f2001db170800000000000000
+      internalID: 8195724501811749826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_6
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 74
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57f0b521230d7ee0800000000000000
+      internalID: -1261848879692712101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_7
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 74
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02d7bdb84fcb0d280800000000000000
+      internalID: -9020502295118643936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_8
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 73
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0b63ef745d68b780800000000000000
+      internalID: -8667057273184228596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 46
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d99401f02f260c60800000000000000
+      internalID: 7783960824485550546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 45
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32d594872bf091650800000000000000
+      internalID: 6204007220876238115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_11
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 46
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eab4f617ad90abc0800000000000000
+      internalID: -3773843146766239004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_12
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 46
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ae63895664aea4e0800000000000000
+      internalID: -1968455227618922842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_13
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 46
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d025d9f3cbda5b0800000000000000
+      internalID: -5355417400465289968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 26
+        width: 43
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dc0e175537226550800000000000000
+      internalID: 6152523150989855957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 29
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da420ee53de252b70800000000000000
+      internalID: 8873550126168155309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_16
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 18
+        width: 21
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb81cb362a4976e40800000000000000
+      internalID: 5649647682738460862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_17
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 23
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c47af8f521e0bdf0800000000000000
+      internalID: -166385633005505342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_18
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 9
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf1472f7e6071e430800000000000000
+      internalID: 3810450379614142972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_19
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 9
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef013f2b33d717540800000000000000
+      internalID: 5003918321984409854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_20
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 9
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d814c52598acfe660800000000000000
+      internalID: 7417369802443604365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_21
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 13
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38a6d9e87fb921b20800000000000000
+      internalID: 3103714580763601539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_22
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae5ebf26c4335aa10800000000000000
+      internalID: 1919997219314591210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_23
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61758f048c703a710800000000000000
+      internalID: 1703213640741050134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_24
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 1
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a74502c54359a90800000000000000
+      internalID: -7307877250054718822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_25
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 2
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c25faac59a3608c90800000000000000
+      internalID: -7169621027718499028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Knight mask_26
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 1
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 530b890908ef14b10800000000000000
+      internalID: 1964130740645441589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9b2d25657fb68ba409f7c9dda9c8d394
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player guard_0: 1737851302510637667
+      Player guard_1: -7942653609398019411
+      Player guard_10: -4091110708751148173
+      Player guard_11: 1890373269946134019
+      Player guard_12: 1438248172960435456
+      Player guard_13: 3284685468114550870
+      Player guard_14: 7818715624467201950
+      Player guard_15: -3365701301699021618
+      Player guard_16: 3471938692517606355
+      Player guard_17: -5464670169405434639
+      Player guard_18: 3626968792682983815
+      Player guard_19: 2840364542882239186
+      Player guard_2: -4475302800228227467
+      Player guard_20: 1989861002077216360
+      Player guard_21: -6010020954096570063
+      Player guard_22: 1351024586608831853
+      Player guard_3: 3087467676200428321
+      Player guard_4: -8594237936139060646
+      Player guard_5: 531364238145108751
+      Player guard_6: 2808859833944855010
+      Player guard_7: 4361402322396502065
+      Player guard_8: -6767544748856783519
+      Player guard_9: -3140940712499596123
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

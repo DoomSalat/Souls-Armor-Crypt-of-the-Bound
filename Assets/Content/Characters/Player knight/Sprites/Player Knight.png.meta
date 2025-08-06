@@ -736,7 +736,7 @@ TextureImporter:
       name: 'Knight_Body Front Open [2]'
       rect:
         serializedVersion: 2
-        x: 64
+        x: 60
         y: 18
         width: 21
         height: 26
@@ -798,6 +798,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Knight_Helmet Side Active
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 72
+        width: 18
+        height: 19
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0.15789473}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f532573773ec5d41aebd2ab16846b84
+      internalID: -213623706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -816,6 +838,7 @@ TextureImporter:
     nameFileIdTable:
       Knight_Body Back: 1890373269946134019
       Knight_Body Front: 4361402322396502065
+      Knight_Body Front Active: -1478826559
       'Knight_Body Front Open [1]': -6767544748856783519
       'Knight_Body Front Open [2]': 2082190505
       Knight_Body Side L: -4091110708751148173
@@ -831,6 +854,7 @@ TextureImporter:
       Knight_Helmet Front Down: 640821304
       Knight_Helmet Front Up: 968603553
       Knight_Helmet Side: -4475302800228227467
+      Knight_Helmet Side Active: -213623706
       Knight_Leg Back: 3471938692517606355
       Knight_Leg Front: 7818715624467201950
       Knight_Leg Side: -3365701301699021618

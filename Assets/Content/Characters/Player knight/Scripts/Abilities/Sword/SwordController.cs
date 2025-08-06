@@ -137,6 +137,11 @@ public class SwordController : MonoBehaviour
 		_speed = speed;
 	}
 
+	public void SetSpeedThreshold(float threshold)
+	{
+		_sword.SetSpeedThreshold(threshold);
+	}
+
 	private Vector3 GetCenterTargetPosition()
 	{
 		return _sword.transform.TransformPoint(_springJoint.connectedAnchor);

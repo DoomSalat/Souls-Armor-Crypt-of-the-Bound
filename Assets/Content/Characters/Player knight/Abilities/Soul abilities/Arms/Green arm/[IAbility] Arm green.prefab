@@ -46,5 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _swordSpeed: 1
   _swordScaleIndex: 0
-  _greenPosionSeekerSpawnerPrefab: {fileID: 9078848546835828479, guid: 5d5bf95f299e4ea43b94a6df7f801de4, type: 3}
-  _spawnRate: 2
+  _speedThreshold: 0.5

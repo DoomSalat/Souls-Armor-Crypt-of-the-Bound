@@ -36,20 +36,50 @@ public class CameraController : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_absorptionState = _playerStateMachine.GetState<AbsorptionState>();
-		_absorptionState.AbsorptionStarted += StartAbsorptionZoom;
-		_absorptionState.InventoryClosed += EndAbsorptionZoom;
+		if (_absorptionState == null)
+			_absorptionState = _playerStateMachine.GetState<AbsorptionState>();
+
+		if (_absorptionState != null)
+		{
+			SubscribeToAbsorptionEvents();
+		}
+		else
+		{
+			_playerStateMachine.StatesInitialized += OnStatesInitialized;
+		}
 	}
 
 	private void OnDisable()
 	{
-		_absorptionState.AbsorptionStarted -= StartAbsorptionZoom;
-		_absorptionState.InventoryClosed -= EndAbsorptionZoom;
+		_playerStateMachine.StatesInitialized -= OnStatesInitialized;
+		UnsubscribeFromAbsorptionEvents();
 	}
 
 	private void OnDestroy()
 	{
 		_currentZoomTween?.Kill();
+	}
+
+	private void OnStatesInitialized()
+	{
+		_playerStateMachine.StatesInitialized -= OnStatesInitialized;
+		_absorptionState = _playerStateMachine.GetState<AbsorptionState>();
+		SubscribeToAbsorptionEvents();
+	}
+
+	private void SubscribeToAbsorptionEvents()
+	{
+		if (_absorptionState == null)
+			return;
+
+		_absorptionState.AbsorptionStarted += StartAbsorptionZoom;
+		_absorptionState.InventoryClosed += EndAbsorptionZoom;
+	}
+
+	private void UnsubscribeFromAbsorptionEvents()
+	{
+		if (_absorptionState == null)
+			return;
 
 		_absorptionState.AbsorptionStarted -= StartAbsorptionZoom;
 		_absorptionState.InventoryClosed -= EndAbsorptionZoom;

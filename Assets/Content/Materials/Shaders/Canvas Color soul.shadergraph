@@ -495,10 +495,10 @@
     "m_Guid": {
         "m_GuidSerialized": "3707650e-8ca0-424f-8acd-4482d728f996"
     },
-    "m_Name": "Color hue",
+    "m_Name": "ColorHue",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Color hue",
-    "m_DefaultReferenceName": "_Color_hue",
+    "m_RefNameGeneratedByDisplayName": "ColorHue",
+    "m_DefaultReferenceName": "_ColorHue",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -779,7 +779,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "f99e182654ea427085ffaf2937856a8d",
     "m_Id": 0,
-    "m_DisplayName": "Color hue",
+    "m_DisplayName": "ColorHue",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

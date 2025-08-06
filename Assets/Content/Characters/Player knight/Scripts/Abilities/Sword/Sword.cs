@@ -13,6 +13,7 @@ public class Sword : MonoBehaviour
 	[SerializeField, Required] private SwordWallBounce _wallBounce;
 	[SerializeField, Required] private SwordPlayerDetector _playerDetector;
 	[SerializeField, Required] private SwordAttackZoneScaler _attackZoneScaler;
+	[SerializeField, Required] private SwordCollision _swordCollision;
 	[SerializeField, Required] private HitBox _hitBox;
 
 	[Header("Visualization")]
@@ -109,6 +110,11 @@ public class Sword : MonoBehaviour
 	public void SetSwordAbility(IAbilitySword swordAbility)
 	{
 		_currentSwordAbility = swordAbility;
+	}
+
+	public void SetSpeedThreshold(float threshold)
+	{
+		_swordCollision.SetSpeedThreshold(threshold);
 	}
 
 	private void OnEnteredRadius()

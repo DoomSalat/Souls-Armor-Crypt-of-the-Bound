@@ -6,9 +6,11 @@ public abstract class BaseArmAbility : MonoBehaviour, IAbilityArm
 	[Header("Settings")]
 	[SerializeField, MinValue(0)] protected float _swordSpeed = 1f;
 	[SerializeField, MinValue(0)] protected int _swordScaleIndex = 0;
+	[SerializeField, MinValue(0)] protected float _speedThreshold = 5f;
 
 	public float SwordSpeed => _swordSpeed;
 	public int SwordScaleIndex => _swordScaleIndex;
+	public float SpeedThreshold => _speedThreshold;
 
 	public abstract bool HasVisualEffects { get; }
 
@@ -21,5 +23,6 @@ public abstract class BaseArmAbility : MonoBehaviour, IAbilityArm
 	{
 		swordController.SetSwordSpeed(_swordSpeed);
 		swordController.SetIndexAttackZoneScale(_swordScaleIndex);
+		swordController.SetSpeedThreshold(_speedThreshold);
 	}
 }

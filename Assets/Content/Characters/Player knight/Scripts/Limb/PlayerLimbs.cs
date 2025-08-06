@@ -122,6 +122,7 @@ public class PlayerLimbs : MonoBehaviour
 		bool wasLegless = HasLegs() == false;
 		_limbs[limbType] = new LimbInfo(true, soulType);
 
+		_limbsVisual.ResetLimbVisualProperties(limbType);
 		_limbsVisual.PlayRestore(limbType);
 		_soulMaterials.Apply(limbType, soulType);
 		LimbStateChanged?.Invoke(limbType);

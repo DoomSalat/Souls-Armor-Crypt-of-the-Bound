@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _swordSpeed: 1.4
   _swordScaleIndex: 0
+  _speedThreshold: 4

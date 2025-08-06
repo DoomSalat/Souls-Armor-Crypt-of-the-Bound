@@ -20,9 +20,6 @@
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
-# Memory Bank files can get excessive in size
-# They also could contain sensitive data
-/[Mm]emory[Bb]ank/
 
 # Recordings can get excessive in size
 /[Rr]ecordings/
@@ -101,3 +98,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Cursor Memory Bank
+cursor-memory-bank/

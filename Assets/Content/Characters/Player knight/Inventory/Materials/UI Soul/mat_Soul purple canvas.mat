@@ -46,8 +46,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0.5
+    - _ColorHue: 50
     - _ColorMask: 15
-    - _Color_hue: 50.8
+    - _Color_hue: 50
     - _Gray_intencity: 0.391
     - _Stencil: 0
     - _StencilComp: 8

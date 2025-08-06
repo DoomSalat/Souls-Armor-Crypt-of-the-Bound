@@ -45,6 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorHue: 135
     - _Color_hue: 137.3
     - _Gray_intencity: 0.391
     m_Colors:

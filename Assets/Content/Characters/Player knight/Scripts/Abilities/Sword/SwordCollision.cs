@@ -7,7 +7,6 @@ public class SwordCollision : MonoBehaviour
 	[SerializeField, Required] private Collider2D _hitBox;
 	[SerializeField, Required] private Collider2D _wall;
 	[SerializeField, Required] private SwordBladeVisualizer _bladeVisualizer;
-
 	[Space]
 	[SerializeField, MinValue(0f)] private float _speedThreshold = 5f;
 
@@ -22,6 +21,12 @@ public class SwordCollision : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		CheckSpeedAndUpdateCollision();
+	}
+
+	public void SetSpeedThreshold(float threshold)
+	{
+		_speedThreshold = threshold;
 		CheckSpeedAndUpdateCollision();
 	}
 

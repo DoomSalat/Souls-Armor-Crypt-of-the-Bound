@@ -70,6 +70,18 @@ public class PlayerLimbsVisual : MonoBehaviour
 		PlayParticles(limbData);
 	}
 
+	public void ResetLimbVisualProperties(LimbType limbType)
+	{
+		if (_limbsMap.TryGetValue(limbType, out LimbVisualData limbData) == false)
+		{
+			Debug.LogWarning($"Limb visual data not found for {limbType}");
+			return;
+		}
+
+		limbData.Material.SetFloat(WhiteAmountParam, DefaultWhiteAmount);
+		limbData.Material.SetFloat(FadeParam, DefaultFade);
+	}
+
 	private void StopParticles(LimbVisualData limbData)
 	{
 		if (limbData.Particles != null)
