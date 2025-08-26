@@ -10,9 +10,13 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 	private PlayerKnightAnimator _playerKnightAnimator;
 	private AbilityInitializer _abilityInitializer;
 
-	public event Action Dead;
-	public event Action DeadEnd;
+	private bool _isDamageLocked = false;
+
+	public event Action<DamageData> DamageTaken;
+	public event Action Died;
+	public event Action DiedEnd;
 	public event Action BodyLost;
+	public event Action Damaged;
 	public event Action LegsLost;
 	public event Action LegsRestored;
 
@@ -49,9 +53,18 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 	public void TakeDamage(DamageData damageData)
 	{
+		DamageTaken?.Invoke(damageData);
+	}
+
+	public void ApplyDamage(DamageData damageData)
+	{
+		if (_isDamageLocked)
+			return;
+
 		if (_limbsState.LimbStates[LimbType.Body].IsPresent == false)
 		{
 			_limbsState.TakeDamage();
+			Damaged?.Invoke();
 			return;
 		}
 
@@ -64,9 +77,15 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 		}
 
 		_limbsState.TakeDamage();
+		Damaged?.Invoke();
 
 		if (ability != null && _limbsState.LimbStates[LimbType.Body].IsPresent)
 			ability.Activate();
+	}
+
+	public void SetDamageLock(bool isLocked)
+	{
+		_isDamageLocked = isLocked;
 	}
 
 	public void StatusEnd(DamageType statusType)
@@ -76,14 +95,14 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 	private void OnDead()
 	{
-		Dead?.Invoke();
+		Died?.Invoke();
 		StartCoroutine(DeadCoroutine());
 	}
 
 	private IEnumerator DeadCoroutine()
 	{
 		yield return new WaitForSeconds(_deadDelay);
-		DeadEnd?.Invoke();
+		DiedEnd?.Invoke();
 	}
 
 	private void OnBodyLost()

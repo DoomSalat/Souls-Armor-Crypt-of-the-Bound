@@ -12,10 +12,14 @@ public class AbsorptionState : PlayerState
 	private readonly Transform _soulAbsorptionTarget;
 	private readonly AbsorptionCooldown _absorptionCooldown;
 	private readonly SwordController _swordController;
+	private readonly TimeController _timeController;
+	private readonly PlayerDamage _playerDamage;
 
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
 	private bool _waitingForInventoryCompletion = false;
+	private bool _isInventoryPhase = false;
+	private Coroutine _absorptionCoroutine;
 
 	private float _absorptionDelay = 0.5f;
 
@@ -30,7 +34,9 @@ public class AbsorptionState : PlayerState
 							PlayerLimbs playerLimbs,
 							Transform soulAbsorptionTarget,
 							AbsorptionCooldown absorptionCooldown,
-							SwordController swordController)
+							SwordController swordController,
+							TimeController timeController,
+							PlayerDamage playerDamage)
 	{
 		_animator = playerKnightAnimator;
 		_absorptionScopeController = absorptionScopeController;
@@ -41,6 +47,8 @@ public class AbsorptionState : PlayerState
 		_soulAbsorptionTarget = soulAbsorptionTarget;
 		_absorptionCooldown = absorptionCooldown;
 		_swordController = swordController;
+		_timeController = timeController;
+		_playerDamage = playerDamage;
 
 		var mousePos = InputUtilits.GetMouseClampPosition();
 		Camera.main.ScreenToWorldPoint(mousePos);
@@ -92,7 +100,7 @@ public class AbsorptionState : PlayerState
 
 	private void OnAttractionCompleted()
 	{
-		_coroutineRunner.StartCoroutine(StartAbsorptionProcess());
+		_absorptionCoroutine = _coroutineRunner.StartCoroutine(StartAbsorptionProcess());
 	}
 
 	private void OnSoulTargeted()
@@ -105,7 +113,8 @@ public class AbsorptionState : PlayerState
 		yield return new WaitForSeconds(_absorptionDelay);
 		_absorptionScope.Hide();
 
-		TimeController.Instance.StopTime();
+		_timeController.StopTime();
+		_isInventoryPhase = true;
 		_playerLimbs.ActivateInventory(_currentSoul.GetSoulType());
 
 		_waitingForInventoryCompletion = true;
@@ -123,8 +132,32 @@ public class AbsorptionState : PlayerState
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
 
-		TimeController.Instance.ResumeTime();
+		_timeController.ResumeTime();
 		InventoryClosed?.Invoke();
+	}
+
+	public override void DamageTaken(DamageData damageData)
+	{
+		if (_isInventoryPhase)
+			return;
+
+		_playerDamage.ApplyDamage(damageData);
+
+		if (_currentSoul != null)
+		{
+			if (_absorptionCoroutine != null)
+			{
+				_coroutineRunner.StopCoroutine(_absorptionCoroutine);
+				_absorptionCoroutine = null;
+			}
+
+			_currentSoul.OnAbsorptionCompleted();
+			_currentSoul = null;
+		}
+
+		_absorptionScope.Hide();
+		_animator.AbdorptionDeactive();
+		AbsorptionCompleted?.Invoke();
 	}
 
 	private void OnAbsorptionAnimationEnded()

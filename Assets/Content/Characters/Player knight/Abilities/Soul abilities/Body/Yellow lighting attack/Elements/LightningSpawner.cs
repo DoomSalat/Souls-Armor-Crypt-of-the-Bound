@@ -11,13 +11,11 @@ public class LightningSpawner : MonoBehaviour
 
 	private ObjectPool<LightingPool> _lightningPool;
 
-	public LightingPool SpawnLightning(Vector3 targetPosition, bool foundEnemy)
+	public void SpawnLightning(Vector3 targetPosition, bool foundEnemy)
 	{
 		LightingPool lightning = _lightningPool.Get();
 		lightning.transform.position = transform.position;
 		lightning.Play(targetPosition, foundEnemy);
-
-		return lightning;
 	}
 
 	public void Initialize()
@@ -47,12 +45,32 @@ public class LightningSpawner : MonoBehaviour
 
 	private void OnReleaseLightning(LightingPool lightning)
 	{
-		lightning.gameObject.SetActive(false);
+		if (lightning == null)
+		{
+			return;
+		}
+
+		var go = lightning.gameObject;
+
+		if (go != null)
+		{
+			go.SetActive(false);
+		}
 	}
 
 	private void OnDestroyLightning(LightingPool lightning)
 	{
-		Destroy(lightning.gameObject);
+		if (lightning == null)
+		{
+			return;
+		}
+
+		var go = lightning.gameObject;
+
+		if (go != null)
+		{
+			Destroy(go);
+		}
 	}
 
 	private void OnDestroy()

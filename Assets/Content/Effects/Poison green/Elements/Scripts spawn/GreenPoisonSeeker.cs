@@ -9,7 +9,7 @@ public class GreenPoisonSeeker : MonoBehaviour
 	[SerializeField] private CircleCollider2D _circleCollider;
 	[Space]
 	[SerializeField] private TrailRenderer _trail;
-	[SerializeField] private TargetFollower _targetFollower;
+	[SerializeField] private MonoBehaviour _targetFollowerObject;
 
 	[Header("General")]
 	[SerializeField, MinValue(0)] private float _speedSeek = 0.5f;
@@ -26,6 +26,7 @@ public class GreenPoisonSeeker : MonoBehaviour
 	[SerializeField, MinValue(0)] private float _followingTrailTime = 0.2f;
 	[SerializeField, MinValue(0)] private float _trailTransitionDuration = 0.1f;
 
+	private IFollower _targetFollower;
 	private int _damageAmount = 1;
 	private HurtBox _targetHurtBox;
 	private Transform _targetTransform;
@@ -37,6 +38,11 @@ public class GreenPoisonSeeker : MonoBehaviour
 	private Coroutine _trailTransitionCoroutine;
 
 	public event System.Action<GreenPoisonSeeker> SeekerDestroyed;
+
+	private void Awake()
+	{
+		_targetFollower = _targetFollowerObject as IFollower;
+	}
 
 	private void OnEnable()
 	{
@@ -63,11 +69,7 @@ public class GreenPoisonSeeker : MonoBehaviour
 
 		if (_isAttackFollowingTarget && _targetTransform != null)
 		{
-			if (_targetTransform.gameObject.activeInHierarchy)
-			{
-				_targetFollower.TryFollow(_targetTransform);
-			}
-			else
+			if (_targetTransform.gameObject.activeInHierarchy == false)
 			{
 				Die();
 			}
@@ -76,22 +78,43 @@ public class GreenPoisonSeeker : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (_isDying || _isAttackFollowingTarget)
-			return;
-
-		if (_targetTransform != null)
+		if (CanFollow())
 		{
-			_targetFollower.TryFollow(_targetTransform);
-			return;
+			_targetFollower.TryFollow();
 		}
+		else
+		{
+			_rigidbody.linearVelocity = _initialDirection * _speedSeek;
+		}
+	}
 
-		_rigidbody.linearVelocity = _initialDirection * _speedSeek;
+	private void OnValidate()
+	{
+		if (_targetFollowerObject != null)
+		{
+			if (_targetFollowerObject.TryGetComponent(out IFollower follower))
+			{
+				_targetFollower = follower;
+			}
+			else
+			{
+				Debug.LogError($"[{nameof(GreenPoisonSeeker)}] Target follower is not a IFollower on {_targetFollowerObject.name}!");
+				_targetFollowerObject = null;
+			}
+		}
+	}
+
+	private bool CanFollow()
+	{
+		return _isDying == false &&
+				_targetTransform != null &&
+				_targetTransform.gameObject.activeInHierarchy == true;
 	}
 
 	public void Initialize(Vector2 direction, Transform target = null)
 	{
-		_targetFollower.SetMoveState(false);
-		_targetFollower.StopMovement();
+		_targetFollower.DisableMovement();
+		_targetFollower.SetTarget(null);
 
 		_initialDirection = direction.normalized;
 
@@ -111,7 +134,7 @@ public class GreenPoisonSeeker : MonoBehaviour
 
 		if (target != null)
 		{
-			_targetFollower.TryFollow(target);
+			_targetFollower.SetTarget(target);
 			_targetTransform = target;
 		}
 	}
@@ -123,11 +146,10 @@ public class GreenPoisonSeeker : MonoBehaviour
 
 		if (collision.TryGetComponent(out HurtBox hurtBox) && hurtBox.TryGetComponent(out FactionTag factionTag))
 		{
-			if (factionTag.Faction == Faction.Enemy)
+			if (factionTag.IsTagged(Faction.Enemy))
 			{
 				if (_isAttackFollowingTarget == false)
 				{
-					_targetFollower.SetMoveState(true);
 					StartFollowingTarget(hurtBox);
 
 					_circleCollider.radius = _colliderShrinkAmount;
@@ -144,6 +166,8 @@ public class GreenPoisonSeeker : MonoBehaviour
 	{
 		_targetHurtBox = hurtBox;
 		_targetTransform = hurtBox.transform;
+		_targetFollower.SetTarget(_targetTransform);
+		_targetFollower.EnableMovement();
 		_isAttackFollowingTarget = true;
 		_currentLifeTime = 0f;
 		_currentEndLifeTime = _lifeTimeAttack;
@@ -205,7 +229,10 @@ public class GreenPoisonSeeker : MonoBehaviour
 
 		_isDying = true;
 		if (_isAttackFollowingTarget)
-			_targetFollower.TryFollow(null);
+		{
+			_targetFollower.SetTarget(null);
+			_targetFollower.DisableMovement();
+		}
 
 		_isAttackFollowingTarget = false;
 

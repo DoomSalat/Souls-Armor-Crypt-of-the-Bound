@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _greenPoisonSeekerPrefab: {fileID: 7159194836284741909, guid: 7f389e14a60238442b52fc6ded3f9b3c, type: 3}
+  _spawnActivatedCount: 8

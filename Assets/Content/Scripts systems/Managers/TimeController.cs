@@ -3,24 +3,12 @@ using UnityEngine;
 
 public class TimeController : MonoBehaviour
 {
-	public static TimeController Instance { get; private set; }
-
 	[SerializeField, MinValue(0f)] private float _defaultTimeScale = 1f;
 
 	private float _currentTimeScale;
 
 	private void Awake()
 	{
-		if (Instance == null)
-		{
-			Instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
-
 		_currentTimeScale = _defaultTimeScale;
 		Time.timeScale = _currentTimeScale;
 	}

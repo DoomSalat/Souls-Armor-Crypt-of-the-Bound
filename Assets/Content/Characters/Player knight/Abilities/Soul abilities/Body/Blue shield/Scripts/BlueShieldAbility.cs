@@ -61,7 +61,6 @@ public class BlueShieldAbility : MonoBehaviour, IAbilityBody
 		_isActive = false;
 	}
 
-
 	private IEnumerator TimerActive()
 	{
 		yield return _waitForDeactive;

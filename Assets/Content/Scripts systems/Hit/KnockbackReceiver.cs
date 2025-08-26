@@ -29,7 +29,9 @@ public class KnockbackReceiver : MonoBehaviour
 	public void ApplyKnockback(Vector2 direction, float force)
 	{
 		if (force <= 0)
+		{
 			return;
+		}
 
 		float knockback = Mathf.Min(force * _knockbackMultiplier, _maxKnockback);
 

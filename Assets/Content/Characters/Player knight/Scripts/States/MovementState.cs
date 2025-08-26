@@ -14,6 +14,7 @@ public class MovementState : PlayerState
 	private readonly PlayerHandsTarget _playerHandsTarget;
 	private readonly PlayerLimbs _playerLimbs;
 	private readonly AbilityInitializer _abilityInitializer;
+	private readonly PlayerDamage _playerDamage;
 
 	private bool _isSwordControlRequested;
 
@@ -28,7 +29,14 @@ public class MovementState : PlayerState
 	private bool _isMouseControlled = false;
 	private float _swordDeactivateTimer = 0f;
 
-	public MovementState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, SwordController swordController, InputReader inputReader, PlayerHandsTarget playerHandsTarget, PlayerLimbs playerLimbs, AbilityInitializer abilityInitializer)
+	public MovementState(PlayerKnightAnimator playerKnightAnimator,
+						InputMove inputMove,
+						SwordController swordController,
+						InputReader inputReader,
+						PlayerHandsTarget playerHandsTarget,
+						PlayerLimbs playerLimbs,
+						AbilityInitializer abilityInitializer,
+						PlayerDamage playerDamage)
 	{
 		_inputMove = inputMove;
 		_swordController = swordController;
@@ -37,6 +45,7 @@ public class MovementState : PlayerState
 		_playerHandsTarget = playerHandsTarget;
 		_playerLimbs = playerLimbs;
 		_abilityInitializer = abilityInitializer;
+		_playerDamage = playerDamage;
 	}
 
 	public override void Enter()
@@ -90,6 +99,11 @@ public class MovementState : PlayerState
 
 		_isSwordControlRequested = false;
 		UpdateSwordControl();
+	}
+
+	public override void DamageTaken(DamageData damageData)
+	{
+		_playerDamage.ApplyDamage(damageData);
 	}
 
 	private void UpdateSwordControl()

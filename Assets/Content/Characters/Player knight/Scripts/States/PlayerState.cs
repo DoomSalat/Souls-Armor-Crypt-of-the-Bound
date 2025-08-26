@@ -15,4 +15,5 @@ public abstract class PlayerState
 	public virtual void Exit() { }
 	public virtual void OnMousePerformed(InputAction.CallbackContext context) { }
 	public virtual void OnMouseCanceled(InputAction.CallbackContext context) { }
+	public virtual void DamageTaken(DamageData damageData) { }
 }

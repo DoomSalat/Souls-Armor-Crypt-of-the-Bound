@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace CustomPool
 {
-	public class ObjectPool<T> where T : MonoBehaviour, IPool
+	public class ObjectPool<T> where T : MonoBehaviour
 	{
 		private const int DefaultCapacity = 10;
 		private const int MaxSize = 100;
@@ -91,8 +90,15 @@ namespace CustomPool
 
 		private void CreatePoolParent(Transform parentTransform)
 		{
-			GameObject poolParentGO = new GameObject($"{_prefab.name} Pool");
-			_poolParent = poolParentGO.transform;
+			if (parentTransform != null)
+			{
+				_poolParent = parentTransform;
+			}
+			else
+			{
+				GameObject poolParentGO = new GameObject($"{_prefab.name} Pool");
+				_poolParent = poolParentGO.transform;
+			}
 		}
 
 		private T CreatePooledItem()
@@ -111,22 +117,17 @@ namespace CustomPool
 		{
 			pooledObject.gameObject.SetActive(true);
 			pooledObject.transform.SetParent(null);
-			pooledObject.OnSpawnFromPool();
 		}
 
 		private void OnReturnedToPool(T pooledObject)
 		{
-			pooledObject.OnReturnToPool();
 			pooledObject.gameObject.SetActive(false);
 			pooledObject.transform.SetParent(_poolParent);
 		}
 
 		private void OnDestroyPoolObject(T pooledObject)
 		{
-			if (pooledObject != null)
-			{
-				Object.Destroy(pooledObject.gameObject);
-			}
+			Object.Destroy(pooledObject.gameObject);
 		}
 	}
 }

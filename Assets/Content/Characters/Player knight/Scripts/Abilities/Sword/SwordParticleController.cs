@@ -22,4 +22,9 @@ public class SwordParticleController : MonoBehaviour
 
 		_controlledParticles.Stop();
 	}
+
+	public void ForceStop()
+	{
+		_controlledParticles.Clear();
+	}
 }

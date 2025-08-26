@@ -5,16 +5,18 @@ public class MovementHeadState : PlayerState
 	private readonly InputMove _inputMove;
 	private readonly PlayerKnightAnimator _playerKnightAnimator;
 	private readonly InputReader _inputReader;
+	private readonly PlayerDamage _playerDamage;
 
 	private Vector2 _movementDirection;
 	private int _directionIndex;
 	private float _speedMoveMultiplier = 3f;
 
-	public MovementHeadState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, InputReader inputReader)
+	public MovementHeadState(PlayerKnightAnimator playerKnightAnimator, InputMove inputMove, InputReader inputReader, PlayerDamage playerDamage)
 	{
 		_inputMove = inputMove;
 		_playerKnightAnimator = playerKnightAnimator;
 		_inputReader = inputReader;
+		_playerDamage = playerDamage;
 	}
 
 	public override void Enter()
@@ -42,6 +44,11 @@ public class MovementHeadState : PlayerState
 		_inputMove.Stop();
 		_playerKnightAnimator.ResetSpeed();
 		_playerKnightAnimator.StopHeadStateParticles();
+	}
+
+	public override void DamageTaken(DamageData damageData)
+	{
+		_playerDamage.ApplyDamage(damageData);
 	}
 
 	private void InitializeMovementDirection()

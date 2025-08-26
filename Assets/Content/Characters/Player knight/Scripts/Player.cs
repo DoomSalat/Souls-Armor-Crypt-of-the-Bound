@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 	[SerializeField, Required] private PlayerLimbs _limbsState;
 	[SerializeField, Required] private PlayerKnightAnimator _playerKnightAnimator;
 	[SerializeField, Required] private PlayerHandsTarget _playerHandsTarget;
+	[SerializeField, Required] private TimeController _timeController;
 	[Space]
 	[SerializeField, Required] private PlayerInputHandler _inputHandler;
 	[SerializeField, Required] private PlayerDamage _damageHandler;
@@ -45,7 +46,9 @@ public class Player : MonoBehaviour
 										_soulAbsorptionTarget,
 										_absorptionCooldown,
 										_playerHandsTarget,
-										_abilityInitializer);
+									_abilityInitializer,
+									_timeController,
+									_damageHandler);
 	}
 
 	private void Start()
@@ -59,8 +62,9 @@ public class Player : MonoBehaviour
 		_inputHandler.MouseCanceled += OnMouseCanceled;
 		_inputHandler.AbsorptionActivated += OnAbsorptionActivated;
 
-		_damageHandler.Dead += HandleDead;
+		_damageHandler.Died += HandleDead;
 		_damageHandler.BodyLost += HandleBodyLost;
+		_damageHandler.DamageTaken += OnDamageTaken;
 
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
 	}
@@ -71,8 +75,9 @@ public class Player : MonoBehaviour
 		_inputHandler.MouseCanceled -= OnMouseCanceled;
 		_inputHandler.AbsorptionActivated -= OnAbsorptionActivated;
 
-		_damageHandler.Dead -= HandleDead;
+		_damageHandler.Died -= HandleDead;
 		_damageHandler.BodyLost -= HandleBodyLost;
+		_damageHandler.DamageTaken -= OnDamageTaken;
 
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
 	}
@@ -101,6 +106,11 @@ public class Player : MonoBehaviour
 	{
 		ChooseCurrentState();
 		_stateMachine.OnMousePerformed(context);
+	}
+
+	private void OnDamageTaken(DamageData damageData)
+	{
+		_stateMachine.OnDamageTaken(damageData);
 	}
 
 	private void ChooseCurrentState()

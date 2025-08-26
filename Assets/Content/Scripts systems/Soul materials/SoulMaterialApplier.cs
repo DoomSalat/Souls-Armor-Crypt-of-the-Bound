@@ -20,6 +20,9 @@ public class SoulMaterialApplier : MonoBehaviour
 	[Header("Current State")]
 	[SerializeField, ReadOnly] private SoulType _currentSoulType = SoulType.None;
 
+	[Header("Reset Behavior")]
+	[SerializeField] private bool _resetParticleMaterialsOnReset = false;
+
 	private Dictionary<SpriteRenderer, Material> _originalSpriteMaterials;
 	private Dictionary<ParticleSystem, Material> _originalParticleMaterials;
 	private Dictionary<UIParticle, List<Material>> _originalUIParticleMaterials;
@@ -50,11 +53,15 @@ public class SoulMaterialApplier : MonoBehaviour
 
 	public void ResetToOriginalMaterials()
 	{
-		ResetParticleMaterials();
+		if (_resetParticleMaterialsOnReset)
+		{
+			ResetParticleMaterials();
+			ResetUIParticleMaterials();
+		}
+
 		ResetSpriteMaterials();
 		ResetImageMaterials();
 		ResetRawImageMaterials();
-		ResetUIParticleMaterials();
 		ResetMasks();
 
 		_currentSoulType = SoulType.None;

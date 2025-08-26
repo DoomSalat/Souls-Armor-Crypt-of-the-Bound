@@ -6,9 +6,11 @@ public class BodyLightingAbility : MonoBehaviour, IAbilityBody
 	[SerializeField, Required] private LightningSpawner _lightningSpawnerPrefab;
 
 	[Header("Found")]
-	[SerializeField] private float _lightningRadius = 8f;
 	[SerializeField] private LayerMask _enemyLayerMask = -1;
+	[SerializeField] private float _lightningRadius = 8f;
+	[SerializeField] private int _foundMaxKills = 3;
 
+	private Transform _effectCenter;
 	private LightningSpawner _lightningSpawner;
 	private float _damageAmount = 1;
 
@@ -23,6 +25,7 @@ public class BodyLightingAbility : MonoBehaviour, IAbilityBody
 
 	public void InitializeVisualEffects(Transform effectsParent)
 	{
+		_effectCenter = effectsParent;
 		_lightningSpawner = Instantiate(_lightningSpawnerPrefab, effectsParent.transform.position, effectsParent.transform.rotation, effectsParent);
 		_lightningSpawner.Initialize();
 	}
@@ -30,23 +33,28 @@ public class BodyLightingAbility : MonoBehaviour, IAbilityBody
 	public void Activate()
 	{
 		Vector3 targetPosition;
-		bool foundEnemy;
 
-		Collider2D closestEnemy = FoundOverlapCircleUtilits.FindClosestEnemy(transform.position, _lightningRadius, _enemyLayerMask, _collidersBuffer);
+		Collider2D[] closestEnemys = FoundOverlapCircleUtilits.FindCircleEnemys(_effectCenter.position, _lightningRadius, _enemyLayerMask, _collidersBuffer, _foundMaxKills);
 
-		if (closestEnemy != null)
+		int foundedEnemys = 0;
+
+		for (int i = 0; i < _foundMaxKills; i++)
 		{
-			targetPosition = closestEnemy.transform.position;
-			foundEnemy = true;
-			ApplyDamageToEnemy(closestEnemy);
+			if (closestEnemys[i] != null)
+			{
+				targetPosition = closestEnemys[i].transform.position;
+				ApplyDamageToEnemy(closestEnemys[i]);
+				_lightningSpawner.SpawnLightning(targetPosition, true);
+				foundedEnemys++;
+			}
 		}
-		else
+
+		int extraLightnings = _foundMaxKills - foundedEnemys;
+		for (int i = 0; i < extraLightnings; i++)
 		{
 			targetPosition = GetRandomTargetPosition();
-			foundEnemy = false;
+			_lightningSpawner.SpawnLightning(targetPosition, false);
 		}
-
-		_lightningSpawner.SpawnLightning(targetPosition, foundEnemy);
 	}
 
 	private void ApplyDamageToEnemy(Collider2D enemy)

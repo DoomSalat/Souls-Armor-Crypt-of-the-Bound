@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4977553485174549574}
   - component: {fileID: 3132772460762570855}
   - component: {fileID: 7159194836284741909}
-  - component: {fileID: 8842954570341920099}
+  - component: {fileID: 1163700446475412946}
   m_Layer: 3
   m_Name: Poison seeker (sword)
   m_TagString: Untagged
@@ -221,17 +221,17 @@ MonoBehaviour:
   _rigidbody: {fileID: 6465465426098879424}
   _circleCollider: {fileID: 4977553485174549574}
   _trail: {fileID: 3132772460762570855}
-  _targetFollower: {fileID: 8842954570341920099}
+  _targetFollowerObject: {fileID: 1163700446475412946}
   _speedSeek: 7
-  _lifeTime: 0.5
+  _lifeTime: 0.7
   _lifeTimeAttack: 3
   _fadeOutDuration: 0.5
-  _colliderSeekRadius: 3
+  _colliderSeekRadius: 6
   _colliderShrinkAmount: 0.1
   _initialTrailTime: 0.3
   _followingTrailTime: 0.1
   _trailTransitionDuration: 0.1
---- !u!114 &8842954570341920099
+--- !u!114 &1163700446475412946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,12 +240,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4636614938089213318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b56cb1285b87304c95d21333891222f, type: 3}
+  m_Script: {fileID: 11500000, guid: e1e89ec961afcca4b87777ea2275d75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _moveSpeed: 5
+  _acceleration: 15
+  _maxSpeed: 50
   _minDistance: 0.1
-  _useForceMovement: 0
-  _acceleration: 3
-  _maxSpeed: 10

@@ -30,14 +30,14 @@ public class GameFlow : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_playerDamage.DeadEnd += OnPlayerDeath;
+		_playerDamage.DiedEnd += OnPlayerDeath;
 		_victoryEvents.LevelCompleted += OnPlayerVictory;
 		_sceneActivator.FadeCompleted += OnFadeCompleted;
 	}
 
 	private void OnDisable()
 	{
-		_playerDamage.DeadEnd -= OnPlayerDeath;
+		_playerDamage.DiedEnd -= OnPlayerDeath;
 		_victoryEvents.LevelCompleted -= OnPlayerVictory;
 		_sceneActivator.FadeCompleted -= OnFadeCompleted;
 	}

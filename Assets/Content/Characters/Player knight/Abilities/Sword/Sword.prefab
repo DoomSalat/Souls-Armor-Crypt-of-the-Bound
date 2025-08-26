@@ -5342,7 +5342,9 @@ MonoBehaviour:
   _attackZoneScaler: {fileID: 5224762290322751230}
   _swordCollision: {fileID: 1775377272352095187}
   _hitBox: {fileID: 2844672563833018958}
+  _playerDamage: {fileID: 0}
   _eye: {fileID: 319452641757712795}
+  _angleShake: {fileID: 2863305133101987369}
 --- !u!114 &3746018895473431096
 MonoBehaviour:
   m_ObjectHideFlags: 0

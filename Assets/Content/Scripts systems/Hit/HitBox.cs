@@ -67,6 +67,12 @@ public class HitBox : MonoBehaviour
 		}
 	}
 
+	public void SetColliderEnabled(bool enabled)
+	{
+		if (_collider != null)
+			_collider.enabled = enabled;
+	}
+
 	private bool CanDamage(FactionTag faction)
 	{
 		return _ownerFaction.Faction != faction.Faction;

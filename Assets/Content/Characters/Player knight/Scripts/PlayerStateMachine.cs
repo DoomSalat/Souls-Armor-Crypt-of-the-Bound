@@ -29,14 +29,16 @@ public class PlayerStateMachine : MonoBehaviour
 								Transform soulAbsorptionTarget,
 								AbsorptionCooldown absorptionCooldown,
 								PlayerHandsTarget playerHandsTarget,
-								AbilityInitializer abilityInitializer)
+								AbilityInitializer abilityInitializer,
+								TimeController timeController,
+								PlayerDamage playerDamage)
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
 			{ typeof(EmptyState), new EmptyState(inputMove) },
-			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs, abilityInitializer) },
-			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown, swordController) },
-			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader) }
+			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs, abilityInitializer, playerDamage) },
+			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown, swordController, timeController, playerDamage) },
+			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader, playerDamage) }
 		};
 
 		StatesInitialized?.Invoke();
@@ -91,6 +93,11 @@ public class PlayerStateMachine : MonoBehaviour
 	public void OnMouseCanceled(InputAction.CallbackContext context)
 	{
 		_currentState?.OnMouseCanceled(context);
+	}
+
+	public void OnDamageTaken(DamageData damageData)
+	{
+		_currentState?.DamageTaken(damageData);
 	}
 
 	public void EnterMovementState()

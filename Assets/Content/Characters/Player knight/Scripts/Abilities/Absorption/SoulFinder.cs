@@ -56,7 +56,9 @@ public class SoulFinder : MonoBehaviour
 
 			if (_colliderBuffer[i].TryGetComponent(out ISoul soul) && _colliderBuffer[i].gameObject.activeInHierarchy)
 			{
-				float distanceSqr = (_colliderBuffer[i].transform.position - transform.position).sqrMagnitude;
+				Vector2 targetPosition2D = _colliderBuffer[i].transform.position;
+				Vector2 currentPosition2D = transform.position;
+				float distanceSqr = (targetPosition2D - currentPosition2D).sqrMagnitude;
 
 				if (distanceSqr < minDistanceSqr)
 				{

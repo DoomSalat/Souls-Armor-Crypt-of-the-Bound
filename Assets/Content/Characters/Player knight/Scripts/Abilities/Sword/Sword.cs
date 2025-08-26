@@ -15,9 +15,11 @@ public class Sword : MonoBehaviour
 	[SerializeField, Required] private SwordAttackZoneScaler _attackZoneScaler;
 	[SerializeField, Required] private SwordCollision _swordCollision;
 	[SerializeField, Required] private HitBox _hitBox;
+	[SerializeField, Required] private PlayerDamage _playerDamage;
 
 	[Header("Visualization")]
 	[SerializeField, Required] private SmoothLook _eye;
+	[SerializeField, Required] private AngularShake _angleShake;
 
 	[Header("Ability debug")]
 	[ShowInInspector, ReadOnly] private SoulType _currentSoulType = SoulType.None;
@@ -34,6 +36,7 @@ public class Sword : MonoBehaviour
 		_playerDetector.ExitedRadius += OnExitedRadius;
 		_wallBounce.OnBounceEnded += OnBounceEnded;
 		_hitBox.Hitted += OnEnemyHit;
+		_playerDamage.Died += OnDied;
 	}
 
 	private void OnDisable()
@@ -42,6 +45,7 @@ public class Sword : MonoBehaviour
 		_playerDetector.ExitedRadius -= OnExitedRadius;
 		_wallBounce.OnBounceEnded -= OnBounceEnded;
 		_hitBox.Hitted -= OnEnemyHit;
+		_playerDamage.Died -= OnDied;
 	}
 
 	private void FixedUpdate()
@@ -151,5 +155,15 @@ public class Sword : MonoBehaviour
 		{
 			_currentSwordAbility.Activate();
 		}
+	}
+
+	private void OnDied()
+	{
+		_followSystem.Deactivate();
+		_speedTracker.ResetSpeed();
+		_particleController.ForceStop();
+		_angleShake.Stop();
+
+		_eye.gameObject.SetActive(false);
 	}
 }

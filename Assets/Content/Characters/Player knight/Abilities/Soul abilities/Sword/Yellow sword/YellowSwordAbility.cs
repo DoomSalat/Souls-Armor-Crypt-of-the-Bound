@@ -46,7 +46,7 @@ public class YellowSwordAbility : MonoBehaviour, IAbilitySword
 		Vector3 targetPosition;
 		bool foundEnemy;
 
-		Collider2D closestEnemy = FoundOverlapCircleUtilits.FindClosestEnemy(transform.position, _foundEnemyRadius, _enemyLayerMask, _collidersBuffer);
+		Collider2D closestEnemy = FoundOverlapCircleUtilits.FindClosestEnemy(_lightningSpawner.transform.position, _foundEnemyRadius, _enemyLayerMask, _collidersBuffer);
 
 		if (closestEnemy != null)
 		{

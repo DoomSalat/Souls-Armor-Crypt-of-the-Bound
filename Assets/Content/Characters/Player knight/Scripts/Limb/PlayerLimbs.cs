@@ -28,6 +28,8 @@ public class PlayerLimbs : MonoBehaviour
 
 	private void Start()
 	{
+		ApplyDefaultSoulMaterials();
+
 		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
 		{
 			if (limbType != LimbType.None)
@@ -179,9 +181,24 @@ public class PlayerLimbs : MonoBehaviour
 			if (limbType != LimbType.None)
 			{
 				_limbs[limbType] = new LimbInfo(true, _defaultSoulType);
-				_soulMaterials.Apply(limbType, _defaultSoulType);
-
 				LimbStateChanged?.Invoke(limbType);
+			}
+		}
+	}
+
+	private void ApplyDefaultSoulMaterials()
+	{
+		if (_soulMaterials == null)
+		{
+			Debug.LogError($"[{name}] Cannot apply default soul materials: _soulMaterials is null!");
+			return;
+		}
+
+		foreach (LimbType limbType in System.Enum.GetValues(typeof(LimbType)))
+		{
+			if (limbType != LimbType.None)
+			{
+				_soulMaterials.Apply(limbType, _defaultSoulType);
 			}
 		}
 	}
