@@ -7,12 +7,21 @@ public class SkeletThrow : MonoBehaviour
 	[SerializeField, Required] private Transform _throwPoint;
 	[SerializeField, Required] private ThrowSpawner _throwSpawner;
 
+	[Header("Throw Parameters")]
+	[SerializeField] private float _speedBone = 10f;
+	[SerializeField] private float _endDistanceBone = 10f;
+
 	public void Initialize(ThrowSpawner throwSpawner)
 	{
 		_throwSpawner = throwSpawner;
 	}
 
 	public void Attack(Vector3 target)
+	{
+		Attack(target, _speedBone, _endDistanceBone);
+	}
+
+	public void Attack(Vector3 target, float speed, float endDistance)
 	{
 		if (_throwSpawner == null)
 		{
@@ -21,7 +30,7 @@ public class SkeletThrow : MonoBehaviour
 		}
 
 		Vector3 throwDirection = (target - _throwPoint.position).normalized;
-		_throwSpawner.SpawnThrow(_throwPoint.position, throwDirection, _throwPoint.rotation);
+		_throwSpawner.SpawnThrow(_throwPoint.position, throwDirection, _throwPoint.rotation, speed, endDistance);
 	}
 
 	[Button("Test Throw")]

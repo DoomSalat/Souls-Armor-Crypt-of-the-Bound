@@ -81,6 +81,12 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_hitBox.enabled = true;
 	}
 
+	public void SetThrowParameters(float speed, float endDistance)
+	{
+		_speed = speed;
+		_endDistance = endDistance;
+	}
+
 	public void ReturnToPool()
 	{
 		_pool.Release(this);

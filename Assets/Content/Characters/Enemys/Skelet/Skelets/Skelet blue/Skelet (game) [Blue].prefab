@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 2976287767735029814}
   - component: {fileID: 8683806117694491444}
   m_Layer: 0
-  m_Name: Skelet (game)
+  m_Name: 'Skelet (game) [Blue]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 8599856172359595164}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.78, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -316,6 +316,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _throwPoint: {fileID: 3000862452442391441}
   _throwSpawner: {fileID: 0}
+  _speedBone: 6
+  _endDistanceBone: 12
 --- !u!114 &6823832461876464137
 MonoBehaviour:
   m_ObjectHideFlags: 0

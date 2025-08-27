@@ -43,6 +43,15 @@ public class ThrowSpawner : MonoBehaviour
 		return throwObject;
 	}
 
+	public ThrowObject SpawnThrow(Vector3 position, Vector3 direction, Quaternion rotation, float speed, float endDistance)
+	{
+		ThrowObject throwObject = _throwPool.Spawn(position, rotation);
+		throwObject.SetThrowParameters(speed, endDistance);
+		throwObject.InitializeThrow(direction);
+
+		return throwObject;
+	}
+
 	private void InitializePool()
 	{
 		_throwPool = new ObjectPool<ThrowObject>();
