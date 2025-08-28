@@ -52,12 +52,64 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: f8f4e231f9420f04288f9171d916adf9, type: 2}
+    - target: {fileID: 6168676929361911085, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      propertyPath: _throw
+      value: 
+      objectReference: {fileID: 6264285234285504114}
+    - target: {fileID: 6168676929361911085, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      propertyPath: _attackCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168676929361911085, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      propertyPath: _attackDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168676929361911085, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      propertyPath: _optimalDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6823832461876464137, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      propertyPath: _soulType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8599856172359595164, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
       propertyPath: m_Name
       value: 'Skelet (game) [Red]'
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4470079767201985, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8599856172359595164, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 6264285234285504114}
   m_SourcePrefab: {fileID: 100100000, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+--- !u!4 &4357792321293402542 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3000862452442391441, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+  m_PrefabInstance: {fileID: 1575355552441868863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7098827606024066723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8599856172359595164, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+  m_PrefabInstance: {fileID: 1575355552441868863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6264285234285504114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098827606024066723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610dd6284ac222e4c8a66ee4efed57b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPoint: {fileID: 4357792321293402542}
+  _throwSpawner: {fileID: 0}
+  _speedBone: 4
+  _endDistanceBone: 3
+  _directionCount: 8
+  _includePlayerDirection: 0

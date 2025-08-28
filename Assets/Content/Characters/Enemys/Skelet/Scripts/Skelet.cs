@@ -9,7 +9,7 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 	[Header("Components")]
 	[SerializeField, Required] private MonoBehaviour _followLogic;
 	[SerializeField, Required] private SkeletAnimator _animator;
-	[SerializeField, Required] private SkeletThrow _throw;
+	[SerializeField, Required] private BaseSkeletThrow _throw;
 	[SerializeField, Required] private CreatureFlip _creatureFlip;
 	[SerializeField, Required] private SoulSpawnerRequested _soulSpawner;
 

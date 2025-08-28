@@ -1,15 +1,15 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class SkeletThrow : MonoBehaviour
+public abstract class BaseSkeletThrow : MonoBehaviour
 {
 	[Header("Throw Settings")]
-	[SerializeField, Required] private Transform _throwPoint;
-	[SerializeField, Required] private ThrowSpawner _throwSpawner;
+	[SerializeField, Required] protected Transform _throwPoint;
+	[SerializeField, Required] protected ThrowSpawner _throwSpawner;
 
 	[Header("Throw Parameters")]
-	[SerializeField] private float _speedBone = 10f;
-	[SerializeField] private float _endDistanceBone = 10f;
+	[SerializeField] protected float _speedBone = 10f;
+	[SerializeField] protected float _endDistanceBone = 10f;
 
 	public void Initialize(ThrowSpawner throwSpawner)
 	{
@@ -21,11 +21,11 @@ public class SkeletThrow : MonoBehaviour
 		Attack(target, _speedBone, _endDistanceBone);
 	}
 
-	public void Attack(Vector3 target, float speed, float endDistance)
+	protected virtual void Attack(Vector3 target, float speed, float endDistance)
 	{
 		if (_throwSpawner == null)
 		{
-			Debug.LogWarning($"[{nameof(SkeletThrow)}] ThrowSpawner not initialized!");
+			Debug.LogWarning($"[{nameof(BaseSkeletThrow)}] ThrowSpawner not initialized!");
 			return;
 		}
 
@@ -34,7 +34,7 @@ public class SkeletThrow : MonoBehaviour
 	}
 
 	[Button("Test Throw")]
-	private void TestThrow()
+	protected virtual void TestThrow()
 	{
 		Vector3 target = _throwPoint.position + Vector3.right * 5f;
 		Attack(target);

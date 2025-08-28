@@ -13,11 +13,17 @@ namespace SpawnerSystem
 
 		private Transform _playerTarget;
 		private StatusMachine _statusMachine;
+		private Dictionary<PooledEnemy, ISpawner> _prefabToSpawner = new();
 
 		private readonly Dictionary<PooledEnemy, ObjectPool<PooledEnemy>> _prefabToPool = new();
 
 		public Transform GetPlayerTarget() => _playerTarget;
 		public StatusMachine GetStatusMachine() => _statusMachine;
+
+		public void RegisterPrefab(PooledEnemy prefab, ISpawner spawner)
+		{
+			_prefabToSpawner[prefab] = spawner;
+		}
 
 		public void Initialize(Transform playerTarget, StatusMachine statusMachine)
 		{
@@ -162,6 +168,11 @@ namespace SpawnerSystem
 			if (pooledInstance.TryGetComponent<IFollower>(out var follower))
 			{
 				follower.SetTarget(_playerTarget);
+			}
+
+			if (_prefabToSpawner.TryGetValue(prefab, out var spawner))
+			{
+				spawner.InitializeComponents(pooledInstance);
 			}
 
 			pooledInstance.gameObject.SetActive(false);

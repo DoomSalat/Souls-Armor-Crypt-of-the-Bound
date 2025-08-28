@@ -5,9 +5,6 @@ namespace SpawnerSystem
 {
 	public abstract class SpawnerBase : MonoBehaviour, ISpawner
 	{
-		private const float MinWeight = 0.01f;
-		private const float DefaultWeight = 1f;
-
 		[SerializeField] protected EnemyPrefabByKind[] _prefabsByKind;
 		[SerializeField, Required] protected Transform _inactiveContainer;
 		[SerializeField, Min(0)] private int _prewarmPerPrefab = 10;
@@ -20,9 +17,26 @@ namespace SpawnerSystem
 		{
 			_dependencies = dependencies;
 
+			RegisterPrefabs();
+
 			if (_prewarmOnInit)
 			{
 				PrewarmPrefabs();
+			}
+		}
+
+		private void RegisterPrefabs()
+		{
+			if (_prefabsByKind == null)
+				return;
+
+			for (int i = 0; i < _prefabsByKind.Length; i++)
+			{
+				var entry = _prefabsByKind[i];
+				if (entry?.Prefab != null)
+				{
+					_dependencies.EnemyPool.RegisterPrefab(entry.Prefab, this);
+				}
 			}
 		}
 
@@ -50,6 +64,7 @@ namespace SpawnerSystem
 
 			PooledEnemy pooledEnemy = SpawnEnemyAt(position, enemyKind, prefabToSpawn);
 			SetupSpawned(pooledEnemy, section, enemyKind);
+
 			return pooledEnemy;
 		}
 
@@ -165,32 +180,14 @@ namespace SpawnerSystem
 			return pooledEnemy;
 		}
 
-		protected void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
+		public void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
 			SetupEnemySpawn(spawned, section, kind);
-			SetupSoulSpawnerRequested(spawned);
-			SetupSkeletThrow(spawned);
 		}
 
 		private void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
 			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
-		}
-
-		private void SetupSoulSpawnerRequested(PooledEnemy spawned)
-		{
-			if (spawned.TryGetComponent<SoulSpawnerRequested>(out var soulSpawnerRequested))
-			{
-				soulSpawnerRequested.Initialize(_dependencies.SoulSpawnRequestHandler);
-			}
-		}
-
-		private void SetupSkeletThrow(PooledEnemy spawned)
-		{
-			if (spawned.TryGetComponent<SkeletThrow>(out var skeletThrow))
-			{
-				skeletThrow.Initialize(_dependencies.ThrowSpawner);
-			}
 		}
 
 		private void PrewarmPrefabs()
@@ -200,12 +197,20 @@ namespace SpawnerSystem
 				var entry = _prefabsByKind[i];
 				var prefab = entry.Prefab;
 
-				for (int j = 0; j < _prewarmPerPrefab; j++)
-				{
-					var pooled = _dependencies.EnemyPool.GetPooled(prefab, Vector3.zero, Quaternion.identity);
-					pooled.gameObject.SetActive(false);
-					pooled.transform.SetParent(_inactiveContainer, false);
-				}
+				_dependencies.EnemyPool.PrewarmPool(prefab, _prewarmPerPrefab);
+			}
+		}
+
+		public void InitializeComponents(PooledEnemy pooled)
+		{
+			if (pooled.TryGetComponent<SoulSpawnerRequested>(out var soulSpawnerRequested))
+			{
+				soulSpawnerRequested.Initialize(_dependencies.SoulSpawnRequestHandler);
+			}
+
+			if (pooled.TryGetComponent<BaseSkeletThrow>(out var skeletThrow))
+			{
+				skeletThrow.Initialize(_dependencies.ThrowSpawner);
 			}
 		}
 	}

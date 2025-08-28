@@ -426,6 +426,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Skelet_Bone Crack
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 35
+        width: 5
+        height: 7
+      alignment: 9
+      pivot: {x: 0.5, y: 0.78571427}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba51f9913daf3db4ab6e58b952baa98b
+      internalID: 538025435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -465,6 +487,7 @@ TextureImporter:
       Player guard_9: -3140940712499596123
       Skelet_Body: 2703833942202491990
       Skelet_Bone: 96806846
+      Skelet_Bone Crack: 538025435
       Skelet_Foot Back: -2305469999239286605
       Skelet_Foot Front: 441145769256729704
       Skelet_Foot Side: 6568570359945177037

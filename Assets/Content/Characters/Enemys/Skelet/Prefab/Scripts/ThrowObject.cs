@@ -8,6 +8,7 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 {
 	private const float FullProgress = 1f;
 
+	[SerializeField, Required] private ThrowAnimator _animator;
 	[SerializeField, Required] private PhysicsRotate _physicsRotate;
 	[SerializeField, Required] private Rigidbody2D _rigidbody;
 	[SerializeField, Required] private HitBox _hitBox;
@@ -27,12 +28,16 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 	{
 		_hitBox.Hitted += OnHitTarget;
 		SubscribeToDamageEvents();
+
+		_animator.Ended += OnCrackedEnd;
 	}
 
 	private void OnDisable()
 	{
 		_hitBox.Hitted -= OnHitTarget;
 		UnsubscribeFromDamageEvents();
+
+		_animator.Ended -= OnCrackedEnd;
 	}
 
 	private void FixedUpdate()
@@ -49,7 +54,8 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 
 		if (distanceSquared >= endDistanceSquared)
 		{
-			ReturnToPool();
+			_isActive = false;
+			DamageReceived();
 		}
 	}
 
@@ -57,7 +63,8 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 	{
 		if (((1 << other.gameObject.layer) & _wallLayerMask) != 0)
 		{
-			ReturnToPool();
+			_isActive = false;
+			DamageReceived();
 		}
 	}
 
@@ -65,7 +72,7 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 	{
 		_isActive = false;
 		_rigidbody.linearVelocity = Vector2.zero;
-		_hitBox.enabled = false;
+		_hitBox.SetColliderEnabled(false);
 	}
 
 	public void InitializeThrow(Vector3 direction)
@@ -75,21 +82,11 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_direction = _direction.normalized;
 
 		_startPosition = transform.position;
-		_isActive = true;
 
 		_rigidbody.linearVelocity = _direction * _speed;
-		_hitBox.enabled = true;
-	}
+		_physicsRotate.StartRotation();
 
-	public void SetThrowParameters(float speed, float endDistance)
-	{
-		_speed = speed;
-		_endDistance = endDistance;
-	}
-
-	public void ReturnToPool()
-	{
-		_pool.Release(this);
+		_animator.Reset();
 	}
 
 	public void OnSpawnFromPool()
@@ -98,24 +95,41 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_startPosition = transform.position;
 		_rigidbody.linearVelocity = Vector2.zero;
 
-		_hitBox.enabled = false;
-		_physicsRotate.StartRotation();
+		_damage.EnableCollisions();
 	}
 
-	public void OnReturnToPool()
+	public void SetThrowParameters(float speed, float endDistance)
+	{
+		_speed = speed;
+		_endDistance = endDistance;
+	}
+
+	public void SetPool(object pool)
+	{
+		_pool = pool as ObjectPool<ThrowObject>;
+	}
+
+	public void ReturnToPool()
 	{
 		_isActive = false;
 		_rigidbody.linearVelocity = Vector2.zero;
 		transform.position = Vector3.zero;
 		transform.rotation = Quaternion.identity;
 
-		_hitBox.enabled = false;
+		_damage.DisableCollisions();
 		_physicsRotate.StopRotation();
+
+		OnReturnToPool();
 	}
 
-	public void SetPool(object pool)
+	public void OnReturnToPool()
 	{
-		_pool = pool as ObjectPool<ThrowObject>;
+		_pool.Release(this);
+	}
+
+	private void OnCrackedEnd()
+	{
+		ReturnToPool();
 	}
 
 	private void SubscribeToDamageEvents()
@@ -130,18 +144,27 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_damage.StatusApplied -= OnStatusApplied;
 	}
 
+	private void DamageReceived()
+	{
+		_damage.DisableCollisions();
+		_rigidbody.linearVelocity = Vector2.zero;
+
+		_physicsRotate.StopRotation();
+		_animator.Crack();
+	}
+
 	private void OnDamageReceived(SimpleDamage target, DamageData damageData)
 	{
-		ReturnToPool();
+		DamageReceived();
 	}
 
 	private void OnStatusApplied(SimpleDamage target, DamageType statusType)
 	{
-		ReturnToPool();
+		DamageReceived();
 	}
 
 	private void OnHitTarget(Collider2D collider, DamageData data)
 	{
-		ReturnToPool();
+		DamageReceived();
 	}
 }

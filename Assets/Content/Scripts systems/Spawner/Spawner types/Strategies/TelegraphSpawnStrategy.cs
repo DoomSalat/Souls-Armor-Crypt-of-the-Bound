@@ -57,22 +57,7 @@ namespace SpawnerSystem
 
 		private void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
-			Transform inactiveContainer = _ownerSpawner?.GetInactiveContainer();
-
-			spawned.SetupForSpawn(
-				_dependencies.Tokens,
-				section,
-				_dependencies.EnemyPool.GetPlayerTarget(),
-				kind,
-				inactiveContainer,
-				_dependencies.EnemyPool.GetStatusMachine()
-			);
-
-			var soulSpawnerRequested = spawned.GetComponent<SoulSpawnerRequested>();
-			if (soulSpawnerRequested != null && _dependencies.SoulSpawnRequestHandler != null)
-			{
-				soulSpawnerRequested.Initialize(_dependencies.SoulSpawnRequestHandler);
-			}
+			_ownerSpawner?.SetupSpawned(spawned, section, kind);
 		}
 
 		private Vector3 SectionToDirection(SpawnSection section)

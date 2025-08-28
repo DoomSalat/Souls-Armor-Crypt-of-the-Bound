@@ -48,7 +48,6 @@ namespace SpawnerSystem
 			}
 		}
 
-
 #if UNITY_EDITOR
 		private void OnValidate()
 		{

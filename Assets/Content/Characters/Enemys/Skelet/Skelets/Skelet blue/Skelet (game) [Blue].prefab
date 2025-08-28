@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 2808113451408658559}
   - component: {fileID: 7949012465888947640}
   - component: {fileID: 6168676929361911085}
+  - component: {fileID: 4470079767201985}
   - component: {fileID: 508870147041884454}
   - component: {fileID: 972796058210434141}
-  - component: {fileID: 6424073980263340946}
   - component: {fileID: 6823832461876464137}
   - component: {fileID: 2976287767735029814}
   - component: {fileID: 8683806117694491444}
@@ -265,14 +265,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _followLogic: {fileID: 972796058210434141}
   _animator: {fileID: 7536204552960039192}
-  _throw: {fileID: 6424073980263340946}
+  _throw: {fileID: 4470079767201985}
   _creatureFlip: {fileID: 1323777199404565503}
   _soulSpawner: {fileID: 6823832461876464137}
   _attackDistance: 7.5
-  _optimalDistance: 4.5
+  _optimalDistance: 5
   _attackCooldown: 2
   _hurtBox: {fileID: 6298797725975634928}
   _damage: {fileID: 508870147041884454}
+--- !u!114 &4470079767201985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8599856172359595164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e574b9f5b6180df4ba63c07b92a996bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPoint: {fileID: 3000862452442391441}
+  _throwSpawner: {fileID: 0}
+  _speedBone: 6
+  _endDistanceBone: 10
 --- !u!114 &508870147041884454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,22 +318,6 @@ MonoBehaviour:
   _target: {fileID: 0}
   _moveSpeed: 1.5
   _minDistance: 0.1
---- !u!114 &6424073980263340946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8599856172359595164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48eada36d02378a4dae64ddc5f128e86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _throwPoint: {fileID: 3000862452442391441}
-  _throwSpawner: {fileID: 0}
-  _speedBone: 6
-  _endDistanceBone: 12
 --- !u!114 &6823832461876464137
 MonoBehaviour:
   m_ObjectHideFlags: 0

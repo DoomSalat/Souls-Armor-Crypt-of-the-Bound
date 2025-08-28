@@ -598,6 +598,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Simple Teleport
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 429
+        width: 32
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 7, y: 0, z: 7, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2a038480f029184c9bb2e5fd36bb6ac
+      internalID: 679929987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -616,6 +638,7 @@ TextureImporter:
     nameFileIdTable:
       Simple Lighting: 1195843093
       Simple Poison: 713859863
+      Simple Teleport: 679929987
       'Simple explose smoke [10]': 484963026
       'Simple explose smoke [11]': 82236131
       'Simple explose smoke [12]': 885182512
