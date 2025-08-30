@@ -101,6 +101,11 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 		LimitSpeed();
 	}
 
+	public void AddInfluence(Vector2 influence, float strength)
+	{
+		// ImpulseFollower ignores group influence
+	}
+
 	private void ApplyImpulse()
 	{
 		Vector2 directionToTarget = (_target.position - transform.position).normalized;

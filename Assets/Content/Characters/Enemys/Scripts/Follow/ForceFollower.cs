@@ -15,6 +15,9 @@ public class ForceFollower : MonoBehaviour, IFollower
 	private Vector2 _moveDirection;
 	private bool _hasReachedTarget;
 
+	private Vector2 _groupInfluence;
+	private float _groupInfluenceStrength;
+
 	public event System.Action TargetReached;
 
 	public bool IsMovementEnabled => enabled;
@@ -77,6 +80,12 @@ public class ForceFollower : MonoBehaviour, IFollower
 		ApplyMovement();
 	}
 
+	public void AddInfluence(Vector2 influence, float strength)
+	{
+		_groupInfluence = influence;
+		_groupInfluenceStrength = strength;
+	}
+
 	public void SetMoveSpeed(float speed)
 	{
 		_acceleration = speed;
@@ -128,6 +137,12 @@ public class ForceFollower : MonoBehaviour, IFollower
 	{
 		Vector2 accelerationForce = _moveDirection * _acceleration;
 		_rigidbody.AddForce(accelerationForce);
+
+		if (_groupInfluenceStrength > 0f)
+		{
+			Vector2 groupForce = _groupInfluence * _groupInfluenceStrength;
+			_rigidbody.AddForce(groupForce, ForceMode2D.Force);
+		}
 
 		if (_rigidbody.linearVelocity.magnitude > _maxSpeed)
 		{

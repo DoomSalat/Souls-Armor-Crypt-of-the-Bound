@@ -74,11 +74,6 @@ namespace SpawnerSystem
 				var section = _spawnerTokens.GetSectionByDirection(direction);
 				var spawned = spawner.Spawn(section, enemyKind);
 				_spawnerTokens.Commit(section, spawned);
-
-				if (spawned > 0)
-				{
-					Debug.Log($"Spawned {enemyKind} with {soulType} soul type at {direction}");
-				}
 			}
 		}
 

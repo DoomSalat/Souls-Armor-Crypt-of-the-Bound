@@ -8,8 +8,11 @@ namespace SpawnerSystem
 		int Spawn(SpawnSection section);
 		int Spawn(SpawnSection section, int tierIndex);
 		int Spawn(SpawnSection section, EnemyKind enemyKind);
+
 		PooledEnemy SpawnAtPosition(SpawnSection section, EnemyKind enemyKind, Vector3 position);
 		int GetTierCount();
 		void InitializeComponents(PooledEnemy pooled);
+
+		Transform GetInactiveContainer();
 	}
 }

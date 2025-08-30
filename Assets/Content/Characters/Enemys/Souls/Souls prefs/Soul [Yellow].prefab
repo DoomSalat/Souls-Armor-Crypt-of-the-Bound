@@ -5340,13 +5340,14 @@ GameObject:
   - component: {fileID: 1753209730640506127}
   - component: {fileID: 2240984736122013345}
   - component: {fileID: 2721364213782653316}
-  - component: {fileID: 5885745146485329820}
   - component: {fileID: 5957789021434574804}
   - component: {fileID: 2852503701444505321}
+  - component: {fileID: 5885745146485329820}
   - component: {fileID: 2549360879008636151}
   - component: {fileID: 2804703302713372882}
   - component: {fileID: 6526651546507707706}
   - component: {fileID: 4101581840176747302}
+  - component: {fileID: 6374158387063424668}
   m_Layer: 0
   m_Name: 'Soul [Yellow]'
   m_TagString: Untagged
@@ -5452,21 +5453,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.45
---- !u!114 &5885745146485329820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7154621557268803403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b56cb1285b87304c95d21333891222f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _moveSpeed: 2
-  _minDistance: 0.1
 --- !u!114 &5957789021434574804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5502,6 +5488,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusPoint: {fileID: 6408839142997088687}
   _statusMachine: {fileID: 0}
+--- !u!114 &5885745146485329820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154621557268803403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b56cb1285b87304c95d21333891222f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _moveSpeed: 1.6
+  _minDistance: 0.1
 --- !u!114 &2549360879008636151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5557,6 +5558,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dedeeca08b5c0c24ca972dd7fd7d68a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6374158387063424668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154621557268803403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f313a83a5d24645a75e5534b431175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optimalDistance: 1
+  _targetZoneRadius: 0.4
+  _dangerZoneRadius: 0.7
+  _influenceRadius: 2.5
+  _targetWobbleSpeed: 0.8
+  _targetWobbleAmount: 0.6
+  _dangerZoneMultiplier: 2
+  _baseInfluenceStrength: 1.4
+  _distanceCompensationMultiplier: 1.15
+  _separationForce: 1.8
+  _smoothFollowSpeed: 2.2
+  _maxFollowDistance: 1.2
+  _followerLogic: {fileID: 5885745146485329820}
+  _showZonesInEditor: 1
+  _soul: {fileID: 5957789021434574804}
 --- !u!1 &7484585964037301526
 GameObject:
   m_ObjectHideFlags: 0

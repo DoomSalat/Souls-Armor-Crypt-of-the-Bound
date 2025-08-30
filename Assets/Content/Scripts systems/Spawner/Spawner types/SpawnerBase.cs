@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 namespace SpawnerSystem
 {
@@ -27,9 +28,6 @@ namespace SpawnerSystem
 
 		private void RegisterPrefabs()
 		{
-			if (_prefabsByKind == null)
-				return;
-
 			for (int i = 0; i < _prefabsByKind.Length; i++)
 			{
 				var entry = _prefabsByKind[i];
@@ -63,7 +61,7 @@ namespace SpawnerSystem
 			}
 
 			PooledEnemy pooledEnemy = SpawnEnemyAt(position, enemyKind, prefabToSpawn);
-			SetupSpawned(pooledEnemy, section, enemyKind);
+			SetupEnemySpawn(pooledEnemy, section, enemyKind);
 
 			return pooledEnemy;
 		}
@@ -97,7 +95,7 @@ namespace SpawnerSystem
 				if (!handledByStrategy)
 				{
 					PooledEnemy pooledEnemy = SpawnEnemyAt(spawnPosition, kindToSpawn, prefabToSpawn);
-					SetupSpawned(pooledEnemy, section, kindToSpawn);
+					SetupEnemySpawn(pooledEnemy, section, kindToSpawn);
 					_spawnStrategy.OnAfterSpawn(pooledEnemy, spawnPosition, section, kindToSpawn);
 				}
 
@@ -170,35 +168,53 @@ namespace SpawnerSystem
 
 		protected PooledEnemy SpawnEnemyAt(Vector3 position, EnemyKind kind, PooledEnemy prefab)
 		{
-			if (prefab == null)
-			{
-				Debug.LogError($"SpawnerBase.SpawnEnemyAt: prefab is null for kind {kind}");
-				return null;
-			}
-
-			PooledEnemy pooledEnemy = _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
-			return pooledEnemy;
+			return _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
 		}
 
-		public void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
-		{
-			SetupEnemySpawn(spawned, section, kind);
-		}
-
-		private void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
+		public void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
 			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
 		}
 
 		private void PrewarmPrefabs()
 		{
+			var prefabsByKind = new Dictionary<EnemyKind, List<PooledEnemy>>();
+
 			for (int i = 0; i < _prefabsByKind.Length; i++)
 			{
 				var entry = _prefabsByKind[i];
-				var prefab = entry.Prefab;
+				if (entry?.Prefab != null)
+				{
+					if (!prefabsByKind.ContainsKey(entry.Kind))
+					{
+						prefabsByKind[entry.Kind] = new List<PooledEnemy>();
+					}
 
-				_dependencies.EnemyPool.PrewarmPool(prefab, _prewarmPerPrefab);
+					prefabsByKind[entry.Kind].Add(entry.Prefab);
+				}
 			}
+
+			foreach (var kvp in prefabsByKind)
+			{
+				var kind = kvp.Key;
+				var prefabs = kvp.Value;
+
+				int instancesPerPrefab = _prewarmPerPrefab / prefabs.Count;
+				int remainingInstances = _prewarmPerPrefab % prefabs.Count;
+
+				for (int i = 0; i < prefabs.Count; i++)
+				{
+					var prefab = prefabs[i];
+					int countForThisPrefab = instancesPerPrefab + (i < remainingInstances ? 1 : 0);
+
+					PrewarmPrefabInInactiveContainer(prefab, countForThisPrefab);
+				}
+			}
+		}
+
+		private void PrewarmPrefabInInactiveContainer(PooledEnemy prefab, int count)
+		{
+			_dependencies.EnemyPool.PrewarmPool(prefab, count);
 		}
 
 		public void InitializeComponents(PooledEnemy pooled)

@@ -26,9 +26,12 @@ public class Soul : MonoBehaviour, ISpawnInitializable
 
 	private bool _isAttracted = false;
 	private bool _isEndAttraction = false;
-	private event System.Action _attractionCompleted;
 
 	private WaitUntil _isKnockedBackWaitUntil;
+
+	private event System.Action _attractionCompleted;
+
+	public bool IsBusy => _soulDamage.IsDead || _isAttracted || _knockbackReceiver.IsKnockedBack;
 
 	private void Awake()
 	{

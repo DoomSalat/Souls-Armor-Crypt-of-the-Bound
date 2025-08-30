@@ -4,6 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class LinearFollower : MonoBehaviour, IFollower
 {
+	private const float DefaultDistance = 0f;
+	private const float MinimumVectorMagnitude = 0.01f;
+	private const float NoInfluence = 0f;
+
 	[SerializeField, ReadOnly] private Transform _target;
 
 	[Header("Linear Movement")]
@@ -14,11 +18,14 @@ public class LinearFollower : MonoBehaviour, IFollower
 	private Vector2 _moveDirection;
 	private bool _hasReachedTarget;
 
-	public event System.Action TargetReached;
+	private Vector2 _groupInfluence;
+	private float _groupInfluenceStrength;
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _moveDirection;
 	public Transform Target => _target;
+
+	public event System.Action TargetReached;
 
 	private void Awake()
 	{
@@ -47,7 +54,7 @@ public class LinearFollower : MonoBehaviour, IFollower
 	{
 		if (_target == null)
 		{
-			distance = 0;
+			distance = DefaultDistance;
 			return false;
 		}
 
@@ -89,6 +96,12 @@ public class LinearFollower : MonoBehaviour, IFollower
 		ApplyMovement();
 	}
 
+	public void AddInfluence(Vector2 influence, float strength)
+	{
+		_groupInfluence = influence;
+		_groupInfluenceStrength = strength;
+	}
+
 	public void SetMoveSpeed(float speed)
 	{
 		_moveSpeed = speed;
@@ -125,6 +138,29 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	private void ApplyMovement()
 	{
-		_rigidbody.linearVelocity = _moveDirection * _moveSpeed;
+		Vector2 finalDirection = Vector2.zero;
+		float finalSpeed = _moveSpeed;
+
+		if (_groupInfluenceStrength != NoInfluence)
+		{
+			finalDirection = _groupInfluence;
+			finalSpeed = _groupInfluenceStrength;
+		}
+		else
+		{
+			finalDirection = _moveDirection;
+		}
+
+		if (finalDirection.sqrMagnitude > MinimumVectorMagnitude)
+		{
+			_rigidbody.linearVelocity = finalDirection.normalized * finalSpeed;
+		}
+		else
+		{
+			_rigidbody.linearVelocity = Vector2.zero;
+		}
+
+		_groupInfluence = Vector2.zero;
+		_groupInfluenceStrength = NoInfluence;
 	}
 }

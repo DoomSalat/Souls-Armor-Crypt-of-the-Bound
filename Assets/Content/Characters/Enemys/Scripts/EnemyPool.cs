@@ -14,6 +14,7 @@ namespace SpawnerSystem
 		private Transform _playerTarget;
 		private StatusMachine _statusMachine;
 		private Dictionary<PooledEnemy, ISpawner> _prefabToSpawner = new();
+		private Dictionary<PooledEnemy, Transform> _prefabToInactiveContainer = new();
 
 		private readonly Dictionary<PooledEnemy, ObjectPool<PooledEnemy>> _prefabToPool = new();
 
@@ -23,6 +24,7 @@ namespace SpawnerSystem
 		public void RegisterPrefab(PooledEnemy prefab, ISpawner spawner)
 		{
 			_prefabToSpawner[prefab] = spawner;
+			_prefabToInactiveContainer[prefab] = spawner.GetInactiveContainer();
 		}
 
 		public void Initialize(Transform playerTarget, StatusMachine statusMachine)
@@ -44,6 +46,7 @@ namespace SpawnerSystem
 
 			Transform instanceTransform = pooledInstance.transform;
 			instanceTransform.SetPositionAndRotation(position, rotation);
+
 			instanceTransform.SetParent(_container, false);
 			pooledInstance.gameObject.SetActive(true);
 
@@ -57,27 +60,23 @@ namespace SpawnerSystem
 			return Get(prefab, position, rotation);
 		}
 
-		public void PrewarmPool(PooledEnemy prefab, int count = 4)
+		public void PrewarmPool(PooledEnemy prefab, int count)
 		{
+			if (count <= 0 || prefab == null)
+				return;
+
 			ObjectPool<PooledEnemy> pool = GetOrCreatePool(prefab);
+			var createdObjects = new List<PooledEnemy>();
 
 			for (int i = 0; i < count; i++)
 			{
 				PooledEnemy instance = pool.Get();
-				pool.Release(instance);
+				createdObjects.Add(instance);
 			}
-		}
 
-		public void PrewarmAllPools(EnemyPrefabByKind[] prefabs, int countPerPrefab = 4)
-		{
-			if (prefabs == null)
-				return;
-
-			for (int i = 0; i < prefabs.Length; i++)
+			foreach (var obj in createdObjects)
 			{
-				var prefab = prefabs[i]?.Prefab;
-				if (prefab != null)
-					PrewarmPool(prefab, countPerPrefab);
+				pool.Release(obj);
 			}
 		}
 
@@ -153,9 +152,11 @@ namespace SpawnerSystem
 		private PooledEnemy CreateInstance(PooledEnemy prefab)
 		{
 			PooledEnemy pooledInstance = Instantiate(prefab);
-			if (_container != null)
+
+			Transform inactiveContainer = _prefabToInactiveContainer.TryGetValue(prefab, out var container) ? container : _container;
+			if (inactiveContainer != null)
 			{
-				pooledInstance.transform.SetParent(_container, false);
+				pooledInstance.transform.SetParent(inactiveContainer, false);
 			}
 
 			pooledInstance.Initialize(this, prefab);
@@ -198,6 +199,9 @@ namespace SpawnerSystem
 			if (pooledInstance == null)
 				return;
 
+			Transform targetContainer = GetTargetContainer(pooledInstance);
+			pooledInstance.transform.SetParent(targetContainer, false);
+
 			pooledInstance.gameObject.SetActive(false);
 		}
 
@@ -205,6 +209,21 @@ namespace SpawnerSystem
 		{
 			if (pooledInstance != null)
 				Destroy(pooledInstance.gameObject);
+		}
+
+		private Transform GetTargetContainer(PooledEnemy pooledInstance)
+		{
+			if (_prefabToInactiveContainer.TryGetValue(pooledInstance.PrefabOrigin, out var inactiveContainer))
+			{
+				return inactiveContainer ?? _container;
+			}
+
+			if (pooledInstance.TryGetComponent<EnemySpawnMeta>(out var spawnMeta))
+			{
+				return spawnMeta.InactiveParent ?? _container;
+			}
+
+			return _container;
 		}
 	}
 }

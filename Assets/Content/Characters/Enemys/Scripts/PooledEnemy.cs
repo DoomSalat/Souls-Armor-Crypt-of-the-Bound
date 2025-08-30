@@ -14,6 +14,8 @@ namespace SpawnerSystem
 		private IFollower _follower;
 		private bool _cached;
 
+		public event System.Action<PooledEnemy> ReturnedToPool;
+
 		public void Initialize(EnemyPool pool, PooledEnemy prefabOrigin)
 		{
 			_ownerPool = pool;
@@ -54,6 +56,8 @@ namespace SpawnerSystem
 
 		public void ReturnToPool()
 		{
+			ReturnedToPool?.Invoke(this);
+
 			if (_ownerPool != null)
 			{
 				_ownerPool.Release(this);

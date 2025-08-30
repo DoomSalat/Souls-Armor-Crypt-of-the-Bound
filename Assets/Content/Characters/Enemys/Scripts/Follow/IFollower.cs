@@ -10,6 +10,8 @@ public interface IFollower
 	void EnableMovement();
 	void DisableMovement();
 
+	void AddInfluence(Vector2 influence, float strength);
+
 	bool TryGetDistanceToTarget(out float distance);
 
 	bool IsMovementEnabled { get; }

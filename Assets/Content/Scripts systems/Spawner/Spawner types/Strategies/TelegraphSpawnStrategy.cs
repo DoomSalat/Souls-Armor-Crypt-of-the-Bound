@@ -57,7 +57,7 @@ namespace SpawnerSystem
 
 		private void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
-			_ownerSpawner?.SetupSpawned(spawned, section, kind);
+			_ownerSpawner?.SetupEnemySpawn(spawned, section, kind);
 		}
 
 		private Vector3 SectionToDirection(SpawnSection section)

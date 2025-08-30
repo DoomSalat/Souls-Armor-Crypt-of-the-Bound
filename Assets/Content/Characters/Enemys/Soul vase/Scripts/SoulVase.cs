@@ -26,6 +26,8 @@ public class SoulVase : MonoBehaviour, ISpawnInitializable
 
 	private WaitUntil _isKnockedBackWaitUntil;
 
+	public bool IsBusy => _enemyDamage.IsDead || _knockbackReceiver.IsKnockedBack;
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
