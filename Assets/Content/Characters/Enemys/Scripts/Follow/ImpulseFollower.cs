@@ -20,6 +20,7 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 	private float _currentSpreadAngle;
 	private float _lastImpulseTime;
 	private bool _isInitialImpulse;
+	private bool _controlOverridden;
 
 #pragma warning disable 0067
 	public event System.Action TargetReached;
@@ -28,6 +29,7 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _rigidbody.linearVelocity.normalized;
 	public Transform Target => _target;
+	public bool IsControlOverridden => _controlOverridden;
 
 	private void Awake()
 	{
@@ -39,7 +41,7 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 	{
 		if (_target == null)
 		{
-			distance = 0;
+			distance = 0f;
 			return false;
 		}
 
@@ -92,18 +94,35 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 		if (_target == null || enabled == false)
 			return;
 
-		if (Time.time - _lastImpulseTime >= _impulseInterval)
+		if (_controlOverridden == false)
 		{
-			ApplyImpulse();
-			_lastImpulseTime = Time.time;
-		}
+			if (Time.time - _lastImpulseTime >= _impulseInterval)
+			{
+				ApplyImpulse();
+				_lastImpulseTime = Time.time;
+			}
 
-		LimitSpeed();
+			LimitSpeed();
+		}
 	}
 
 	public void AddInfluence(Vector2 influence, float strength)
 	{
-		// ImpulseFollower ignores group influence
+		if (_controlOverridden)
+		{
+			Vector2 force = influence.normalized * strength;
+			_rigidbody.AddForce(force, ForceMode2D.Force);
+		}
+	}
+
+	public void SetControlOverride(bool isOverridden)
+	{
+		_controlOverridden = isOverridden;
+
+		if (isOverridden)
+		{
+			StopMovement();
+		}
 	}
 
 	private void ApplyImpulse()

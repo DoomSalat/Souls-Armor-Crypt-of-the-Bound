@@ -126,7 +126,6 @@ namespace SpawnerSystem
 
 			if (!leaderEnemy.TryGetComponent<IGroupController>(out var leader))
 			{
-				Debug.LogError($"[{nameof(GroupSpawnStrategy)}] Leader enemy {leaderEnemy.name} does not have IGroupController component!");
 				return;
 			}
 
@@ -137,13 +136,10 @@ namespace SpawnerSystem
 				{
 					groupMembers.Add(member);
 				}
-				else
-				{
-					Debug.LogError($"[{nameof(GroupSpawnStrategy)}] Member {i} {_currentGroup[i].name} does not have IGroupController component!");
-				}
 			}
 
-			leader.InitializeGroup(groupMembers);
+			int groupId = GroupRegister.CreateGroup(leader, groupMembers);
+			leader.InitializeGroup(groupId, true);
 		}
 	}
 }

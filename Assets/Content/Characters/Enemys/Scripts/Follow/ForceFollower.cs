@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ForceFollower : MonoBehaviour, IFollower
 {
+	private const float MinimumVectorMagnitude = 0.01f;
+
 	[SerializeField, ReadOnly] private Transform _target;
 
 	[Header("Force Movement")]
@@ -17,12 +19,14 @@ public class ForceFollower : MonoBehaviour, IFollower
 
 	private Vector2 _groupInfluence;
 	private float _groupInfluenceStrength;
+	private bool _controlOverridden;
 
 	public event System.Action TargetReached;
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _moveDirection;
 	public Transform Target => _target;
+	public bool IsControlOverridden => _controlOverridden;
 
 	private void Awake()
 	{
@@ -43,8 +47,11 @@ public class ForceFollower : MonoBehaviour, IFollower
 			return;
 		}
 
-		UpdateMoveDirection(target.position);
-		ApplyMovement();
+		if (_controlOverridden == false)
+		{
+			UpdateMoveDirection(target.position);
+			ApplyMovement();
+		}
 	}
 
 	public void PauseMovement()
@@ -76,7 +83,11 @@ public class ForceFollower : MonoBehaviour, IFollower
 		if (_target == null || enabled == false)
 			return;
 
-		UpdateMoveDirection(_target.position);
+		if (_controlOverridden == false)
+		{
+			UpdateMoveDirection(_target.position);
+		}
+
 		ApplyMovement();
 	}
 
@@ -84,6 +95,21 @@ public class ForceFollower : MonoBehaviour, IFollower
 	{
 		_groupInfluence = influence;
 		_groupInfluenceStrength = strength;
+	}
+
+	public void SetControlOverride(bool isOverridden)
+	{
+		_controlOverridden = isOverridden;
+
+		if (isOverridden)
+		{
+			StopMovement();
+		}
+		else
+		{
+			_groupInfluence = Vector2.zero;
+			_groupInfluenceStrength = 0f;
+		}
 	}
 
 	public void SetMoveSpeed(float speed)
@@ -100,7 +126,7 @@ public class ForceFollower : MonoBehaviour, IFollower
 	{
 		if (_target == null)
 		{
-			distance = 0;
+			distance = 0f;
 			return false;
 		}
 
@@ -135,18 +161,34 @@ public class ForceFollower : MonoBehaviour, IFollower
 
 	private void ApplyMovement()
 	{
-		Vector2 accelerationForce = _moveDirection * _acceleration;
-		_rigidbody.AddForce(accelerationForce);
-
-		if (_groupInfluenceStrength > 0f)
+		if (_controlOverridden)
 		{
-			Vector2 groupForce = _groupInfluence * _groupInfluenceStrength;
-			_rigidbody.AddForce(groupForce, ForceMode2D.Force);
+			if (_groupInfluence.sqrMagnitude > MinimumVectorMagnitude)
+			{
+				Vector2 force = _groupInfluence.normalized * _groupInfluenceStrength;
+				_rigidbody.AddForce(force, ForceMode2D.Force);
+
+				if (_rigidbody.linearVelocity.magnitude > _maxSpeed)
+				{
+					_rigidbody.linearVelocity = _rigidbody.linearVelocity.normalized * _maxSpeed;
+				}
+			}
+		}
+		else
+		{
+			if (_moveDirection.sqrMagnitude > MinimumVectorMagnitude)
+			{
+				Vector2 force = _moveDirection.normalized * _acceleration;
+				_rigidbody.AddForce(force, ForceMode2D.Force);
+
+				if (_rigidbody.linearVelocity.magnitude > _maxSpeed)
+				{
+					_rigidbody.linearVelocity = _rigidbody.linearVelocity.normalized * _maxSpeed;
+				}
+			}
 		}
 
-		if (_rigidbody.linearVelocity.magnitude > _maxSpeed)
-		{
-			_rigidbody.linearVelocity = _rigidbody.linearVelocity.normalized * _maxSpeed;
-		}
+		_groupInfluence = Vector2.zero;
+		_groupInfluenceStrength = 0f;
 	}
 }

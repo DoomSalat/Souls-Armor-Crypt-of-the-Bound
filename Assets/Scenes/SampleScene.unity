@@ -1090,7 +1090,7 @@ MonoBehaviour:
   _baseCostPerEnemy: 1
   _decayPerSecond: 0.25
   _minCost: 1
-  _spawnDistanceFromCenter: 54
+  _spawnDistanceFromCenter: 4
   _desiredPowerPerSection: 5
   _glitchChance: 0.05
   _maxSectionDeviation: 2
@@ -63255,7 +63255,7 @@ MonoBehaviour:
   _inactiveContainer: {fileID: 1070628920}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1
-  _groupSizeRange: {x: 3, y: 6}
+  _groupSizeRange: {x: 3, y: 3}
   _minDistanceFromLeader: 0.6
   _maxDistanceFromLeader: 1.8
   _randomOffset: 0.1

@@ -1,6 +1,8 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using SpawnerSystem;
 
+[RequireComponent(typeof(Soul))]
 public class SoulGroupController : BaseGroupController
 {
 	[SerializeField, Required] private Soul _soul;
@@ -15,7 +17,6 @@ public class SoulGroupController : BaseGroupController
 	{
 		if (_soul == null)
 			return false;
-
 		return !_soul.IsBusy;
 	}
 

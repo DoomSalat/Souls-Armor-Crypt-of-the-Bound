@@ -140,7 +140,7 @@ namespace SpawnerSystem
 			_spawnerTokens.Commit(section, spawned);
 		}
 
-		public void RequestSoulSpawn(SoulType soulType, Vector3 spawnPosition, DamageData damageData)
+		public void RequestSoulSpawn(SoulType soulType, Vector3 spawnPosition, DamageData damageData, System.Action<PooledEnemy> onSoulSpawned = null)
 		{
 			var spawner = GetSpawnerBySoulType(soulType);
 
@@ -156,9 +156,10 @@ namespace SpawnerSystem
 					if (soul != null)
 					{
 						soul.SpawnInitializate(enableCollisions: false);
-
 						soul.ApplySpawnKnockback(damageData.KnockbackDirection, damageData.KnockbackForce);
 					}
+
+					onSoulSpawned?.Invoke(spawnedEnemy);
 				}
 			}
 			else

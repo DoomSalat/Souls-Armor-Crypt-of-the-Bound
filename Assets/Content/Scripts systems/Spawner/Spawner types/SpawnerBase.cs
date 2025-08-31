@@ -171,7 +171,7 @@ namespace SpawnerSystem
 			return _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
 		}
 
-		public void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
+		public virtual void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
 			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
 		}

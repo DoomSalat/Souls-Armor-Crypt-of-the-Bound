@@ -6,7 +6,6 @@ public class LinearFollower : MonoBehaviour, IFollower
 {
 	private const float DefaultDistance = 0f;
 	private const float MinimumVectorMagnitude = 0.01f;
-	private const float NoInfluence = 0f;
 
 	[SerializeField, ReadOnly] private Transform _target;
 
@@ -20,10 +19,12 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	private Vector2 _groupInfluence;
 	private float _groupInfluenceStrength;
+	private bool _controlOverridden;
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _moveDirection;
 	public Transform Target => _target;
+	public bool IsControlOverridden => _controlOverridden;
 
 	public event System.Action TargetReached;
 
@@ -45,9 +46,6 @@ public class LinearFollower : MonoBehaviour, IFollower
 			StopMovement();
 			return;
 		}
-
-		UpdateMoveDirection(target.position);
-		ApplyMovement();
 	}
 
 	public bool TryGetDistanceToTarget(out float distance)
@@ -92,7 +90,11 @@ public class LinearFollower : MonoBehaviour, IFollower
 		if (_target == null || enabled == false)
 			return;
 
-		UpdateMoveDirection(_target.position);
+		if (_controlOverridden == false)
+		{
+			UpdateMoveDirection(_target.position);
+		}
+
 		ApplyMovement();
 	}
 
@@ -100,6 +102,21 @@ public class LinearFollower : MonoBehaviour, IFollower
 	{
 		_groupInfluence = influence;
 		_groupInfluenceStrength = strength;
+	}
+
+	public void SetControlOverride(bool isOverridden)
+	{
+		_controlOverridden = isOverridden;
+
+		if (isOverridden)
+		{
+			StopMovement();
+		}
+		else
+		{
+			_groupInfluence = Vector2.zero;
+			_groupInfluenceStrength = 0f;
+		}
 	}
 
 	public void SetMoveSpeed(float speed)
@@ -138,29 +155,26 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	private void ApplyMovement()
 	{
-		Vector2 finalDirection = Vector2.zero;
-		float finalSpeed = _moveSpeed;
-
-		if (_groupInfluenceStrength != NoInfluence)
+		if (_controlOverridden)
 		{
-			finalDirection = _groupInfluence;
-			finalSpeed = _groupInfluenceStrength;
+			if (_groupInfluence.sqrMagnitude > MinimumVectorMagnitude)
+			{
+				_rigidbody.linearVelocity = _groupInfluence.normalized * _groupInfluenceStrength;
+			}
 		}
 		else
 		{
-			finalDirection = _moveDirection;
-		}
-
-		if (finalDirection.sqrMagnitude > MinimumVectorMagnitude)
-		{
-			_rigidbody.linearVelocity = finalDirection.normalized * finalSpeed;
-		}
-		else
-		{
-			_rigidbody.linearVelocity = Vector2.zero;
+			if (_moveDirection.sqrMagnitude > MinimumVectorMagnitude)
+			{
+				_rigidbody.linearVelocity = _moveDirection.normalized * _moveSpeed;
+			}
+			else
+			{
+				_rigidbody.linearVelocity = Vector2.zero;
+			}
 		}
 
 		_groupInfluence = Vector2.zero;
-		_groupInfluenceStrength = NoInfluence;
+		_groupInfluenceStrength = 0f;
 	}
 }

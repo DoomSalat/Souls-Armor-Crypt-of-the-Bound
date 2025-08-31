@@ -97,13 +97,29 @@ MonoBehaviour:
   _targetWobbleAmount: 0.6
   _dangerZoneMultiplier: 2
   _baseInfluenceStrength: 1.2
-  _distanceCompensationMultiplier: 1.15
+  _distanceCompensationMultiplier: 1.3
   _separationForce: 1.8
   _smoothFollowSpeed: 2.2
   _maxFollowDistance: 1.2
+  _minMovementThreshold: 0.05
   _followerLogic: {fileID: 8900090990513494380}
   _showZonesInEditor: 1
+  _debugIsGroupLeader: 0
+  _debugGroupMembersCount: 0
+  _debugGroupId: -1
   _soulVase: {fileID: 5959186561092539673}
+  _soulSpawner: {fileID: 3548674456960260452}
+--- !u!114 &3548674456960260452 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3373918496019332053, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
+  m_PrefabInstance: {fileID: 2300772486767469233}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515328075244261258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de71d191163b6e941a3345e86b2f39e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5959186561092539673 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5575092367368107944, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
