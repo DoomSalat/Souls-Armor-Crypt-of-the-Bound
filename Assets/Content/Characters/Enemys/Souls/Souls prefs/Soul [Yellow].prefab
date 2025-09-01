@@ -5578,12 +5578,16 @@ MonoBehaviour:
   _targetWobbleAmount: 0.6
   _dangerZoneMultiplier: 2
   _baseInfluenceStrength: 1.4
-  _distanceCompensationMultiplier: 1.15
+  _distanceCompensationMultiplier: 1.5
   _separationForce: 1.8
   _smoothFollowSpeed: 2.2
   _maxFollowDistance: 1.2
+  _minMovementThreshold: 0.05
   _followerLogic: {fileID: 5885745146485329820}
   _showZonesInEditor: 1
+  _debugIsGroupLeader: 0
+  _debugGroupMembersCount: 0
+  _debugGroupId: -1
   _soul: {fileID: 5957789021434574804}
 --- !u!1 &7484585964037301526
 GameObject:

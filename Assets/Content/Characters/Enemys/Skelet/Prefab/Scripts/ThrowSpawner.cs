@@ -27,28 +27,12 @@ public class ThrowSpawner : MonoBehaviour
 		PrewarmPool();
 	}
 
-	public ThrowObject SpawnThrow(Vector3 position, Vector3 direction)
-	{
-		ThrowObject throwObject = _throwPool.Spawn(position);
-		throwObject.InitializeThrow(direction);
-
-		return throwObject;
-	}
-
-	public ThrowObject SpawnThrow(Vector3 position, Vector3 direction, Quaternion rotation)
-	{
-		ThrowObject throwObject = _throwPool.Spawn(position, rotation);
-		throwObject.InitializeThrow(direction);
-
-		return throwObject;
-	}
-
-	public ThrowObject SpawnThrow(Vector3 position, Vector3 direction, Quaternion rotation, float speed, float endDistance)
+	public ThrowObject SpawnThrow(Vector3 position, Vector3 direction, Quaternion rotation, float speed, float endDistance, Vector3 scale)
 	{
 		ThrowObject throwObject = _throwPool.Spawn(position, rotation);
 		throwObject.OnSpawnFromPool();
 
-		throwObject.SetThrowParameters(speed, endDistance);
+		throwObject.Setup(speed, endDistance, scale);
 		throwObject.InitializeThrow(direction);
 
 		return throwObject;

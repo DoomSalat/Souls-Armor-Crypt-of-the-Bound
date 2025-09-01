@@ -270,7 +270,7 @@ MonoBehaviour:
   _soulSpawner: {fileID: 6823832461876464137}
   _attackDistance: 7.5
   _optimalDistance: 5
-  _attackCooldown: 2
+  _attackCooldown: 1.7
   _hurtBox: {fileID: 6298797725975634928}
   _damage: {fileID: 508870147041884454}
 --- !u!114 &4470079767201985

@@ -63252,10 +63252,12 @@ MonoBehaviour:
     _prefab: {fileID: 4101581840176747302, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
   - _kind: 1
     _prefab: {fileID: 4527693246588735446, guid: 6634bbdfc9fb607448f91d6363ee17e0, type: 3}
+  - _kind: 2
+    _prefab: {fileID: 2967995751957790497, guid: a78b56bf21748ef49a89647b53e3c2a8, type: 3}
   _inactiveContainer: {fileID: 1070628920}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1
-  _groupSizeRange: {x: 3, y: 3}
+  _groupSizeRange: {x: 3, y: 5}
   _minDistanceFromLeader: 0.6
   _maxDistanceFromLeader: 1.8
   _randomOffset: 0.1

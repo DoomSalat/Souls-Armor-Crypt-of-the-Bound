@@ -43,9 +43,10 @@ public class SkeletThrowAroundPlayer : BaseSkeletThrow
 		Vector3 spawnPosition = target + spawnDirection * randomDistance;
 
 		Vector3 throwDirection = (target - spawnPosition).normalized;
+		Vector3 throwPointScale = _throwPoint.lossyScale;
 
 		PlayTeleportEffect(spawnPosition);
-		_throwSpawner.SpawnThrow(spawnPosition, throwDirection, Quaternion.identity, speed, endDistance);
+		_throwSpawner.SpawnThrow(spawnPosition, throwDirection, Quaternion.identity, speed, endDistance, throwPointScale);
 	}
 
 	private void PlayTeleportEffect(Vector3 spawnPosition)

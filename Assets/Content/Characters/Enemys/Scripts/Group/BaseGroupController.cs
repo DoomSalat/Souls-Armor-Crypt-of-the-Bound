@@ -136,14 +136,14 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 	{
 		if (groupId <= 0)
 		{
-			Debug.LogWarning($"[BaseGroupController] InitializeGroup: Invalid groupId {groupId}");
+			Debug.LogWarning($"[{nameof(BaseGroupController)}] InitializeGroup: Invalid groupId {groupId}");
 			return;
 		}
 
 		var group = GroupRegister.GetGroup(groupId);
 		if (group == null)
 		{
-			Debug.LogError($"[BaseGroupController] InitializeGroup: Group {groupId} not found in register");
+			Debug.LogError($"[{nameof(BaseGroupController)}] InitializeGroup: Group {groupId} not found in register");
 			return;
 		}
 
@@ -185,11 +185,11 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 		{
 			if (member != null)
 			{
-				// Включаем контроль только если член группы не занят (не в knockback)
 				if (member.CanControlled())
 				{
 					EnableMemberControl(member);
 				}
+
 				DistributeGroupIdToMember(member, groupId);
 			}
 		}
@@ -202,14 +202,14 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 	{
 		if (_groupId <= 0 || !_isGroupLeader)
 		{
-			Debug.LogWarning($"[BaseGroupController] InitializeSwarm: GroupId={_groupId}, IsGroupLeader={_isGroupLeader} - cannot initialize swarm");
+			Debug.LogWarning($"[{nameof(BaseGroupController)}] InitializeSwarm: GroupId={_groupId}, IsGroupLeader={_isGroupLeader} - cannot initialize swarm");
 			return;
 		}
 
 		var group = GroupRegister.GetGroup(_groupId);
 		if (group == null)
 		{
-			Debug.LogError($"[BaseGroupController] InitializeSwarm: Group {_groupId} not found in register");
+			Debug.LogError($"[{nameof(BaseGroupController)}] InitializeSwarm: Group {_groupId} not found in register");
 			return;
 		}
 
@@ -231,11 +231,11 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 		{
 			if (member != null)
 			{
-				// Включаем контроль только если член группы не занят (не в knockback)
 				if (member.CanControlled())
 				{
 					EnableMemberControl(member);
 				}
+
 				DistributeGroupIdToMember(member, _groupId);
 			}
 		}
@@ -267,7 +267,6 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 		_groupMembers.Clear();
 		_isGroupLeader = false;
 		_groupId = -1;
-
 
 		_memberOffsets.Clear();
 		_memberFollowPositions.Clear();
@@ -339,18 +338,8 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 			}
 
 			_memberFollowPositions.Remove(member);
-
 			DistributeGroupIdToMember(member, _groupId);
-
 			ReinitializeSwarmSystem();
-		}
-		else if (member != null && _groupMembers.Contains(member))
-		{
-			// Член уже в группе
-		}
-		else
-		{
-			// Попытка добавить null члена
 		}
 	}
 

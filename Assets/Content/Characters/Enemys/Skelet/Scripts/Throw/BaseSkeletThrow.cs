@@ -30,7 +30,8 @@ public abstract class BaseSkeletThrow : MonoBehaviour
 		}
 
 		Vector3 throwDirection = (target - _throwPoint.position).normalized;
-		_throwSpawner.SpawnThrow(_throwPoint.position, throwDirection, _throwPoint.rotation, speed, endDistance);
+		Vector3 throwPointScale = _throwPoint.lossyScale;
+		_throwSpawner.SpawnThrow(_throwPoint.position, throwDirection, _throwPoint.rotation, speed, endDistance, throwPointScale);
 	}
 
 	[Button("Test Throw")]

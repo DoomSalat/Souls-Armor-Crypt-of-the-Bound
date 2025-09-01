@@ -6,6 +6,13 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Skelet : MonoBehaviour, ISpawnInitializable
 {
+	private enum AttackState
+	{
+		Ready,
+		Attacking,
+		Cooldown
+	}
+
 	[Header("Components")]
 	[SerializeField, Required] private MonoBehaviour _followLogic;
 	[SerializeField, Required] private SkeletAnimator _animator;
@@ -25,18 +32,23 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
 	private IFollower _follower;
+	private IGroupController _groupController;
 
-	private bool _canAttack = true;
-	private bool _isInAttackState = false;
+	private AttackState _attackState = AttackState.Ready;
 	private bool _hasSpawnedSoul = false;
 	private Coroutine _attackCooldownRoutine;
 	private WaitForSeconds _attackCooldownWait;
+
+	public bool IsCanAttack => _attackState != AttackState.Attacking && _damage.IsDead == false;
+
+	public System.Action Attacked;
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_collider = GetComponent<Collider2D>();
 		_follower = _followLogic.GetComponent<IFollower>();
+		TryGetComponent(out _groupController);
 
 		_damage.Initialize(_collider, null, _hurtBox);
 
@@ -71,12 +83,12 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 
 	private void Update()
 	{
-		if (_isInAttackState == false)
+		if (_attackState != AttackState.Attacking)
 		{
 			UpdateFlipDirection();
 		}
 
-		if (_damage.IsDead || _isInAttackState)
+		if (_damage.IsDead || _attackState == AttackState.Attacking)
 		{
 			return;
 		}
@@ -85,6 +97,16 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		{
 			UpdateAttack(distance);
 		}
+	}
+
+	public void StartAttack()
+	{
+		_attackState = AttackState.Attacking;
+
+		_follower.PauseMovement();
+
+		_animator.StopWalk();
+		_animator.PlayThrow();
 	}
 
 	private void UpdateFlipDirection()
@@ -103,7 +125,10 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 
 	private void UpdateAttack(float distanceToTarget)
 	{
-		if (_canAttack && distanceToTarget <= _attackDistance && !_isInAttackState)
+		if (_groupController != null && !_groupController.IsGroupLeader)
+			return;
+
+		if (_attackState == AttackState.Ready && distanceToTarget <= _attackDistance)
 		{
 			StartAttack();
 		}
@@ -111,7 +136,7 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 
 	private void UpdateMovement(float distanceToTarget)
 	{
-		if (_isInAttackState)
+		if (_attackState == AttackState.Attacking)
 		{
 			return;
 		}
@@ -126,17 +151,6 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		_follower.ResumeMovement();
 		_follower.TryFollow();
 		_animator.PlayWalk();
-	}
-
-	private void StartAttack()
-	{
-		_canAttack = false;
-		_isInAttackState = true;
-
-		_follower.PauseMovement();
-
-		_animator.StopWalk();
-		_animator.PlayThrow();
 	}
 
 	private void OnValidate()
@@ -164,11 +178,12 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 	private void OnThrowAttack()
 	{
 		_throw.Attack(_follower.Target.position);
+		Attacked?.Invoke();
 	}
 
 	private void ThrowEnd()
 	{
-		_isInAttackState = false;
+		_attackState = AttackState.Cooldown;
 
 		_follower.ResumeMovement();
 		_animator.PlayWalk();
@@ -177,14 +192,15 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		{
 			StopCoroutine(_attackCooldownRoutine);
 		}
+
 		_attackCooldownRoutine = StartCoroutine(AttackCooldownRoutine());
 	}
 
 	private IEnumerator AttackCooldownRoutine()
 	{
-		_canAttack = false;
 		yield return _attackCooldownWait;
-		_canAttack = true;
+
+		_attackState = AttackState.Ready;
 		_attackCooldownRoutine = null;
 	}
 
@@ -222,8 +238,7 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		_animator.PlayIdle();
 		_animator.PlayWalk();
 
-		_canAttack = true;
-		_isInAttackState = false;
+		_attackState = AttackState.Ready;
 		_hasSpawnedSoul = false;
 
 		if (_attackCooldownRoutine != null)

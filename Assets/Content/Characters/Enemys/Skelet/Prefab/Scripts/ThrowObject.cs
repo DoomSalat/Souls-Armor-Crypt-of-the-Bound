@@ -98,10 +98,11 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_damage.EnableCollisions();
 	}
 
-	public void SetThrowParameters(float speed, float endDistance)
+	public void Setup(float speed, float endDistance, Vector3 scale)
 	{
 		_speed = speed;
 		_endDistance = endDistance;
+		transform.localScale = scale;
 	}
 
 	public void SetPool(object pool)
@@ -115,6 +116,7 @@ public class ThrowObject : MonoBehaviour, IPool, IPoolReference
 		_rigidbody.linearVelocity = Vector2.zero;
 		transform.position = Vector3.zero;
 		transform.rotation = Quaternion.identity;
+		transform.localScale = Vector3.one;
 
 		_damage.DisableCollisions();
 		_physicsRotate.StopRotation();

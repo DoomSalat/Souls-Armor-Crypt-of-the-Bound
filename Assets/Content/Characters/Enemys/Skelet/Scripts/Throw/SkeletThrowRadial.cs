@@ -19,19 +19,20 @@ public class SkeletThrowRadial : BaseSkeletThrow
 
 		Vector3 throwCenter = transform.position;
 		float angleStep = FullAngle / _directionCount;
+		Vector3 throwPointScale = _throwPoint.lossyScale;
 
 		for (int i = 0; i < _directionCount; i++)
 		{
 			float angle = i * angleStep;
 			Vector3 direction = Quaternion.Euler(0, 0, angle) * Vector3.right;
 
-			_throwSpawner.SpawnThrow(_throwPoint.position, direction, _throwPoint.rotation, speed, endDistance);
+			_throwSpawner.SpawnThrow(_throwPoint.position, direction, _throwPoint.rotation, speed, endDistance, throwPointScale);
 		}
 
 		if (_includePlayerDirection)
 		{
 			Vector3 playerDirection = (target - throwCenter).normalized;
-			_throwSpawner.SpawnThrow(_throwPoint.position, playerDirection, _throwPoint.rotation, speed, endDistance);
+			_throwSpawner.SpawnThrow(_throwPoint.position, playerDirection, _throwPoint.rotation, speed, endDistance, throwPointScale);
 		}
 	}
 }

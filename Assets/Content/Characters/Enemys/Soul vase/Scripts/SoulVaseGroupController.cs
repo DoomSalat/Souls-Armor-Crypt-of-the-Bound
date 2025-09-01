@@ -30,6 +30,7 @@ public class SoulVaseGroupController : BaseGroupController
 		{
 			_soulSpawner.SpawnedSoul -= OnSoulSpawned;
 		}
+
 		base.OnDisable();
 	}
 
@@ -37,6 +38,7 @@ public class SoulVaseGroupController : BaseGroupController
 	{
 		if (_soulVase == null)
 			return false;
+
 		return !_soulVase.IsBusy;
 	}
 
