@@ -6,12 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Skelet : MonoBehaviour, ISpawnInitializable
 {
-	private enum AttackState
-	{
-		Ready,
-		Attacking,
-		Cooldown
-	}
+	private const float MinVelocity = 0.01f;
 
 	[Header("Components")]
 	[SerializeField, Required] private MonoBehaviour _followLogic;
@@ -29,6 +24,9 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 	[SerializeField, Required] private HurtBox _hurtBox;
 	[SerializeField, Required] private DamageSkelet _damage;
 
+	[Header("Debug")]
+	[SerializeField] private bool _debug = false;
+
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
 	private IFollower _follower;
@@ -38,6 +36,13 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 	private bool _hasSpawnedSoul = false;
 	private Coroutine _attackCooldownRoutine;
 	private WaitForSeconds _attackCooldownWait;
+
+	private enum AttackState
+	{
+		Ready,
+		Attacking,
+		Cooldown
+	}
 
 	public bool IsCanAttack => _attackState != AttackState.Attacking && _damage.IsDead == false;
 
@@ -93,6 +98,8 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 			return;
 		}
 
+		UpdateMoveAnimation();
+
 		if (_follower.TryGetDistanceToTarget(out float distance))
 		{
 			UpdateAttack(distance);
@@ -144,13 +151,28 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		if (distanceToTarget <= _optimalDistance)
 		{
 			_follower.PauseMovement();
-			_animator.PlayIdle();
 			return;
 		}
 
 		_follower.ResumeMovement();
 		_follower.TryFollow();
-		_animator.PlayWalk();
+
+		if (_debug)
+		{
+			Debug.Log($"[{nameof(Skelet)}] UpdateMovement: {distanceToTarget}");
+		}
+	}
+
+	private void UpdateMoveAnimation()
+	{
+		if (_follower.Velocity.magnitude > MinVelocity)
+		{
+			_animator.PlayWalk();
+		}
+		else
+		{
+			_animator.StopWalk();
+		}
 	}
 
 	private void OnValidate()

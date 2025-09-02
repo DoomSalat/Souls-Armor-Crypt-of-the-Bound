@@ -12,6 +12,10 @@ public class LinearFollower : MonoBehaviour, IFollower
 	[Header("Linear Movement")]
 	[SerializeField, MinValue(0)] private float _moveSpeed = 2f;
 	[SerializeField, MinValue(0)] private float _minDistance = 0.1f;
+	[SerializeField, Range(0f, 1f)] private float _directionSmoothing = 0.85f;
+
+	[Header("Debug")]
+	[SerializeField] private bool _debugMovement = false;
 
 	private Rigidbody2D _rigidbody;
 	private Vector2 _moveDirection;
@@ -23,6 +27,7 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _moveDirection;
+	public Vector2 Velocity => _rigidbody.linearVelocity;
 	public Transform Target => _target;
 	public bool IsControlOverridden => _controlOverridden;
 
@@ -63,12 +68,18 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	public void PauseMovement()
 	{
+		if (_controlOverridden)
+			return;
+
 		enabled = false;
 		StopMovement();
 	}
 
 	public void ResumeMovement()
 	{
+		if (_controlOverridden)
+			return;
+
 		enabled = true;
 	}
 
@@ -110,6 +121,7 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 		if (isOverridden)
 		{
+			enabled = true;
 			StopMovement();
 		}
 		else
@@ -155,23 +167,40 @@ public class LinearFollower : MonoBehaviour, IFollower
 
 	private void ApplyMovement()
 	{
+		Vector2 targetVelocity = Vector2.zero;
+
 		if (_controlOverridden)
 		{
-			if (_groupInfluence.sqrMagnitude > MinimumVectorMagnitude)
+			targetVelocity = _groupInfluence.normalized * _groupInfluenceStrength;
+
+			if (_debugMovement)
 			{
-				_rigidbody.linearVelocity = _groupInfluence.normalized * _groupInfluenceStrength;
+				Debug.Log($"[{nameof(LinearFollower)}] ApplyMovement: {_groupInfluence} - {_groupInfluenceStrength}");
 			}
 		}
 		else
 		{
 			if (_moveDirection.sqrMagnitude > MinimumVectorMagnitude)
 			{
-				_rigidbody.linearVelocity = _moveDirection.normalized * _moveSpeed;
+				targetVelocity = _moveDirection.normalized * _moveSpeed;
 			}
-			else
-			{
-				_rigidbody.linearVelocity = Vector2.zero;
-			}
+		}
+
+		float currentSpeed = _rigidbody.linearVelocity.magnitude;
+
+		if (targetVelocity.sqrMagnitude < Mathf.Epsilon)
+		{
+			_rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, Vector2.zero, _directionSmoothing);
+		}
+		else
+		{
+			Vector2 currentDirection = _rigidbody.linearVelocity.normalized;
+			Vector2 newDirection = Vector2.Lerp(currentDirection, targetVelocity.normalized, _directionSmoothing);
+
+			float targetSpeed = targetVelocity.magnitude;
+			float smoothedSpeed = Mathf.Lerp(currentSpeed, targetSpeed, _directionSmoothing);
+
+			_rigidbody.linearVelocity = newDirection * smoothedSpeed;
 		}
 
 		_groupInfluence = Vector2.zero;

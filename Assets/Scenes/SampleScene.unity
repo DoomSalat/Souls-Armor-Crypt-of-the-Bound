@@ -1090,7 +1090,7 @@ MonoBehaviour:
   _baseCostPerEnemy: 1
   _decayPerSecond: 0.25
   _minCost: 1
-  _spawnDistanceFromCenter: 4
+  _spawnDistanceFromCenter: 5
   _desiredPowerPerSection: 5
   _glitchChance: 0.05
   _maxSectionDeviation: 2

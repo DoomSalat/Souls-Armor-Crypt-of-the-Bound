@@ -34,10 +34,11 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 	[SerializeField, MinValue(0.5f)] protected float _influenceRadius = 4.0f;
 
 	[Header("Movement Settings")]
-	[SerializeField, Range(0.1f, 3.0f)] protected float _targetWobbleSpeed = 1.5f;
-	[SerializeField, Range(0.1f, 2.0f)] protected float _targetWobbleAmount = 0.6f;
+	[SerializeField, Range(0, 3.0f)] protected float _targetWobbleSpeed = 1.5f;
+	[SerializeField, Range(0, 2.0f)] protected float _targetWobbleAmount = 0.6f;
 	[SerializeField, Range(1.0f, 5.0f)] protected float _dangerZoneMultiplier = 2.5f;
 	[Space]
+	[SerializeField] protected bool _useLinearMovement = false;
 	[SerializeField, Range(0.1f, 10.0f)] protected float _baseInfluenceStrength = 3f;
 	[SerializeField, Range(1.0f, 10.0f)] protected float _distanceCompensationMultiplier = 3f;
 	[SerializeField, Range(0.1f, 10.0f)] protected float _separationForce = 4f;
@@ -121,7 +122,14 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 
 		if (_isGroupLeader && _groupMembers.Count > 0)
 		{
-			ApplyGroupBehavior();
+			if (_useLinearMovement)
+			{
+				ApplyLinearGroupBehavior();
+			}
+			else
+			{
+				ApplyGroupBehavior();
+			}
 		}
 	}
 
@@ -456,6 +464,53 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 		}
 	}
 
+	protected virtual void ApplyLinearGroupBehavior()
+	{
+		CleanupInactiveMembers();
+
+		Vector2 leaderPos = transform.position;
+
+		foreach (var member in _groupMembers)
+		{
+			if (member?.GetFollower() == null || member?.GetTransform() == null)
+				continue;
+
+			Vector2 memberPos = member.GetTransform().position;
+			float distanceToLeaderSqr = (memberPos - leaderPos).sqrMagnitude;
+			float influenceRadiusSqr = _influenceRadius * _influenceRadius;
+
+			if (member.GetFollower().IsMovementEnabled &&
+				member.GetTransform().gameObject.activeInHierarchy &&
+				member.CanControlled() &&
+				distanceToLeaderSqr <= influenceRadiusSqr)
+			{
+				if (!member.GetFollower().IsControlOverridden)
+				{
+					EnableMemberControl(member);
+				}
+
+				Vector2 targetPos = CalculateBaseTargetPosition(member, leaderPos);
+				float distanceToTargetSqr = (targetPos - memberPos).sqrMagnitude;
+				float minMovementThresholdSqr = _minMovementThreshold * _minMovementThreshold;
+
+				if (distanceToTargetSqr > minMovementThresholdSqr)
+				{
+					Vector2 directionToTarget = (targetPos - memberPos).normalized;
+					float influenceStrength = _baseInfluenceStrength;
+
+					ApplyInfluenceToMember(member, directionToTarget, influenceStrength);
+				}
+			}
+			else
+			{
+				if (member.GetFollower().IsControlOverridden)
+				{
+					DisableMemberControl(member);
+				}
+			}
+		}
+	}
+
 	private void ApplyInfluenceToMember(IGroupController member, Vector2 direction, float strength)
 	{
 		if (strength < MinInfluenceStrength)
@@ -634,6 +689,35 @@ public abstract class BaseGroupController : MonoBehaviour, IGroupController
 	public virtual bool CanControlled()
 	{
 		return ShouldSkipGroupBehavior() == false;
+	}
+
+	public bool IsInLeaderControlZone(IGroupController member)
+	{
+		if (_groupId <= 0 || member == null)
+		{
+			return false;
+		}
+
+		var group = GroupRegister.GetGroup(_groupId);
+		if (group == null)
+		{
+			return false;
+		}
+
+		var leader = group.Keys.First();
+		if (leader?.GetTransform() == null || member.GetTransform() == null)
+		{
+			return false;
+		}
+
+		if (!group[leader].Contains(member))
+		{
+			return false;
+		}
+
+		float distanceToLeaderSqr = (member.GetTransform().position - leader.GetTransform().position).sqrMagnitude;
+		float influenceRadiusSqr = _influenceRadius * _influenceRadius;
+		return distanceToLeaderSqr <= influenceRadiusSqr;
 	}
 
 	protected abstract bool ShouldSkipGroupBehavior();

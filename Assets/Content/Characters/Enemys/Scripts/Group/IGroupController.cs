@@ -23,4 +23,6 @@ public interface IGroupController
 	bool CanControlled();
 
 	void CheckAndActivateGroupState();
+
+	bool IsInLeaderControlZone(IGroupController member);
 }

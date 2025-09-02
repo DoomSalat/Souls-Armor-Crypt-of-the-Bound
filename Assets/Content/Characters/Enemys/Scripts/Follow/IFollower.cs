@@ -17,6 +17,7 @@ public interface IFollower
 
 	bool IsMovementEnabled { get; }
 	Vector2 Direction { get; }
+	Vector2 Velocity { get; }
 	Transform Target { get; }
 	bool IsControlOverridden { get; }
 

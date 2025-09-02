@@ -25,6 +25,7 @@ public class ForceFollower : MonoBehaviour, IFollower
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _moveDirection;
+	public Vector2 Velocity => _rigidbody.linearVelocity;
 	public Transform Target => _target;
 	public bool IsControlOverridden => _controlOverridden;
 

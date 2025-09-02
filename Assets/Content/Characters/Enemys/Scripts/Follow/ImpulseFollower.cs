@@ -28,6 +28,7 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 
 	public bool IsMovementEnabled => enabled;
 	public Vector2 Direction => _rigidbody.linearVelocity.normalized;
+	public Vector2 Velocity => _rigidbody.linearVelocity;
 	public Transform Target => _target;
 	public bool IsControlOverridden => _controlOverridden;
 

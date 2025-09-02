@@ -27,7 +27,9 @@ public class SkeletonGroupController : BaseGroupController
 	protected override void Awake()
 	{
 		base.Awake();
+
 		_skeleton = GetComponent<Skelet>();
+
 		_attackChainDelayWait = new WaitForSeconds(_attackChainDelay);
 	}
 
@@ -132,7 +134,7 @@ public class SkeletonGroupController : BaseGroupController
 
 	public override bool CanControlled()
 	{
-		return false;
+		return _skeleton.IsCanAttack;
 	}
 
 	private void StartAttackChain()
@@ -250,6 +252,6 @@ public class SkeletonGroupController : BaseGroupController
 
 	protected override bool ShouldSkipGroupBehavior()
 	{
-		return true;
+		return false;
 	}
 }
