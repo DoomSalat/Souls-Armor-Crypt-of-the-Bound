@@ -1,4 +1,5 @@
 using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -14,7 +15,7 @@ public class PlayerKnightAnimator : MonoBehaviour
 	private const int DirectionLeft = 3;
 	private const int DirectionRight = 4;
 
-	[SerializeField] private PlayerKnightAnimatorEvents _events;
+	[SerializeField, Required] private PlayerKnightAnimatorEvents _events;
 
 	private Animator _animator;
 
@@ -23,12 +24,27 @@ public class PlayerKnightAnimator : MonoBehaviour
 
 	public event System.Action AbdorptionAnimationEnded;
 
+	public event System.Action StartIdleParticles;
+	public event System.Action StartIdleEnded;
+
 	public bool IsStepMove { get; private set; }
 
 	private void Awake()
 	{
 		_animator = GetComponent<Animator>();
 		_shortMoveWait = new WaitForSecondsRealtime(ShortMoveDuration);
+	}
+
+	private void OnEnable()
+	{
+		_events.StartIdleParticlesStarted += OnStartIdleParticles;
+		_events.StartIdleEnded += OnStartIdleEnd;
+	}
+
+	private void OnDisable()
+	{
+		_events.StartIdleParticlesStarted -= OnStartIdleParticles;
+		_events.StartIdleEnded -= OnStartIdleEnd;
 	}
 
 	public void SetDirection(int direction)
@@ -161,5 +177,25 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, true);
 		yield return _shortMoveWait;
 		_animator.SetBool(PlayerKnightAnimatorData.Params.isMove, false);
+	}
+
+	public void PlayStartIdle()
+	{
+		_animator.Play(PlayerKnightAnimatorData.Clips.startIdle);
+	}
+
+	public void PlayStartIdleEnd()
+	{
+		_animator.Play(PlayerKnightAnimatorData.Clips.startIdleEnd);
+	}
+
+	public void OnStartIdleParticles()
+	{
+		StartIdleParticles?.Invoke();
+	}
+
+	public void OnStartIdleEnd()
+	{
+		StartIdleEnded?.Invoke();
 	}
 }

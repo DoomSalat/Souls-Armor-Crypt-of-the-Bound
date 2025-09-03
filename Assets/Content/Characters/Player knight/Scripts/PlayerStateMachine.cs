@@ -31,14 +31,16 @@ public class PlayerStateMachine : MonoBehaviour
 								PlayerHandsTarget playerHandsTarget,
 								AbilityInitializer abilityInitializer,
 								TimeController timeController,
-								PlayerDamage playerDamage)
+								PlayerDamage playerDamage,
+								Transform cutsceneSwordTarget)
 	{
 		_states = new Dictionary<System.Type, PlayerState>
 		{
 			{ typeof(EmptyState), new EmptyState(inputMove) },
 			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs, abilityInitializer, playerDamage) },
 			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown, swordController, timeController, playerDamage) },
-			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader, playerDamage) }
+			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader, playerDamage) },
+			{ typeof(CutsceneState), new CutsceneState(playerKnightAnimator, inputReader, swordController, cutsceneSwordTarget, playerLimbs, absorptionScopeController) }
 		};
 
 		StatesInitialized?.Invoke();
@@ -118,6 +120,11 @@ public class PlayerStateMachine : MonoBehaviour
 	public void EnterEmptyState()
 	{
 		SetState<EmptyState>();
+	}
+
+	public void EnterCutsceneState()
+	{
+		SetState<CutsceneState>();
 	}
 
 	private void SetState(PlayerState newState)

@@ -29,6 +29,9 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 
 	private ParticleAttractor _absorptionAttractor;
 
+	public event System.Action StartIdleParticlesStarted;
+	public event System.Action StartIdleEnded;
+
 	private void Awake()
 	{
 		_absorptionAttractor = _particleAbsorptionSwitcher.GetComponent<ParticleAttractor>();
@@ -129,5 +132,15 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 		{
 			particle.gameObject.SetActive(false);
 		}
+	}
+
+	public void StartIdleParticles()
+	{
+		StartIdleParticlesStarted?.Invoke();
+	}
+
+	public void StartIdleEnd()
+	{
+		StartIdleEnded?.Invoke();
 	}
 }

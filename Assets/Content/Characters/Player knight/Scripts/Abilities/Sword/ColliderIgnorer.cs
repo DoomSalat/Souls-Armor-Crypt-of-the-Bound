@@ -11,6 +11,14 @@ public class ColliderIgnorer : MonoBehaviour
 	private void Awake()
 	{
 		_collider = GetComponent<Collider2D>();
+		OnEnable();
+	}
+
+	private void OnEnable()
+	{
+		if (_collider == null)
+			return;
+
 		IgnoreCollisions();
 	}
 

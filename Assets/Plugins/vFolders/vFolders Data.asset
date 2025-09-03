@@ -18,6 +18,7 @@ MonoBehaviour:
     - c4152d7f17509a84f9e9232cf4c1300b
     - 9149ec580f1cf5f44b49f663842012f8
     - 0d87a34d2ae8d6f49870be3f154307e7
+    - b800e36de3d974e4590e6aeefc7792d3
     values:
     - colorIndex: 0
       iconNameOrGuid: Texture Icon
@@ -27,3 +28,5 @@ MonoBehaviour:
       iconNameOrGuid: Texture Icon
     - colorIndex: 0
       iconNameOrGuid: cs Script Icon
+    - colorIndex: 0
+      iconNameOrGuid: AnimationClip Icon

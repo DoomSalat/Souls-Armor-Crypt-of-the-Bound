@@ -12,4 +12,10 @@ public static class PlayerKnightAnimatorData
 		public static readonly int abdorptionDeactive = Animator.StringToHash(nameof(abdorptionDeactive));
 		public static readonly int headed = Animator.StringToHash(nameof(headed));
 	}
+
+	public static class Clips
+	{
+		public static readonly string startIdle = "Start Idle";
+		public static readonly string startIdleEnd = "Start out Idle cutscene";
+	}
 }

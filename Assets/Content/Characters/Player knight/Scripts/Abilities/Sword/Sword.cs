@@ -82,6 +82,8 @@ public class Sword : MonoBehaviour
 		_followSystem.Activate();
 		_speedTracker.ResetSpeed();
 		_localAxisLimiter.SyncPosition();
+
+		_wallBounce.ResetBounceState();
 	}
 
 	public void DeactiveFollow()
@@ -89,6 +91,8 @@ public class Sword : MonoBehaviour
 		_followSystem.Deactivate();
 		_speedTracker.ResetSpeed();
 		_followSystem.UpdatePocketOffset();
+
+		_wallBounce.ResetBounceState();
 	}
 
 	public void RotateImpulse(float angle)

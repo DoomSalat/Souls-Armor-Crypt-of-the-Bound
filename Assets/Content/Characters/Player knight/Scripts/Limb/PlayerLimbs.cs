@@ -113,6 +113,16 @@ public class PlayerLimbs : MonoBehaviour
 		return _limbs[LimbType.LeftLeg].IsPresent || _limbs[LimbType.RightLeg].IsPresent;
 	}
 
+	public void DisableAllLimbVisuals()
+	{
+		_limbsVisual.DisableAllLimbVisuals();
+	}
+
+	public void RestoreAllLimbVisuals()
+	{
+		_limbsVisual.RestoreAllLimbVisuals();
+	}
+
 	private void Regenerate(LimbType limbType, SoulType soulType)
 	{
 		if (_limbs[LimbType.Body].IsPresent == false)

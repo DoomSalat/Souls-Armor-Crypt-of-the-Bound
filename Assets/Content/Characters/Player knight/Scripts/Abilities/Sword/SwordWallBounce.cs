@@ -43,6 +43,19 @@ public class SwordWallBounce : MonoBehaviour
 	public event System.Action OnBounceStarted;
 	public event System.Action<float, Ease> OnBounceEnded;
 
+	public void ResetBounceState()
+	{
+		_isBouncing = false;
+		_canBounce = true;
+
+		_bounceSequence?.Kill();
+		DOTween.Kill(this);
+
+		_rigidbody.bodyType = _originalBodyType;
+		_rigidbody.constraints = _originalConstraints;
+		_rigidbody.linearVelocity = Vector2.zero;
+	}
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();

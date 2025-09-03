@@ -20,10 +20,14 @@ public class Player : MonoBehaviour
 	[SerializeField, Required] private AbilityInitializer _abilityInitializer;
 	[Space]
 	[SerializeField, Required] private Transform _soulAbsorptionTarget;
+	[SerializeField, Required] private Transform _cutsceneSwordTarget;
 
 	[Header("Colliders")]
 	[SerializeField, Required] private Collider2D _bodyCollider;
 	[SerializeField, Required] private HurtBox _hurtBoxCollider;
+
+	[Header("Debug")]
+	[SerializeField] private bool _skipCutscene = false;
 
 	private PlayerStateMachine _stateMachine;
 
@@ -48,12 +52,20 @@ public class Player : MonoBehaviour
 										_playerHandsTarget,
 									_abilityInitializer,
 									_timeController,
-									_damageHandler);
+									_damageHandler,
+									_cutsceneSwordTarget);
 	}
 
 	private void Start()
 	{
-		EnterMovementState();
+		if (_skipCutscene)
+		{
+			EnterMovementState();
+		}
+		else
+		{
+			EnterCutsceneState();
+		}
 	}
 
 	private void OnEnable()
@@ -67,6 +79,7 @@ public class Player : MonoBehaviour
 		_damageHandler.DamageTaken += OnDamageTaken;
 
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted += EnterMovementState;
+		_stateMachine.GetState<CutsceneState>().CutsceneCompleted += EnterMovementState;
 	}
 
 	private void OnDisable()
@@ -80,6 +93,7 @@ public class Player : MonoBehaviour
 		_damageHandler.DamageTaken -= OnDamageTaken;
 
 		_stateMachine.GetState<AbsorptionState>().AbsorptionCompleted -= EnterMovementState;
+		_stateMachine.GetState<CutsceneState>().CutsceneCompleted -= EnterMovementState;
 	}
 
 	public void EnterAbsorptionState()
@@ -102,9 +116,18 @@ public class Player : MonoBehaviour
 		_stateMachine.EnterEmptyState();
 	}
 
+	public void EnterCutsceneState()
+	{
+		_stateMachine.EnterCutsceneState();
+	}
+
 	private void OnMousePerformed(InputAction.CallbackContext context)
 	{
-		ChooseCurrentState();
+		if (_stateMachine.IsCurrentState<CutsceneState>() == false)
+		{
+			ChooseCurrentState();
+		}
+
 		_stateMachine.OnMousePerformed(context);
 	}
 
@@ -115,10 +138,21 @@ public class Player : MonoBehaviour
 
 	private void ChooseCurrentState()
 	{
-		if (_absorptionScopeController.IsPointInActivationZone() && _absorptionCooldown.IsOnCooldown == false)
-			EnterAbsorptionState();
+		if (_absorptionScopeController.IsPointInActivationZone())
+		{
+			if (_absorptionCooldown.IsOnCooldown == false)
+			{
+				EnterAbsorptionState();
+			}
+			else
+			{
+				EnterCutsceneState();
+			}
+		}
 		else
+		{
 			EnterMovementState();
+		}
 	}
 
 	private void OnMouseCanceled(InputAction.CallbackContext context)

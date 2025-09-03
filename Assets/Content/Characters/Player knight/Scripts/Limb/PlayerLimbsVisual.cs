@@ -82,7 +82,30 @@ public class PlayerLimbsVisual : MonoBehaviour
 		limbData.Material.SetFloat(FadeParam, DefaultFade);
 	}
 
-	private void StopParticles(LimbVisualData limbData)
+	public void DisableAllLimbVisuals()
+	{
+		foreach (var limbData in _limbsData)
+		{
+			if (limbData.LimbType != LimbType.None)
+			{
+				StopParticles(limbData);
+				ResetLimbVisualProperties(limbData.LimbType);
+			}
+		}
+	}
+
+	public void RestoreAllLimbVisuals()
+	{
+		foreach (var limbData in _limbsData)
+		{
+			if (limbData.LimbType != LimbType.None)
+			{
+				PlayParticles(limbData);
+			}
+		}
+	}
+
+	public void StopParticles(LimbVisualData limbData)
 	{
 		if (limbData.Particles != null)
 		{
@@ -93,7 +116,7 @@ public class PlayerLimbsVisual : MonoBehaviour
 		}
 	}
 
-	private void PlayParticles(LimbVisualData limbData)
+	public void PlayParticles(LimbVisualData limbData)
 	{
 		if (limbData.Particles != null)
 		{

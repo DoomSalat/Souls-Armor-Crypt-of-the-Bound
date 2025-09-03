@@ -35,6 +35,7 @@ public class SwordController : MonoBehaviour
 	private bool _isMouseControlled;
 
 	public bool IsControlled => _isControlled;
+	public Transform SwordTransform => _sword.transform;
 
 	private void Awake()
 	{
@@ -83,6 +84,7 @@ public class SwordController : MonoBehaviour
 		_springJoint.enabled = true;
 		_isControlled = true;
 		_sword.ActiveFollow();
+		transform.position = GetCenterTargetPosition();
 
 		if (_isMouseControlled)
 		{
@@ -157,6 +159,16 @@ public class SwordController : MonoBehaviour
 
 		float force = Random.value > RandomHalf ? RotationTorqueForce : -RotationTorqueForce;
 		_sword.RotateImpulse(force);
+	}
+
+	public void ShowSword()
+	{
+		_sword.gameObject.SetActive(true);
+	}
+
+	public void HideSword()
+	{
+		_sword.gameObject.SetActive(false);
 	}
 
 	private void DisableSpring()
