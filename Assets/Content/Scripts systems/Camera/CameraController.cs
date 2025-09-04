@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 	private const int PriorityLow = 0;
 	private const string AbsorptionZoom = "AbsorptionZoom";
 	private const string AbsorptionZoomReturn = "AbsorptionZoomReturn";
+	private const string CutsceneZoomReturn = "CutsceneZoomReturn";
 
 	[SerializeField, Required] private CinemachineCamera _mainCamera;
 	[SerializeField, Required] private CinemachineCamera _playerMobCamera;
@@ -23,9 +24,15 @@ public class CameraController : MonoBehaviour
 	[SerializeField, Min(0.1f)] private float _returnZoomDuration = 0.35f;
 	[SerializeField] private Ease _returnZoomEase = Ease.OutQuad;
 
+	[Title("Cutscene Settings")]
+	[SerializeField, Min(0.1f)] private float _cutsceneStartOrthoSize = 2f;
+	[SerializeField, Min(0.1f)] private float _cutsceneTransitionDuration = 1.5f;
+	[SerializeField] private Ease _cutsceneReturnEase = Ease.OutQuad;
+
 	private float _originalOrthoSize;
 	private Tween _currentZoomTween;
 	private AbsorptionState _absorptionState;
+	private CutsceneState _cutsceneState;
 
 	private void Awake()
 	{
@@ -36,12 +43,9 @@ public class CameraController : MonoBehaviour
 
 	private void OnEnable()
 	{
-		if (_absorptionState == null)
-			_absorptionState = _playerStateMachine.GetState<AbsorptionState>();
-
-		if (_absorptionState != null)
+		if (_playerStateMachine.IsStatesInitialized)
 		{
-			SubscribeToAbsorptionEvents();
+			OnStatesInitialized();
 		}
 		else
 		{
@@ -52,7 +56,9 @@ public class CameraController : MonoBehaviour
 	private void OnDisable()
 	{
 		_playerStateMachine.StatesInitialized -= OnStatesInitialized;
+
 		UnsubscribeFromAbsorptionEvents();
+		UnsubscribeFromCutsceneEvents();
 	}
 
 	private void OnDestroy()
@@ -62,9 +68,11 @@ public class CameraController : MonoBehaviour
 
 	private void OnStatesInitialized()
 	{
-		_playerStateMachine.StatesInitialized -= OnStatesInitialized;
 		_absorptionState = _playerStateMachine.GetState<AbsorptionState>();
+		_cutsceneState = _playerStateMachine.GetState<CutsceneState>();
+
 		SubscribeToAbsorptionEvents();
+		SubscribeToCutsceneEvents();
 	}
 
 	private void SubscribeToAbsorptionEvents()
@@ -83,6 +91,25 @@ public class CameraController : MonoBehaviour
 
 		_absorptionState.AbsorptionStarted -= StartAbsorptionZoom;
 		_absorptionState.InventoryClosed -= EndAbsorptionZoom;
+	}
+
+	private void SubscribeToCutsceneEvents()
+	{
+		if (_cutsceneState == null)
+			return;
+
+		Debug.Log($"Subscribed to cutscene events");
+		_cutsceneState.CutsceneStarted += OnCutsceneStarted;
+		_cutsceneState.CutsceneOuted += OnCutsceneOuted;
+	}
+
+	private void UnsubscribeFromCutsceneEvents()
+	{
+		if (_cutsceneState == null)
+			return;
+
+		_cutsceneState.CutsceneStarted -= OnCutsceneStarted;
+		_cutsceneState.CutsceneOuted -= OnCutsceneOuted;
 	}
 
 	public void SwitchToGlobalCamera()
@@ -115,6 +142,18 @@ public class CameraController : MonoBehaviour
 		SetCameraOrthoSize(_originalOrthoSize);
 	}
 
+	public void SetCutsceneZoomInstant()
+	{
+		_currentZoomTween?.Kill();
+		SetCameraOrthoSize(_cutsceneStartOrthoSize);
+	}
+
+	public void ReturnFromCutsceneZoom()
+	{
+		_currentZoomTween?.Kill();
+		CreateZoomTween(_originalOrthoSize, CutsceneZoomReturn, _cutsceneTransitionDuration, _cutsceneReturnEase);
+	}
+
 	private void CreateZoomTween(float targetSize, string tweenId, float duration, Ease ease)
 	{
 		_currentZoomTween = DOTween.To(
@@ -132,5 +171,16 @@ public class CameraController : MonoBehaviour
 		var lens = _mainCamera.Lens;
 		lens.OrthographicSize = size;
 		_mainCamera.Lens = lens;
+	}
+
+	private void OnCutsceneStarted()
+	{
+		Debug.Log($"OnCutsceneStarted");
+		SetCutsceneZoomInstant();
+	}
+
+	private void OnCutsceneOuted()
+	{
+		ReturnFromCutsceneZoom();
 	}
 }

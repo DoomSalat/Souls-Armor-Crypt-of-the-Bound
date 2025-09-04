@@ -279,7 +279,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -397,7 +397,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.6
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5467,6 +5467,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _moveSpeed: 2
   _minDistance: 0.1
+  _directionSmoothing: 0.85
+  _debugMovement: 0
 --- !u!114 &5957789021434574804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5488,6 +5490,7 @@ MonoBehaviour:
   _soulDamage: {fileID: 8770216575755425704}
   _knockbackReceiver: {fileID: 2804703302713372882}
   _knockbackForce: 4
+  _isStandaloneSoul: 0
 --- !u!114 &8770216575755425704
 MonoBehaviour:
   m_ObjectHideFlags: 0

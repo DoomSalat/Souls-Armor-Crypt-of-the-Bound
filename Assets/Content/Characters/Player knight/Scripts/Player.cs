@@ -174,6 +174,9 @@ public class Player : MonoBehaviour
 
 	private void OnAbsorptionActivated()
 	{
+		if (_stateMachine.IsCurrentState<CutsceneState>())
+			return;
+
 		EnterAbsorptionState();
 	}
 

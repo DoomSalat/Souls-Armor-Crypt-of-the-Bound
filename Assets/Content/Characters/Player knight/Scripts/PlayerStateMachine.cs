@@ -9,6 +9,8 @@ public class PlayerStateMachine : MonoBehaviour
 
 	public event System.Action StatesInitialized;
 
+	public bool IsStatesInitialized { get; private set; }
+
 	private void Update()
 	{
 		_currentState?.Update();
@@ -40,9 +42,10 @@ public class PlayerStateMachine : MonoBehaviour
 			{ typeof(MovementState), new MovementState(playerKnightAnimator, inputMove, swordController, inputReader, playerHandsTarget, playerLimbs, abilityInitializer, playerDamage) },
 			{ typeof(AbsorptionState), new AbsorptionState(playerKnightAnimator, absorptionScopeController, absorptionScope, inputReader, playerLimbs, soulAbsorptionTarget, absorptionCooldown, swordController, timeController, playerDamage) },
 			{ typeof(MovementHeadState), new MovementHeadState(playerKnightAnimator, inputMove, inputReader, playerDamage) },
-			{ typeof(CutsceneState), new CutsceneState(playerKnightAnimator, inputReader, swordController, cutsceneSwordTarget, playerLimbs, absorptionScopeController) }
+			{ typeof(CutsceneState), new CutsceneState(playerKnightAnimator, inputReader, swordController, cutsceneSwordTarget, playerLimbs, absorptionScopeController, absorptionScope, soulAbsorptionTarget) }
 		};
 
+		IsStatesInitialized = true;
 		StatesInitialized?.Invoke();
 	}
 

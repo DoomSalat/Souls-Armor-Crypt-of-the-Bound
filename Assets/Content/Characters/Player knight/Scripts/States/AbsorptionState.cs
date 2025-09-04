@@ -91,7 +91,7 @@ public class AbsorptionState : PlayerState
 		}
 
 		_animator.SetCapture(true);
-		_animator.AbdorptionSoulsCapture();
+		_animator.PlayAbdorptionSoulsCapture();
 
 		AbsorptionStarted?.Invoke();
 

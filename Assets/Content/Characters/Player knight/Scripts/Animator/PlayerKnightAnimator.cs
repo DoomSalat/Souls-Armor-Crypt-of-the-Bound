@@ -27,6 +27,8 @@ public class PlayerKnightAnimator : MonoBehaviour
 	public event System.Action StartIdleParticles;
 	public event System.Action StartIdleEnded;
 
+	public event System.Action CutsceneKilledSoul;
+
 	public bool IsStepMove { get; private set; }
 
 	private void Awake()
@@ -39,12 +41,14 @@ public class PlayerKnightAnimator : MonoBehaviour
 	{
 		_events.StartIdleParticlesStarted += OnStartIdleParticles;
 		_events.StartIdleEnded += OnStartIdleEnd;
+		_events.CutsceneKilledSoul += OnCutsceneKilledSoul;
 	}
 
 	private void OnDisable()
 	{
 		_events.StartIdleParticlesStarted -= OnStartIdleParticles;
 		_events.StartIdleEnded -= OnStartIdleEnd;
+		_events.CutsceneKilledSoul -= OnCutsceneKilledSoul;
 	}
 
 	public void SetDirection(int direction)
@@ -104,9 +108,8 @@ public class PlayerKnightAnimator : MonoBehaviour
 
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.abdorptionActive);
 
-		_events.SwitchMainAbsorptionTo(0);
-		_events.DeactivateAbsorptionAttractor();
 		_events.PlayAbsorptionBody();
+		PlayAbdorptionParticles();
 	}
 
 	public void PlayHeaded()
@@ -114,10 +117,27 @@ public class PlayerKnightAnimator : MonoBehaviour
 		_animator.SetTrigger(PlayerKnightAnimatorData.Params.headed);
 	}
 
-	public void AbdorptionSoulsCapture()
+	public void PlayAbdorptionParticles()
+	{
+		_events.DeactivateAbsorptionAttractor();
+		_events.SwitchMainAbsorptionTo(0);
+
+		_events.PlayMainAbsorption();
+	}
+
+	public void PlayAbdorptionSoulsCapture()
 	{
 		_events.SwitchMainAbsorptionTo(AbsorptionCaptureIndex);
 		_events.ActivateAbsorptionAttractor(true);
+	}
+
+	public void StopAbdorptionParticles()
+	{
+		_events.SwitchMainAbsorptionTo(0);
+		_events.ActivateAbsorptionAttractor(false);
+		_events.DeactivateAbsorptionAttractor();
+
+		_events.StopMainAbsorption();
 	}
 
 	public void AbdorptionDeactive()
@@ -197,5 +217,10 @@ public class PlayerKnightAnimator : MonoBehaviour
 	public void OnStartIdleEnd()
 	{
 		StartIdleEnded?.Invoke();
+	}
+
+	public void OnCutsceneKilledSoul()
+	{
+		CutsceneKilledSoul?.Invoke();
 	}
 }

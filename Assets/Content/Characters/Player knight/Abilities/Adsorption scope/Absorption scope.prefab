@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1414034567, guid: de823884ceb953b40aa81f2661e7c7e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -269,6 +269,12 @@ MonoBehaviour:
   _moveSpeed: 15
   _smoothingDistance: 0.5
   _minSpeedFactor: 0.1
+  _minLeadDistance: 0.3
+  _maxLeadDistance: 2
+  _leadMultiplier: 0.8
+  _minTargetSpeed: 0.1
+  _speedBoostMultiplier: 1.5
+  _maxSpeedForMaxLead: 10
 --- !u!114 &8452488216625887912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,4 +292,3 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _maxBuffer: 10
-  _gizmosColor: {r: 1, g: 0.5, b: 0, a: 0.3}

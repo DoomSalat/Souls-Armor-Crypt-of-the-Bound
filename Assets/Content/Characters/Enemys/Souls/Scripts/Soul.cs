@@ -20,6 +20,9 @@ public class Soul : MonoBehaviour, ISpawnInitializable
 	[SerializeField, Required] private KnockbackReceiver _knockbackReceiver;
 	[SerializeField, MinValue(0)] private float _knockbackForce = 10f;
 
+	[Header("State")]
+	[SerializeField] private bool _isStandaloneSoul = false;
+
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
 	private IFollower _follower;
@@ -230,5 +233,10 @@ public class Soul : MonoBehaviour, ISpawnInitializable
 		_rigidbody.linearVelocity = Vector2.zero;
 		_soulAnimator.Reset();
 		_soulDamage.CompleteDeath();
+
+		if (_isStandaloneSoul)
+		{
+			Destroy(gameObject);
+		}
 	}
 }

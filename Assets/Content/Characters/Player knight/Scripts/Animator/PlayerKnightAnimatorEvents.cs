@@ -32,6 +32,7 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	public event System.Action StartIdleParticlesStarted;
 	public event System.Action StartIdleEnded;
 
+	public event System.Action CutsceneKilledSoul;
 	private void Awake()
 	{
 		_absorptionAttractor = _particleAbsorptionSwitcher.GetComponent<ParticleAttractor>();
@@ -137,10 +138,16 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 	public void StartIdleParticles()
 	{
 		StartIdleParticlesStarted?.Invoke();
+		PlayAbsorptionBody();
 	}
 
 	public void StartIdleEnd()
 	{
 		StartIdleEnded?.Invoke();
+	}
+
+	public void CutsceneKillSoul()
+	{
+		CutsceneKilledSoul?.Invoke();
 	}
 }

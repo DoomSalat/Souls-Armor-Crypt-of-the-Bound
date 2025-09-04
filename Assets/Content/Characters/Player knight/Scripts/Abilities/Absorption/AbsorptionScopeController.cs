@@ -13,6 +13,8 @@ public class AbsorptionScopeController : MonoBehaviour
 
 	public event Action Activated;
 
+	public bool IsActive { get; private set; }
+
 	private void Awake()
 	{
 		_mainCamera = Camera.main;
@@ -28,12 +30,20 @@ public class AbsorptionScopeController : MonoBehaviour
 
 	public void Activate()
 	{
+		if (IsActive)
+			return;
+
+		IsActive = true;
 		_absorptionScope.Activate();
 		Activated?.Invoke();
 	}
 
 	public void StartSoulSearch()
 	{
+		if (IsActive == false)
+			return;
+
+		IsActive = false;
 		_absorptionScope.SearchSoul();
 		_absorptionScope.Hide();
 	}

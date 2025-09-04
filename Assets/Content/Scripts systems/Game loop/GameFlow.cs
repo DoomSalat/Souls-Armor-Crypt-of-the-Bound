@@ -36,10 +36,13 @@ public class GameFlow : MonoBehaviour
 		_victoryEvents.LevelCompleted += OnPlayerVictory;
 		_sceneActivator.FadeCompleted += OnFadeCompleted;
 
-		_playerStateMachine.StatesInitialized += OnStatesInitialized;
-		if (_playerStateMachine.GetState<CutsceneState>() != null)
+		if (_playerStateMachine.IsStatesInitialized)
 		{
 			SubscribeToCutsceneEvents();
+		}
+		else
+		{
+			_playerStateMachine.StatesInitialized += OnStatesInitialized;
 		}
 	}
 
