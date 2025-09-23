@@ -15,6 +15,7 @@ namespace SpawnerSystem
 
 		[Header("Systems")]
 		[SerializeField, Required] private Transform _playerTarget;
+		[SerializeField, Required] private Sword _playerSword;
 		[SerializeField, Required] private StatusMachine _statusMachine;
 		[SerializeField, Required] private ThrowSpawner _throwSpawner;
 
@@ -50,7 +51,8 @@ namespace SpawnerSystem
 				Tokens = _spawnerTokens,
 				EnemyPool = _enemyPool,
 				SoulSpawnRequestHandler = this,
-				ThrowSpawner = _throwSpawner
+				ThrowSpawner = _throwSpawner,
+				PlayerSword = _playerSword
 			};
 
 			_blue?.Init(dependencies);

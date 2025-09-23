@@ -174,6 +174,7 @@ namespace SpawnerSystem
 		public virtual void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
 		{
 			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
+			InitializeComponents(spawned);
 		}
 
 		private void PrewarmPrefabs()
@@ -227,6 +228,11 @@ namespace SpawnerSystem
 			if (pooled.TryGetComponent<BaseSkeletThrow>(out var skeletThrow))
 			{
 				skeletThrow.Initialize(_dependencies.ThrowSpawner);
+			}
+
+			if (pooled.TryGetComponent<Knight>(out var knight))
+			{
+				knight.InitializePlayerSword(_dependencies.PlayerSword);
 			}
 		}
 	}

@@ -1124,6 +1124,7 @@ MonoBehaviour:
   _redSpawner: {fileID: 113643590}
   _yellowSpawner: {fileID: 2145396105}
   _playerTarget: {fileID: 1119663177}
+  _playerSword: {fileID: 305386761}
   _statusMachine: {fileID: 1528849323}
   _throwSpawner: {fileID: 1914863243}
   _manualMode: 1
@@ -6522,6 +6523,17 @@ MonoBehaviour:
   _defaultCapacity: 4
   _maxSize: 16
   _container: {fileID: 1255157309}
+--- !u!114 &305386761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4972086489707388878, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
+  m_PrefabInstance: {fileID: 5275364722384445034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275364722384445037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13106cf0a85d2ed4aa1562d2947beacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &330528141
 GameObject:
   m_ObjectHideFlags: 0
@@ -12613,6 +12625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Soul [Blue]'
       objectReference: {fileID: 0}
+    - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13227,6 +13243,10 @@ PrefabInstance:
     - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
       propertyPath: m_Name
       value: Soul [Blue] (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154621557268803403, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -63411,6 +63431,87 @@ MonoBehaviour:
   _minDistanceFromLeader: 0.6
   _maxDistanceFromLeader: 1.8
   _randomOffset: 0.1
+--- !u!1001 &62549344271473931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2389014403822376125, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_Name
+      value: Knight (game)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3988104604324415235, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _debugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _debugPlayerSword
+      value: 
+      objectReference: {fileID: 305386761}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _debugTargetPlayer
+      value: 
+      objectReference: {fileID: 1119663177}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _rotationSlowdownAngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _rotationSlowdownStrength
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
 --- !u!1001 &5275364722384445034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63677,7 +63778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5980012152104037873, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: _skipCutscene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5980012152104037873, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: _timeController
@@ -63860,3 +63961,4 @@ SceneRoots:
   - {fileID: 1300653400}
   - {fileID: 688424629}
   - {fileID: 871598320}
+  - {fileID: 62549344271473931}

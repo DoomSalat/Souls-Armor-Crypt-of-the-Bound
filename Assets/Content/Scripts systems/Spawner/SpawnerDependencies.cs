@@ -8,5 +8,6 @@ namespace SpawnerSystem
 		public EnemyPool EnemyPool;
 		public ISoulSpawnRequestHandler SoulSpawnRequestHandler;
 		public ThrowSpawner ThrowSpawner;
+		public Sword PlayerSword;
 	}
 }

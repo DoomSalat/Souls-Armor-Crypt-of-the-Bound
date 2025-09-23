@@ -1,0 +1,633 @@
+fileFormatVersion: 2
+guid: ad519b9ef6427e940aec1a4710b8a2bc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6835755465987648995
+    second: Enemy Player Knight_0
+  - first:
+      213: -8370328710497329261
+    second: Enemy Player Knight_1
+  - first:
+      213: 3374256367575837973
+    second: Enemy Player Knight_2
+  - first:
+      213: -2905951734366055807
+    second: Enemy Player Knight_3
+  - first:
+      213: 5682220321913386582
+    second: Enemy Player Knight_4
+  - first:
+      213: -3699019284287792323
+    second: Enemy Player Knight_5
+  - first:
+      213: 8508090393530401125
+    second: Enemy Player Knight_6
+  - first:
+      213: -8100235598368039431
+    second: Enemy Player Knight_7
+  - first:
+      213: 7698748152742991496
+    second: Enemy Player Knight_8
+  - first:
+      213: -1415374847593780881
+    second: Enemy Player Knight_9
+  - first:
+      213: -4593330095525881635
+    second: Enemy Player Knight_10
+  - first:
+      213: 298260743368467897
+    second: Enemy Player Knight_11
+  - first:
+      213: 8515932176049890820
+    second: Enemy Player Knight_12
+  - first:
+      213: -4380064450139886745
+    second: Enemy Player Knight_13
+  - first:
+      213: -1335837571126878619
+    second: Enemy Player Knight_14
+  - first:
+      213: -5745730766692751127
+    second: Enemy Player Knight_15
+  - first:
+      213: 5150729522734699782
+    second: Enemy Player Knight_16
+  - first:
+      213: 4040766039051960539
+    second: Enemy Player Knight_17
+  - first:
+      213: -2562767779419338968
+    second: Enemy Player Knight_18
+  - first:
+      213: -5900180895098655599
+    second: Enemy Player Knight_19
+  - first:
+      213: -3039430483465923279
+    second: Enemy Player Knight_20
+  - first:
+      213: -5655252769488987500
+    second: Enemy Player Knight_21
+  - first:
+      213: 5777678248378831195
+    second: Enemy Player Knight_22
+  - first:
+      213: -1479722232870580662
+    second: Enemy Player Knight_23
+  - first:
+      213: 8901198643400025912
+    second: Enemy Player Knight_24
+  - first:
+      213: 8145284218610830408
+    second: Enemy Player Knight_25
+  - first:
+      213: -1017476323176525137
+    second: Enemy Player Knight_26
+  - first:
+      213: 7695206686770742983
+    second: Enemy Player Knight_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: En_knight Head
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 106
+        width: 16
+        height: 19
+      alignment: 9
+      pivot: {x: 0.375, y: 0.13157895}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e3dc32075f0b44fac65798baccb4f0
+      internalID: 1150332349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Head Eye
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 106
+        width: 16
+        height: 19
+      alignment: 9
+      pivot: {x: 0.375, y: 0.13157895}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57daaf44cf2244640a95002ea0e72044
+      internalID: -2047271169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Body
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 81
+        width: 15
+        height: 21
+      alignment: 9
+      pivot: {x: 0.40000004, y: 0.2857143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26096b8e2d6400a4db7940afb0ee15d2
+      internalID: -76641606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Plash
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 87
+        width: 13
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5769231, y: 0.8571429}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd8425ad4622b4498b3ef949347fe25
+      internalID: 1522930771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Sword
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 50
+        width: 41
+        height: 11
+      alignment: 9
+      pivot: {x: 0.13414635, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c50549a5b05b0345870415cde5e5615
+      internalID: -1996342848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Leg1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 25
+        width: 5
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.9}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf8084f53f8fbd489d66710a3aab3de
+      internalID: -769721346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Leg2 Front
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 11
+        width: 6
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7916667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1200b042c27133b47b3c5fff3f5fcd82
+      internalID: 1589412353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Hand2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 3
+        width: 11
+        height: 7
+      alignment: 9
+      pivot: {x: 0.8181819, y: 0.42857146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74395bc325b8ab499588e0c7dec5f28
+      internalID: 1547120248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Hand1
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 2
+        width: 12
+        height: 9
+      alignment: 9
+      pivot: {x: 0.7083333, y: 0.11111111}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07cba11ff2dc9a84cbf494f4243a519b
+      internalID: -907117919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Foot Front
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 10
+        height: 5
+      alignment: 9
+      pivot: {x: 0.4, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5626906df27ba4f9b8b50c0c07229b
+      internalID: -342789528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Foot 32
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 2
+        width: 9
+        height: 5
+      alignment: 9
+      pivot: {x: 0.44444445, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c548206a32125945a326b1547e5a27d
+      internalID: -1151691785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Palm
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3
+        width: 6
+        height: 6
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a484865ccca987c4eacf5236ac431313
+      internalID: -178729230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Leg2 32
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 11
+        width: 6
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7916667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28d91ab72604f0941a375d4994a2a20c
+      internalID: -309950676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Sword (1)
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 81
+        width: 41
+        height: 11
+      alignment: 9
+      pivot: {x: 0.13414635, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df7a2ca0119111c47bcaa9272f56276d
+      internalID: 1120263393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Sword (2)
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 96
+        width: 41
+        height: 11
+      alignment: 9
+      pivot: {x: 0.13414635, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00759bf31d8edd747b23d26fd13d4a87
+      internalID: 474177471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Sword (3)
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 110
+        width: 41
+        height: 11
+      alignment: 9
+      pivot: {x: 0.13414635, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1911405ecb32e3439f1a87d9c5f823b
+      internalID: 128098618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: En_knight Hand1 Right
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 16
+        width: 12
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.22222222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703573589917f3e4b9affff348f3101e
+      internalID: 1376573641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9b2d25657fb68ba409f7c9dda9c8d394
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      En_knight Body: -76641606
+      En_knight Foot 32: -1151691785
+      En_knight Foot Front: -342789528
+      En_knight Hand1: -907117919
+      En_knight Hand1 Right: 1376573641
+      En_knight Hand2: 1547120248
+      En_knight Head: 1150332349
+      En_knight Head Eye: -2047271169
+      En_knight Leg1: -769721346
+      En_knight Leg2 32: -309950676
+      En_knight Leg2 Front: 1589412353
+      En_knight Palm: -178729230
+      En_knight Plash: 1522930771
+      En_knight Sword: -1996342848
+      En_knight Sword (1): 1120263393
+      En_knight Sword (2): 474177471
+      En_knight Sword (3): 128098618
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

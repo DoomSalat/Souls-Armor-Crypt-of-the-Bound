@@ -98,7 +98,6 @@ public class CameraController : MonoBehaviour
 		if (_cutsceneState == null)
 			return;
 
-		Debug.Log($"Subscribed to cutscene events");
 		_cutsceneState.CutsceneStarted += OnCutsceneStarted;
 		_cutsceneState.CutsceneOuted += OnCutsceneOuted;
 	}
@@ -175,7 +174,6 @@ public class CameraController : MonoBehaviour
 
 	private void OnCutsceneStarted()
 	{
-		Debug.Log($"OnCutsceneStarted");
 		SetCutsceneZoomInstant();
 	}
 
