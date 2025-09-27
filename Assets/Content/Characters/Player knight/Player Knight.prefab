@@ -447,7 +447,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.3}
   m_Radius: 0.55
 --- !u!114 &8400442654283922249
 MonoBehaviour:
@@ -1005,7 +1005,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.3}
   m_Radius: 0.5
 --- !u!114 &8425065640337170352
 MonoBehaviour:
@@ -1047,6 +1047,7 @@ MonoBehaviour:
   _cutsceneSwordTarget: {fileID: 9219271642847053578}
   _bodyCollider: {fileID: 7457979793913768143}
   _hurtBoxCollider: {fileID: 8400442654283922249}
+  _skipCutscene: 0
 --- !u!114 &8954013109217506612
 MonoBehaviour:
   m_ObjectHideFlags: 0

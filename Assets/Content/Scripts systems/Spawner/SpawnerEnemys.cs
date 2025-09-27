@@ -12,6 +12,7 @@ namespace SpawnerSystem
 		[SerializeField, Required] private MonoBehaviour _greenSpawner;
 		[SerializeField, Required] private MonoBehaviour _redSpawner;
 		[SerializeField, Required] private MonoBehaviour _yellowSpawner;
+		[SerializeField, Required] private MonoBehaviour _knightSpawner;
 
 		[Header("Systems")]
 		[SerializeField, Required] private Transform _playerTarget;
@@ -26,6 +27,7 @@ namespace SpawnerSystem
 		private ISpawner _green;
 		private ISpawner _red;
 		private ISpawner _yellow;
+		private ISpawner _knight;
 
 		[Header("Manual Mode")]
 		[SerializeField] private bool _manualMode;
@@ -45,6 +47,7 @@ namespace SpawnerSystem
 			_green = _greenSpawner as ISpawner;
 			_red = _redSpawner as ISpawner;
 			_yellow = _yellowSpawner as ISpawner;
+			_knight = _knightSpawner as ISpawner;
 
 			var dependencies = new SpawnerDependencies
 			{
@@ -59,6 +62,7 @@ namespace SpawnerSystem
 			_green?.Init(dependencies);
 			_red?.Init(dependencies);
 			_yellow?.Init(dependencies);
+			_knight?.Init(dependencies);
 		}
 
 		public void SpawnEnemyManually(SoulType soulType, EnemyKind enemyKind, SpawnDirection direction = SpawnDirection.Right)
@@ -69,7 +73,16 @@ namespace SpawnerSystem
 				return;
 			}
 
-			var spawner = GetSpawnerBySoulType(soulType);
+			ISpawner spawner;
+
+			if (enemyKind == EnemyKind.Knight)
+			{
+				spawner = _knight;
+			}
+			else
+			{
+				spawner = GetSpawnerBySoulType(soulType);
+			}
 
 			if (spawner != null)
 			{
@@ -98,6 +111,7 @@ namespace SpawnerSystem
 			ValidateSpawner(ref _greenSpawner, nameof(_greenSpawner));
 			ValidateSpawner(ref _redSpawner, nameof(_redSpawner));
 			ValidateSpawner(ref _yellowSpawner, nameof(_yellowSpawner));
+			ValidateSpawner(ref _knightSpawner, nameof(_knightSpawner));
 		}
 
 		private void ValidateSpawner(ref MonoBehaviour spawner, string fieldName)
@@ -138,6 +152,14 @@ namespace SpawnerSystem
 		{
 			var section = _spawnerTokens.SelectSection();
 			var spawned = _yellow?.Spawn(section) ?? 0;
+
+			_spawnerTokens.Commit(section, spawned);
+		}
+
+		public void SpawnKnight()
+		{
+			var section = _spawnerTokens.SelectSection();
+			var spawned = _knight?.Spawn(section) ?? 0;
 
 			_spawnerTokens.Commit(section, spawned);
 		}

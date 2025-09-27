@@ -12,13 +12,18 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 	[SerializeField, Required] private KnightAnimator _animator;
 	[SerializeField, Required] private KnightSword _knightSword;
 	[SerializeField, Required] private CreatureFlip _creatureFlip;
+	[SerializeField, Required] private SoulSpawnerRequested _soulSpawner;
 
 	[Header("Movement Settings")]
 	[SerializeField, MinValue(0)] private float _optimalDistance = 3f;
 
+	[Header("Soul Settings")]
+	[SerializeField, Required] private SoulMaterialApplier _soulMaterialHead;
+	[SerializeField, Required] private SoulMaterialApplier _soulMaterialSword;
+
 	[Header("Hit")]
 	[SerializeField, Required] private HurtBox _hurtBox;
-	[SerializeField, Required] private EnemyDamage _damage;
+	[SerializeField, Required] private DamageKnight _damage;
 
 	[Header("Debug")]
 	[SerializeField] private bool _debug = false;
@@ -34,6 +39,7 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 		_follower = _followLogic.GetComponent<IFollower>();
 
 		_damage.Initialize(_collider, null, _hurtBox);
+		_damage.InitializeComponents(_animator, _knightSword, _soulSpawner);
 	}
 
 	private void OnEnable()
@@ -46,14 +52,6 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 		_damage.DeathRequested -= OnDeathRequested;
 	}
 
-	private void FixedUpdate()
-	{
-		if (_follower.IsMovementEnabled && _follower.TryGetDistanceToTarget(out float distance))
-		{
-			UpdateMovement(distance);
-		}
-	}
-
 	private void Update()
 	{
 		if (_damage.IsDead)
@@ -63,19 +61,19 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 
 		UpdateFlipDirection();
 		UpdateMoveAnimation();
+	}
 
-		// Активируем меч для блокировки, если игрок близко
-		if (_follower.TryGetDistanceToTarget(out float distanceToTarget))
+	private void FixedUpdate()
+	{
+		if (_follower.IsMovementEnabled && _follower.TryGetDistanceToTarget(out float distance))
 		{
-			if (distanceToTarget <= _optimalDistance)
-			{
-				_knightSword.EnableBlocking(_follower.Target);
-			}
-			else
-			{
-				_knightSword.DisableBlocking();
-			}
+			UpdateMovement(distance);
 		}
+	}
+
+	public void InitializePlayerSword(Sword playerSword)
+	{
+		_knightSword.InitializePlayerSword(playerSword);
 	}
 
 	private void UpdateFlipDirection()
@@ -141,14 +139,10 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 	private void OnDeathRequested(DamageData damageData)
 	{
 		_animator.PlayDeath();
+
 		_follower.DisableMovement();
 		_damage.DisableCollisions();
-		_knightSword.DisableBlocking();
-	}
-
-	private void Death()
-	{
-		_animator.PlayDeath();
+		_knightSword.StopLogic();
 	}
 
 	public void SpawnInitializate(bool enableCollisions = true)
@@ -160,15 +154,16 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 		_damage.ClearStatus();
 		_damage.ResetDeathState();
 
+		SoulType[] soulTypes = _damage.RandomSoulInside();
+		_soulMaterialHead.ApplySoul(soulTypes[0]);
+		Debug.Log($"[{nameof(Knight)}] SpawnInitializate: {soulTypes[0]}");
+		_soulMaterialSword.ApplySoul(soulTypes[1]);
+		Debug.Log($"[{nameof(Knight)}] SpawnInitializate: {soulTypes[1]}");
+
 		_follower.EnableMovement();
 		_animator.PlayIdle();
 		_animator.PlayWalk();
 
-		_knightSword.DisableBlocking();
-	}
-
-	public void InitializePlayerSword(Sword playerSword)
-	{
-		_knightSword.InitializePlayerSword(playerSword);
+		_knightSword.Enable(_follower.Target);
 	}
 }

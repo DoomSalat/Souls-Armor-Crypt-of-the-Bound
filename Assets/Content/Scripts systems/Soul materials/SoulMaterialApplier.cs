@@ -28,10 +28,19 @@ public class SoulMaterialApplier : MonoBehaviour
 	private Dictionary<UIParticle, List<Material>> _originalUIParticleMaterials;
 	private Dictionary<Image, Material> _originalImageMaterials;
 	private Dictionary<RawImage, Material> _originalRawImageMaterials;
+	private Dictionary<SpriteRenderer, Material> _duplicatedMaskMaterials;
+
+	private Dictionary<ParticleSystem, ParticleSystemRenderer> _particleSystemRenderers;
+	private Dictionary<ParticleSystem, ParticleSystemRenderer> _uiParticleSystemRenderers;
 
 	private void Awake()
 	{
 		CacheOriginalMaterials();
+	}
+
+	private void OnDestroy()
+	{
+		CleanupDuplicatedMaterials();
 	}
 
 	public void ApplySoul(SoulType soulType)
@@ -111,30 +120,50 @@ public class SoulMaterialApplier : MonoBehaviour
 		_originalSpriteMaterials = new Dictionary<SpriteRenderer, Material>();
 		_originalImageMaterials = new Dictionary<Image, Material>();
 		_originalRawImageMaterials = new Dictionary<RawImage, Material>();
+		_duplicatedMaskMaterials = new Dictionary<SpriteRenderer, Material>();
+		_particleSystemRenderers = new Dictionary<ParticleSystem, ParticleSystemRenderer>();
+		_uiParticleSystemRenderers = new Dictionary<ParticleSystem, ParticleSystemRenderer>();
 
 		if (_particleSystems != null)
 		{
-			foreach (var psData in _particleSystems)
+			foreach (var particleSystemData in _particleSystems)
 			{
-				var ps = psData.ParticleSystem;
-				if (ps == null)
+				var particleSystem = particleSystemData.ParticleSystem;
+				if (particleSystem == null)
 					continue;
 
-				var renderer = ps.GetComponent<ParticleSystemRenderer>();
+				var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
 				if (renderer != null)
 				{
-					_originalParticleMaterials[ps] = psData.ApplyToTrail ? renderer.trailMaterial : renderer.material;
+					_particleSystemRenderers[particleSystem] = renderer;
+					_originalParticleMaterials[particleSystem] = particleSystemData.ApplyToTrail ? renderer.trailMaterial : renderer.material;
 				}
 			}
 		}
 
 		if (_UIParticles != null)
 		{
-			foreach (var psData in _UIParticles)
+			foreach (var uiParticleData in _UIParticles)
 			{
-				var uiParticle = psData.UIParticle;
+				var uiParticle = uiParticleData.UIParticle;
 				if (uiParticle == null)
 					continue;
+
+				var particleSystems = uiParticle.particles;
+				if (particleSystems != null)
+				{
+					foreach (var particleSystem in particleSystems)
+					{
+						if (particleSystem == null)
+							continue;
+
+						var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
+						if (renderer != null)
+						{
+							_uiParticleSystemRenderers[particleSystem] = renderer;
+						}
+					}
+				}
 
 				var materials = new List<Material>();
 				uiParticle.GetMaterials(materials);
@@ -144,12 +173,12 @@ public class SoulMaterialApplier : MonoBehaviour
 
 		if (_spriteRenderers != null)
 		{
-			foreach (var sr in _spriteRenderers)
+			foreach (var spriteRenderer in _spriteRenderers)
 			{
-				if (sr == null)
+				if (spriteRenderer == null)
 					continue;
 
-				_originalSpriteMaterials[sr] = sr.material;
+				_originalSpriteMaterials[spriteRenderer] = spriteRenderer.material;
 			}
 		}
 
@@ -174,6 +203,18 @@ public class SoulMaterialApplier : MonoBehaviour
 				_originalRawImageMaterials[rawImage] = rawImage.material;
 			}
 		}
+
+		if (_maskSpriteRenderersMask != null)
+		{
+			foreach (var spriteRenderer in _maskSpriteRenderersMask)
+			{
+				if (spriteRenderer == null || spriteRenderer.sharedMaterial == null)
+					continue;
+
+				var duplicatedMaterial = new Material(spriteRenderer.sharedMaterial);
+				_duplicatedMaskMaterials[spriteRenderer] = duplicatedMaterial;
+			}
+		}
 	}
 
 	private void ApplyToParticles(Material material)
@@ -181,19 +222,18 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_particleSystems == null)
 			return;
 
-		foreach (var psData in _particleSystems)
+		foreach (var particleSystemData in _particleSystems)
 		{
-			ApplyToParticleSystem(psData.ParticleSystem, material, psData.ApplyToTrail);
+			ApplyToParticleSystem(particleSystemData.ParticleSystem, material, particleSystemData.ApplyToTrail);
 		}
 	}
 
-	private void ApplyToParticleSystem(ParticleSystem ps, Material material, bool applyToTrail)
+	private void ApplyToParticleSystem(ParticleSystem particleSystem, Material material, bool applyToTrail)
 	{
-		if (ps == null || material == null)
+		if (particleSystem == null || material == null)
 			return;
 
-		var renderer = ps.GetComponent<ParticleSystemRenderer>();
-		if (renderer != null)
+		if (_particleSystemRenderers.TryGetValue(particleSystem, out var renderer))
 		{
 			if (applyToTrail)
 				renderer.trailMaterial = material;
@@ -207,9 +247,9 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_UIParticles == null)
 			return;
 
-		foreach (var psData in _UIParticles)
+		foreach (var uiParticleData in _UIParticles)
 		{
-			ApplyToUIParticleSystem(psData.UIParticle, material, psData.ApplyToTrail);
+			ApplyToUIParticleSystem(uiParticleData.UIParticle, material, uiParticleData.ApplyToTrail);
 		}
 	}
 
@@ -235,9 +275,9 @@ public class SoulMaterialApplier : MonoBehaviour
 
 		if (particleSystems != null)
 		{
-			foreach (var ps in particleSystems)
+			foreach (var particleSystem in particleSystems)
 			{
-				if (ps != null && ps.isPlaying)
+				if (particleSystem != null && particleSystem.isPlaying)
 				{
 					wasPlaying = true;
 					break;
@@ -268,16 +308,15 @@ public class SoulMaterialApplier : MonoBehaviour
 
 		bool materialApplied = false;
 
-		foreach (var ps in particleSystems)
+		foreach (var particleSystem in particleSystems)
 		{
-			if (ps == null)
+			if (particleSystem == null)
 				continue;
 
-			var renderer = ps.GetComponent<ParticleSystemRenderer>();
-			if (renderer == null)
+			if (!_uiParticleSystemRenderers.TryGetValue(particleSystem, out var renderer))
 				continue;
 
-			if (applyToTrail && ps.trails.enabled)
+			if (applyToTrail && particleSystem.trails.enabled)
 			{
 				renderer.trailMaterial = material;
 				materialApplied = true;
@@ -303,11 +342,11 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_spriteRenderers == null || material == null)
 			return;
 
-		foreach (var sr in _spriteRenderers)
+		foreach (var spriteRenderer in _spriteRenderers)
 		{
-			if (sr != null)
+			if (spriteRenderer != null)
 			{
-				sr.material = material;
+				spriteRenderer.material = material;
 			}
 		}
 	}
@@ -347,11 +386,15 @@ public class SoulMaterialApplier : MonoBehaviour
 
 		float hueValue = GetColorHueForSoulType(soulType);
 
-		foreach (var sr in _maskSpriteRenderersMask)
+		foreach (var spriteRenderer in _maskSpriteRenderersMask)
 		{
-			if (sr != null && sr.sharedMaterial != null)
+			if (spriteRenderer == null)
+				continue;
+
+			if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
 			{
-				sr.sharedMaterial.SetFloat(ColorHueProperty, hueValue);
+				duplicatedMaterial.SetFloat(ColorHueProperty, hueValue);
+				spriteRenderer.material = duplicatedMaterial;
 			}
 		}
 	}
@@ -361,18 +404,19 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_originalParticleMaterials == null || _particleSystems == null)
 			return;
 
-		foreach (var psData in _particleSystems)
+		foreach (var particleSystemData in _particleSystems)
 		{
-			var ps = psData.ParticleSystem;
-			if (ps == null || !_originalParticleMaterials.ContainsKey(ps))
+			var particleSystem = particleSystemData.ParticleSystem;
+			if (particleSystem == null || !_originalParticleMaterials.ContainsKey(particleSystem))
 				continue;
 
-			var renderer = ps.GetComponent<ParticleSystemRenderer>();
-			var originalMaterial = _originalParticleMaterials[ps];
+			var originalMaterial = _originalParticleMaterials[particleSystem];
+			if (originalMaterial == null)
+				continue;
 
-			if (renderer != null && originalMaterial != null)
+			if (_particleSystemRenderers.TryGetValue(particleSystem, out var renderer))
 			{
-				if (psData.ApplyToTrail)
+				if (particleSystemData.ApplyToTrail)
 					renderer.trailMaterial = originalMaterial;
 				else
 					renderer.material = originalMaterial;
@@ -385,9 +429,9 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_originalUIParticleMaterials == null || _UIParticles == null)
 			return;
 
-		foreach (var psData in _UIParticles)
+		foreach (var uiParticleData in _UIParticles)
 		{
-			var uiParticle = psData.UIParticle;
+			var uiParticle = uiParticleData.UIParticle;
 			if (uiParticle == null || !_originalUIParticleMaterials.ContainsKey(uiParticle))
 				continue;
 
@@ -402,25 +446,24 @@ public class SoulMaterialApplier : MonoBehaviour
 			{
 				int materialIndex = 0;
 
-				foreach (var ps in particleSystems)
+				foreach (var particleSystem in particleSystems)
 				{
-					if (ps == null)
+					if (particleSystem == null)
 						continue;
 
-					var renderer = ps.GetComponent<ParticleSystemRenderer>();
-					if (renderer == null)
+					if (!_uiParticleSystemRenderers.TryGetValue(particleSystem, out var renderer))
 						continue;
 
-					if (psData.ApplyToTrail && ps.trails.enabled && materialIndex + 1 < originalMaterials.Count)
+					if (uiParticleData.ApplyToTrail && particleSystem.trails.enabled && materialIndex + 1 < originalMaterials.Count)
 					{
 						renderer.trailMaterial = originalMaterials[materialIndex + 1];
 					}
-					else if (!psData.ApplyToTrail && materialIndex < originalMaterials.Count)
+					else if (!uiParticleData.ApplyToTrail && materialIndex < originalMaterials.Count)
 					{
 						renderer.material = originalMaterials[materialIndex];
 					}
 
-					materialIndex += ps.trails.enabled ? 2 : 1;
+					materialIndex += particleSystem.trails.enabled ? 2 : 1;
 				}
 
 				var savedParticleSystems = new List<ParticleSystem>(particleSystems);
@@ -441,11 +484,11 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_originalSpriteMaterials == null)
 			return;
 
-		foreach (var kvp in _originalSpriteMaterials)
+		foreach (var spriteMaterialPair in _originalSpriteMaterials)
 		{
-			if (kvp.Key != null && kvp.Value != null)
+			if (spriteMaterialPair.Key != null && spriteMaterialPair.Value != null)
 			{
-				kvp.Key.material = kvp.Value;
+				spriteMaterialPair.Key.material = spriteMaterialPair.Value;
 			}
 		}
 	}
@@ -455,11 +498,11 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_originalImageMaterials == null)
 			return;
 
-		foreach (var kvp in _originalImageMaterials)
+		foreach (var imageMaterialPair in _originalImageMaterials)
 		{
-			if (kvp.Key != null && kvp.Value != null)
+			if (imageMaterialPair.Key != null && imageMaterialPair.Value != null)
 			{
-				kvp.Key.material = kvp.Value;
+				imageMaterialPair.Key.material = imageMaterialPair.Value;
 			}
 		}
 	}
@@ -469,11 +512,11 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_originalRawImageMaterials == null)
 			return;
 
-		foreach (var kvp in _originalRawImageMaterials)
+		foreach (var rawImageMaterialPair in _originalRawImageMaterials)
 		{
-			if (kvp.Key != null && kvp.Value != null)
+			if (rawImageMaterialPair.Key != null && rawImageMaterialPair.Value != null)
 			{
-				kvp.Key.material = kvp.Value;
+				rawImageMaterialPair.Key.material = rawImageMaterialPair.Value;
 			}
 		}
 	}
@@ -483,11 +526,15 @@ public class SoulMaterialApplier : MonoBehaviour
 		if (_maskSpriteRenderersMask == null)
 			return;
 
-		foreach (var sr in _maskSpriteRenderersMask)
+		foreach (var spriteRenderer in _maskSpriteRenderersMask)
 		{
-			if (sr != null && sr.sharedMaterial != null)
+			if (spriteRenderer == null)
+				continue;
+
+			if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
 			{
-				sr.sharedMaterial.SetFloat(ColorHueProperty, 0f);
+				duplicatedMaterial.SetFloat(ColorHueProperty, 0f);
+				spriteRenderer.material = duplicatedMaterial;
 			}
 		}
 	}
@@ -503,10 +550,29 @@ public class SoulMaterialApplier : MonoBehaviour
 		return 0f;
 	}
 
+	private void CleanupDuplicatedMaterials()
+	{
+		if (_duplicatedMaskMaterials == null)
+			return;
+
+		foreach (var duplicatedMaterial in _duplicatedMaskMaterials.Values)
+		{
+			if (duplicatedMaterial != null)
+			{
+				DestroyImmediate(duplicatedMaterial);
+			}
+		}
+
+		_duplicatedMaskMaterials.Clear();
+	}
+
 #if UNITY_EDITOR
 	[Button("Testing Buttons (Editor Only)")]
 	private void TestApplySoul(int index)
 	{
+		if (_originalSpriteMaterials == null)
+			CacheOriginalMaterials();
+
 		ApplySoulByIndex(index);
 	}
 #endif

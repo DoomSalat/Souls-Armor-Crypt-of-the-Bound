@@ -112,7 +112,7 @@ public class SoulVase : MonoBehaviour, ISpawnInitializable
 		{
 			_hasSpawnedSoul = true;
 			_soulVaseAnimator.PlayDeath();
-			_soulSpawner.RequestSoulSpawn(damageData);
+			_soulSpawner.RequestSoulSpawn(damageData, transform.position);
 		}
 
 		_follower.DisableMovement();

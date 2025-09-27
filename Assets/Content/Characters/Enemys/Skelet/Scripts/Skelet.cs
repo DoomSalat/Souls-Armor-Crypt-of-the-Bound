@@ -238,7 +238,7 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		if (!_hasSpawnedSoul)
 		{
 			_hasSpawnedSoul = true;
-			_soulSpawner.RequestSoulSpawn(new DamageData(0, DamageType.Physical, Vector2.zero, 0));
+			_soulSpawner.RequestSoulSpawn(new DamageData(0, DamageType.Physical, Vector2.zero, 0), transform.position);
 		}
 	}
 

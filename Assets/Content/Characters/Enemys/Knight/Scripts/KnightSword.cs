@@ -16,6 +16,8 @@ public class KnightSword : MonoBehaviour
 	[Header("Components")]
 	[SerializeField, Required] private Transform _pivotPoint;
 	[SerializeField, Required] private Transform _swordBlockPoint;
+	[SerializeField] private Collider2D[] _colliders;
+	[SerializeField, Required] private ParticleSystem _particleSystemSoul;
 
 	[Header("Physics")]
 	[SerializeField, MinValue(0)] private float _moveSpeed = 15f;
@@ -51,7 +53,7 @@ public class KnightSword : MonoBehaviour
 	private Transform _target;
 	private Sword _playerSword;
 
-	private bool _isBlockingEnabled = false;
+	private bool _isControllEnabled = false;
 	private bool _isBlockingMode = false;
 	private Vector2 _orbitCenter;
 	private Vector2 _targetPosition;
@@ -66,7 +68,7 @@ public class KnightSword : MonoBehaviour
 
 	private void Update()
 	{
-		if (_isBlockingEnabled && _target != null)
+		if (_isControllEnabled && _target != null)
 		{
 			UpdateSwordTargets();
 			CheckForPlayerSwordBlocking();
@@ -75,23 +77,60 @@ public class KnightSword : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (_isBlockingEnabled && _target != null)
+		if (_isControllEnabled && _target != null)
 		{
 			ApplyPhysicsMovement();
 		}
 	}
 
-	public void EnableBlocking(Transform target)
+	public void Enable(Transform target)
 	{
+		foreach (var collider in _colliders)
+		{
+			if (collider != null)
+				collider.enabled = true;
+		}
+
+		_rigidbody.simulated = true;
+
+		if (!gameObject.activeInHierarchy)
+		{
+			gameObject.SetActive(true);
+		}
+
 		_target = target;
-		_isBlockingEnabled = true;
+		_isControllEnabled = true;
 		_orbitCenter = _pivotPoint.position;
+
+		_particleSystemSoul.Play();
 	}
 
-	public void DisableBlocking()
+	public void Disable()
 	{
+		_rigidbody.linearVelocity = Vector2.zero;
+		_rigidbody.angularVelocity = 0f;
+		_rigidbody.simulated = false;
+
+		foreach (var collider in _colliders)
+		{
+			if (collider != null)
+				collider.enabled = false;
+		}
+
 		_target = null;
-		_isBlockingEnabled = false;
+		_isControllEnabled = false;
+		_isBlockingMode = false;
+	}
+
+	public void StopLogic()
+	{
+		_rigidbody.linearVelocity = Vector2.zero;
+		_rigidbody.angularVelocity = 0f;
+
+		_particleSystemSoul.Stop();
+
+		_target = null;
+		_isControllEnabled = false;
 		_isBlockingMode = false;
 	}
 
@@ -312,7 +351,7 @@ public class KnightSword : MonoBehaviour
 		if (_debugTargetPlayer != null && _debugPlayerSword != null)
 		{
 			_playerSword = _debugPlayerSword;
-			EnableBlocking(_debugTargetPlayer);
+			Enable(_debugTargetPlayer);
 		}
 		else
 		{

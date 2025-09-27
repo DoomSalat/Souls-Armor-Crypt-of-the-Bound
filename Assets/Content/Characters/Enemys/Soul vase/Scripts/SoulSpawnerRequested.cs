@@ -4,24 +4,62 @@ using SpawnerSystem;
 public class SoulSpawnerRequested : MonoBehaviour
 {
 	[SerializeField] private SoulType _soulType;
+	[Space]
+	[SerializeField] private MonoBehaviour _soulSpawnerLogic;
 
 	private ISoulSpawnRequestHandler _spawnRequestHandler;
 
 	public event System.Action<PooledEnemy> SpawnedSoul;
+
+	private void Awake()
+	{
+		if (_soulSpawnerLogic != null)
+		{
+			if (_soulSpawnerLogic.TryGetComponent<ISoulSpawnRequestHandler>(out var handler))
+			{
+				_spawnRequestHandler = handler;
+			}
+			else
+			{
+				Debug.LogWarning($"[{nameof(SoulSpawnerRequested)}] SoulSpawnerRequestHandler not found on {_soulSpawnerLogic.gameObject.name}");
+				_soulSpawnerLogic = null;
+			}
+		}
+	}
+
+	private void OnValidate()
+	{
+		if (_soulSpawnerLogic != null)
+		{
+			if (_soulSpawnerLogic.TryGetComponent<ISoulSpawnRequestHandler>(out var handler))
+			{
+				_spawnRequestHandler = handler;
+			}
+			else
+			{
+				Debug.LogWarning($"[{nameof(SoulSpawnerRequested)}] SoulSpawnerRequestHandler not found on {_soulSpawnerLogic.gameObject.name}");
+				_soulSpawnerLogic = null;
+			}
+		}
+	}
 
 	public void Initialize(ISoulSpawnRequestHandler spawnRequestHandler)
 	{
 		_spawnRequestHandler = spawnRequestHandler;
 	}
 
-	public void RequestSoulSpawn(DamageData damageData)
+	public void RequestSoulSpawn(DamageData damageData, Vector3 spawnPosition, SoulType soulType = SoulType.None)
 	{
 		if (_spawnRequestHandler != null)
 		{
-			Vector3 spawnPosition = transform.position;
 			spawnPosition.z = transform.position.z;
 
-			_spawnRequestHandler.RequestSoulSpawn(_soulType, spawnPosition, damageData, OnSoulSpawned);
+			if (soulType == SoulType.None)
+			{
+				soulType = _soulType;
+			}
+
+			_spawnRequestHandler.RequestSoulSpawn(soulType, spawnPosition, damageData, OnSoulSpawned);
 		}
 		else
 		{
