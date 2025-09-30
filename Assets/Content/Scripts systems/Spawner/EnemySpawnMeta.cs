@@ -22,7 +22,6 @@ namespace SpawnerSystem
 			Section = section;
 			Kind = kind;
 			InactiveParent = inactiveParent;
-			Tokens?.CommitKind(section, kind, 1);
 
 			_spawnInitializable?.SpawnInitializate();
 		}
@@ -32,7 +31,6 @@ namespace SpawnerSystem
 			if (Tokens != null)
 			{
 				Tokens.Release(Section, 1);
-				Tokens.ReleaseKind(Section, Kind, 1);
 			}
 		}
 	}

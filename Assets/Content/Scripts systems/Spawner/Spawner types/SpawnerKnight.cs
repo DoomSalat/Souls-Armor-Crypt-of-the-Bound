@@ -19,9 +19,9 @@ namespace SpawnerSystem
 			return Spawn(section, EnemyKind.Knight);
 		}
 
-		public override int Spawn(SpawnSection section, int tierIndex)
+		public override int Spawn(SpawnSection section, EnemyData enemyData)
 		{
-			return Spawn(section, EnemyKind.Knight);
+			return Spawn(section, enemyData.EnemyKind);
 		}
 	}
 }

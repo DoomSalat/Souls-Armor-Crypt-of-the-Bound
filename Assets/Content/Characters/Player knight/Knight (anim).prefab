@@ -5419,6 +5419,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &713106627591193523
@@ -5544,6 +5545,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &1147818807433519398
@@ -7475,6 +7477,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &2351319349424933378
@@ -7677,6 +7680,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &2849261081856735127
@@ -9617,6 +9621,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &4989874584095925958
@@ -10314,6 +10319,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 0
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &5410323701280131581
@@ -10396,7 +10402,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _events: {fileID: 2234637232572639717}
-  _playerLimbsVisual: {fileID: 6214532615712991873}
 --- !u!114 &2234637232572639717
 MonoBehaviour:
   m_ObjectHideFlags: 0

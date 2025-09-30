@@ -43,7 +43,7 @@ public class HitBox : MonoBehaviour
 
 		if (other.TryGetComponent<HurtBox>(out var hurtBox) && CanDamage(hurtBox.Faction))
 		{
-			Vector2 direction = Vector2.zero;
+			Vector2 direction;
 			float force = 0f;
 
 			if (_knockbackProvider != null)

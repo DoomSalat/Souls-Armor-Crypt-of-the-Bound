@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e6afe7017c45349a9668d106e8999a, type: 3}
+  m_Name: Soul (yellow)
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4101581840176747302, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
+  _enemyKind: 0
+  _tokenValue: 1
+  _sectionWeight: 1
+  _spawnCooldown: 2
+  _timerReduction: 0.5
+  _minSpawnCount: 1
+  _maxSpawnCount: 1
+  _spawnChance: 1

@@ -31,54 +31,54 @@ namespace SpawnerSystem
 		[GUIColor(0.7f, 0.8f, 1f)]
 		[VerticalGroup("SpawnTable/Blue/Soul")]
 		[Button("Soul", ButtonSizes.Medium)]
-		public void SpawnBlueSoul() => _spawnerEnemys.SpawnEnemyManually(SoulType.Blue, EnemyKind.Soul, _selectedDirection);
+		public void SpawnBlueSoul() => _spawnerEnemys.SpawnEnemy(SoulType.Blue, EnemyKind.Soul, _selectedDirection);
 		[VerticalGroup("SpawnTable/Blue/Vase")]
 		[Button("Soul Vase", ButtonSizes.Medium)]
-		public void SpawnBlueSoulVase() => _spawnerEnemys.SpawnEnemyManually(SoulType.Blue, EnemyKind.SoulVase, _selectedDirection);
+		public void SpawnBlueSoulVase() => _spawnerEnemys.SpawnEnemy(SoulType.Blue, EnemyKind.SoulVase, _selectedDirection);
 		[VerticalGroup("SpawnTable/Blue/Skelet")]
 		[Button("Skelet", ButtonSizes.Medium)]
-		public void SpawnBlueSkelet() => _spawnerEnemys.SpawnEnemyManually(SoulType.Blue, EnemyKind.Skelet, _selectedDirection);
+		public void SpawnBlueSkelet() => _spawnerEnemys.SpawnEnemy(SoulType.Blue, EnemyKind.Skelet, _selectedDirection);
 
 		[VerticalGroup("SpawnTable/Green")]
 		[Title("Green Souls")]
 		[GUIColor(0.8f, 1f, 0.8f)]
 		[VerticalGroup("SpawnTable/Green/Soul")]
 		[Button("Soul", ButtonSizes.Medium)]
-		public void SpawnGreenSoul() => _spawnerEnemys.SpawnEnemyManually(SoulType.Green, EnemyKind.Soul, _selectedDirection);
+		public void SpawnGreenSoul() => _spawnerEnemys.SpawnEnemy(SoulType.Green, EnemyKind.Soul, _selectedDirection);
 		[VerticalGroup("SpawnTable/Green/Vase")]
 		[Button("Soul Vase", ButtonSizes.Medium)]
-		public void SpawnGreenSoulVase() => _spawnerEnemys.SpawnEnemyManually(SoulType.Green, EnemyKind.SoulVase, _selectedDirection);
+		public void SpawnGreenSoulVase() => _spawnerEnemys.SpawnEnemy(SoulType.Green, EnemyKind.SoulVase, _selectedDirection);
 		[VerticalGroup("SpawnTable/Green/Skelet")]
 		[Button("Skelet", ButtonSizes.Medium)]
-		public void SpawnGreenSkelet() => _spawnerEnemys.SpawnEnemyManually(SoulType.Green, EnemyKind.Skelet, _selectedDirection);
+		public void SpawnGreenSkelet() => _spawnerEnemys.SpawnEnemy(SoulType.Green, EnemyKind.Skelet, _selectedDirection);
 
 		[VerticalGroup("SpawnTable/Red")]
 		[Title("Red Souls")]
 		[GUIColor(1f, 0.8f, 0.8f)]
 		[VerticalGroup("SpawnTable/Red/Soul")]
 		[Button("Soul", ButtonSizes.Medium)]
-		public void SpawnRedSoul() => _spawnerEnemys.SpawnEnemyManually(SoulType.Red, EnemyKind.Soul, _selectedDirection);
+		public void SpawnRedSoul() => _spawnerEnemys.SpawnEnemy(SoulType.Red, EnemyKind.Soul, _selectedDirection);
 		[VerticalGroup("SpawnTable/Red/Vase")]
 		[Button("Soul Vase", ButtonSizes.Medium)]
-		public void SpawnRedSoulVase() => _spawnerEnemys.SpawnEnemyManually(SoulType.Red, EnemyKind.SoulVase, _selectedDirection);
+		public void SpawnRedSoulVase() => _spawnerEnemys.SpawnEnemy(SoulType.Red, EnemyKind.SoulVase, _selectedDirection);
 		[VerticalGroup("SpawnTable/Red/Skelet")]
 		[Button("Skelet", ButtonSizes.Medium)]
-		public void SpawnRedSkelet() => _spawnerEnemys.SpawnEnemyManually(SoulType.Red, EnemyKind.Skelet, _selectedDirection);
+		public void SpawnRedSkelet() => _spawnerEnemys.SpawnEnemy(SoulType.Red, EnemyKind.Skelet, _selectedDirection);
 
 		[VerticalGroup("SpawnTable/Yellow")]
 		[Title("Yellow Souls")]
 		[GUIColor(1f, 1f, 0.8f)]
 		[VerticalGroup("SpawnTable/Yellow/Soul")]
 		[Button("Soul", ButtonSizes.Medium)]
-		public void SpawnYellowSoul() => _spawnerEnemys.SpawnEnemyManually(SoulType.Yellow, EnemyKind.Soul, _selectedDirection);
+		public void SpawnYellowSoul() => _spawnerEnemys.SpawnEnemy(SoulType.Yellow, EnemyKind.Soul, _selectedDirection);
 		[VerticalGroup("SpawnTable/Yellow/Vase")]
 		[Button("Soul Vase", ButtonSizes.Medium)]
-		public void SpawnYellowSoulVase() => _spawnerEnemys.SpawnEnemyManually(SoulType.Yellow, EnemyKind.SoulVase, _selectedDirection);
+		public void SpawnYellowSoulVase() => _spawnerEnemys.SpawnEnemy(SoulType.Yellow, EnemyKind.SoulVase, _selectedDirection);
 		[VerticalGroup("SpawnTable/Yellow/Skelet")]
 		[Button("Skelet", ButtonSizes.Medium)]
-		public void SpawnYellowSkelet() => _spawnerEnemys.SpawnEnemyManually(SoulType.Yellow, EnemyKind.Skelet, _selectedDirection);
+		public void SpawnYellowSkelet() => _spawnerEnemys.SpawnEnemy(SoulType.Yellow, EnemyKind.Skelet, _selectedDirection);
 
 		[Button("Spawn Knight", ButtonSizes.Medium)]
-		public void SpawnKnight() => _spawnerEnemys.SpawnEnemyManually(SoulType.None, EnemyKind.Knight, _selectedDirection);
+		public void SpawnKnight() => _spawnerEnemys.SpawnEnemy(SoulType.None, EnemyKind.Knight, _selectedDirection);
 	}
 }

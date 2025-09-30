@@ -29,7 +29,6 @@ public class SwordWallBounce : MonoBehaviour
 	[Header("Debug")]
 	[ShowInInspector, ReadOnly] private bool _isBouncing;
 	[ShowInInspector, ReadOnly] private Vector2 _lastBounceDirection;
-	[ShowInInspector, ReadOnly] private float _lastPenetrationDepth;
 
 	private Rigidbody2D _rigidbody;
 	private Collider2D _collider;
@@ -69,7 +68,7 @@ public class SwordWallBounce : MonoBehaviour
 
 	private void Start()
 	{
-		_particleSpawner.SetSoulType(SoulType.Blue);
+		_particleSpawner?.SetSoulType(SoulType.Blue);
 	}
 
 	private void OnTriggerStay2D(Collider2D other)
@@ -88,7 +87,15 @@ public class SwordWallBounce : MonoBehaviour
 
 	public void UpdateSoulType(SoulType soulType)
 	{
-		_particleSpawner.SetSoulType(soulType);
+		_particleSpawner?.SetSoulType(soulType);
+	}
+
+	public void ManualBounce(Collider2D target)
+	{
+		if (_canBounce == false)
+			return;
+
+		BounceFromTarget(target);
 	}
 
 	private bool IsWallLayer(Collider2D collider)
@@ -112,7 +119,6 @@ public class SwordWallBounce : MonoBehaviour
 		_lastBounceDirection = bounceDirection;
 		float penetrationDepth = CalculatePenetrationDepth(wall);
 		float adaptiveBounceDistance = CalculateAdaptiveBounceDistance(penetrationDepth);
-		_lastPenetrationDepth = penetrationDepth;
 
 		if (_spawnParticlesOnBounce && _particleSpawner != null)
 		{
@@ -133,6 +139,59 @@ public class SwordWallBounce : MonoBehaviour
 			.SetEase(_bounceEase);
 
 		float rotationAmount = CalculateRotationAmount(wall, bounceDirection);
+
+		Tween rotateTween = transform.DORotate(Vector3.forward * rotationAmount, _bounceDuration, RotateMode.LocalAxisAdd)
+			.SetEase(_bounceEase);
+
+		_bounceSequence.Append(moveTween)
+			.Join(rotateTween)
+			.OnComplete(() =>
+			{
+				_rigidbody.bodyType = _originalBodyType;
+				_rigidbody.constraints = _originalConstraints;
+				_rigidbody.linearVelocity = Vector2.zero;
+
+				_canBounce = true;
+				_isBouncing = false;
+				OnBounceEnded?.Invoke(_springRecoveryTime, _springRecoveryEase);
+			});
+
+		_bounceSequence.Play();
+	}
+
+	private void BounceFromTarget(Collider2D target)
+	{
+		_isBouncing = true;
+		_canBounce = false;
+
+		OnBounceStarted?.Invoke();
+
+		_bounceSequence?.Kill();
+		DOTween.Kill(this);
+
+		Vector2 bounceDirection = CalculateTargetBounceDirection(target);
+		_lastBounceDirection = bounceDirection;
+		float adaptiveBounceDistance = _baseBounceDistance;
+
+		if (_spawnParticlesOnBounce && _particleSpawner != null)
+		{
+			Vector3 impactPoint = GetTargetImpactPoint(target);
+			Vector3 targetNormal = CalculateTargetNormal(target);
+			_particleSpawner.SpawnWallImpactEffect(impactPoint, targetNormal);
+		}
+
+		_rigidbody.bodyType = RigidbodyType2D.Kinematic;
+		_rigidbody.linearVelocity = Vector2.zero;
+
+		Vector2 startPosition = _rigidbody.position;
+		Vector2 targetPosition = startPosition + bounceDirection * adaptiveBounceDistance;
+
+		_bounceSequence = DOTween.Sequence();
+
+		Tween moveTween = _rigidbody.DOMove(targetPosition, _bounceDuration)
+			.SetEase(_bounceEase);
+
+		float rotationAmount = CalculateTargetRotationAmount(target, bounceDirection);
 
 		Tween rotateTween = transform.DORotate(Vector3.forward * rotationAmount, _bounceDuration, RotateMode.LocalAxisAdd)
 			.SetEase(_bounceEase);
@@ -221,6 +280,66 @@ public class SwordWallBounce : MonoBehaviour
 		Vector3 wallCenter = wall.bounds.center;
 
 		Vector3 normal = (swordCenter - wallCenter).normalized;
+
+		if (normal == Vector3.zero)
+		{
+			normal = _lastBounceDirection.normalized;
+		}
+
+		return normal;
+	}
+
+	private Vector2 CalculateTargetBounceDirection(Collider2D target)
+	{
+		Vector2 targetCenter = target.bounds.center;
+		Vector2 swordCenter = _collider.bounds.center;
+		Vector2 directionFromTarget = (swordCenter - targetCenter).normalized;
+
+		if (directionFromTarget == Vector2.zero)
+		{
+			float randomAngle = Random.Range(0f, MaxRotation) * Mathf.Deg2Rad;
+			directionFromTarget = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
+		}
+
+		return directionFromTarget;
+	}
+
+	private float CalculateTargetRotationAmount(Collider2D target, Vector2 bounceDirection)
+	{
+		Vector2 swordCenter = _collider.bounds.center;
+		Vector2 impactPoint = target.ClosestPoint(swordCenter);
+
+		Vector2 impactVector = impactPoint - swordCenter;
+		Vector2 localImpactVector = transform.InverseTransformDirection(impactVector);
+
+		float rotationDirection;
+
+		if (localImpactVector.y > 0)
+		{
+			rotationDirection = -1f;
+		}
+		else
+		{
+			rotationDirection = 1f;
+		}
+
+		return rotationDirection * _rotationSpeed;
+	}
+
+	private Vector3 GetTargetImpactPoint(Collider2D target)
+	{
+		Vector3 swordCenter = _collider.bounds.center;
+		Vector3 closestPoint = target.ClosestPoint(swordCenter);
+
+		return Vector3.Lerp(swordCenter, closestPoint, Half);
+	}
+
+	private Vector3 CalculateTargetNormal(Collider2D target)
+	{
+		Vector3 swordCenter = _collider.bounds.center;
+		Vector3 targetCenter = target.bounds.center;
+
+		Vector3 normal = (swordCenter - targetCenter).normalized;
 
 		if (normal == Vector3.zero)
 		{

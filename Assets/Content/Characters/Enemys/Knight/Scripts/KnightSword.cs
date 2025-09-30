@@ -16,8 +16,11 @@ public class KnightSword : MonoBehaviour
 	[Header("Components")]
 	[SerializeField, Required] private Transform _pivotPoint;
 	[SerializeField, Required] private Transform _swordBlockPoint;
-	[SerializeField] private Collider2D[] _colliders;
 	[SerializeField, Required] private ParticleSystem _particleSystemSoul;
+	[Space]
+	[SerializeField] private Collider2D[] _colliders;
+	[SerializeField, Required] private HitBox _hitBox;
+	[SerializeField, Required] private SwordWallBounce _swordWallBounce;
 
 	[Header("Physics")]
 	[SerializeField, MinValue(0)] private float _moveSpeed = 15f;
@@ -55,6 +58,7 @@ public class KnightSword : MonoBehaviour
 
 	private bool _isControllEnabled = false;
 	private bool _isBlockingMode = false;
+	private bool _isRecoveringFromBounce = false;
 	private Vector2 _orbitCenter;
 	private Vector2 _targetPosition;
 	private float _targetRotation;
@@ -66,9 +70,23 @@ public class KnightSword : MonoBehaviour
 		_rigidbody = GetComponent<Rigidbody2D>();
 	}
 
+	private void OnEnable()
+	{
+		_hitBox.Hitted += OnHitBoxHitted;
+		_swordWallBounce.OnBounceStarted += OnBounceStarted;
+		_swordWallBounce.OnBounceEnded += OnBounceEnded;
+	}
+
+	private void OnDisable()
+	{
+		_hitBox.Hitted -= OnHitBoxHitted;
+		_swordWallBounce.OnBounceStarted -= OnBounceStarted;
+		_swordWallBounce.OnBounceEnded -= OnBounceEnded;
+	}
+
 	private void Update()
 	{
-		if (_isControllEnabled && _target != null)
+		if (_isControllEnabled && _target != null && !_isRecoveringFromBounce)
 		{
 			UpdateSwordTargets();
 			CheckForPlayerSwordBlocking();
@@ -77,7 +95,7 @@ public class KnightSword : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (_isControllEnabled && _target != null)
+		if (_isControllEnabled && _target != null && !_isRecoveringFromBounce)
 		{
 			ApplyPhysicsMovement();
 		}
@@ -85,6 +103,8 @@ public class KnightSword : MonoBehaviour
 
 	public void Enable(Transform target)
 	{
+		gameObject.SetActive(true);
+
 		foreach (var collider in _colliders)
 		{
 			if (collider != null)
@@ -120,6 +140,8 @@ public class KnightSword : MonoBehaviour
 		_target = null;
 		_isControllEnabled = false;
 		_isBlockingMode = false;
+
+		gameObject.SetActive(false);
 	}
 
 	public void StopLogic()
@@ -132,6 +154,22 @@ public class KnightSword : MonoBehaviour
 		_target = null;
 		_isControllEnabled = false;
 		_isBlockingMode = false;
+		_isRecoveringFromBounce = false;
+	}
+
+	private void OnHitBoxHitted(Collider2D other, DamageData damageData)
+	{
+		_swordWallBounce.ManualBounce(other);
+	}
+
+	private void OnBounceStarted()
+	{
+		_isRecoveringFromBounce = true;
+	}
+
+	private void OnBounceEnded(float recoveryTime, DG.Tweening.Ease recoveryEase)
+	{
+		_isRecoveringFromBounce = false;
 	}
 
 	public void InitializePlayerSword(Sword playerSword)

@@ -16,6 +16,8 @@ public class SoulMaterialApplier : MonoBehaviour
 	[SerializeField] private Image[] _images;
 	[SerializeField] private RawImage[] _rawImages;
 	[SerializeField] private UIParticleSystemRender[] _UIParticles;
+	[Space]
+	[SerializeField] private bool _cashingSpriteRenderersMask = true;
 
 	[Header("Current State")]
 	[SerializeField, ReadOnly] private SoulType _currentSoulType = SoulType.None;
@@ -29,6 +31,7 @@ public class SoulMaterialApplier : MonoBehaviour
 	private Dictionary<Image, Material> _originalImageMaterials;
 	private Dictionary<RawImage, Material> _originalRawImageMaterials;
 	private Dictionary<SpriteRenderer, Material> _duplicatedMaskMaterials;
+	private Dictionary<SpriteRenderer, MaterialPropertyBlock> _maskPropertyBlocks;
 
 	private Dictionary<ParticleSystem, ParticleSystemRenderer> _particleSystemRenderers;
 	private Dictionary<ParticleSystem, ParticleSystemRenderer> _uiParticleSystemRenderers;
@@ -121,6 +124,7 @@ public class SoulMaterialApplier : MonoBehaviour
 		_originalImageMaterials = new Dictionary<Image, Material>();
 		_originalRawImageMaterials = new Dictionary<RawImage, Material>();
 		_duplicatedMaskMaterials = new Dictionary<SpriteRenderer, Material>();
+		_maskPropertyBlocks = new Dictionary<SpriteRenderer, MaterialPropertyBlock>();
 		_particleSystemRenderers = new Dictionary<ParticleSystem, ParticleSystemRenderer>();
 		_uiParticleSystemRenderers = new Dictionary<ParticleSystem, ParticleSystemRenderer>();
 
@@ -208,11 +212,18 @@ public class SoulMaterialApplier : MonoBehaviour
 		{
 			foreach (var spriteRenderer in _maskSpriteRenderersMask)
 			{
-				if (spriteRenderer == null || spriteRenderer.sharedMaterial == null)
+				if (spriteRenderer == null)
 					continue;
 
-				var duplicatedMaterial = new Material(spriteRenderer.sharedMaterial);
-				_duplicatedMaskMaterials[spriteRenderer] = duplicatedMaterial;
+				if (_cashingSpriteRenderersMask && spriteRenderer.sharedMaterial != null)
+				{
+					var duplicatedMaterial = new Material(spriteRenderer.sharedMaterial);
+					_duplicatedMaskMaterials[spriteRenderer] = duplicatedMaterial;
+				}
+				else
+				{
+					_maskPropertyBlocks[spriteRenderer] = new MaterialPropertyBlock();
+				}
 			}
 		}
 	}
@@ -391,10 +402,21 @@ public class SoulMaterialApplier : MonoBehaviour
 			if (spriteRenderer == null)
 				continue;
 
-			if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
+			if (_cashingSpriteRenderersMask)
 			{
-				duplicatedMaterial.SetFloat(ColorHueProperty, hueValue);
-				spriteRenderer.material = duplicatedMaterial;
+				if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
+				{
+					duplicatedMaterial.SetFloat(ColorHueProperty, hueValue);
+					spriteRenderer.material = duplicatedMaterial;
+				}
+			}
+			else
+			{
+				if (_maskPropertyBlocks.TryGetValue(spriteRenderer, out var propertyBlock))
+				{
+					propertyBlock.SetFloat(ColorHueProperty, hueValue);
+					spriteRenderer.SetPropertyBlock(propertyBlock);
+				}
 			}
 		}
 	}
@@ -531,10 +553,21 @@ public class SoulMaterialApplier : MonoBehaviour
 			if (spriteRenderer == null)
 				continue;
 
-			if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
+			if (_cashingSpriteRenderersMask)
 			{
-				duplicatedMaterial.SetFloat(ColorHueProperty, 0f);
-				spriteRenderer.material = duplicatedMaterial;
+				if (_duplicatedMaskMaterials.TryGetValue(spriteRenderer, out var duplicatedMaterial))
+				{
+					duplicatedMaterial.SetFloat(ColorHueProperty, 0f);
+					spriteRenderer.material = duplicatedMaterial;
+				}
+			}
+			else
+			{
+				if (_maskPropertyBlocks.TryGetValue(spriteRenderer, out var propertyBlock))
+				{
+					propertyBlock.SetFloat(ColorHueProperty, 0f);
+					spriteRenderer.SetPropertyBlock(propertyBlock);
+				}
 			}
 		}
 	}

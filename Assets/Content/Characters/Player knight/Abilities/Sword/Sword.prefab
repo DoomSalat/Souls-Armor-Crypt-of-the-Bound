@@ -5444,7 +5444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wallLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
   _baseBounceDistance: 1
   _bounceMultiplier: 1.5
   _maxBounceDistance: 3

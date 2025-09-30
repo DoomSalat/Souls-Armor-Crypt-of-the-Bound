@@ -100,7 +100,7 @@ public class DamageKnight : EnemyDamage
 	private void SpawnSwordSoul()
 	{
 		DamageData swordSoulDamageData = new DamageData(
-			_bodySoulSpawnForceAmount,
+			0,
 			DamageType.Physical,
 			Vector2.zero,
 			0

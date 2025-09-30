@@ -59,6 +59,18 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 			return;
 		}
 
+		if (_follower.TryGetDistanceToTarget(out float distanceToTarget))
+		{
+			if (distanceToTarget <= _optimalDistance)
+			{
+				_follower.PauseMovement();
+			}
+			else
+			{
+				_follower.ResumeMovement();
+			}
+		}
+
 		UpdateFlipDirection();
 		UpdateMoveAnimation();
 	}
@@ -92,13 +104,6 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 
 	private void UpdateMovement(float distanceToTarget)
 	{
-		if (distanceToTarget <= _optimalDistance)
-		{
-			_follower.PauseMovement();
-			return;
-		}
-
-		_follower.ResumeMovement();
 		_follower.TryFollow();
 
 		if (_debug)
@@ -155,10 +160,8 @@ public class Knight : MonoBehaviour, ISpawnInitializable
 		_damage.ResetDeathState();
 
 		SoulType[] soulTypes = _damage.RandomSoulInside();
-		_soulMaterialHead.ApplySoul(soulTypes[0]);
-		Debug.Log($"[{nameof(Knight)}] SpawnInitializate: {soulTypes[0]}");
-		_soulMaterialSword.ApplySoul(soulTypes[1]);
-		Debug.Log($"[{nameof(Knight)}] SpawnInitializate: {soulTypes[1]}");
+		_soulMaterialSword.ApplySoul(soulTypes[0]);
+		_soulMaterialHead.ApplySoul(soulTypes[1]);
 
 		_follower.EnableMovement();
 		_animator.PlayIdle();

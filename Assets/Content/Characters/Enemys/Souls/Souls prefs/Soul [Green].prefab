@@ -5468,7 +5468,8 @@ MonoBehaviour:
   _impulseForce: 10
   _impulseInterval: 1
   _maxSpeed: 15
-  _initialSpreadAngle: 90
+  _closeRangeDistance: 4
+  _initialSpreadAngle: 60
   _spreadReductionRate: 10
   _minSpreadAngle: 5
 --- !u!114 &5957789021434574804

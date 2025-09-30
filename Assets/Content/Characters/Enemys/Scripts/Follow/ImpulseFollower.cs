@@ -10,6 +10,7 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 	[SerializeField, MinValue(0)] private float _impulseForce = 10f;
 	[SerializeField, MinValue(0)] private float _impulseInterval = 1f;
 	[SerializeField, MinValue(0)] private float _maxSpeed = 15f;
+	[SerializeField, MinValue(0)] private float _closeRangeDistance = 5f;
 
 	[Header("Spread Settings")]
 	[SerializeField, MinValue(0), MaxValue(90)] private float _initialSpreadAngle = 90f;
@@ -36,6 +37,12 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		ResetImpulseState();
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, _closeRangeDistance);
 	}
 
 	public bool TryGetDistanceToTarget(out float distance)
@@ -99,7 +106,15 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 		{
 			if (Time.time - _lastImpulseTime >= _impulseInterval)
 			{
-				ApplyImpulse();
+				if (TryGetDistanceToTarget(out float distance) && distance <= _closeRangeDistance)
+				{
+					ApplyCloseRangeImpulse();
+				}
+				else
+				{
+					ApplyImpulse();
+				}
+
 				_lastImpulseTime = Time.time;
 			}
 
@@ -145,6 +160,13 @@ public class ImpulseFollower : MonoBehaviour, IFollower
 		}
 
 		Vector2 impulse = impulseDirection * _impulseForce;
+		_rigidbody.AddForce(impulse, ForceMode2D.Impulse);
+	}
+
+	private void ApplyCloseRangeImpulse()
+	{
+		Vector2 directionToTarget = (_target.position - transform.position).normalized;
+		Vector2 impulse = directionToTarget * _impulseForce;
 		_rigidbody.AddForce(impulse, ForceMode2D.Impulse);
 	}
 

@@ -1,23 +1,30 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace SpawnerSystem
 {
 	public abstract class SpawnerBase : MonoBehaviour, ISpawner
 	{
-		[SerializeField] protected EnemyPrefabByKind[] _prefabsByKind;
+		[SerializeField] protected EnemyData[] _enemysData = new EnemyData[0];
 		[SerializeField, Required] protected Transform _inactiveContainer;
 		[SerializeField, Min(0)] private int _prewarmPerPrefab = 10;
 		[SerializeField] private bool _prewarmOnInit = true;
 
+		private Dictionary<EnemyKind, EnemyData> _enemyDataLookup;
+
 		protected ISpawnStrategy _spawnStrategy;
 		protected SpawnerDependencies _dependencies;
+
+		public event Action<PooledEnemy> EnemyReturnedToPool;
 
 		public virtual void Init(SpawnerDependencies dependencies)
 		{
 			_dependencies = dependencies;
 
+			BuildEnemyDataLookup();
 			RegisterPrefabs();
 
 			if (_prewarmOnInit)
@@ -26,14 +33,22 @@ namespace SpawnerSystem
 			}
 		}
 
+		protected virtual void OnEnemyReturnedToPool(PooledEnemy enemy)
+		{
+			EnemyReturnedToPool?.Invoke(enemy);
+		}
+
 		private void RegisterPrefabs()
 		{
-			for (int i = 0; i < _prefabsByKind.Length; i++)
+			for (int i = 0; i < _enemysData.Length; i++)
 			{
-				var entry = _prefabsByKind[i];
+				var entry = _enemysData[i];
 				if (entry?.Prefab != null)
 				{
 					_dependencies.EnemyPool.RegisterPrefab(entry.Prefab, this);
+
+					var prefab = entry.Prefab;
+					prefab.ReturnedToPool += OnEnemyReturnedToPool;
 				}
 			}
 		}
@@ -43,27 +58,54 @@ namespace SpawnerSystem
 			return SpawnWithStrategy(section);
 		}
 
-		public virtual int Spawn(SpawnSection section, int tierIndex) => Spawn(section);
+		public virtual int Spawn(SpawnSection section, EnemyData enemyData)
+		{
+			if (enemyData == null)
+			{
+				Debug.LogWarning("SpawnerBase: EnemyData is null!");
+				return 0;
+			}
+
+			return SpawnWithStrategy(section, enemyData.EnemyKind);
+		}
 
 		public virtual int Spawn(SpawnSection section, EnemyKind enemyKind)
 		{
 			return SpawnWithStrategy(section, enemyKind);
 		}
 
-		public virtual PooledEnemy SpawnAtPosition(SpawnSection section, EnemyKind enemyKind, Vector3 position)
+		public virtual PooledEnemy SpawnAtPosition(SpawnSection section, EnemyData enemyData, Vector3 position)
 		{
-			PooledEnemy prefabToSpawn = GetPrefabForKind(enemyKind);
-
-			if (prefabToSpawn == null)
+			if (enemyData == null)
 			{
-				Debug.LogWarning($"SpawnerBase: No prefab configured for enemy kind {enemyKind}");
+				Debug.LogWarning("SpawnerBase: EnemyData is null!");
 				return null;
 			}
 
-			PooledEnemy pooledEnemy = SpawnEnemyAt(position, enemyKind, prefabToSpawn);
-			SetupEnemySpawn(pooledEnemy, section, enemyKind);
+			PooledEnemy prefabToSpawn = enemyData.Prefab;
+
+			if (prefabToSpawn == null)
+			{
+				Debug.LogWarning($"SpawnerBase: No prefab configured for enemy kind {enemyData.EnemyKind}");
+				return null;
+			}
+
+			PooledEnemy pooledEnemy = SpawnEnemyAt(position, enemyData.EnemyKind, prefabToSpawn);
+			SetupEnemySpawn(pooledEnemy, section, enemyData.EnemyKind);
 
 			return pooledEnemy;
+		}
+
+		public virtual PooledEnemy SpawnAtPosition(SpawnSection section, EnemyKind enemyKind, Vector3 position)
+		{
+			EnemyData enemyData = GetEnemyData(enemyKind);
+			if (enemyData == null)
+			{
+				Debug.LogWarning($"SpawnerBase: No EnemyData found for enemy kind {enemyKind}");
+				return null;
+			}
+
+			return SpawnAtPosition(section, enemyData, position);
 		}
 
 		protected virtual int SpawnWithStrategy(SpawnSection section, EnemyKind? enemyKind = null)
@@ -105,65 +147,82 @@ namespace SpawnerSystem
 			return spawnedCount;
 		}
 
-		public virtual int GetTierCount() => 0;
+		public virtual int GetEnemyDataCount() => _enemysData?.Length ?? 0;
+
+		public virtual EnemyData GetEnemyData(EnemyKind enemyKind)
+		{
+			if (_enemyDataLookup == null)
+				BuildEnemyDataLookup();
+
+			return _enemyDataLookup.TryGetValue(enemyKind, out var data) ? data : null;
+		}
+
+		public virtual EnemyData[] GetAllEnemyData()
+		{
+			return _enemysData?.Where(data => data != null).ToArray() ?? new EnemyData[0];
+		}
+
+		public virtual EnemyKind[] GetAllEnemyKinds()
+		{
+			return _enemysData?.Where(data => data != null).Select(data => data.EnemyKind).ToArray() ?? new EnemyKind[0];
+		}
 
 		public virtual Transform GetInactiveContainer()
 		{
 			return _inactiveContainer;
 		}
 
-		protected static EnemyKind ChooseKindWeightedByTokens(SpawnerTokens tokens)
+		protected EnemyKind ChooseKindWeightedByTokens(SpawnerTokens tokens)
 		{
-			// Временно возвращаем только Soul, пока не настроены другие префабы
-			return EnemyKind.Soul;
+			var availableKinds = GetAllEnemyKinds();
+			if (availableKinds.Length == 0)
+				return EnemyKind.Soul;
 
-			// TODO: Раскомментировать когда будут настроены префабы для всех типов
-			/*
-			EnemyKind[] kinds = { EnemyKind.Soul, EnemyKind.SoulVase, EnemyKind.Skelet, EnemyKind.Knight };
 			float totalWeight = 0f;
-			float[] weights = new float[kinds.Length];
+			float[] weights = new float[availableKinds.Length];
 
-			for (int index = 0; index < kinds.Length; index++)
+			for (int index = 0; index < availableKinds.Length; index++)
 			{
-				float weight = Mathf.Max(MinWeight, tokens.GetKindWeight(kinds[index]));
+				EnemyData enemyData = GetEnemyData(availableKinds[index]);
+				float weight = enemyData?.SectionWeight ?? 1f;
 				weights[index] = weight;
 				totalWeight += weight;
 			}
 
-			float randomRoll = Random.value * totalWeight;
-			for (int index = 0; index < kinds.Length; index++)
+			if (totalWeight <= 0f)
+				return availableKinds[0];
+
+			float randomRoll = UnityEngine.Random.value * totalWeight;
+			for (int index = 0; index < availableKinds.Length; index++)
 			{
 				randomRoll -= weights[index];
 				if (randomRoll <= 0f)
-					return kinds[index];
+					return availableKinds[index];
 			}
 
-			return kinds[kinds.Length - 1];
-			*/
+			return availableKinds[availableKinds.Length - 1];
 		}
 
 		protected PooledEnemy GetPrefabForKind(EnemyKind kind)
 		{
-			int count = 0;
-			for (int i = 0; i < (_prefabsByKind?.Length ?? 0); i++)
-				if (_prefabsByKind[i].Kind == kind) count++;
+			EnemyData enemyData = GetEnemyData(kind);
+			return enemyData?.Prefab;
+		}
 
-			if (count == 0)
-				return null;
+		private void BuildEnemyDataLookup()
+		{
+			_enemyDataLookup = new Dictionary<EnemyKind, EnemyData>();
 
-			int pickIndex = UnityEngine.Random.Range(0, count);
-			for (int i = 0; i < _prefabsByKind.Length; i++)
+			if (_enemysData != null)
 			{
-				if (_prefabsByKind[i].Kind != kind)
-					continue;
-
-				if (pickIndex == 0)
-					return _prefabsByKind[i].Prefab;
-
-				pickIndex--;
+				foreach (var enemyData in _enemysData)
+				{
+					if (enemyData != null)
+					{
+						_enemyDataLookup[enemyData.EnemyKind] = enemyData;
+					}
+				}
 			}
-
-			return null;
 		}
 
 		protected PooledEnemy SpawnEnemyAt(Vector3 position, EnemyKind kind, PooledEnemy prefab)
@@ -181,17 +240,17 @@ namespace SpawnerSystem
 		{
 			var prefabsByKind = new Dictionary<EnemyKind, List<PooledEnemy>>();
 
-			for (int i = 0; i < _prefabsByKind.Length; i++)
+			for (int i = 0; i < _enemysData.Length; i++)
 			{
-				var entry = _prefabsByKind[i];
+				var entry = _enemysData[i];
 				if (entry?.Prefab != null)
 				{
-					if (!prefabsByKind.ContainsKey(entry.Kind))
+					if (!prefabsByKind.ContainsKey(entry.EnemyKind))
 					{
-						prefabsByKind[entry.Kind] = new List<PooledEnemy>();
+						prefabsByKind[entry.EnemyKind] = new List<PooledEnemy>();
 					}
 
-					prefabsByKind[entry.Kind].Add(entry.Prefab);
+					prefabsByKind[entry.EnemyKind].Add(entry.Prefab);
 				}
 			}
 

@@ -672,13 +672,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbfbe0fcdd87a04a9d795a7f181b383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabsByKind:
-  - _kind: 0
-    _prefab: {fileID: 1729553965342692993, guid: 6e9e4843986d45749a384722cf18e24a, type: 3}
-  - _kind: 1
-    _prefab: {fileID: 2720557105488604028, guid: d89cbd28a24942846884258fa0be4bd9, type: 3}
-  - _kind: 2
-    _prefab: {fileID: 4364318390275502601, guid: 8da53554b3f6ac2439c5093507f20fb6, type: 3}
+  _enemysData:
+  - {fileID: 11400000, guid: c0c9d5ddbdc05ac4d9fb3f9cf76d162a, type: 2}
+  - {fileID: 11400000, guid: 690ae2bca8de53944aa5c04646d39271, type: 2}
+  - {fileID: 11400000, guid: 54a23986aaae9db47a5df5fcb7cf3956, type: 2}
   _inactiveContainer: {fileID: 1249822755}
   _prewarmPerPrefab: 20
   _prewarmOnInit: 1
@@ -780,6 +777,7 @@ MonoBehaviour:
   - {fileID: 118324865}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &122402664
@@ -1048,6 +1046,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 179726288}
+  - component: {fileID: 179726293}
   - component: {fileID: 179726292}
   - component: {fileID: 179726290}
   - component: {fileID: 179726289}
@@ -1091,23 +1090,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb36185f85cb34049beacb9498070ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseCostPerEnemy: 1
   _decayPerSecond: 0.25
   _minCost: 1
   _spawnDistanceFromCenter: 5
-  _desiredPowerPerSection: 5
-  _glitchChance: 0.05
-  _maxSectionDeviation: 2
-  _kindWeights:
-  - _kind: 0
-    _weight: 0.2
-  - _kind: 1
-    _weight: 0.3
-  - _kind: 2
-    _weight: 0.5
-  - _kind: 3
-    _weight: 0.7
-  _manualMode: 1
+  _showDebugGizmos: 1
+  _debugSectionsInfo:
+    keys: 
+    values: []
 --- !u!114 &179726290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,6 +1109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae33ae2ebef33614384e85560b1f6eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _manualMode: 1
   _blueSpawner: {fileID: 2062695703}
   _greenSpawner: {fileID: 1779681392}
   _redSpawner: {fileID: 113643590}
@@ -1129,7 +1119,6 @@ MonoBehaviour:
   _playerSword: {fileID: 305386761}
   _statusMachine: {fileID: 1528849323}
   _throwSpawner: {fileID: 1914863243}
-  _manualMode: 1
 --- !u!114 &179726291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,6 +1148,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnerEnemys: {fileID: 179726290}
   _selectedDirection: 4
+--- !u!114 &179726293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179726287}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c88c5039be6b149bd166d505f14eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _difficultyLevels:
+  - _soulWeight: 0.8
+    _soulVaseWeight: 0.2
+    _skeletWeight: 0
+    _knightWeight: 0
+    _soulCountRange: {x: 1, y: 2}
+    _soulVaseCountRange: {x: 1, y: 1}
+    _skeletCountRange: {x: 0, y: 0}
+    _knightCountRange: {x: 0, y: 0}
+    _spawnIntervalRange: {x: 8, y: 12}
+    _timerReductionPerKill: 1
+    _timerReductionPerPresetKill: 2
+    _waveSpawnInterval: 2
+    _waveThreshold: 3
+    _afkSecondsPerToken: 2
+    _levelName: Very Easy
+    _description: Very Easy level. Minimum enemies and long spawn intervals.
+  _desiredPowerPerSection: 5
+  _maxSectionDeviation: 2
+  _glitchAccumulationRate: 0.02
+  _glitchAccumulationTime: {x: 5, y: 10}
+  _maxGlitchChance: 1
+  _showDebugInfo: 1
 --- !u!1 &186094409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,9 +1228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc76d5783fcc9dd46bc7c075ad5dfa9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabsByKind:
-  - _kind: 3
-    _prefab: {fileID: 1741988752760418025, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+  _enemysData:
+  - {fileID: 11400000, guid: 224fb33f27267764a86dd194975ccd94, type: 2}
   _inactiveContainer: {fileID: 1632421635}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1
@@ -1466,6 +1489,7 @@ MonoBehaviour:
   - {fileID: 223408827}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &225526324 stripped
@@ -1657,6 +1681,7 @@ MonoBehaviour:
   - {fileID: 286025423}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &294020206
@@ -13818,7 +13843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389014403822376125, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: m_Name
-      value: Knight (game)
+      value: Enemy knight
       objectReference: {fileID: 0}
     - target: {fileID: 2389014403822376125, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: m_IsActive
@@ -13826,11 +13851,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.2559967
+      value: 7.19
       objectReference: {fileID: 0}
     - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3544436
+      value: -0.17
       objectReference: {fileID: 0}
     - target: {fileID: 2806475161779314650, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13872,6 +13897,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 1444593560}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _debugPlayerSword
+      value: 
+      objectReference: {fileID: 305386761}
+    - target: {fileID: 4825290554069786977, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
+      propertyPath: _debugTargetPlayer
+      value: 
+      objectReference: {fileID: 1119663177}
     - target: {fileID: 5331486775774857942, guid: 9b5710945e8cfda449e5d8d0fd233d88, type: 3}
       propertyPath: _currentSoulType
       value: 1
@@ -15173,6 +15206,7 @@ MonoBehaviour:
   - {fileID: 1418135967}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!21 &1444593560
@@ -20357,6 +20391,7 @@ MonoBehaviour:
   - {fileID: 1581841552}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &1589570215
@@ -20938,6 +20973,7 @@ MonoBehaviour:
   - {fileID: 1683235652}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &1704030601
@@ -57588,13 +57624,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8843710ab2a4b074b89e8ecfdd982a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabsByKind:
-  - _kind: 0
-    _prefab: {fileID: 1331630848409759103, guid: ad2bd48f286829f489dc300b202e125e, type: 3}
-  - _kind: 1
-    _prefab: {fileID: 4540917626595518321, guid: 1bd9df0a52eddfc4c904acad094b43c5, type: 3}
-  - _kind: 2
-    _prefab: {fileID: 2655078774710047753, guid: 76343425e3f487c40b23e92246bd467b, type: 3}
+  _enemysData:
+  - {fileID: 11400000, guid: 06280096d80ebbb449ac734999a2eab6, type: 2}
+  - {fileID: 11400000, guid: 33bb76238d76e084c8d088e959ae6fd9, type: 2}
+  - {fileID: 11400000, guid: d88569e610387d44daa1f9836c13ad49, type: 2}
   _inactiveContainer: {fileID: 1266995758}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1
@@ -58426,6 +58459,7 @@ MonoBehaviour:
   _UIParticles:
   - _uiParticle: {fileID: 871467052}
     _applyToTrail: 1
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &2062695701
@@ -58473,13 +58507,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a684e956b6380754ab720a26ece0eff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabsByKind:
-  - _kind: 0
-    _prefab: {fileID: 5899287935479151394, guid: e922f28352a5cc042b3da6260cf8dba9, type: 3}
-  - _kind: 1
-    _prefab: {fileID: -6829597345607373465, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
-  - _kind: 2
-    _prefab: {fileID: 2976287767735029814, guid: 7240fdc6637bda3479f949a0f9bb9965, type: 3}
+  _enemysData:
+  - {fileID: 11400000, guid: ac132ccb2262a71479b793e926f56e04, type: 2}
+  - {fileID: 11400000, guid: 88208f95f9a325e4cbd5ab864c417e5d, type: 2}
+  - {fileID: 11400000, guid: 86f85c3f2c7f0564e950bc0c13c16baf, type: 2}
   _inactiveContainer: {fileID: 1385848401}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1
@@ -63590,6 +63621,7 @@ MonoBehaviour:
   - {fileID: 2112716622}
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!1 &2145396103
@@ -63637,13 +63669,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2df1ed05fc1b4745a6229a848a5851a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabsByKind:
-  - _kind: 0
-    _prefab: {fileID: 4101581840176747302, guid: 598bf8935dfbb6a49bb5fdb884e239c1, type: 3}
-  - _kind: 1
-    _prefab: {fileID: 4527693246588735446, guid: 6634bbdfc9fb607448f91d6363ee17e0, type: 3}
-  - _kind: 2
-    _prefab: {fileID: 2967995751957790497, guid: a78b56bf21748ef49a89647b53e3c2a8, type: 3}
+  _enemysData:
+  - {fileID: 11400000, guid: 66a81c403af963e40afcd27760fe4618, type: 2}
+  - {fileID: 11400000, guid: 242c72e59745ac9439ffb09ee4ed4b55, type: 2}
+  - {fileID: 11400000, guid: de97f7c272acae34e864613b97855690, type: 2}
   _inactiveContainer: {fileID: 1070628920}
   _prewarmPerPrefab: 10
   _prewarmOnInit: 1

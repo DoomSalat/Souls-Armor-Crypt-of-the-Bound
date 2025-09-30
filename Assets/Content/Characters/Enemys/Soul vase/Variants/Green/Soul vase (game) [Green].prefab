@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1786570354420624699, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
       propertyPath: m_Name
-      value: Soul vase (game) [Green]_Variant
+      value: 'Soul vase (game) [Green]'
       objectReference: {fileID: 0}
     - target: {fileID: 3373918496019332053, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
       propertyPath: _soulType
@@ -94,6 +94,7 @@ MonoBehaviour:
   _impulseForce: 10
   _impulseInterval: 1
   _maxSpeed: 15
+  _closeRangeDistance: 4
   _initialSpreadAngle: 90
   _spreadReductionRate: 10
   _minSpreadAngle: 5

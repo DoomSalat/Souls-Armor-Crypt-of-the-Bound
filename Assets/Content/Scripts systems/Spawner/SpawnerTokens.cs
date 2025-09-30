@@ -1,41 +1,46 @@
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
+using static VFolders.Libs.VUtils;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace SpawnerSystem
 {
 	public class SpawnerTokens : MonoBehaviour
 	{
-		private const int SectionCount = 8;
+		private const int SectionCount = 12;
 		private const int EnemyKindCount = 4;
 		private const float ScreenHeightMultiplier = 0.5f;
 		private const float SectionAngleRadians = Mathf.PI / 4f;
 		private const float DefaultWeight = 1f;
 
-		[SerializeField, MinValue(0)] private float _baseCostPerEnemy = 1f;
 		[SerializeField, MinValue(0)] private float _decayPerSecond = 0.25f;
 		[SerializeField, MinValue(0)] private float _minCost = 1f;
 		[SerializeField, MinValue(0)] private float _spawnDistanceFromCenter = 3f;
-		[SerializeField, MinValue(0)] private float _desiredPowerPerSection = 5f;
-		[SerializeField, Range(0, 1)] private float _glitchChance = 0.05f;
-		[SerializeField, MinValue(0)] private int _maxSectionDeviation = 2;
 
-		[Header("Weights by kind")]
-		[SerializeField] private EnemyTier[] _kindWeights;
+		[System.Serializable]
+		public class SectionDebugInfo
+		{
+			public int EnemyCount;
+			public float SectionCost;
+		}
 
-		[Header("Manual Mode")]
-		[SerializeField] private bool _manualMode;
+		[Header("Debug")]
+		[SerializeField] private bool _showDebugGizmos = false;
+		[SerializeField, ReadOnly] private SerializableDictionary<int, SectionDebugInfo> _debugSectionsInfo = new SerializableDictionary<int, SectionDebugInfo>();
 
-		public bool ManualMode => _manualMode;
+		private Dictionary<EnemyKind, float> _kindWeightsLookup;
+
+		public int Sections => SectionCount;
 
 		private Transform _player;
 		private Camera _camera;
 
 		private readonly float[] _costBySection = new float[SectionCount];
 		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount, EnemyKindCount];
-		private int _currentTargetSection;
-		private float _currentSectionPower;
-		private bool _isTargetingNewSection = true;
 
 		private void Awake()
 		{
@@ -45,7 +50,7 @@ namespace SpawnerSystem
 				_costBySection[i] = _minCost;
 		}
 
-		private void Update()
+		public void UpdateDecay()
 		{
 			float decay = _decayPerSecond * Time.deltaTime;
 
@@ -53,6 +58,8 @@ namespace SpawnerSystem
 			{
 				_costBySection[i] = Mathf.Max(_minCost, _costBySection[i] - decay);
 			}
+
+			UpdateDebugArrays();
 		}
 
 		public void Init(Transform player)
@@ -60,115 +67,91 @@ namespace SpawnerSystem
 			_player = player;
 		}
 
-		public SpawnSection SelectSection()
+		public void InitWeightsFromSpawnerEnemys(SpawnerEnemys spawnerEnemys)
 		{
-			if (UnityEngine.Random.value < _glitchChance)
+			if (spawnerEnemys == null)
+				return;
+
+			var allEnemyData = spawnerEnemys.AllEnemyData;
+
+			_kindWeightsLookup = new Dictionary<EnemyKind, float>();
+
+			foreach (var enemyData in allEnemyData)
 			{
-				return (SpawnSection)UnityEngine.Random.Range(0, SectionCount);
-			}
-
-			if (_isTargetingNewSection || _currentSectionPower >= _desiredPowerPerSection)
-			{
-				_currentTargetSection = SelectNewTargetSection();
-				_currentSectionPower = 0f;
-				_isTargetingNewSection = false;
-			}
-
-			return (SpawnSection)_currentTargetSection;
-		}
-
-		private int SelectNewTargetSection()
-		{
-			int lowestPowerSection = 0;
-			float lowestPower = _costBySection[0];
-
-			for (int i = 1; i < _costBySection.Length; i++)
-			{
-				if (_costBySection[i] < lowestPower)
+				if (enemyData != null)
 				{
-					lowestPower = _costBySection[i];
-					lowestPowerSection = i;
+					_kindWeightsLookup[enemyData.EnemyKind] = enemyData.SectionWeight;
 				}
 			}
-
-			int oppositeSection = (lowestPowerSection + SectionCount / 2) % SectionCount;
-
-			int deviation = UnityEngine.Random.Range(-_maxSectionDeviation, _maxSectionDeviation + 1);
-			int targetSection = (oppositeSection + deviation + SectionCount) % SectionCount;
-
-			return targetSection;
 		}
 
-		public void ForceRetarget()
+		public float[] GetSectionWeights()
 		{
-			_isTargetingNewSection = true;
+			return _costBySection;
 		}
 
-		public void Commit(SpawnSection section, int enemiesSpawned)
+		public float GetSectionWeight(int sectionIndex)
+		{
+			if (sectionIndex >= 0 && sectionIndex < SectionCount)
+				return _costBySection[sectionIndex];
+			return _minCost;
+		}
+
+		public void Commit(SpawnSection section, int enemiesSpawned, float costPerEnemy = 1f)
 		{
 			if (enemiesSpawned <= 0)
 				return;
 
 			int index = (int)section;
-			float powerAdded = enemiesSpawned * Mathf.Max(_baseCostPerEnemy, _minCost);
+			float powerAdded = enemiesSpawned * Mathf.Max(costPerEnemy, _minCost);
 			_costBySection[index] += powerAdded;
 
-			if (index == _currentTargetSection)
-			{
-				_currentSectionPower += powerAdded;
-			}
+			UpdateDebugArrays();
 		}
 
-		public void Release(SpawnSection section, int enemiesReturned)
+		public void Release(SpawnSection section, int enemiesReturned, float costPerEnemy = 1f)
 		{
 			if (enemiesReturned <= 0)
 				return;
 
 			int index = (int)section;
-			_costBySection[index] = Mathf.Max(_minCost, _costBySection[index] - enemiesReturned * _baseCostPerEnemy);
+			_costBySection[index] = Mathf.Max(_minCost, _costBySection[index] - enemiesReturned * costPerEnemy);
+
+			UpdateDebugArrays();
 		}
 
-		public void CommitKind(SpawnSection section, EnemyKind kind, int amount = 1)
+		public int[] GetEnemyCountsBySection(SpawnSection section)
+		{
+			int sectionIndex = (int)section;
+			int[] counts = new int[EnemyKindCount];
+
+			for (int i = 0; i < EnemyKindCount; i++)
+			{
+				counts[i] = _enemyKindCountsBySection[sectionIndex, i];
+			}
+
+			return counts;
+		}
+
+		public int GetEnemyCountBySectionAndKind(SpawnSection section, EnemyKind kind)
 		{
 			int sectionIndex = (int)section;
 			int kindIndex = (int)kind;
 
-			_enemyKindCountsBySection[sectionIndex, kindIndex] += amount;
+			if (sectionIndex >= 0 && sectionIndex < SectionCount &&
+				kindIndex >= 0 && kindIndex < EnemyKindCount)
+			{
+				return _enemyKindCountsBySection[sectionIndex, kindIndex];
+			}
+
+			return 0;
 		}
-
-		public void ReleaseKind(SpawnSection section, EnemyKind kind, int amount = 1)
-		{
-			int sectionIndex = (int)section;
-			int kindIndex = (int)kind;
-
-			_enemyKindCountsBySection[sectionIndex, kindIndex] = Mathf.Max(0, _enemyKindCountsBySection[sectionIndex, kindIndex] - amount);
-		}
-
-		public EnemyKind SuggestComplementaryKind(SpawnSection section)
-		{
-			int sectionIndex = (int)section;
-			int soul = _enemyKindCountsBySection[sectionIndex, (int)EnemyKind.Soul];
-			int vase = _enemyKindCountsBySection[sectionIndex, (int)EnemyKind.SoulVase];
-			int skelet = _enemyKindCountsBySection[sectionIndex, (int)EnemyKind.Skelet];
-			int knight = _enemyKindCountsBySection[sectionIndex, (int)EnemyKind.Knight];
-
-			if (knight > 0 && skelet == 0)
-				return EnemyKind.Skelet;
-			if (skelet > 0 && knight == 0)
-				return EnemyKind.Knight;
-			if (soul + vase > 2)
-				return EnemyKind.Skelet;
-
-			return EnemyKind.Soul;
-		}
-
 
 		public float GetKindWeight(EnemyKind kind)
 		{
-			for (int i = 0; i < (_kindWeights?.Length ?? 0); i++)
+			if (_kindWeightsLookup != null && _kindWeightsLookup.TryGetValue(kind, out float weight))
 			{
-				if (_kindWeights[i].Kind == kind)
-					return Mathf.Max(0f, _kindWeights[i].Weight);
+				return Mathf.Max(0f, weight);
 			}
 
 			return DefaultWeight;
@@ -181,7 +164,7 @@ namespace SpawnerSystem
 
 			Vector3 topScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 1f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
 			Vector3 bottomScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
-			float screenHeight = Vector3.Distance(topScreen, bottomScreen);
+			float screenHeight = Mathf.Sqrt((topScreen - bottomScreen).sqrMagnitude);
 			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
 
 			float angleInRadians = (int)section * SectionAngleRadians;
@@ -196,6 +179,159 @@ namespace SpawnerSystem
 		public SpawnSection GetSectionByDirection(SpawnDirection direction)
 		{
 			return (SpawnSection)((int)direction);
+		}
+
+		public void RecalculateSectionsByEnemyPositions(PooledEnemy[] activeEnemies)
+		{
+			for (int i = 0; i < SectionCount; i++)
+			{
+				for (int j = 0; j < EnemyKindCount; j++)
+				{
+					_enemyKindCountsBySection[i, j] = 0;
+				}
+			}
+
+			foreach (var enemy in activeEnemies)
+			{
+				if (enemy == null || enemy.gameObject == null)
+					continue;
+
+				var section = GetSectionByPosition(enemy.transform.position);
+				int sectionIndex = (int)section;
+
+				var spawnMeta = enemy.GetComponent<EnemySpawnMeta>();
+				if (spawnMeta == null)
+					continue;
+
+				int kindIndex = (int)spawnMeta.Kind;
+
+				if (sectionIndex >= 0 && sectionIndex < SectionCount &&
+					kindIndex >= 0 && kindIndex < EnemyKindCount)
+				{
+					_enemyKindCountsBySection[sectionIndex, kindIndex]++;
+				}
+			}
+
+			UpdateDebugArrays();
+		}
+
+		private SpawnSection GetSectionByPosition(Vector3 position)
+		{
+			if (_player == null)
+				return SpawnSection.Right;
+
+			Vector3 direction = (position - _player.position).normalized;
+			float angle = Mathf.Atan2(direction.y, direction.x);
+
+			// normalize angle from 0 to 2π
+			if (angle < 0)
+				angle += 2f * Mathf.PI;
+
+			int sectionIndex = Mathf.FloorToInt(angle / (2f * Mathf.PI / SectionCount));
+			sectionIndex = Mathf.Clamp(sectionIndex, 0, SectionCount - 1);
+
+			return (SpawnSection)sectionIndex;
+		}
+
+		private void UpdateDebugArrays()
+		{
+			_debugSectionsInfo.Clear();
+
+			for (int i = 0; i < SectionCount; i++)
+			{
+				int totalEnemies = 0;
+				for (int j = 0; j < EnemyKindCount; j++)
+				{
+					totalEnemies += _enemyKindCountsBySection[i, j];
+				}
+
+				_debugSectionsInfo[i] = new SectionDebugInfo
+				{
+					EnemyCount = totalEnemies,
+					SectionCost = _costBySection[i]
+				};
+			}
+		}
+
+		private void OnDrawGizmos()
+		{
+			if (!_showDebugGizmos)
+				return;
+
+			if (_player == null || _camera == null)
+				return;
+
+			DrawSectorGizmos();
+		}
+
+		private void DrawSectorGizmos()
+		{
+			Vector3 topScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 1f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
+			Vector3 bottomScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
+			float screenHeight = Mathf.Sqrt((topScreen - bottomScreen).sqrMagnitude);
+			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
+
+			float angleStep = 2f * Mathf.PI / SectionCount;
+
+			for (int i = 0; i < SectionCount; i++)
+			{
+				float startAngle = i * angleStep;
+				float endAngle = (i + 1) * angleStep;
+
+				float sectionCost = _minCost;
+				if (_debugSectionsInfo.TryGetValue(i, out var debugInfo))
+				{
+					sectionCost = debugInfo.SectionCost;
+				}
+
+				float maxCost = 20f;
+				float loadFactor = Mathf.Clamp01(sectionCost / maxCost);
+
+				Color sectionColor;
+				if (loadFactor <= 0.5f)
+				{
+					sectionColor = Color.Lerp(Color.white, Color.green, loadFactor * 2f);
+				}
+				else
+				{
+					sectionColor = Color.Lerp(Color.green, Color.red, (loadFactor - 0.5f) * 2f);
+				}
+				sectionColor.a = 0.6f;
+
+				Gizmos.color = sectionColor;
+
+				DrawSector(_player.position, circleRadius, startAngle, endAngle);
+
+				float labelAngle = startAngle + angleStep * 0.5f;
+				Vector3 labelPosition = _player.position + new Vector3(
+					Mathf.Cos(labelAngle) * (circleRadius + 0.5f),
+					Mathf.Sin(labelAngle) * (circleRadius + 0.5f),
+					_player.position.z
+				);
+
+#if UNITY_EDITOR
+				Handles.Label(labelPosition, $"S{i}\n{sectionCost:F1}");
+#endif
+			}
+		}
+
+		private void DrawSector(Vector3 center, float radius, float startAngle, float endAngle)
+		{
+			Vector3 startPoint = center + new Vector3(
+				Mathf.Cos(startAngle) * radius,
+				Mathf.Sin(startAngle) * radius,
+				center.z
+			);
+
+			Vector3 endPoint = center + new Vector3(
+				Mathf.Cos(endAngle) * radius,
+				Mathf.Sin(endAngle) * radius,
+				center.z
+			);
+
+			Gizmos.DrawLine(center, startPoint);
+			Gizmos.DrawLine(center, endPoint);
+			Gizmos.DrawLine(startPoint, endPoint);
 		}
 	}
 }

@@ -325,8 +325,8 @@ MonoBehaviour:
   _deathEndedDelay: 1
   _bodySoulDelay: 3
   _bodySoulSpawnOffset: 0.5
-  _bodySoulSpawnForce: 5
-  _bodySoulSpawnForceAmount: 1.5
+  _bodySoulSpawnForce: 1
+  _bodySoulSpawnForceAmount: 0.5
   _swordSoulSpawnPoint: {fileID: 2975194210286724048}
   _bodySoulSpawnPoint: {fileID: 7025974063041078526}
 --- !u!114 &530817803738132294
@@ -444,7 +444,8 @@ GameObject:
   - component: {fileID: 4825290554069786977}
   - component: {fileID: 1448695473887685867}
   - component: {fileID: 5331486775774857942}
-  m_Layer: 7
+  - component: {fileID: 8034338142970032941}
+  m_Layer: 11
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,10 +615,12 @@ MonoBehaviour:
   _blockingRange: 6
   _pivotPoint: {fileID: 8676344370624253695}
   _swordBlockPoint: {fileID: 2315633952433824848}
+  _particleSystemSoul: {fileID: 1201036396769806981}
   _colliders:
   - {fileID: 3988104604324415235}
   - {fileID: 8623885061841992739}
-  _particleSystemSoul: {fileID: 1201036396769806981}
+  _hitBox: {fileID: 7679441529780811075}
+  _swordWallBounce: {fileID: 8034338142970032941}
   _moveSpeed: 50
   _moveAcceleration: 120
   _arrivalThreshold: 0.1
@@ -665,6 +668,31 @@ MonoBehaviour:
   _UIParticles: []
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
+--- !u!114 &8034338142970032941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6911834525912151953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d121ad469fc714285405fdc706c9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _baseBounceDistance: 2
+  _bounceMultiplier: 1.5
+  _maxBounceDistance: 5
+  _bounceDuration: 0.3
+  _bounceEase: 27
+  _rotationSpeed: 10
+  _springRecoveryTime: 0.5
+  _springRecoveryEase: 5
+  _particleSpawner: {fileID: 0}
+  _spawnParticlesOnBounce: 1
 --- !u!1 &7354942510092653515
 GameObject:
   m_ObjectHideFlags: 0

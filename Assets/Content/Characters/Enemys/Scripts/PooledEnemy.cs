@@ -12,9 +12,12 @@ namespace SpawnerSystem
 
 		private EnemySpawnMeta _spawnMeta;
 		private IFollower _follower;
+		private Soul _soul;
 		private bool _cached;
 
 		public event System.Action<PooledEnemy> ReturnedToPool;
+
+		public Soul Soul => _soul;
 
 		public void Initialize(EnemyPool pool, PooledEnemy prefabOrigin)
 		{
@@ -32,6 +35,7 @@ namespace SpawnerSystem
 
 			_spawnMeta = GetComponent<EnemySpawnMeta>();
 			_follower = GetComponent<IFollower>();
+			_soul = GetComponent<Soul>();
 			_cached = true;
 		}
 

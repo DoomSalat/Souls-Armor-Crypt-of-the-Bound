@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 name: Unity Core Rules - Import All
 priority: 100
@@ -34,6 +34,3 @@ patterns:
 # 70: Performance Optimizations
 
 rules: []
-
-
-

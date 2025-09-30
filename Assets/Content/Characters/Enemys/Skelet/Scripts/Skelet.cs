@@ -78,16 +78,20 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		_damage.DeathRequested -= OnDeathRequested;
 	}
 
-	private void FixedUpdate()
-	{
-		if (_follower.IsMovementEnabled && _follower.TryGetDistanceToTarget(out float distance))
-		{
-			UpdateMovement(distance);
-		}
-	}
-
 	private void Update()
 	{
+		if (_follower.TryGetDistanceToTarget(out float distanceToTarget))
+		{
+			if (distanceToTarget <= _optimalDistance)
+			{
+				_follower.PauseMovement();
+			}
+			else
+			{
+				_follower.ResumeMovement();
+			}
+		}
+
 		if (_attackState != AttackState.Attacking)
 		{
 			UpdateFlipDirection();
@@ -103,6 +107,14 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 		if (_follower.TryGetDistanceToTarget(out float distance))
 		{
 			UpdateAttack(distance);
+		}
+	}
+
+	private void FixedUpdate()
+	{
+		if (_follower.IsMovementEnabled && _follower.TryGetDistanceToTarget(out float distance))
+		{
+			UpdateMovement(distance);
 		}
 	}
 
@@ -148,13 +160,6 @@ public class Skelet : MonoBehaviour, ISpawnInitializable
 			return;
 		}
 
-		if (distanceToTarget <= _optimalDistance)
-		{
-			_follower.PauseMovement();
-			return;
-		}
-
-		_follower.ResumeMovement();
 		_follower.TryFollow();
 
 		if (_debug)
