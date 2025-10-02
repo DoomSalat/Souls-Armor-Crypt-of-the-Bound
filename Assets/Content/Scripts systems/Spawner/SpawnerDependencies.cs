@@ -4,7 +4,7 @@ namespace SpawnerSystem
 {
 	public sealed class SpawnerDependencies
 	{
-		public SpawnerTokens Tokens;
+		public SpawnerSection Tokens;
 		public EnemyPool EnemyPool;
 		public ISoulSpawnRequestHandler SoulSpawnRequestHandler;
 		public ThrowSpawner ThrowSpawner;

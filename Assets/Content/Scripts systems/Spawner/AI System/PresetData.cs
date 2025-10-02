@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 namespace SpawnerSystem
 {
@@ -32,22 +33,60 @@ namespace SpawnerSystem
 		[Header("Preset Settings")]
 		[SerializeField, MinValue(1)] private int _tokenCost = 3;
 		[SerializeField, MinValue(0.1f)] private float _presetCooldown = 6f;
-		[SerializeField, MinValue(0)] private int _difficultyLevel = 0;
+		[SerializeField, MinValue(0)] private int[] _allowedDifficultyLevels = { 0 };
 		[SerializeField, MinValue(1)] private int _cooldownCycles = 2;
 
 		[Header("Enemy Placement")]
 		[InfoBox("Section 1 = main enemy (center), Sections 2-12 = additional enemies around")]
-		[SerializeField] private EnemyPlacement[] _enemyPlacements;
+		[SerializeField] private EnemyPlacement[] _enemyPlacements = new EnemyPlacement[1];
 
 		public string PresetName => _presetName;
 		public string Description => _description;
 
 		public int TokenCost => _tokenCost;
 		public float PresetCooldown => _presetCooldown;
-		public int DifficultyLevel => _difficultyLevel;
+		public int[] AllowedDifficultyLevels => _allowedDifficultyLevels;
 		public int CooldownCycles => _cooldownCycles;
 
-		public EnemyPlacement[] EnemyPlacements => _enemyPlacements;
+#if UNITY_EDITOR
+		private void OnValidate()
+		{
+			if (_tokenCost < 1) _tokenCost = 1;
+			if (_presetCooldown < 0.1f) _presetCooldown = 0.1f;
+			if (_cooldownCycles < 1) _cooldownCycles = 1;
+
+			if (_allowedDifficultyLevels == null || _allowedDifficultyLevels.Length == 0)
+			{
+				_allowedDifficultyLevels = new int[] { 0 };
+			}
+			else
+			{
+				_allowedDifficultyLevels = _allowedDifficultyLevels
+					.Where(level => level >= 0)
+					.Distinct()
+					.OrderBy(level => level)
+					.ToArray();
+			}
+		}
+#endif
+
+		public EnemyPlacement[] GetEnemyPlacements()
+		{
+			EnemyPlacement[] result = new EnemyPlacement[13]; // Индексы 0-12, где 0 пустой
+
+			if (_enemyPlacements != null)
+			{
+				foreach (var placement in _enemyPlacements)
+				{
+					if (placement != null && placement.Section >= 1 && placement.Section <= 12)
+					{
+						result[placement.Section] = placement;
+					}
+				}
+			}
+
+			return result;
+		}
 
 		public int GetTotalEnemyCount()
 		{
@@ -65,7 +104,7 @@ namespace SpawnerSystem
 
 		public float[] GetSectionWeights()
 		{
-			float[] sectionWeights = new float[13]; // 0-12, где 0 всегда пустой (фиксированный размер для совместимости)
+			float[] sectionWeights = new float[13];
 
 			if (_enemyPlacements != null)
 			{
@@ -90,14 +129,12 @@ namespace SpawnerSystem
 			return availableSoulTypes[UnityEngine.Random.Range(0, availableSoulTypes.Length)];
 		}
 
-#if UNITY_EDITOR
-		private void OnValidate()
+		public bool IsAvailableForDifficulty(int difficultyLevel)
 		{
-			if (_tokenCost < 1) _tokenCost = 1;
-			if (_presetCooldown < 0.1f) _presetCooldown = 0.1f;
-			if (_difficultyLevel < 0) _difficultyLevel = 0;
-			if (_cooldownCycles < 1) _cooldownCycles = 1;
+			if (_allowedDifficultyLevels == null || _allowedDifficultyLevels.Length == 0)
+				return false;
+
+			return _allowedDifficultyLevels.Contains(difficultyLevel);
 		}
-#endif
 	}
 }

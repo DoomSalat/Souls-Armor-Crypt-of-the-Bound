@@ -188,7 +188,7 @@ namespace SpawnerSystem
 			return _activeEnemies.ToArray();
 		}
 
-		protected EnemyKind ChooseKindWeightedByTokens(SpawnerTokens tokens)
+		protected EnemyKind ChooseKindWeightedByTokens(SpawnerSection tokens)
 		{
 			var availableKinds = GetAllEnemyKinds();
 			if (availableKinds.Length == 0)

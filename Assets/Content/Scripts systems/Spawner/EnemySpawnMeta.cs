@@ -4,7 +4,7 @@ namespace SpawnerSystem
 {
 	public class EnemySpawnMeta : MonoBehaviour
 	{
-		public SpawnerTokens Tokens { get; private set; }
+		public SpawnerSection Tokens { get; private set; }
 		public SpawnSection Section { get; private set; }
 		public EnemyKind Kind { get; private set; }
 		public Transform InactiveParent { get; private set; }
@@ -18,7 +18,7 @@ namespace SpawnerSystem
 			_spawnInitializable = GetComponent<ISpawnInitializable>();
 		}
 
-		public void Set(SpawnerTokens tokens, SpawnSection section, EnemyKind kind = EnemyKind.Soul, Transform inactiveParent = null)
+		public void Set(SpawnerSection tokens, SpawnSection section, EnemyKind kind = EnemyKind.Soul, Transform inactiveParent = null)
 		{
 			Tokens = tokens;
 			Section = section;

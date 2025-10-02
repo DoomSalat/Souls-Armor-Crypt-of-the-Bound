@@ -40,7 +40,7 @@ namespace SpawnerSystem
 			_cached = true;
 		}
 
-		public void SetupForSpawn(SpawnerTokens tokens, SpawnSection section, Transform player, EnemyKind kind, Transform inactiveParent = null, StatusMachine statusMachine = null)
+		public void SetupForSpawn(SpawnerSection tokens, SpawnSection section, Transform player, EnemyKind kind, Transform inactiveParent = null, StatusMachine statusMachine = null)
 		{
 			if (!_cached)
 				CacheComponents();

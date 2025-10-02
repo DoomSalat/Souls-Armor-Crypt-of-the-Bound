@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SpawnerSystem
 {
-	[RequireComponent(typeof(SpawnerTokens), typeof(SpawnerEnemys))]
+	[RequireComponent(typeof(SpawnerSection), typeof(SpawnerEnemys))]
 	public class SpawnerEnemysAI : MonoBehaviour
 	{
 		[Header("Difficulty Levels")]
@@ -27,7 +27,7 @@ namespace SpawnerSystem
 		[SerializeField] private bool _showDebugInfo = false;
 		[SerializeField] private bool _disableWaveSystem = false;
 
-		private SpawnerTokens _spawnerTokens;
+		private SpawnerSection _spawnerTokens;
 		private SpawnerEnemys _spawnerEnemys;
 
 		private DifficultyLevel _currentDifficultyLevel;
@@ -55,7 +55,7 @@ namespace SpawnerSystem
 			if (!enabled)
 				return;
 
-			_spawnerTokens = GetComponent<SpawnerTokens>();
+			_spawnerTokens = GetComponent<SpawnerSection>();
 			_spawnerEnemys = GetComponent<SpawnerEnemys>();
 
 			InitializeDifficultySystem();
@@ -168,7 +168,7 @@ namespace SpawnerSystem
 
 			foreach (var preset in _availablePresets)
 			{
-				if (preset != null && preset.DifficultyLevel == _currentDifficultyIndex)
+				if (preset != null && preset.IsAvailableForDifficulty(_currentDifficultyIndex))
 				{
 					_presetCooldowns[preset.PresetName] = 0;
 				}
@@ -231,7 +231,7 @@ namespace SpawnerSystem
 			{
 				Success = true,
 				IsPreset = true,
-				Enemies = presetData.EnemyPlacements.SelectMany(p => Enumerable.Repeat(p.EnemyKind, p.Count)).ToArray(),
+				Enemies = presetData.GetEnemyPlacements().Where(p => p != null).SelectMany(p => Enumerable.Repeat(p.EnemyKind, p.Count)).ToArray(),
 				SpawnedEnemies = spawnedEnemies,
 				TotalCooldown = presetData.PresetCooldown,
 				TokensSpent = presetData.TokenCost
@@ -242,7 +242,7 @@ namespace SpawnerSystem
 		{
 			var placements = new List<PresetEnemyInfo>();
 
-			foreach (var placement in presetData.EnemyPlacements)
+			foreach (var placement in presetData.GetEnemyPlacements().Where(p => p != null))
 			{
 				for (int i = 0; i < placement.Count; i++)
 				{
@@ -363,15 +363,6 @@ namespace SpawnerSystem
 			return (SpawnSection)targetSection;
 		}
 
-		private bool CanAffordEnemy(EnemyKind enemyKind)
-		{
-			var enemyData = _spawnerEnemys.GetEnemyData(enemyKind);
-			if (enemyData == null)
-				return false;
-
-			return _currentTokens >= enemyData.TokenValue;
-		}
-
 		private bool SpendTokens(float tokenCost)
 		{
 			if (_currentTokens >= tokenCost)
@@ -388,20 +379,6 @@ namespace SpawnerSystem
 			return false;
 		}
 
-		private EnemyKind[] GetAvailableEnemiesForCurrentDifficulty()
-		{
-			return _spawnerEnemys.GetAvailableEnemiesForDifficulty(_currentDifficultyIndex);
-		}
-
-		private EnemyKind SelectRandomAvailableEnemy()
-		{
-			var availableEnemies = GetAvailableEnemiesForCurrentDifficulty();
-			if (availableEnemies.Length == 0)
-				return EnemyKind.Soul;
-
-			return availableEnemies[Random.Range(0, availableEnemies.Length)];
-		}
-
 		private PresetData SelectAvailablePreset()
 		{
 			if (_availablePresets == null)
@@ -412,7 +389,7 @@ namespace SpawnerSystem
 			foreach (var preset in _availablePresets)
 			{
 				if (preset != null &&
-					preset.DifficultyLevel == _currentDifficultyIndex &&
+					preset.IsAvailableForDifficulty(_currentDifficultyIndex) &&
 					_presetCooldowns.ContainsKey(preset.PresetName) &&
 					_presetCooldowns[preset.PresetName] <= 0 &&
 					CanAffordPreset(preset))
@@ -511,11 +488,12 @@ namespace SpawnerSystem
 
 		private float CalculatePresetScoreForWeakSection(PresetData preset, float[] currentSectionWeights, int weakestSection)
 		{
-			if (preset.EnemyPlacements == null)
+			var placements = preset.GetEnemyPlacements();
+			if (placements == null || placements.All(p => p == null))
 				return float.MinValue;
 
 			float[] presetWeights = preset.GetSectionWeights();
-			float[] simulatedWeights = new float[_spawnerTokens.Sections + 1]; // 0-Sections, где 0 всегда пустой
+			float[] simulatedWeights = new float[_spawnerTokens.Sections + 1];
 
 			for (int i = 1; i <= _spawnerTokens.Sections; i++)
 			{
@@ -549,70 +527,6 @@ namespace SpawnerSystem
 			}
 
 			return weakSectionBonus - variance;
-		}
-
-		private float CalculatePresetUniformityScore(PresetData preset, float[] currentSectionWeights)
-		{
-			if (preset.EnemyPlacements == null)
-				return float.MaxValue;
-
-			float[] presetWeights = preset.GetSectionWeights();
-			float[] simulatedWeights = new float[_spawnerTokens.Sections + 1];
-
-			for (int i = 1; i <= _spawnerTokens.Sections; i++)
-			{
-				if (i - 1 < currentSectionWeights.Length)
-				{
-					simulatedWeights[i] = currentSectionWeights[i - 1];
-				}
-			}
-
-			for (int i = 1; i <= _spawnerTokens.Sections; i++)
-			{
-				simulatedWeights[i] += presetWeights[i];
-			}
-
-			var highWeightSections = new List<int>();
-			float maxWeight = simulatedWeights.Skip(1).Max();
-
-			for (int i = 1; i <= _spawnerTokens.Sections; i++)
-			{
-				if (simulatedWeights[i] >= maxWeight * 0.8f)
-				{
-					highWeightSections.Add(i);
-				}
-			}
-
-			int weakestSection = 1;
-			float minWeight = simulatedWeights[1];
-
-			for (int i = 1; i <= _spawnerTokens.Sections; i++)
-			{
-				if (simulatedWeights[i] < minWeight)
-				{
-					minWeight = simulatedWeights[i];
-					weakestSection = i;
-				}
-			}
-
-			float mean = simulatedWeights.Skip(1).Average();
-			float variance = 0f;
-
-			for (int i = 1; i <= _spawnerTokens.Sections; i++)
-			{
-				float diff = simulatedWeights[i] - mean;
-				variance += diff * diff;
-			}
-
-			variance /= _spawnerTokens.Sections;
-
-			float weakSectionBonus = 0f;
-			if (presetWeights[weakestSection] > 0)
-			{
-				weakSectionBonus = presetWeights[weakestSection] * 0.5f;
-			}
-
-			return variance - weakSectionBonus;
 		}
 
 		private void ReduceAllPresetCooldowns()
@@ -676,66 +590,6 @@ namespace SpawnerSystem
 			}
 		}
 
-		private PresetSpawnResult ProcessPresetSpawn(PresetData presetData)
-		{
-			if (presetData == null)
-				return new PresetSpawnResult { Success = false };
-
-			if (!ShouldSpawn())
-				return new PresetSpawnResult { Success = false };
-
-			if (!SpendTokens(presetData.TokenCost))
-				return new PresetSpawnResult { Success = false };
-
-			SpawnSection mainSection = SelectSection();
-
-			var placements = new System.Collections.Generic.List<PresetEnemyInfo>();
-
-			foreach (var placement in presetData.EnemyPlacements)
-			{
-				for (int i = 0; i < placement.Count; i++)
-				{
-					int absoluteSection = CalculateAbsoluteSection((int)mainSection, placement.Section);
-
-					SoulType soulType = placement.SoulType;
-					if (soulType == SoulType.Random)
-					{
-						soulType = presetData.GetRandomSoulType(_spawnerEnemys);
-					}
-
-					placements.Add(new PresetEnemyInfo
-					{
-						EnemyKind = placement.EnemyKind,
-						SoulType = soulType,
-						Section = (SpawnSection)absoluteSection
-					});
-				}
-			}
-
-			_lastTimerDuration = presetData.PresetCooldown;
-			_nextSpawnTime = Time.time + presetData.PresetCooldown;
-			_currentTimer = presetData.PresetCooldown;
-
-			int totalEnemies = placements.Count;
-			float tokensPerEnemy = totalEnemies > 0 ? presetData.TokenCost / (float)totalEnemies : 0f;
-			float timerPerEnemy = totalEnemies > 0 ? presetData.PresetCooldown / (float)totalEnemies : 0f;
-
-			var spawnedEnemies = _spawnerEnemys.SpawnPresetEnemies(placements.ToArray(), tokensPerEnemy, timerPerEnemy);
-
-			if (_showDebugInfo)
-				Debug.Log($"[{nameof(SpawnerEnemysAI)}] Preset '{presetData.PresetName}' spawned: {spawnedEnemies.Length} enemies, main section: {mainSection}, {presetData.TokenCost} tokens spent, {presetData.PresetCooldown:F1}s cooldown");
-
-			return new PresetSpawnResult
-			{
-				Success = true,
-				PresetName = presetData.PresetName,
-				MainSection = mainSection,
-				Placements = placements.ToArray(),
-				SpawnedEnemies = spawnedEnemies,
-				TotalCooldown = presetData.PresetCooldown,
-				TokensSpent = presetData.TokenCost
-			};
-		}
 
 		private int CalculateAbsoluteSection(int mainSection, int presetSection)
 		{

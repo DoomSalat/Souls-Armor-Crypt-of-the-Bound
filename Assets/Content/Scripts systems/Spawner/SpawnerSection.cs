@@ -9,15 +9,12 @@ using UnityEditor;
 
 namespace SpawnerSystem
 {
-	public class SpawnerTokens : MonoBehaviour
+	public class SpawnerSection : MonoBehaviour
 	{
 		private const int SectionCount = 12;
 		private const int EnemyKindCount = 4;
 		private const float ScreenHeightMultiplier = 0.5f;
-		private const float DefaultWeight = 1f;
 
-		[SerializeField, MinValue(0)] private float _decayPerSecond = 0.25f;
-		[SerializeField, MinValue(0)] private float _minCost = 1f;
 		[SerializeField, MinValue(0)] private float _spawnDistanceFromCenter = 3f;
 
 		[System.Serializable]
@@ -38,27 +35,15 @@ namespace SpawnerSystem
 		private Transform _player;
 		private Camera _camera;
 
-		private readonly float[] _costBySection = new float[SectionCount + 1]; // 0-12, где 0 пустой
-		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount + 1, EnemyKindCount]; // 0-12, где 0 пустой
+		private readonly float[] _costBySection = new float[SectionCount + 1];
+		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount + 1, EnemyKindCount];
 
 		private void Awake()
 		{
 			_camera = Camera.main;
 
 			for (int i = 1; i <= SectionCount; i++)
-				_costBySection[i] = _minCost;
-		}
-
-		public void UpdateDecay()
-		{
-			float decay = _decayPerSecond * Time.deltaTime;
-
-			for (int i = 1; i <= SectionCount; i++)
-			{
-				_costBySection[i] = Mathf.Max(_minCost, _costBySection[i] - decay);
-			}
-
-			UpdateDebugArrays();
+				_costBySection[i] = 0f;
 		}
 
 		public void Init(Transform player)
@@ -94,7 +79,7 @@ namespace SpawnerSystem
 			if (sectionIndex >= 1 && sectionIndex <= SectionCount)
 				return _costBySection[sectionIndex];
 
-			return _minCost;
+			return 0f; // Возвращаем 0 для несуществующих секторов
 		}
 
 		public void Commit(SpawnSection section, int enemiesSpawned, float costPerEnemy = 1f)
@@ -105,7 +90,7 @@ namespace SpawnerSystem
 			int index = (int)section;
 			if (index >= 1 && index <= SectionCount)
 			{
-				float powerAdded = enemiesSpawned * Mathf.Max(costPerEnemy, _minCost);
+				float powerAdded = enemiesSpawned * costPerEnemy;
 				_costBySection[index] += powerAdded;
 			}
 
@@ -120,7 +105,7 @@ namespace SpawnerSystem
 			int index = (int)section;
 			if (index >= 1 && index <= SectionCount)
 			{
-				_costBySection[index] = Mathf.Max(_minCost, _costBySection[index] - enemiesReturned * costPerEnemy);
+				_costBySection[index] = Mathf.Max(0f, _costBySection[index] - enemiesReturned * costPerEnemy);
 			}
 
 			UpdateDebugArrays();
@@ -163,7 +148,7 @@ namespace SpawnerSystem
 				return Mathf.Max(0f, weight);
 			}
 
-			return DefaultWeight;
+			return 0f; // Возвращаем 0 для несуществующих типов врагов
 		}
 
 		public Vector3 GetSpawnPosition(SpawnSection section)
@@ -283,12 +268,18 @@ namespace SpawnerSystem
 
 			float angleStep = 2f * Mathf.PI / SectionCount;
 
+			float totalWeight = 0f;
+			for (int i = 1; i <= SectionCount; i++)
+			{
+				totalWeight += _costBySection[i];
+			}
+
 			for (int i = 1; i <= SectionCount; i++)
 			{
 				float startAngle = (i - 1) * angleStep;
 				float endAngle = i * angleStep;
 
-				float sectionCost = _minCost;
+				float sectionCost = 0f;
 				if (_debugSectionsInfo.TryGetValue(i, out var debugInfo))
 				{
 					sectionCost = debugInfo.SectionCost;
@@ -314,28 +305,42 @@ namespace SpawnerSystem
 
 				float labelAngle = startAngle + angleStep * 0.5f;
 				Vector3 labelPosition = _player.position + new Vector3(
-					Mathf.Cos(labelAngle) * (circleRadius + 0.5f),
 					Mathf.Sin(labelAngle) * (circleRadius + 0.5f),
+					Mathf.Cos(labelAngle) * (circleRadius + 0.5f),
 					_player.position.z
 				);
 
 #if UNITY_EDITOR
-				Handles.Label(labelPosition, $"S{i}\n{sectionCost:F1}");
+				int enemyCount = 0;
+				if (_debugSectionsInfo.TryGetValue(i, out var sectionDebugInfo))
+				{
+					enemyCount = sectionDebugInfo.EnemyCount;
+				}
+
+				Color weightTextColor = loadFactor <= 0.5f ? Color.green : Color.red;
+				Handles.color = weightTextColor;
+				Handles.Label(labelPosition, $"S{i}\nWeight: {sectionCost:F1}\nEnemies: {enemyCount}");
 #endif
 			}
+
+#if UNITY_EDITOR
+			Vector3 totalWeightPosition = _player.position + Vector3.up * 0.5f;
+			Handles.color = Color.yellow;
+			Handles.Label(totalWeightPosition, $"Total Weight: {totalWeight:F1}");
+#endif
 		}
 
 		private void DrawSector(Vector3 center, float radius, float startAngle, float endAngle)
 		{
 			Vector3 startPoint = center + new Vector3(
-				Mathf.Cos(startAngle) * radius,
 				Mathf.Sin(startAngle) * radius,
+				Mathf.Cos(startAngle) * radius,
 				center.z
 			);
 
 			Vector3 endPoint = center + new Vector3(
-				Mathf.Cos(endAngle) * radius,
 				Mathf.Sin(endAngle) * radius,
+				Mathf.Cos(endAngle) * radius,
 				center.z
 			);
 

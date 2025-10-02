@@ -15,7 +15,7 @@ namespace SpawnerSystem
 		Knight
 	}
 
-	[RequireComponent(typeof(SpawnerTokens))]
+	[RequireComponent(typeof(SpawnerSection))]
 	public class SpawnerEnemys : MonoBehaviour, ISoulSpawnRequestHandler
 	{
 		[Header("Manual Mode")]
@@ -42,7 +42,7 @@ namespace SpawnerSystem
 		[SerializeField, Required] private ThrowSpawner _throwSpawner;
 
 		private EnemyPool _enemyPool;
-		private SpawnerTokens _spawnerTokens;
+		private SpawnerSection _spawnerTokens;
 
 		private ISpawner _blue;
 		private ISpawner _green;
@@ -62,7 +62,7 @@ namespace SpawnerSystem
 
 		private void Awake()
 		{
-			_spawnerTokens = GetComponent<SpawnerTokens>();
+			_spawnerTokens = GetComponent<SpawnerSection>();
 			_enemyPool = GetComponent<EnemyPool>();
 
 			_spawnerTokens.Init(_playerTarget);
