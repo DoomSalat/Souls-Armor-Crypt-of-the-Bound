@@ -14,7 +14,6 @@ namespace SpawnerSystem
 		private const int SectionCount = 12;
 		private const int EnemyKindCount = 4;
 		private const float ScreenHeightMultiplier = 0.5f;
-		private const float SectionAngleRadians = Mathf.PI / 4f;
 		private const float DefaultWeight = 1f;
 
 		[SerializeField, MinValue(0)] private float _decayPerSecond = 0.25f;
@@ -39,14 +38,14 @@ namespace SpawnerSystem
 		private Transform _player;
 		private Camera _camera;
 
-		private readonly float[] _costBySection = new float[SectionCount];
-		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount, EnemyKindCount];
+		private readonly float[] _costBySection = new float[SectionCount + 1]; // 0-12, где 0 пустой
+		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount + 1, EnemyKindCount]; // 0-12, где 0 пустой
 
 		private void Awake()
 		{
 			_camera = Camera.main;
 
-			for (int i = 0; i < _costBySection.Length; i++)
+			for (int i = 1; i <= SectionCount; i++)
 				_costBySection[i] = _minCost;
 		}
 
@@ -54,7 +53,7 @@ namespace SpawnerSystem
 		{
 			float decay = _decayPerSecond * Time.deltaTime;
 
-			for (int i = 0; i < _costBySection.Length; i++)
+			for (int i = 1; i <= SectionCount; i++)
 			{
 				_costBySection[i] = Mathf.Max(_minCost, _costBySection[i] - decay);
 			}
@@ -92,8 +91,9 @@ namespace SpawnerSystem
 
 		public float GetSectionWeight(int sectionIndex)
 		{
-			if (sectionIndex >= 0 && sectionIndex < SectionCount)
+			if (sectionIndex >= 1 && sectionIndex <= SectionCount)
 				return _costBySection[sectionIndex];
+
 			return _minCost;
 		}
 
@@ -103,8 +103,11 @@ namespace SpawnerSystem
 				return;
 
 			int index = (int)section;
-			float powerAdded = enemiesSpawned * Mathf.Max(costPerEnemy, _minCost);
-			_costBySection[index] += powerAdded;
+			if (index >= 1 && index <= SectionCount)
+			{
+				float powerAdded = enemiesSpawned * Mathf.Max(costPerEnemy, _minCost);
+				_costBySection[index] += powerAdded;
+			}
 
 			UpdateDebugArrays();
 		}
@@ -115,7 +118,10 @@ namespace SpawnerSystem
 				return;
 
 			int index = (int)section;
-			_costBySection[index] = Mathf.Max(_minCost, _costBySection[index] - enemiesReturned * costPerEnemy);
+			if (index >= 1 && index <= SectionCount)
+			{
+				_costBySection[index] = Mathf.Max(_minCost, _costBySection[index] - enemiesReturned * costPerEnemy);
+			}
 
 			UpdateDebugArrays();
 		}
@@ -125,9 +131,12 @@ namespace SpawnerSystem
 			int sectionIndex = (int)section;
 			int[] counts = new int[EnemyKindCount];
 
-			for (int i = 0; i < EnemyKindCount; i++)
+			if (sectionIndex >= 1 && sectionIndex <= SectionCount)
 			{
-				counts[i] = _enemyKindCountsBySection[sectionIndex, i];
+				for (int i = 0; i < EnemyKindCount; i++)
+				{
+					counts[i] = _enemyKindCountsBySection[sectionIndex, i];
+				}
 			}
 
 			return counts;
@@ -138,7 +147,7 @@ namespace SpawnerSystem
 			int sectionIndex = (int)section;
 			int kindIndex = (int)kind;
 
-			if (sectionIndex >= 0 && sectionIndex < SectionCount &&
+			if (sectionIndex >= 1 && sectionIndex <= SectionCount &&
 				kindIndex >= 0 && kindIndex < EnemyKindCount)
 			{
 				return _enemyKindCountsBySection[sectionIndex, kindIndex];
@@ -167,9 +176,10 @@ namespace SpawnerSystem
 			float screenHeight = Mathf.Sqrt((topScreen - bottomScreen).sqrMagnitude);
 			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
 
-			float angleInRadians = (int)section * SectionAngleRadians;
+			int sectionIndex = (int)section;
+			float angleInRadians = (sectionIndex - 1) * (2f * Mathf.PI / SectionCount);
 
-			Vector3 spawnDirection = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0f);
+			Vector3 spawnDirection = new Vector3(Mathf.Sin(angleInRadians), Mathf.Cos(angleInRadians), 0f);
 			Vector3 spawnPoint = _player.position + spawnDirection * circleRadius;
 			spawnPoint.z = _player.position.z;
 
@@ -183,7 +193,7 @@ namespace SpawnerSystem
 
 		public void RecalculateSectionsByEnemyPositions(PooledEnemy[] activeEnemies)
 		{
-			for (int i = 0; i < SectionCount; i++)
+			for (int i = 1; i <= SectionCount; i++)
 			{
 				for (int j = 0; j < EnemyKindCount; j++)
 				{
@@ -205,7 +215,7 @@ namespace SpawnerSystem
 
 				int kindIndex = (int)spawnMeta.Kind;
 
-				if (sectionIndex >= 0 && sectionIndex < SectionCount &&
+				if (sectionIndex >= 1 && sectionIndex <= SectionCount &&
 					kindIndex >= 0 && kindIndex < EnemyKindCount)
 				{
 					_enemyKindCountsBySection[sectionIndex, kindIndex]++;
@@ -218,17 +228,17 @@ namespace SpawnerSystem
 		private SpawnSection GetSectionByPosition(Vector3 position)
 		{
 			if (_player == null)
-				return SpawnSection.Right;
+				return SpawnSection.Section4;
 
 			Vector3 direction = (position - _player.position).normalized;
-			float angle = Mathf.Atan2(direction.y, direction.x);
+			float angle = Mathf.Atan2(direction.x, direction.y);
 
-			// normalize angle from 0 to 2π
+			// Нормализуем угол от 0 до 2π
 			if (angle < 0)
 				angle += 2f * Mathf.PI;
 
 			int sectionIndex = Mathf.FloorToInt(angle / (2f * Mathf.PI / SectionCount));
-			sectionIndex = Mathf.Clamp(sectionIndex, 0, SectionCount - 1);
+			sectionIndex = Mathf.Clamp(sectionIndex + 1, 1, SectionCount);
 
 			return (SpawnSection)sectionIndex;
 		}
@@ -237,7 +247,7 @@ namespace SpawnerSystem
 		{
 			_debugSectionsInfo.Clear();
 
-			for (int i = 0; i < SectionCount; i++)
+			for (int i = 1; i <= SectionCount; i++)
 			{
 				int totalEnemies = 0;
 				for (int j = 0; j < EnemyKindCount; j++)
@@ -273,10 +283,10 @@ namespace SpawnerSystem
 
 			float angleStep = 2f * Mathf.PI / SectionCount;
 
-			for (int i = 0; i < SectionCount; i++)
+			for (int i = 1; i <= SectionCount; i++)
 			{
-				float startAngle = i * angleStep;
-				float endAngle = (i + 1) * angleStep;
+				float startAngle = (i - 1) * angleStep;
+				float endAngle = i * angleStep;
 
 				float sectionCost = _minCost;
 				if (_debugSectionsInfo.TryGetValue(i, out var debugInfo))

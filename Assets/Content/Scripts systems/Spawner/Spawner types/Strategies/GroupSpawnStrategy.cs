@@ -21,6 +21,10 @@ namespace SpawnerSystem
 		private Vector3 _leaderPosition;
 		private int _expectedGroupSize;
 
+		private float _groupTokensToReturn = 0f;
+		private float _groupTimerReduction = 0f;
+		private bool _hasGroupMetaData = false;
+
 		public void SetSpawnSettings(Vector2Int groupSizeRange, float minDistanceFromLeader, float maxDistanceFromLeader, float randomOffset = 0.3f)
 		{
 			_groupSizeRange = groupSizeRange;
@@ -29,10 +33,20 @@ namespace SpawnerSystem
 			_randomOffset = randomOffset;
 		}
 
+		public void SetGroupMetaData(float tokensToReturn, float timerReduction)
+		{
+			_groupTokensToReturn = tokensToReturn;
+			_groupTimerReduction = timerReduction;
+			_hasGroupMetaData = true;
+		}
+
 		public void ResetGroupState()
 		{
 			_currentGroup.Clear();
 			_expectedGroupSize = 0;
+			_hasGroupMetaData = false;
+			_groupTokensToReturn = 0f;
+			_groupTimerReduction = 0f;
 		}
 
 		public void ForceCompleteGroup()
@@ -111,6 +125,11 @@ namespace SpawnerSystem
 
 		public override void OnAfterSpawn(PooledEnemy spawned, Vector3 position, SpawnSection section, EnemyKind kind)
 		{
+			if (spawned != null && spawned.SpawnMeta != null && _hasGroupMetaData)
+			{
+				spawned.SpawnMeta.SetSpawnData(_groupTokensToReturn, _groupTimerReduction);
+			}
+
 			_currentGroup.Add(spawned);
 
 			if (_currentGroup.Count >= _expectedGroupSize)

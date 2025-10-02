@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _moveSpeed: 1
+  _moveSpeed: 0.7
   _minDistance: 3
   _directionSmoothing: 0.85
   _debugMovement: 0
@@ -666,6 +666,7 @@ MonoBehaviour:
   _images: []
   _rawImages: []
   _UIParticles: []
+  _cashingSpriteRenderersMask: 1
   _currentSoulType: 0
   _resetParticleMaterialsOnReset: 0
 --- !u!114 &8034338142970032941

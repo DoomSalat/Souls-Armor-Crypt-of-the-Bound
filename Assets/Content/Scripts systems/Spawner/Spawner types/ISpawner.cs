@@ -23,5 +23,7 @@ namespace SpawnerSystem
 		void InitializeComponents(PooledEnemy pooled);
 
 		Transform GetInactiveContainer();
+		ISpawnStrategy GetSpawnStrategy();
+		PooledEnemy[] GetActiveEnemies();
 	}
 }

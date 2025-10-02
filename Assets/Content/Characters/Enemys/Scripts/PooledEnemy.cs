@@ -18,6 +18,7 @@ namespace SpawnerSystem
 		public event System.Action<PooledEnemy> ReturnedToPool;
 
 		public Soul Soul => _soul;
+		public EnemySpawnMeta SpawnMeta => _spawnMeta;
 
 		public void Initialize(EnemyPool pool, PooledEnemy prefabOrigin)
 		{

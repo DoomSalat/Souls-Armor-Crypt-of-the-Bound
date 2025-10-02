@@ -18,6 +18,8 @@ namespace SpawnerSystem
 		protected ISpawnStrategy _spawnStrategy;
 		protected SpawnerDependencies _dependencies;
 
+		private List<PooledEnemy> _activeEnemies = new List<PooledEnemy>();
+
 		public event Action<PooledEnemy> EnemyReturnedToPool;
 
 		public virtual void Init(SpawnerDependencies dependencies)
@@ -35,6 +37,8 @@ namespace SpawnerSystem
 
 		protected virtual void OnEnemyReturnedToPool(PooledEnemy enemy)
 		{
+			_activeEnemies.Remove(enemy);
+
 			EnemyReturnedToPool?.Invoke(enemy);
 		}
 
@@ -172,6 +176,18 @@ namespace SpawnerSystem
 			return _inactiveContainer;
 		}
 
+		public virtual ISpawnStrategy GetSpawnStrategy()
+		{
+			return _spawnStrategy;
+		}
+
+		public virtual PooledEnemy[] GetActiveEnemies()
+		{
+			_activeEnemies.RemoveAll(enemy => enemy == null || !enemy.gameObject.activeInHierarchy);
+
+			return _activeEnemies.ToArray();
+		}
+
 		protected EnemyKind ChooseKindWeightedByTokens(SpawnerTokens tokens)
 		{
 			var availableKinds = GetAllEnemyKinds();
@@ -227,7 +243,14 @@ namespace SpawnerSystem
 
 		protected PooledEnemy SpawnEnemyAt(Vector3 position, EnemyKind kind, PooledEnemy prefab)
 		{
-			return _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
+			var spawnedEnemy = _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
+
+			if (spawnedEnemy != null)
+			{
+				_activeEnemies.Add(spawnedEnemy);
+			}
+
+			return spawnedEnemy;
 		}
 
 		public virtual void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)

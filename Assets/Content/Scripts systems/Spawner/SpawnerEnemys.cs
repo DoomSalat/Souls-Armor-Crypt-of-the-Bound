@@ -96,7 +96,7 @@ namespace SpawnerSystem
 			InitializeDictionaries();
 		}
 
-		public void SpawnEnemy(SoulType soulType, EnemyKind enemyKind, SpawnDirection direction = SpawnDirection.Right)
+		public void SpawnEnemy(SoulType soulType, EnemyKind enemyKind, SpawnDirection direction = SpawnDirection.Section1)
 		{
 			if (!Application.isPlaying)
 			{
@@ -117,12 +117,99 @@ namespace SpawnerSystem
 
 			if (spawner != null)
 			{
-				var section = _spawnerTokens.GetSectionByDirection(direction);
+				var section = ConvertDirectionToSection(direction);
 				var spawned = spawner.Spawn(section, enemyKind);
 				var enemyData = GetEnemyData(enemyKind);
 				var costPerEnemy = enemyData?.TokenValue ?? 1f;
 				_spawnerTokens.Commit(section, spawned, costPerEnemy);
 			}
+		}
+
+		public PooledEnemy SpawnEnemyWithMeta(SoulType soulType, EnemyKind enemyKind, SpawnSection section, float tokensToReturn, float timerReduction)
+		{
+			ISpawner spawner = enemyKind == EnemyKind.Knight
+				? _knight
+				: GetSpawnerBySoulType(soulType);
+
+			if (spawner == null)
+				return null;
+
+			if (spawner is SpawnerYellow yellowSpawner)
+			{
+				return SpawnGroupEnemyWithMeta(yellowSpawner, enemyKind, section, tokensToReturn, timerReduction);
+			}
+
+			var spawnPosition = _spawnerTokens.GetSpawnPosition(section);
+			var spawnedEnemy = spawner.SpawnAtPosition(section, enemyKind, spawnPosition);
+
+			if (spawnedEnemy != null && spawnedEnemy.SpawnMeta != null)
+			{
+				spawnedEnemy.SpawnMeta.SetSpawnData(tokensToReturn, timerReduction);
+			}
+
+			var enemyData = GetEnemyData(enemyKind);
+			var costPerEnemy = enemyData?.SectionWeight ?? 1f;
+			_spawnerTokens.Commit(section, spawnedEnemy != null ? 1 : 0, costPerEnemy);
+
+			return spawnedEnemy;
+		}
+
+		public PooledEnemy SpawnGroupEnemyWithMeta(SpawnerYellow yellowSpawner, EnemyKind enemyKind, SpawnSection section, float tokensToReturn, float timerReduction)
+		{
+			if (yellowSpawner.GetSpawnStrategy() is GroupSpawnStrategy groupStrategy)
+			{
+				groupStrategy.SetGroupMetaData(tokensToReturn, timerReduction);
+			}
+
+			var spawnPosition = _spawnerTokens.GetSpawnPosition(section);
+			var spawnedEnemy = yellowSpawner.SpawnAtPosition(section, enemyKind, spawnPosition);
+
+			var enemyData = GetEnemyData(enemyKind);
+			var costPerEnemy = enemyData?.SectionWeight ?? 1f;
+			_spawnerTokens.Commit(section, spawnedEnemy != null ? 1 : 0, costPerEnemy);
+
+			return spawnedEnemy;
+		}
+
+		public PooledEnemy[] SpawnPresetEnemies(PresetEnemyInfo[] placements, float tokensPerEnemy, float timerPerEnemy)
+		{
+			var spawnedEnemies = new System.Collections.Generic.List<PooledEnemy>();
+
+			foreach (var placement in placements)
+			{
+				var spawned = SpawnEnemyWithMeta(
+					placement.SoulType,
+					placement.EnemyKind,
+					placement.Section,
+					tokensPerEnemy,
+					timerPerEnemy
+				);
+
+				if (spawned != null)
+					spawnedEnemies.Add(spawned);
+			}
+
+			return spawnedEnemies.ToArray();
+		}
+
+		private SpawnSection ConvertDirectionToSection(SpawnDirection direction)
+		{
+			return direction switch
+			{
+				SpawnDirection.Section1 => SpawnSection.Section1,
+				SpawnDirection.Section2 => SpawnSection.Section2,
+				SpawnDirection.Section3 => SpawnSection.Section3,
+				SpawnDirection.Section4 => SpawnSection.Section4,
+				SpawnDirection.Section5 => SpawnSection.Section5,
+				SpawnDirection.Section6 => SpawnSection.Section6,
+				SpawnDirection.Section7 => SpawnSection.Section7,
+				SpawnDirection.Section8 => SpawnSection.Section8,
+				SpawnDirection.Section9 => SpawnSection.Section9,
+				SpawnDirection.Section10 => SpawnSection.Section10,
+				SpawnDirection.Section11 => SpawnSection.Section11,
+				SpawnDirection.Section12 => SpawnSection.Section12,
+				_ => SpawnSection.Section1
+			};
 		}
 
 		private ISpawner GetSpawnerBySoulType(SoulType soulType)
@@ -163,7 +250,7 @@ namespace SpawnerSystem
 
 			if (spawner != null)
 			{
-				var section = SpawnSection.Right;
+				var section = SpawnSection.Section4;
 				var spawnedEnemy = spawner.SpawnAtPosition(section, EnemyKind.Soul, spawnPosition);
 				var enemyData = GetEnemyData(EnemyKind.Soul);
 				var costPerEnemy = enemyData?.TokenValue ?? 1f;
@@ -245,6 +332,18 @@ namespace SpawnerSystem
 				.ToArray();
 		}
 
+		public SoulType[] GetAvailableSoulTypes()
+		{
+			var soulTypes = new List<SoulType>();
+
+			if (_blue != null) soulTypes.Add(SoulType.Blue);
+			if (_green != null) soulTypes.Add(SoulType.Green);
+			if (_red != null) soulTypes.Add(SoulType.Red);
+			if (_yellow != null) soulTypes.Add(SoulType.Yellow);
+
+			return soulTypes.ToArray();
+		}
+
 		private void InitializeDictionaries()
 		{
 			_spawnersByType = new Dictionary<SpawnerType, ISpawner>
@@ -300,23 +399,17 @@ namespace SpawnerSystem
 
 		private void AddActiveEnemiesFromSpawner(ISpawner spawner, List<PooledEnemy> list)
 		{
-			if (spawner != null && _enemyPool != null)
+			if (spawner != null)
 			{
-				var container = _enemyPool.transform;
-				for (int i = 0; i < container.childCount; i++)
+				var activeEnemies = spawner.GetActiveEnemies();
+				if (activeEnemies != null)
 				{
-					var child = container.GetChild(i);
-					if (child.gameObject.activeInHierarchy)
-					{
-						var pooledEnemy = child.GetComponent<PooledEnemy>();
-						if (pooledEnemy != null)
-						{
-							list.Add(pooledEnemy);
-						}
-					}
+					list.AddRange(activeEnemies);
 				}
 			}
 		}
+
+		public event System.Action<PooledEnemy> EnemyReturnedToPoolEvent;
 
 		private void SubscribeToSpawnerEvents()
 		{
@@ -330,7 +423,7 @@ namespace SpawnerSystem
 		private void OnEnemyReturnedToPool(PooledEnemy enemy)
 		{
 			SendAllActiveEnemiesToTokens();
+			EnemyReturnedToPoolEvent?.Invoke(enemy);
 		}
 	}
 }
-

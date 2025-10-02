@@ -163,4 +163,9 @@ public static class GroupRegister
 		_groups.Clear();
 		_nextGroupId = 1;
 	}
+
+	public static Dictionary<int, Dictionary<IGroupController, List<IGroupController>>> GetAllGroups()
+	{
+		return _groups;
+	}
 }

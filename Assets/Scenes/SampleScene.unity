@@ -1161,22 +1161,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _difficultyLevels:
-  - _soulWeight: 0.8
-    _soulVaseWeight: 0.2
-    _skeletWeight: 0
-    _knightWeight: 0
-    _soulCountRange: {x: 1, y: 2}
-    _soulVaseCountRange: {x: 1, y: 1}
-    _skeletCountRange: {x: 0, y: 0}
-    _knightCountRange: {x: 0, y: 0}
-    _spawnIntervalRange: {x: 8, y: 12}
-    _timerReductionPerKill: 1
-    _timerReductionPerPresetKill: 2
-    _waveSpawnInterval: 2
+  - _levelName: Start
+    _description: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435. \u041E\u0431\u044B\u0447\u043D\u044B\u0435
+      \u0434\u0443\u0448\u0438 \u0438 \u0440\u0435\u0434\u043A\u043E \u0434\u0443\u0448\u0438-\u0432\u0430\u0437\u044B"
+    _defaultTokens: 3
+    _enableWaves: 0
+    _waveSpawnInterval: 1
+    _waveThreshold: 1
+    _waveDuration: 1
+  - _levelName: 1 lamp
+    _description: "\u041D\u0430\u0447\u0430\u043B\u043E \u0447\u0435\u043B\u043B\u0435\u043D\u0434\u0436\u0430.
+      \u0412 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C \u0434\u0443\u0448\u0438
+      \u0438 \u0440\u0435\u043A\u0434\u0438\u0435 \u0441\u043A\u0435\u043B\u0435\u0442\u044B"
+    _defaultTokens: 6
+    _enableWaves: 1
+    _waveSpawnInterval: 3
     _waveThreshold: 3
-    _afkSecondsPerToken: 2
-    _levelName: Very Easy
-    _description: Very Easy level. Minimum enemies and long spawn intervals.
+    _waveDuration: 15
+  _currentDifficultyIndex: 0
   _desiredPowerPerSection: 5
   _maxSectionDeviation: 2
   _glitchAccumulationRate: 0.02

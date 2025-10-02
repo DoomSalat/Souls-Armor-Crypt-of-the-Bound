@@ -5,14 +5,18 @@ namespace SpawnerSystem
 {
 	public enum SpawnDirection
 	{
-		Right,      // 0° = 0 * 45° = 0°
-		TopRight,   // 45° = 1 * 45° = 45°
-		Top,        // 90° = 2 * 45° = 90°
-		TopLeft,    // 135° = 3 * 45° = 135°
-		Left,       // 180° = 4 * 45° = 180°
-		BottomLeft, // 225° = 5 * 45° = 225°
-		Bottom,     // 270° = 6 * 45° = 270°
-		BottomRight // 315° = 7 * 45° = 315°
+		Section1,   // 0° = 12 часов
+		Section2,   // 30° = 1 час
+		Section3,   // 60° = 2 часа
+		Section4,   // 90° = 3 часа
+		Section5,   // 120° = 4 часа
+		Section6,   // 150° = 5 часов
+		Section7,   // 180° = 6 часов
+		Section8,   // 210° = 7 часов
+		Section9,   // 240° = 8 часов
+		Section10,  // 270° = 9 часов
+		Section11,  // 300° = 10 часов
+		Section12   // 330° = 11 часов
 	}
 
 	[RequireComponent(typeof(SpawnerEnemys))]
@@ -22,7 +26,7 @@ namespace SpawnerSystem
 		[SerializeField, Required] private SpawnerEnemys _spawnerEnemys;
 
 		[Header("Spawn Direction")]
-		[SerializeField] private SpawnDirection _selectedDirection = SpawnDirection.Right;
+		[SerializeField] private SpawnDirection _selectedDirection = SpawnDirection.Section1;
 
 		[HorizontalGroup("SpawnTable", 0.25f)]
 

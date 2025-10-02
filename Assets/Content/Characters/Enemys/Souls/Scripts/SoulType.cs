@@ -1,6 +1,7 @@
 public enum SoulType
 {
 	None,
+	Random,
 	Blue,
 	Red,
 	Yellow,

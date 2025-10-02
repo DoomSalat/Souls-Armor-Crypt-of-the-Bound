@@ -1,5 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SpawnerSystem
 {
@@ -25,6 +27,47 @@ namespace SpawnerSystem
 			}
 
 			base.Init(dependencies);
+		}
+
+		public override PooledEnemy[] GetActiveEnemies()
+		{
+			var allActiveEnemies = base.GetActiveEnemies();
+			var groupLeaders = new List<PooledEnemy>();
+
+			var allGroups = GroupRegister.GetAllGroups();
+			var leaderTransforms = new HashSet<Transform>();
+
+			if (allGroups != null && allGroups.Count > 0)
+			{
+				foreach (var group in allGroups.Values)
+				{
+					var leader = group.Keys.FirstOrDefault();
+					if (leader?.GetTransform() != null)
+					{
+						leaderTransforms.Add(leader.GetTransform());
+					}
+				}
+			}
+
+			foreach (var enemy in allActiveEnemies)
+			{
+				if (enemy == null || enemy.gameObject == null)
+					continue;
+
+				if (allGroups != null && allGroups.Count > 0)
+				{
+					if (leaderTransforms.Contains(enemy.transform))
+					{
+						groupLeaders.Add(enemy);
+					}
+				}
+				else
+				{
+					groupLeaders.Add(enemy);
+				}
+			}
+
+			return groupLeaders.ToArray();
 		}
 	}
 }
