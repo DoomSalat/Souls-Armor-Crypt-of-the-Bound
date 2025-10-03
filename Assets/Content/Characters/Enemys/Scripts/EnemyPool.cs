@@ -50,8 +50,6 @@ namespace SpawnerSystem
 			instanceTransform.SetParent(_container, false);
 			pooledInstance.gameObject.SetActive(true);
 
-			SubscribeToDeathEvent(pooledInstance);
-
 			return pooledInstance;
 		}
 
@@ -85,7 +83,14 @@ namespace SpawnerSystem
 			if (pooled == null || pooled.PrefabOrigin == null)
 				return;
 
-			UnsubscribeFromDeathEvent(pooled);
+			if (pooled.TryGetComponent<EnemySpawnMeta>(out var spawnMeta))
+			{
+				Transform inactiveContainer = spawnMeta.InactiveParent;
+				if (inactiveContainer != null)
+				{
+					pooled.transform.SetParent(inactiveContainer, false);
+				}
+			}
 
 			if (_prefabToPool.TryGetValue(pooled.PrefabOrigin, out var pooledObjectPool))
 			{
@@ -94,39 +99,6 @@ namespace SpawnerSystem
 			else
 			{
 				Destroy(pooled.gameObject);
-			}
-		}
-
-		private void SubscribeToDeathEvent(PooledEnemy pooledInstance)
-		{
-			if (pooledInstance.TryGetComponent<EnemyDamage>(out var enemyDamage))
-			{
-				enemyDamage.DeathCompleted += OnEnemyDeathCompleted;
-			}
-		}
-
-		private void UnsubscribeFromDeathEvent(PooledEnemy pooledInstance)
-		{
-			if (pooledInstance.TryGetComponent<EnemyDamage>(out var enemyDamage))
-			{
-				enemyDamage.DeathCompleted -= OnEnemyDeathCompleted;
-			}
-		}
-
-		private void OnEnemyDeathCompleted(EnemyDamage enemyDamage)
-		{
-			if (enemyDamage.TryGetComponent<PooledEnemy>(out var pooledObject))
-			{
-				if (pooledObject.TryGetComponent<EnemySpawnMeta>(out var spawnMeta))
-				{
-					Transform inactiveContainer = spawnMeta.InactiveParent;
-					if (inactiveContainer != null)
-					{
-						pooledObject.transform.SetParent(inactiveContainer, false);
-					}
-				}
-
-				Release(pooledObject);
 			}
 		}
 

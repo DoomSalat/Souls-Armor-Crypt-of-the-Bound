@@ -4,9 +4,9 @@ namespace SpawnerSystem
 {
 	public interface ISpawnStrategy
 	{
-		Vector3 CalculateSpawnPosition(SpawnSection section, SpawnerDependencies dependencies);
-		int GetSpawnCount(SpawnSection section);
-		bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnSection section, EnemyKind kind);
-		void OnAfterSpawn(PooledEnemy spawned, Vector3 position, SpawnSection section, EnemyKind kind);
+		Vector3 CalculateSpawnPosition(SpawnerSystemData.SpawnSection section, SpawnerDependencies dependencies);
+		int GetSpawnCount(SpawnerSystemData.SpawnSection section);
+		bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnerSystemData.SpawnSection section, EnemyKind kind);
+		void OnAfterSpawn(PooledEnemy spawned, Vector3 position, SpawnerSystemData.SpawnSection section, EnemyKind kind);
 	}
 }

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using static VFolders.Libs.VUtils;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,8 +10,6 @@ namespace SpawnerSystem
 {
 	public class SpawnerSection : MonoBehaviour
 	{
-		private const int SectionCount = 12;
-		private const int EnemyKindCount = 4;
 		private const float ScreenHeightMultiplier = 0.5f;
 
 		[SerializeField, MinValue(0)] private float _spawnDistanceFromCenter = 3f;
@@ -21,29 +18,25 @@ namespace SpawnerSystem
 		public class SectionDebugInfo
 		{
 			public int EnemyCount;
-			public float SectionCost;
+			public float SectionWeight;
 		}
 
 		[Header("Debug")]
 		[SerializeField] private bool _showDebugGizmos = false;
+		[SerializeField] private bool _showDebugLogs = false;
 		[SerializeField, ReadOnly] private SerializableDictionary<int, SectionDebugInfo> _debugSectionsInfo = new SerializableDictionary<int, SectionDebugInfo>();
 
-		private Dictionary<EnemyKind, float> _kindWeightsLookup;
-
-		public int Sections => SectionCount;
+		public int Sections => SpawnerSystemData.SectionCount;
 
 		private Transform _player;
 		private Camera _camera;
 
-		private readonly float[] _costBySection = new float[SectionCount + 1];
-		private readonly int[,] _enemyKindCountsBySection = new int[SectionCount + 1, EnemyKindCount];
+		private readonly float[] _sectionWeights = new float[SpawnerSystemData.SectionCount + 1];
 
 		private void Awake()
 		{
 			_camera = Camera.main;
-
-			for (int i = 1; i <= SectionCount; i++)
-				_costBySection[i] = 0f;
+			ClearSectionWeights();
 		}
 
 		public void Init(Transform player)
@@ -51,107 +44,79 @@ namespace SpawnerSystem
 			_player = player;
 		}
 
-		public void InitWeightsFromSpawnerEnemys(SpawnerEnemys spawnerEnemys)
+		public void UpdateWeights(PooledEnemy[] activeEnemies)
 		{
-			if (spawnerEnemys == null)
-				return;
+			ClearSectionWeights();
 
-			var allEnemyData = spawnerEnemys.AllEnemyData;
-
-			_kindWeightsLookup = new Dictionary<EnemyKind, float>();
-
-			foreach (var enemyData in allEnemyData)
+			if (activeEnemies == null || _player == null)
 			{
-				if (enemyData != null)
+				Debug.LogWarning($"[{nameof(SpawnerSection)}] Cannot recalculate weights: activeEnemies={activeEnemies?.Length ?? 0}, player={_player != null}");
+				return;
+			}
+
+			if (_showDebugLogs)
+				Debug.Log($"[{nameof(SpawnerSection)}] Recalculating weights for {activeEnemies.Length} enemies");
+
+			int[] enemyCounts = new int[SpawnerSystemData.SectionCount + 1];
+
+			foreach (var enemy in activeEnemies)
+			{
+				if (enemy == null || enemy.gameObject == null || !enemy.gameObject.activeInHierarchy)
+					continue;
+
+				var section = GetSectionByPosition(enemy.transform.position);
+				int sectionIndex = (int)section;
+
+				float enemyWeight = GetEnemyWeight(enemy);
+
+				if (_showDebugLogs)
+					Debug.Log($"[{nameof(SpawnerSection)}] Enemy {enemy.SpawnMeta?.Kind} at section {sectionIndex}, weight: {enemyWeight}");
+
+				if (sectionIndex >= 1 && sectionIndex <= SpawnerSystemData.SectionCount)
 				{
-					_kindWeightsLookup[enemyData.EnemyKind] = enemyData.SectionWeight;
+					_sectionWeights[sectionIndex] += enemyWeight;
+					enemyCounts[sectionIndex]++;
 				}
 			}
+
+			UpdateDebugArrays(enemyCounts);
 		}
 
 		public float[] GetSectionWeights()
 		{
-			return _costBySection;
+			return _sectionWeights;
 		}
 
 		public float GetSectionWeight(int sectionIndex)
 		{
-			if (sectionIndex >= 1 && sectionIndex <= SectionCount)
-				return _costBySection[sectionIndex];
+			if (sectionIndex >= 1 && sectionIndex <= SpawnerSystemData.SectionCount)
+				return _sectionWeights[sectionIndex];
 
-			return 0f; // Возвращаем 0 для несуществующих секторов
+			return 0f;
 		}
 
-		public void Commit(SpawnSection section, int enemiesSpawned, float costPerEnemy = 1f)
+		private float GetEnemyWeight(PooledEnemy enemy)
 		{
-			if (enemiesSpawned <= 0)
-				return;
-
-			int index = (int)section;
-			if (index >= 1 && index <= SectionCount)
+			if (enemy?.EnemyData == null)
 			{
-				float powerAdded = enemiesSpawned * costPerEnemy;
-				_costBySection[index] += powerAdded;
+				Debug.LogWarning($"[{nameof(SpawnerSection)}] Enemy has no EnemyData, using default weight 1f");
+				return 1f;
 			}
 
-			UpdateDebugArrays();
+			float weight = enemy.EnemyData.SectionWeight;
+
+			return weight;
 		}
 
-		public void Release(SpawnSection section, int enemiesReturned, float costPerEnemy = 1f)
+		private void ClearSectionWeights()
 		{
-			if (enemiesReturned <= 0)
-				return;
-
-			int index = (int)section;
-			if (index >= 1 && index <= SectionCount)
+			for (int i = 1; i <= SpawnerSystemData.SectionCount; i++)
 			{
-				_costBySection[index] = Mathf.Max(0f, _costBySection[index] - enemiesReturned * costPerEnemy);
+				_sectionWeights[i] = 0f;
 			}
-
-			UpdateDebugArrays();
 		}
 
-		public int[] GetEnemyCountsBySection(SpawnSection section)
-		{
-			int sectionIndex = (int)section;
-			int[] counts = new int[EnemyKindCount];
-
-			if (sectionIndex >= 1 && sectionIndex <= SectionCount)
-			{
-				for (int i = 0; i < EnemyKindCount; i++)
-				{
-					counts[i] = _enemyKindCountsBySection[sectionIndex, i];
-				}
-			}
-
-			return counts;
-		}
-
-		public int GetEnemyCountBySectionAndKind(SpawnSection section, EnemyKind kind)
-		{
-			int sectionIndex = (int)section;
-			int kindIndex = (int)kind;
-
-			if (sectionIndex >= 1 && sectionIndex <= SectionCount &&
-				kindIndex >= 0 && kindIndex < EnemyKindCount)
-			{
-				return _enemyKindCountsBySection[sectionIndex, kindIndex];
-			}
-
-			return 0;
-		}
-
-		public float GetKindWeight(EnemyKind kind)
-		{
-			if (_kindWeightsLookup != null && _kindWeightsLookup.TryGetValue(kind, out float weight))
-			{
-				return Mathf.Max(0f, weight);
-			}
-
-			return 0f; // Возвращаем 0 для несуществующих типов врагов
-		}
-
-		public Vector3 GetSpawnPosition(SpawnSection section)
+		public Vector3 GetSpawnPosition(SpawnerSystemData.SpawnSection section)
 		{
 			if (_player == null)
 				throw new InvalidOperationException("Player reference is required for spawn positioning");
@@ -162,7 +127,7 @@ namespace SpawnerSystem
 			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
 
 			int sectionIndex = (int)section;
-			float angleInRadians = (sectionIndex - 1) * (2f * Mathf.PI / SectionCount);
+			float angleInRadians = (sectionIndex - 1) * SpawnerSystemData.SectionAngleRadians;
 
 			Vector3 spawnDirection = new Vector3(Mathf.Sin(angleInRadians), Mathf.Cos(angleInRadians), 0f);
 			Vector3 spawnPoint = _player.position + spawnDirection * circleRadius;
@@ -171,49 +136,32 @@ namespace SpawnerSystem
 			return spawnPoint;
 		}
 
-		public SpawnSection GetSectionByDirection(SpawnDirection direction)
-		{
-			return (SpawnSection)((int)direction);
-		}
-
-		public void RecalculateSectionsByEnemyPositions(PooledEnemy[] activeEnemies)
-		{
-			for (int i = 1; i <= SectionCount; i++)
-			{
-				for (int j = 0; j < EnemyKindCount; j++)
-				{
-					_enemyKindCountsBySection[i, j] = 0;
-				}
-			}
-
-			foreach (var enemy in activeEnemies)
-			{
-				if (enemy == null || enemy.gameObject == null)
-					continue;
-
-				var section = GetSectionByPosition(enemy.transform.position);
-				int sectionIndex = (int)section;
-
-				var spawnMeta = enemy.GetComponent<EnemySpawnMeta>();
-				if (spawnMeta == null)
-					continue;
-
-				int kindIndex = (int)spawnMeta.Kind;
-
-				if (sectionIndex >= 1 && sectionIndex <= SectionCount &&
-					kindIndex >= 0 && kindIndex < EnemyKindCount)
-				{
-					_enemyKindCountsBySection[sectionIndex, kindIndex]++;
-				}
-			}
-
-			UpdateDebugArrays();
-		}
-
-		private SpawnSection GetSectionByPosition(Vector3 position)
+		public SpawnerSystemData.SectionSpawnInfo GetSectionSpawnInfo(SpawnerSystemData.SpawnSection section)
 		{
 			if (_player == null)
-				return SpawnSection.Section4;
+				throw new InvalidOperationException("Player reference is required for spawn positioning");
+
+			Vector3 topScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 1f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
+			Vector3 bottomScreen = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0f, Mathf.Abs(_camera.transform.position.z - _player.position.z)));
+			float screenHeight = Mathf.Sqrt((topScreen - bottomScreen).sqrMagnitude);
+			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
+
+			int sectionIndex = (int)section;
+			float startAngle = (sectionIndex - 1) * SpawnerSystemData.SectionAngleRadians;
+			float endAngle = sectionIndex * SpawnerSystemData.SectionAngleRadians;
+
+			return new SpawnerSystemData.SectionSpawnInfo(startAngle, endAngle, circleRadius, _player.position, section);
+		}
+
+		public SpawnerSystemData.SpawnSection GetSectionByDirection(SpawnerSystemData.SpawnSection direction)
+		{
+			return direction;
+		}
+
+		private SpawnerSystemData.SpawnSection GetSectionByPosition(Vector3 position)
+		{
+			if (_player == null)
+				return SpawnerSystemData.SpawnSection.Section4;
 
 			Vector3 direction = (position - _player.position).normalized;
 			float angle = Mathf.Atan2(direction.x, direction.y);
@@ -222,28 +170,22 @@ namespace SpawnerSystem
 			if (angle < 0)
 				angle += 2f * Mathf.PI;
 
-			int sectionIndex = Mathf.FloorToInt(angle / (2f * Mathf.PI / SectionCount));
-			sectionIndex = Mathf.Clamp(sectionIndex + 1, 1, SectionCount);
+			int sectionIndex = Mathf.FloorToInt(angle / SpawnerSystemData.SectionAngleRadians);
+			sectionIndex = Mathf.Clamp(sectionIndex + 1, 1, SpawnerSystemData.SectionCount);
 
-			return (SpawnSection)sectionIndex;
+			return (SpawnerSystemData.SpawnSection)sectionIndex;
 		}
 
-		private void UpdateDebugArrays()
+		private void UpdateDebugArrays(int[] enemyCounts)
 		{
 			_debugSectionsInfo.Clear();
 
-			for (int i = 1; i <= SectionCount; i++)
+			for (int i = 1; i <= SpawnerSystemData.SectionCount; i++)
 			{
-				int totalEnemies = 0;
-				for (int j = 0; j < EnemyKindCount; j++)
-				{
-					totalEnemies += _enemyKindCountsBySection[i, j];
-				}
-
 				_debugSectionsInfo[i] = new SectionDebugInfo
 				{
-					EnemyCount = totalEnemies,
-					SectionCost = _costBySection[i]
+					EnemyCount = enemyCounts[i],
+					SectionWeight = _sectionWeights[i]
 				};
 			}
 		}
@@ -266,27 +208,23 @@ namespace SpawnerSystem
 			float screenHeight = Mathf.Sqrt((topScreen - bottomScreen).sqrMagnitude);
 			float circleRadius = screenHeight * ScreenHeightMultiplier + _spawnDistanceFromCenter;
 
-			float angleStep = 2f * Mathf.PI / SectionCount;
+			float angleStep = SpawnerSystemData.SectionAngleRadians;
 
 			float totalWeight = 0f;
-			for (int i = 1; i <= SectionCount; i++)
+			for (int i = 1; i <= SpawnerSystemData.SectionCount; i++)
 			{
-				totalWeight += _costBySection[i];
+				totalWeight += _sectionWeights[i];
 			}
 
-			for (int i = 1; i <= SectionCount; i++)
+			for (int i = 1; i <= SpawnerSystemData.SectionCount; i++)
 			{
 				float startAngle = (i - 1) * angleStep;
 				float endAngle = i * angleStep;
 
-				float sectionCost = 0f;
-				if (_debugSectionsInfo.TryGetValue(i, out var debugInfo))
-				{
-					sectionCost = debugInfo.SectionCost;
-				}
+				float sectionWeight = _sectionWeights[i];
 
-				float maxCost = 20f;
-				float loadFactor = Mathf.Clamp01(sectionCost / maxCost);
+				float maxWeight = 20f;
+				float loadFactor = Mathf.Clamp01(sectionWeight / maxWeight);
 
 				Color sectionColor;
 				if (loadFactor <= 0.5f)
@@ -311,15 +249,11 @@ namespace SpawnerSystem
 				);
 
 #if UNITY_EDITOR
-				int enemyCount = 0;
-				if (_debugSectionsInfo.TryGetValue(i, out var sectionDebugInfo))
-				{
-					enemyCount = sectionDebugInfo.EnemyCount;
-				}
-
 				Color weightTextColor = loadFactor <= 0.5f ? Color.green : Color.red;
 				Handles.color = weightTextColor;
-				Handles.Label(labelPosition, $"S{i}\nWeight: {sectionCost:F1}\nEnemies: {enemyCount}");
+
+				int enemyCount = _debugSectionsInfo.ContainsKey(i) ? _debugSectionsInfo[i].EnemyCount : 0;
+				Handles.Label(labelPosition, $"S{i}\nEnemies: {enemyCount}\nWeight: {sectionWeight:F1}");
 #endif
 			}
 

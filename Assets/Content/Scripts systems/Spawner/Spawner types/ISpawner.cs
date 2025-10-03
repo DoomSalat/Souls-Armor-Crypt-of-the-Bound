@@ -8,12 +8,12 @@ namespace SpawnerSystem
 		event Action<PooledEnemy> EnemyReturnedToPool;
 
 		void Init(SpawnerDependencies dependencies);
-		int Spawn(SpawnSection section);
-		int Spawn(SpawnSection section, EnemyData enemyData);
-		int Spawn(SpawnSection section, EnemyKind enemyKind);
+		int Spawn(SpawnerSystemData.SpawnSection section);
+		int Spawn(SpawnerSystemData.SpawnSection section, EnemyData enemyData);
+		int Spawn(SpawnerSystemData.SpawnSection section, EnemyKind enemyKind);
 
-		PooledEnemy SpawnAtPosition(SpawnSection section, EnemyData enemyData, Vector3 position);
-		PooledEnemy SpawnAtPosition(SpawnSection section, EnemyKind enemyKind, Vector3 position);
+		PooledEnemy SpawnAtPosition(SpawnerSystemData.SpawnSection section, EnemyData enemyData, Vector3 position);
+		PooledEnemy SpawnAtPosition(SpawnerSystemData.SpawnSection section, EnemyKind enemyKind, Vector3 position);
 
 		EnemyData GetEnemyData(EnemyKind enemyKind);
 		EnemyData[] GetAllEnemyData();
@@ -25,5 +25,6 @@ namespace SpawnerSystem
 		Transform GetInactiveContainer();
 		ISpawnStrategy GetSpawnStrategy();
 		PooledEnemy[] GetActiveEnemies();
+		void RegisterSpawnedEnemy(PooledEnemy spawnedEnemy);
 	}
 }

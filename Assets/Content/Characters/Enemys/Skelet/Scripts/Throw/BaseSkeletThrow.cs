@@ -5,7 +5,7 @@ public abstract class BaseSkeletThrow : MonoBehaviour
 {
 	[Header("Throw Settings")]
 	[SerializeField, Required] protected Transform _throwPoint;
-	[SerializeField, Required] protected ThrowSpawner _throwSpawner;
+	[SerializeField] protected ThrowSpawner _throwSpawner;
 
 	[Header("Throw Parameters")]
 	[SerializeField] protected float _speedBone = 10f;

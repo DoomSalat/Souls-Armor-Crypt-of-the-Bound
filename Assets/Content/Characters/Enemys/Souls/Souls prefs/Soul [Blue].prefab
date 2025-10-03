@@ -366,7 +366,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.6
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4905,6 +4905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644d621d52091834982ca0a1c8d64e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 6539326756268512614}
   _returnStartThreshold: 0.65
   _durationAfterReturn: 0.2
   _slowdownSmoothness: 2
@@ -5201,7 +5202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleExplosion: {fileID: 405899665073727199}
-  _particleDeathEndDelay: 3
+  _particleDeathEndDelay: 1.5
 --- !u!1 &7147346158828901262
 GameObject:
   m_ObjectHideFlags: 0
@@ -5490,7 +5491,6 @@ MonoBehaviour:
   _soulDamage: {fileID: 3063139423572588230}
   _knockbackReceiver: {fileID: 2804703302713372882}
   _knockbackForce: 4
-  _isStandaloneSoul: 0
 --- !u!114 &3063139423572588230
 MonoBehaviour:
   m_ObjectHideFlags: 0

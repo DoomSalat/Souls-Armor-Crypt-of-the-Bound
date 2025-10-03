@@ -14,10 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4364318390275502601, guid: 8da53554b3f6ac2439c5093507f20fb6, type: 3}
   _enemyKind: 2
-  _tokenValue: 1
+  _soulType: 3
   _sectionWeight: 1
-  _spawnCooldown: 2
-  _timerReduction: 0.5
-  _minSpawnCount: 1
-  _maxSpawnCount: 1
-  _spawnChance: 1

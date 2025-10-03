@@ -285,6 +285,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _moveSpeed: 2
   _minDistance: 0.1
+  _directionSmoothing: 0.85
+  _debugMovement: 0
 --- !u!114 &8274616839629127306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de71d191163b6e941a3345e86b2f39e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soulType: 1
+  _soulType: 2
+  _soulSpawnerLogic: {fileID: 0}
 --- !u!114 &2612165497479381910
 MonoBehaviour:
   m_ObjectHideFlags: 0

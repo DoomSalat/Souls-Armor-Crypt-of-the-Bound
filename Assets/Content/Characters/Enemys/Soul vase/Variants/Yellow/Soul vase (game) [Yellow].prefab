@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3373918496019332053, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
       propertyPath: _soulType
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4689416527753053999, guid: e7d9b47b1d36e3a40a8e71ee8ab78f58, type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,6 +96,7 @@ MonoBehaviour:
   _targetWobbleSpeed: 0.8
   _targetWobbleAmount: 0.6
   _dangerZoneMultiplier: 2
+  _useLinearMovement: 0
   _baseInfluenceStrength: 1.2
   _distanceCompensationMultiplier: 1.3
   _separationForce: 1.8

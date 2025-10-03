@@ -29,6 +29,14 @@ namespace SpawnerSystem
 			base.Init(dependencies);
 		}
 
+		public void SetGroupMetaData(int tokensToReturn, float timerReduction)
+		{
+			if (_spawnStrategy is GroupSpawnStrategy groupStrategy)
+			{
+				groupStrategy.SetGroupMetaData(tokensToReturn, timerReduction);
+			}
+		}
+
 		public override PooledEnemy[] GetActiveEnemies()
 		{
 			var allActiveEnemies = base.GetActiveEnemies();

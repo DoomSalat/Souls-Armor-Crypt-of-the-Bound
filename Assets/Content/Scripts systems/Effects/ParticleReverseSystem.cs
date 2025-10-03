@@ -10,12 +10,13 @@ public class ParticleReverseSystem : MonoBehaviour
 	private const int MaxInitAttempts = 60;
 	private const float Half = 0.5f;
 
+	[SerializeField] private ParticleSystem _particleSystem;
+
 	[SerializeField, Range(0.1f, 0.9f)] private float _returnStartThreshold = 0.8f;
 	[SerializeField] private float _durationAfterReturn = 0.5f;
 	[SerializeField, Range(0.1f, 10f)] private float _slowdownSmoothness = 2f;
 	[SerializeField, Range(0.1f, 10f)] private float _returnAcceleration = 3f;
 
-	private ParticleSystem _particleSystem;
 	private ParticleSystem.Particle[] _particles;
 	private Vector3[] _calculatedInitialPositions;
 	private float[] _startLifetimes;
@@ -29,7 +30,8 @@ public class ParticleReverseSystem : MonoBehaviour
 
 	private void Awake()
 	{
-		_particleSystem = GetComponent<ParticleSystem>();
+		if (_particleSystem == null)
+			_particleSystem = GetComponent<ParticleSystem>();
 	}
 
 	private void OnValidate()

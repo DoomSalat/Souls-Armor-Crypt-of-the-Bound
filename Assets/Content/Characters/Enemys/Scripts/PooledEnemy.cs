@@ -13,12 +13,14 @@ namespace SpawnerSystem
 		private EnemySpawnMeta _spawnMeta;
 		private IFollower _follower;
 		private Soul _soul;
+		private EnemyData _enemyData;
 		private bool _cached;
 
 		public event System.Action<PooledEnemy> ReturnedToPool;
 
 		public Soul Soul => _soul;
 		public EnemySpawnMeta SpawnMeta => _spawnMeta;
+		public EnemyData EnemyData => _enemyData;
 
 		public void Initialize(EnemyPool pool, PooledEnemy prefabOrigin)
 		{
@@ -40,10 +42,12 @@ namespace SpawnerSystem
 			_cached = true;
 		}
 
-		public void SetupForSpawn(SpawnerSection tokens, SpawnSection section, Transform player, EnemyKind kind, Transform inactiveParent = null, StatusMachine statusMachine = null)
+		public void SetupForSpawn(SpawnerSection tokens, SpawnerSystemData.SpawnSection section, Transform player, EnemyKind kind, EnemyData enemyData, Transform inactiveParent = null, StatusMachine statusMachine = null)
 		{
 			if (!_cached)
 				CacheComponents();
+
+			_enemyData = enemyData;
 
 			if (_spawnMeta != null)
 				_spawnMeta.Set(tokens, section, kind, inactiveParent);

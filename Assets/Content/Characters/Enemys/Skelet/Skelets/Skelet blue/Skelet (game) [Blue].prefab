@@ -273,6 +273,7 @@ MonoBehaviour:
   _attackCooldown: 1.7
   _hurtBox: {fileID: 6298797725975634928}
   _damage: {fileID: 508870147041884454}
+  _debug: 0
 --- !u!114 &4470079767201985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +319,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _moveSpeed: 1.5
   _minDistance: 0.1
+  _directionSmoothing: 0.85
+  _debugMovement: 0
 --- !u!114 &6823832461876464137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de71d191163b6e941a3345e86b2f39e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soulType: 1
+  _soulType: 2
+  _soulSpawnerLogic: {fileID: 0}
 --- !u!114 &2976287767735029814
 MonoBehaviour:
   m_ObjectHideFlags: 0

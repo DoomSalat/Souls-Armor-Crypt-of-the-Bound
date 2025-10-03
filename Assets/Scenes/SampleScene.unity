@@ -677,7 +677,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 690ae2bca8de53944aa5c04646d39271, type: 2}
   - {fileID: 11400000, guid: 54a23986aaae9db47a5df5fcb7cf3956, type: 2}
   _inactiveContainer: {fileID: 1249822755}
-  _prewarmPerPrefab: 20
+  _prewarmPerPrefab: 10
   _prewarmOnInit: 1
   _minSpawnDistancePlayer: 6
   _maxSpawnDistancePlayer: 9
@@ -1107,7 +1107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae33ae2ebef33614384e85560b1f6eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manualMode: 1
   _blueSpawner: {fileID: 2062695703}
   _greenSpawner: {fileID: 1779681392}
   _redSpawner: {fileID: 113643590}
@@ -1153,7 +1152,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179726287}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27c88c5039be6b149bd166d505f14eac, type: 3}
   m_Name: 
@@ -1197,11 +1196,12 @@ MonoBehaviour:
   _availablePresets:
   - {fileID: 11400000, guid: 8d4db118ae123ce4fb6e4b46501ff4af, type: 2}
   _maxSectionDeviation: 1
+  _startupDelay: 2
   _glitchAccumulationRate: 0.02
   _glitchAccumulationTime: {x: 5, y: 10}
   _maxGlitchChance: 1
   _showDebugInfo: 1
-  _disableWaveSystem: 0
+  _disableWaveSystem: 1
 --- !u!1 &186094409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   _enemysData:
   - {fileID: 11400000, guid: 224fb33f27267764a86dd194975ccd94, type: 2}
   _inactiveContainer: {fileID: 1632421635}
-  _prewarmPerPrefab: 10
+  _prewarmPerPrefab: 5
   _prewarmOnInit: 1
 --- !u!1 &202072945
 GameObject:
@@ -63693,7 +63693,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 242c72e59745ac9439ffb09ee4ed4b55, type: 2}
   - {fileID: 11400000, guid: de97f7c272acae34e864613b97855690, type: 2}
   _inactiveContainer: {fileID: 1070628920}
-  _prewarmPerPrefab: 10
+  _prewarmPerPrefab: 20
   _prewarmOnInit: 1
   _groupSizeRange: {x: 3, y: 5}
   _minDistanceFromLeader: 0.6

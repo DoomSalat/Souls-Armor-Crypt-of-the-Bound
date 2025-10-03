@@ -51,7 +51,7 @@ public class DamageKnight : EnemyDamage
 	{
 		SoulType[] allSoulTypes = (SoulType[])System.Enum.GetValues(typeof(SoulType));
 		SoulType[] availableSoulTypes = System.Array.FindAll(allSoulTypes, soulType =>
-			soulType != SoulType.Purple && soulType != SoulType.None);
+			soulType != SoulType.Purple && soulType != SoulType.None && soulType != SoulType.Random);
 
 		_soulTypeSword = availableSoulTypes[Random.Range(0, availableSoulTypes.Length)];
 		_soulTypeBodyFirst = availableSoulTypes[Random.Range(0, availableSoulTypes.Length)];

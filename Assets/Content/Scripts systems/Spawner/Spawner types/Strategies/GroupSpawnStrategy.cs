@@ -21,9 +21,7 @@ namespace SpawnerSystem
 		private Vector3 _leaderPosition;
 		private int _expectedGroupSize;
 
-		private float _groupTokensToReturn = 0f;
-		private float _groupTimerReduction = 0f;
-		private bool _hasGroupMetaData = false;
+		private GroupMetaData _groupMetaData = new GroupMetaData();
 
 		public void SetSpawnSettings(Vector2Int groupSizeRange, float minDistanceFromLeader, float maxDistanceFromLeader, float randomOffset = 0.3f)
 		{
@@ -33,20 +31,16 @@ namespace SpawnerSystem
 			_randomOffset = randomOffset;
 		}
 
-		public void SetGroupMetaData(float tokensToReturn, float timerReduction)
+		public void SetGroupMetaData(int tokensToReturn, float timerReduction)
 		{
-			_groupTokensToReturn = tokensToReturn;
-			_groupTimerReduction = timerReduction;
-			_hasGroupMetaData = true;
+			_groupMetaData.SetData(tokensToReturn, timerReduction);
 		}
 
 		public void ResetGroupState()
 		{
 			_currentGroup.Clear();
 			_expectedGroupSize = 0;
-			_hasGroupMetaData = false;
-			_groupTokensToReturn = 0f;
-			_groupTimerReduction = 0f;
+			_groupMetaData.ClearData();
 		}
 
 		public void ForceCompleteGroup()
@@ -58,7 +52,7 @@ namespace SpawnerSystem
 			}
 		}
 
-		public override int GetSpawnCount(SpawnSection section)
+		public override int GetSpawnCount(SpawnerSystemData.SpawnSection section)
 		{
 			if (_currentGroup.Count > 0)
 			{
@@ -70,7 +64,7 @@ namespace SpawnerSystem
 			return spawnCount;
 		}
 
-		public override Vector3 CalculateSpawnPosition(SpawnSection section, SpawnerDependencies dependencies)
+		public override Vector3 CalculateSpawnPosition(SpawnerSystemData.SpawnSection section, SpawnerDependencies dependencies)
 		{
 			if (_currentGroup.Count == 0 && _expectedGroupSize == 0)
 			{
@@ -79,7 +73,7 @@ namespace SpawnerSystem
 
 			if (_currentGroup.Count == 0)
 			{
-				_leaderPosition = base.CalculateSpawnPosition(section, dependencies);
+				_leaderPosition = CalculateRandomSpawnPosition(section, dependencies);
 			}
 
 			if (_currentGroup.Count < _expectedGroupSize - LeaderIndexOffset)
@@ -118,18 +112,13 @@ namespace SpawnerSystem
 			return position + new Vector3(randomOffset.x, randomOffset.y, ZPosition);
 		}
 
-		public override bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnSection section, EnemyKind kind)
+		public override bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
 			return false;
 		}
 
-		public override void OnAfterSpawn(PooledEnemy spawned, Vector3 position, SpawnSection section, EnemyKind kind)
+		public override void OnAfterSpawn(PooledEnemy spawned, Vector3 position, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
-			if (spawned != null && spawned.SpawnMeta != null && _hasGroupMetaData)
-			{
-				spawned.SpawnMeta.SetSpawnData(_groupTokensToReturn, _groupTimerReduction);
-			}
-
 			_currentGroup.Add(spawned);
 
 			if (_currentGroup.Count >= _expectedGroupSize)
@@ -148,6 +137,14 @@ namespace SpawnerSystem
 				return;
 			}
 
+			foreach (var enemy in _currentGroup)
+			{
+				if (enemy != null && enemy.SpawnMeta != null)
+				{
+					enemy.SpawnMeta.SetSpawnData(0, 0f);
+				}
+			}
+
 			List<IGroupController> groupMembers = new List<IGroupController>();
 			for (int i = 0; i < _currentGroup.Count - LeaderIndexOffset; i++)
 			{
@@ -157,7 +154,7 @@ namespace SpawnerSystem
 				}
 			}
 
-			int groupId = GroupRegister.CreateGroup(leader, groupMembers);
+			int groupId = GroupRegister.CreateGroup(leader, groupMembers, _groupMetaData);
 			leader.InitializeGroup(groupId, true);
 		}
 	}

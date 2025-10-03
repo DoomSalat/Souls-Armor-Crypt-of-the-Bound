@@ -2,12 +2,15 @@ using UnityEngine;
 using StatusSystem;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using SpawnerSystem;
 
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
 	[SerializeField, Required] private Transform _statusPoint;
 
 	[SerializeField, ReadOnly] private StatusMachine _statusMachine;
+
+	private PooledEnemy _pooledEnemy;
 
 	private Collider2D _collider;
 	private HitBox _hitBox;
@@ -19,7 +22,6 @@ public class EnemyDamage : MonoBehaviour, IDamageable
 	public bool IsDead => _isDead;
 
 	public event System.Action<DamageData> DeathRequested;
-	public event System.Action<EnemyDamage> DeathCompleted;
 
 	public void InitializeCreate(StatusMachine statusMachine)
 	{
@@ -31,6 +33,7 @@ public class EnemyDamage : MonoBehaviour, IDamageable
 		_collider = collider;
 		_hitBox = hitBox;
 		_hurtBox = hurtBox;
+		_pooledEnemy = GetComponent<PooledEnemy>();
 	}
 
 	public virtual void TakeDamage(DamageData damageData)
@@ -112,7 +115,14 @@ public class EnemyDamage : MonoBehaviour, IDamageable
 
 	public void CompleteDeath()
 	{
-		DeathCompleted?.Invoke(this);
+		if (_pooledEnemy != null)
+		{
+			_pooledEnemy.ReturnToPool();
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	public void ResetDeathState()

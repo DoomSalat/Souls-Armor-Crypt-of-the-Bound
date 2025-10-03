@@ -4,8 +4,6 @@ namespace SpawnerSystem
 {
 	public class TelegraphSpawnStrategy : SimpleSpawnStrategy
 	{
-		private const float SectionAngleRadians = Mathf.PI / 4f;
-
 		private float _minOffsetFromPlayer = 1.0f;
 		private float _maxOffsetFromPlayer = 2.5f;
 		private TelegraphPool _telegraphPool;
@@ -18,17 +16,16 @@ namespace SpawnerSystem
 			_ownerSpawner = spawner;
 		}
 
-		public override Vector3 CalculateSpawnPosition(SpawnSection section, SpawnerDependencies dependencies)
+		public override Vector3 CalculateSpawnPosition(SpawnerSystemData.SpawnSection section, SpawnerDependencies dependencies)
 		{
 			_dependencies = dependencies;
-			Vector3 playerPosition = dependencies.EnemyPool.GetPlayerTarget().position;
-			Vector3 direction = SectionToDirection(section);
-			float distance = Random.Range(_minOffsetFromPlayer, _maxOffsetFromPlayer);
 
-			return playerPosition + direction * distance;
+			SpawnerSystemData.SectionSpawnInfo sectionInfo = dependencies.Tokens.GetSectionSpawnInfo(section);
+
+			return CalculateRandomPositionInSection(sectionInfo);
 		}
 
-		public override bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnSection section, EnemyKind kind)
+		public override bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
 			if (_telegraphPool != null)
 			{
@@ -43,28 +40,23 @@ namespace SpawnerSystem
 			return false;
 		}
 
-		private void OnTelegraphComplete(Vector3 position, PooledEnemy prefab, SpawnSection section, EnemyKind kind)
+		private void OnTelegraphComplete(Vector3 position, PooledEnemy prefab, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
-			if (_dependencies?.EnemyPool == null)
+			if (_dependencies?.EnemyPool == null || _ownerSpawner == null)
 				return;
 
 			PooledEnemy spawned = _dependencies.EnemyPool.GetPooled(prefab, position, Quaternion.identity);
 			if (spawned != null)
 			{
 				SetupSpawned(spawned, section, kind);
+
+				_ownerSpawner.RegisterSpawnedEnemy(spawned);
 			}
 		}
 
-		private void SetupSpawned(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
+		private void SetupSpawned(PooledEnemy spawned, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
 			_ownerSpawner?.SetupEnemySpawn(spawned, section, kind);
-		}
-
-		private Vector3 SectionToDirection(SpawnSection section)
-		{
-			float angleInRadians = (int)section * SectionAngleRadians;
-
-			return new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0f);
 		}
 
 		public void SetSpawnDistance(float minDistance, float maxDistance)

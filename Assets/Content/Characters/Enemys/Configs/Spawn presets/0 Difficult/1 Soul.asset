@@ -16,11 +16,12 @@ MonoBehaviour:
   _description: "\u041E\u0434\u043D\u0430 \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u0430\u044F
     \u0434\u0443\u0448\u0430"
   _tokenCost: 1
-  _presetCooldown: 1
+  _presetCooldown: 2
   _allowedDifficultyLevels: 00000000
-  _cooldownCycles: 2
+  _cooldownCycles: 0
   _enemyPlacements:
   - _enemyKind: 0
-    _soulType: 1
+    _soulType: 2
     _section: 1
     _count: 1
+    _timerReductionOnDeath: 0.3

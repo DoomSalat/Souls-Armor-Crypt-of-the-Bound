@@ -12,13 +12,17 @@ namespace SpawnerSystem
 		[SerializeField, ShowIf(nameof(ShowSoulType))] private SoulType _soulType = SoulType.Random;
 
 		[Header("Section")]
-		[SerializeField, Range(1, 12)] private int _section = 1;
+		[SerializeField, Range(1, SpawnerSystemData.SectionCount)] private int _section = 1;
 		[SerializeField, MinValue(1)] private int _count = 1;
+
+		[Header("Enemy Meta")]
+		[SerializeField, MinValue(0f)] private float _timerReductionOnDeath = 0.5f;
 
 		public EnemyKind EnemyKind => _enemyKind;
 		public SoulType SoulType => _soulType;
 		public int Section => _section;
 		public int Count => _count;
+		public float TimerReductionOnDeath => _timerReductionOnDeath;
 
 		private bool ShowSoulType => _enemyKind != EnemyKind.Knight;
 	}
@@ -34,7 +38,7 @@ namespace SpawnerSystem
 		[SerializeField, MinValue(1)] private int _tokenCost = 3;
 		[SerializeField, MinValue(0.1f)] private float _presetCooldown = 6f;
 		[SerializeField, MinValue(0)] private int[] _allowedDifficultyLevels = { 0 };
-		[SerializeField, MinValue(1)] private int _cooldownCycles = 2;
+		[SerializeField, MinValue(0)] private int _cooldownCycles = 2;
 
 		[Header("Enemy Placement")]
 		[InfoBox("Section 1 = main enemy (center), Sections 2-12 = additional enemies around")]
@@ -48,37 +52,15 @@ namespace SpawnerSystem
 		public int[] AllowedDifficultyLevels => _allowedDifficultyLevels;
 		public int CooldownCycles => _cooldownCycles;
 
-#if UNITY_EDITOR
-		private void OnValidate()
-		{
-			if (_tokenCost < 1) _tokenCost = 1;
-			if (_presetCooldown < 0.1f) _presetCooldown = 0.1f;
-			if (_cooldownCycles < 1) _cooldownCycles = 1;
-
-			if (_allowedDifficultyLevels == null || _allowedDifficultyLevels.Length == 0)
-			{
-				_allowedDifficultyLevels = new int[] { 0 };
-			}
-			else
-			{
-				_allowedDifficultyLevels = _allowedDifficultyLevels
-					.Where(level => level >= 0)
-					.Distinct()
-					.OrderBy(level => level)
-					.ToArray();
-			}
-		}
-#endif
-
 		public EnemyPlacement[] GetEnemyPlacements()
 		{
-			EnemyPlacement[] result = new EnemyPlacement[13]; // Индексы 0-12, где 0 пустой
+			EnemyPlacement[] result = new EnemyPlacement[SpawnerSystemData.SectionCount + 1]; // Индексы 0-12, где 0 пустой
 
 			if (_enemyPlacements != null)
 			{
 				foreach (var placement in _enemyPlacements)
 				{
-					if (placement != null && placement.Section >= 1 && placement.Section <= 12)
+					if (placement != null && placement.Section >= 1 && placement.Section <= SpawnerSystemData.SectionCount)
 					{
 						result[placement.Section] = placement;
 					}
@@ -110,7 +92,7 @@ namespace SpawnerSystem
 			{
 				foreach (var placement in _enemyPlacements)
 				{
-					if (placement != null && placement.Section >= 1 && placement.Section <= 12)
+					if (placement != null && placement.Section >= 1 && placement.Section <= SpawnerSystemData.SectionCount)
 					{
 						sectionWeights[placement.Section] += placement.Count;
 					}

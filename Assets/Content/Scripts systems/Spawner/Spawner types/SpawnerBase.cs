@@ -39,6 +39,11 @@ namespace SpawnerSystem
 		{
 			_activeEnemies.Remove(enemy);
 
+			if (enemy != null)
+			{
+				enemy.ReturnedToPool -= OnEnemyReturnedToPool;
+			}
+
 			EnemyReturnedToPool?.Invoke(enemy);
 		}
 
@@ -50,19 +55,16 @@ namespace SpawnerSystem
 				if (entry?.Prefab != null)
 				{
 					_dependencies.EnemyPool.RegisterPrefab(entry.Prefab, this);
-
-					var prefab = entry.Prefab;
-					prefab.ReturnedToPool += OnEnemyReturnedToPool;
 				}
 			}
 		}
 
-		public virtual int Spawn(SpawnSection section)
+		public virtual int Spawn(SpawnerSystemData.SpawnSection section)
 		{
 			return SpawnWithStrategy(section);
 		}
 
-		public virtual int Spawn(SpawnSection section, EnemyData enemyData)
+		public virtual int Spawn(SpawnerSystemData.SpawnSection section, EnemyData enemyData)
 		{
 			if (enemyData == null)
 			{
@@ -73,12 +75,12 @@ namespace SpawnerSystem
 			return SpawnWithStrategy(section, enemyData.EnemyKind);
 		}
 
-		public virtual int Spawn(SpawnSection section, EnemyKind enemyKind)
+		public virtual int Spawn(SpawnerSystemData.SpawnSection section, EnemyKind enemyKind)
 		{
 			return SpawnWithStrategy(section, enemyKind);
 		}
 
-		public virtual PooledEnemy SpawnAtPosition(SpawnSection section, EnemyData enemyData, Vector3 position)
+		public virtual PooledEnemy SpawnAtPosition(SpawnerSystemData.SpawnSection section, EnemyData enemyData, Vector3 position)
 		{
 			if (enemyData == null)
 			{
@@ -100,7 +102,7 @@ namespace SpawnerSystem
 			return pooledEnemy;
 		}
 
-		public virtual PooledEnemy SpawnAtPosition(SpawnSection section, EnemyKind enemyKind, Vector3 position)
+		public virtual PooledEnemy SpawnAtPosition(SpawnerSystemData.SpawnSection section, EnemyKind enemyKind, Vector3 position)
 		{
 			EnemyData enemyData = GetEnemyData(enemyKind);
 			if (enemyData == null)
@@ -112,7 +114,7 @@ namespace SpawnerSystem
 			return SpawnAtPosition(section, enemyData, position);
 		}
 
-		protected virtual int SpawnWithStrategy(SpawnSection section, EnemyKind? enemyKind = null)
+		protected virtual int SpawnWithStrategy(SpawnerSystemData.SpawnSection section, EnemyKind? enemyKind = null)
 		{
 			if (_spawnStrategy == null)
 			{
@@ -247,15 +249,25 @@ namespace SpawnerSystem
 
 			if (spawnedEnemy != null)
 			{
-				_activeEnemies.Add(spawnedEnemy);
+				RegisterSpawnedEnemy(spawnedEnemy);
 			}
 
 			return spawnedEnemy;
 		}
 
-		public virtual void SetupEnemySpawn(PooledEnemy spawned, SpawnSection section, EnemyKind kind)
+		public virtual void RegisterSpawnedEnemy(PooledEnemy spawnedEnemy)
 		{
-			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
+			if (spawnedEnemy != null)
+			{
+				_activeEnemies.Add(spawnedEnemy);
+				spawnedEnemy.ReturnedToPool += OnEnemyReturnedToPool;
+			}
+		}
+
+		public virtual void SetupEnemySpawn(PooledEnemy spawned, SpawnerSystemData.SpawnSection section, EnemyKind kind)
+		{
+			var enemyData = GetEnemyData(kind);
+			spawned.SetupForSpawn(_dependencies.Tokens, section, _dependencies.EnemyPool.GetPlayerTarget(), kind, enemyData, _inactiveContainer, _dependencies.EnemyPool.GetStatusMachine());
 			InitializeComponents(spawned);
 		}
 

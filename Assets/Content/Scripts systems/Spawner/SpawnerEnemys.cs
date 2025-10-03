@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using StatusSystem;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace SpawnerSystem
@@ -18,16 +17,6 @@ namespace SpawnerSystem
 	[RequireComponent(typeof(SpawnerSection))]
 	public class SpawnerEnemys : MonoBehaviour, ISoulSpawnRequestHandler
 	{
-		[Header("Manual Mode")]
-		[SerializeField] private bool _manualMode;
-
-		[Button("Send All Active Enemies to SpawnerTokens")]
-		private void SendAllActiveEnemiesToTokens()
-		{
-			var allActiveEnemies = GetAllActiveEnemies();
-			_spawnerTokens.RecalculateSectionsByEnemyPositions(allActiveEnemies);
-		}
-
 		[Header("Spawners")]
 		[SerializeField, Required] private MonoBehaviour _blueSpawner;
 		[SerializeField, Required] private MonoBehaviour _greenSpawner;
@@ -54,11 +43,11 @@ namespace SpawnerSystem
 		private Dictionary<EnemyKind, EnemyData> _enemyDataByKind;
 		private Dictionary<EnemyKind, SpawnerType> _spawnerTypeByEnemyKind;
 
-		public bool ManualMode => _manualMode;
-
 		public EnemyData[] AllEnemyData => GetAllEnemyDataFromSpawners();
 		public Dictionary<EnemyKind, EnemyData> EnemyDataByKind => _enemyDataByKind;
 		public Dictionary<EnemyKind, SpawnerType> SpawnerTypeByEnemyKind => _spawnerTypeByEnemyKind;
+
+		public event System.Action<EnemyMetaData> EnemyMetaDataEvent;
 
 		private void Awake()
 		{
@@ -66,7 +55,6 @@ namespace SpawnerSystem
 			_enemyPool = GetComponent<EnemyPool>();
 
 			_spawnerTokens.Init(_playerTarget);
-			_spawnerTokens.InitWeightsFromSpawnerEnemys(this);
 
 			_enemyPool.Initialize(_playerTarget, _statusMachine);
 
@@ -91,17 +79,40 @@ namespace SpawnerSystem
 			_yellow?.Init(dependencies);
 			_knight?.Init(dependencies);
 
-			SubscribeToSpawnerEvents();
-
 			InitializeDictionaries();
 		}
 
-		public void SpawnEnemy(SoulType soulType, EnemyKind enemyKind, SpawnDirection direction = SpawnDirection.Section1)
+		private void OnEnable()
+		{
+			SubscribeToSpawnerEvents();
+		}
+
+		private void OnDisable()
+		{
+			UnsubscribeFromSpawnerEvents();
+		}
+
+		private void UnsubscribeFromSpawnerEvents()
+		{
+			_blue.EnemyReturnedToPool -= OnEnemyReturnedToPool;
+			_green.EnemyReturnedToPool -= OnEnemyReturnedToPool;
+			_red.EnemyReturnedToPool -= OnEnemyReturnedToPool;
+			_yellow.EnemyReturnedToPool -= OnEnemyReturnedToPool;
+			_knight.EnemyReturnedToPool -= OnEnemyReturnedToPool;
+			GroupRegister.GroupDestroyedEvent -= OnGroupDestroyed;
+		}
+
+		public void SpawnEnemy(SoulType soulType, EnemyKind enemyKind, SpawnerSystemData.SpawnSection section = SpawnerSystemData.SpawnSection.Section1)
 		{
 			if (!Application.isPlaying)
 			{
 				Debug.LogWarning("Manual spawn works only in Play Mode!");
 				return;
+			}
+
+			if (soulType == SoulType.Random && enemyKind != EnemyKind.Knight)
+			{
+				soulType = GetRandomSoulType();
 			}
 
 			ISpawner spawner;
@@ -117,99 +128,20 @@ namespace SpawnerSystem
 
 			if (spawner != null)
 			{
-				var section = ConvertDirectionToSection(direction);
-				var spawned = spawner.Spawn(section, enemyKind);
-				var enemyData = GetEnemyData(enemyKind);
-				var costPerEnemy = enemyData?.TokenValue ?? 1f;
-				_spawnerTokens.Commit(section, spawned, costPerEnemy);
+				if (spawner is SpawnerYellow yellowSpawner)
+				{
+					int spawnCount = yellowSpawner.Spawn(section, enemyKind);
+					if (spawnCount > 0)
+					{
+						_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
+					}
+				}
+				else
+				{
+					spawner.Spawn(section, enemyKind);
+					_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
+				}
 			}
-		}
-
-		public PooledEnemy SpawnEnemyWithMeta(SoulType soulType, EnemyKind enemyKind, SpawnSection section, float tokensToReturn, float timerReduction)
-		{
-			ISpawner spawner = enemyKind == EnemyKind.Knight
-				? _knight
-				: GetSpawnerBySoulType(soulType);
-
-			if (spawner == null)
-				return null;
-
-			if (spawner is SpawnerYellow yellowSpawner)
-			{
-				return SpawnGroupEnemyWithMeta(yellowSpawner, enemyKind, section, tokensToReturn, timerReduction);
-			}
-
-			var spawnPosition = _spawnerTokens.GetSpawnPosition(section);
-			var spawnedEnemy = spawner.SpawnAtPosition(section, enemyKind, spawnPosition);
-
-			if (spawnedEnemy != null && spawnedEnemy.SpawnMeta != null)
-			{
-				spawnedEnemy.SpawnMeta.SetSpawnData(tokensToReturn, timerReduction);
-			}
-
-			var enemyData = GetEnemyData(enemyKind);
-			var costPerEnemy = enemyData?.SectionWeight ?? 1f;
-			_spawnerTokens.Commit(section, spawnedEnemy != null ? 1 : 0, costPerEnemy);
-
-			return spawnedEnemy;
-		}
-
-		public PooledEnemy SpawnGroupEnemyWithMeta(SpawnerYellow yellowSpawner, EnemyKind enemyKind, SpawnSection section, float tokensToReturn, float timerReduction)
-		{
-			if (yellowSpawner.GetSpawnStrategy() is GroupSpawnStrategy groupStrategy)
-			{
-				groupStrategy.SetGroupMetaData(tokensToReturn, timerReduction);
-			}
-
-			var spawnPosition = _spawnerTokens.GetSpawnPosition(section);
-			var spawnedEnemy = yellowSpawner.SpawnAtPosition(section, enemyKind, spawnPosition);
-
-			var enemyData = GetEnemyData(enemyKind);
-			var costPerEnemy = enemyData?.SectionWeight ?? 1f;
-			_spawnerTokens.Commit(section, spawnedEnemy != null ? 1 : 0, costPerEnemy);
-
-			return spawnedEnemy;
-		}
-
-		public PooledEnemy[] SpawnPresetEnemies(PresetEnemyInfo[] placements, float tokensPerEnemy, float timerPerEnemy)
-		{
-			var spawnedEnemies = new System.Collections.Generic.List<PooledEnemy>();
-
-			foreach (var placement in placements)
-			{
-				var spawned = SpawnEnemyWithMeta(
-					placement.SoulType,
-					placement.EnemyKind,
-					placement.Section,
-					tokensPerEnemy,
-					timerPerEnemy
-				);
-
-				if (spawned != null)
-					spawnedEnemies.Add(spawned);
-			}
-
-			return spawnedEnemies.ToArray();
-		}
-
-		private SpawnSection ConvertDirectionToSection(SpawnDirection direction)
-		{
-			return direction switch
-			{
-				SpawnDirection.Section1 => SpawnSection.Section1,
-				SpawnDirection.Section2 => SpawnSection.Section2,
-				SpawnDirection.Section3 => SpawnSection.Section3,
-				SpawnDirection.Section4 => SpawnSection.Section4,
-				SpawnDirection.Section5 => SpawnSection.Section5,
-				SpawnDirection.Section6 => SpawnSection.Section6,
-				SpawnDirection.Section7 => SpawnSection.Section7,
-				SpawnDirection.Section8 => SpawnSection.Section8,
-				SpawnDirection.Section9 => SpawnSection.Section9,
-				SpawnDirection.Section10 => SpawnSection.Section10,
-				SpawnDirection.Section11 => SpawnSection.Section11,
-				SpawnDirection.Section12 => SpawnSection.Section12,
-				_ => SpawnSection.Section1
-			};
 		}
 
 		private ISpawner GetSpawnerBySoulType(SoulType soulType)
@@ -246,15 +178,19 @@ namespace SpawnerSystem
 
 		public void RequestSoulSpawn(SoulType soulType, Vector3 spawnPosition, DamageData damageData, System.Action<PooledEnemy> onSoulSpawned = null)
 		{
+			if (soulType == SoulType.Random)
+			{
+				soulType = GetRandomSoulType();
+			}
+
 			var spawner = GetSpawnerBySoulType(soulType);
 
 			if (spawner != null)
 			{
-				var section = SpawnSection.Section4;
+				var section = SpawnerSystemData.SpawnSection.Section4;
 				var spawnedEnemy = spawner.SpawnAtPosition(section, EnemyKind.Soul, spawnPosition);
-				var enemyData = GetEnemyData(EnemyKind.Soul);
-				var costPerEnemy = enemyData?.TokenValue ?? 1f;
-				_spawnerTokens.Commit(section, spawnedEnemy != null ? 1 : 0, costPerEnemy);
+
+				_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
 
 				if (spawnedEnemy != null)
 				{
@@ -267,8 +203,6 @@ namespace SpawnerSystem
 
 					onSoulSpawned?.Invoke(spawnedEnemy);
 				}
-
-				SendAllActiveEnemiesToTokens();
 			}
 			else
 			{
@@ -323,15 +257,6 @@ namespace SpawnerSystem
 			return data;
 		}
 
-		public EnemyKind[] GetAvailableEnemiesForDifficulty(int difficultyLevel)
-		{
-			return AllEnemyData
-				.Where(data => data.DifficultyLevel <= difficultyLevel)
-				.Select(data => data.EnemyKind)
-				.Distinct()
-				.ToArray();
-		}
-
 		public SoulType[] GetAvailableSoulTypes()
 		{
 			var soulTypes = new List<SoulType>();
@@ -342,6 +267,15 @@ namespace SpawnerSystem
 			if (_yellow != null) soulTypes.Add(SoulType.Yellow);
 
 			return soulTypes.ToArray();
+		}
+
+		public SoulType GetRandomSoulType()
+		{
+			var availableSoulTypes = GetAvailableSoulTypes();
+			if (availableSoulTypes.Length == 0)
+				return SoulType.Blue;
+
+			return availableSoulTypes[UnityEngine.Random.Range(0, availableSoulTypes.Length)];
 		}
 
 		private void InitializeDictionaries()
@@ -384,7 +318,7 @@ namespace SpawnerSystem
 			}
 		}
 
-		private PooledEnemy[] GetAllActiveEnemies()
+		public PooledEnemy[] GetAllActiveEnemies()
 		{
 			var allEnemies = new List<PooledEnemy>();
 
@@ -409,8 +343,6 @@ namespace SpawnerSystem
 			}
 		}
 
-		public event System.Action<PooledEnemy> EnemyReturnedToPoolEvent;
-
 		private void SubscribeToSpawnerEvents()
 		{
 			_blue.EnemyReturnedToPool += OnEnemyReturnedToPool;
@@ -418,12 +350,94 @@ namespace SpawnerSystem
 			_red.EnemyReturnedToPool += OnEnemyReturnedToPool;
 			_yellow.EnemyReturnedToPool += OnEnemyReturnedToPool;
 			_knight.EnemyReturnedToPool += OnEnemyReturnedToPool;
+			GroupRegister.GroupDestroyedEvent += OnGroupDestroyed;
 		}
 
 		private void OnEnemyReturnedToPool(PooledEnemy enemy)
 		{
-			SendAllActiveEnemiesToTokens();
-			EnemyReturnedToPoolEvent?.Invoke(enemy);
+			_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
+
+			if (enemy != null && enemy.SpawnMeta != null)
+			{
+				var metaData = new EnemyMetaData(
+					enemy.SpawnMeta.TokensToReturn,
+					enemy.SpawnMeta.TimerReductionOnDeath,
+					enemy.SpawnMeta.Kind
+				);
+				EnemyMetaDataEvent?.Invoke(metaData);
+			}
 		}
+
+		private void OnGroupDestroyed(int groupId, GroupMetaData metaData)
+		{
+			var enemyMeta = EnemyMetaData.FromGroupMeta(metaData);
+			EnemyMetaDataEvent?.Invoke(enemyMeta);
+		}
+
+		public PooledEnemy SpawnEnemy(SoulType soulType, EnemyKind enemyKind, SpawnerSystemData.SpawnSection section, int tokensToReturn = 0, float timerReduction = 0f)
+		{
+			if (soulType == SoulType.Random && enemyKind != EnemyKind.Knight)
+			{
+				soulType = GetRandomSoulType();
+			}
+
+			ISpawner spawner = enemyKind == EnemyKind.Knight
+				? _knight
+				: GetSpawnerBySoulType(soulType);
+
+			if (spawner == null)
+				return null;
+
+			if (spawner is SpawnerYellow yellowSpawner)
+			{
+				return SpawnGroupEnemy(yellowSpawner, enemyKind, section, tokensToReturn, timerReduction);
+			}
+
+			var activeEnemiesBefore = spawner.GetActiveEnemies();
+			int enemiesCountBefore = activeEnemiesBefore?.Length ?? 0;
+
+			int spawnCount = spawner.Spawn(section, enemyKind);
+
+			if (spawnCount > 0)
+			{
+				var activeEnemiesAfter = spawner.GetActiveEnemies();
+				if (activeEnemiesAfter != null && activeEnemiesAfter.Length > enemiesCountBefore)
+				{
+					var spawnedEnemy = activeEnemiesAfter[enemiesCountBefore];
+
+					if (spawnedEnemy != null && spawnedEnemy.SpawnMeta != null)
+					{
+						spawnedEnemy.SpawnMeta.SetSpawnData(tokensToReturn, timerReduction);
+					}
+
+					_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
+					return spawnedEnemy;
+				}
+			}
+
+			return null;
+		}
+
+		private PooledEnemy SpawnGroupEnemy(SpawnerYellow yellowSpawner, EnemyKind enemyKind, SpawnerSystemData.SpawnSection section, int tokensToReturn, float timerReduction)
+		{
+			if (yellowSpawner.GetSpawnStrategy() is GroupSpawnStrategy groupStrategy)
+			{
+				groupStrategy.SetGroupMetaData(tokensToReturn, timerReduction);
+			}
+			else
+			{
+				Debug.LogWarning($"[{nameof(SpawnerEnemys)}] SpawnerYellow does not have GroupSpawnStrategy!");
+			}
+
+			int spawnCount = yellowSpawner.Spawn(section, enemyKind);
+
+			if (spawnCount > 0)
+			{
+				_spawnerTokens.UpdateWeights(GetAllActiveEnemies());
+			}
+
+			return null;
+		}
+
 	}
 }

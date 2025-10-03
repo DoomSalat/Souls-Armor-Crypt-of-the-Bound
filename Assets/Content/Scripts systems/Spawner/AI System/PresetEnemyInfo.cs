@@ -4,6 +4,7 @@ namespace SpawnerSystem
 	{
 		public EnemyKind EnemyKind;
 		public SoulType SoulType;
-		public SpawnSection Section;
+		public SpawnerSystemData.SpawnSection Section;
+		public float TimerReductionOnDeath;
 	}
 }
