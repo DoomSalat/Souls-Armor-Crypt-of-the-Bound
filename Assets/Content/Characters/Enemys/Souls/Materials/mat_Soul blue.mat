@@ -45,6 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorHue: 0
     - _Gray_intencity: 0.4
     m_Colors:
     - _Color: {r: 0.14146666, g: 0.29391238, b: 0.4188679, a: 1}
@@ -62,4 +63,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
