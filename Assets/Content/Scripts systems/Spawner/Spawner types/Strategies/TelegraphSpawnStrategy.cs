@@ -25,6 +25,19 @@ namespace SpawnerSystem
 			return CalculateRandomPositionInSection(sectionInfo);
 		}
 
+		protected override Vector3 CalculateRandomPositionInSection(SpawnerSystemData.SectionSpawnInfo sectionInfo)
+		{
+			float randomAngle = Random.Range(sectionInfo.StartAngle, sectionInfo.EndAngle);
+
+			float randomDistance = Random.Range(_minOffsetFromPlayer, _maxOffsetFromPlayer);
+
+			Vector3 spawnDirection = new Vector3(Mathf.Sin(randomAngle), Mathf.Cos(randomAngle), 0f);
+			Vector3 spawnPosition = sectionInfo.Center + spawnDirection * randomDistance;
+			spawnPosition.z = sectionInfo.Center.z;
+
+			return spawnPosition;
+		}
+
 		public override bool OnBeforeSpawn(Vector3 position, PooledEnemy prefab, SpawnerSystemData.SpawnSection section, EnemyKind kind)
 		{
 			if (_telegraphPool != null)

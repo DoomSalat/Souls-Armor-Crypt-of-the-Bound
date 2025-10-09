@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerSoulMaterial : MonoBehaviour
 {
 	[Header("Soul Material Appliers")]
-	[SerializeField] private PlayerSoulMaterialApplierData[] _limbAppliers = new PlayerSoulMaterialApplierData[6];
+	[SerializeField] private PlayerSoulMaterialApplierData[] _limbAppliers = new PlayerSoulMaterialApplierData[7];
 
 	private Dictionary<LimbType, SoulMaterialApplier> _applierLookup;
 	private Dictionary<LimbType, SoulType> _currentLimbSouls;
@@ -25,6 +25,24 @@ public class PlayerSoulMaterial : MonoBehaviour
 			if (limbType != LimbType.None)
 			{
 				_currentLimbSouls[limbType] = SoulType.None;
+			}
+		}
+	}
+
+	private void OnValidate()
+	{
+		if (_limbAppliers != null)
+		{
+			var limbTypes = new HashSet<LimbType>();
+			foreach (var applierData in _limbAppliers)
+			{
+				if (applierData.LimbType == LimbType.None)
+					continue;
+
+				if (limbTypes.Add(applierData.LimbType) == false)
+				{
+					Debug.LogWarning($"[{name}] Duplicate limb type {applierData.LimbType} found in appliers!");
+				}
 			}
 		}
 	}
@@ -130,24 +148,6 @@ public class PlayerSoulMaterial : MonoBehaviour
 		foreach (var limbType in _currentLimbSouls.Keys)
 		{
 			ResetLimb(limbType);
-		}
-	}
-
-	private void OnValidate()
-	{
-		if (_limbAppliers != null)
-		{
-			var limbTypes = new HashSet<LimbType>();
-			foreach (var applierData in _limbAppliers)
-			{
-				if (applierData.LimbType == LimbType.None)
-					continue;
-
-				if (limbTypes.Add(applierData.LimbType) == false)
-				{
-					Debug.LogWarning($"[{name}] Duplicate limb type {applierData.LimbType} found in appliers!");
-				}
-			}
 		}
 	}
 #endif

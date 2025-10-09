@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103710858ebfcd245a681cdc0d162943, type: 3}
   m_Name: UIParticles Soul green Data
   m_EditorClassIdentifier: 
-  _soulType: 4
+  _soulType: 5
   _material: {fileID: 2100000, guid: dc629dedc1130464e982d0de06f57b77, type: 2}

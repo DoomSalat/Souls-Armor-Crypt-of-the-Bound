@@ -9,6 +9,7 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 	private PlayerLimbs _limbsState;
 	private PlayerKnightAnimator _playerKnightAnimator;
 	private AbilityInitializer _abilityInitializer;
+	private WaitForSeconds _deadDelayWait;
 
 	private bool _isDamageLocked = false;
 
@@ -46,6 +47,7 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 		_limbsState = limbsState;
 		_playerKnightAnimator = playerKnightAnimator;
 		_abilityInitializer = abilityInitializer;
+		_deadDelayWait = new WaitForSeconds(_deadDelay);
 
 		_isInitialized = true;
 		OnEnable();
@@ -101,7 +103,7 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
 	private IEnumerator DeadCoroutine()
 	{
-		yield return new WaitForSeconds(_deadDelay);
+		yield return _deadDelayWait;
 		DiedEnd?.Invoke();
 	}
 

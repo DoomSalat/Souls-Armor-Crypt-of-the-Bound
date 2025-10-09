@@ -44,4 +44,14 @@ public class AngularShake : MonoBehaviour
 		_shakeTween?.Kill();
 		transform.localRotation = _initialRotate;
 	}
+
+	public void SetUnscaledTime()
+	{
+		_shakeTween?.SetUpdate(true);
+	}
+
+	public void SetNormalTime()
+	{
+		_shakeTween?.SetUpdate(false);
+	}
 }

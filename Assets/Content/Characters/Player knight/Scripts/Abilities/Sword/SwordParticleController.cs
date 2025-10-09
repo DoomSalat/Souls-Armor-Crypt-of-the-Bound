@@ -27,4 +27,16 @@ public class SwordParticleController : MonoBehaviour
 	{
 		_controlledParticles.Clear();
 	}
+
+	public void SetUnscaledTime()
+	{
+		var main = _controlledParticles.main;
+		main.useUnscaledTime = true;
+	}
+
+	public void SetNormalTime()
+	{
+		var main = _controlledParticles.main;
+		main.useUnscaledTime = false;
+	}
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: YellowLeg
   m_EditorClassIdentifier: 
-  _soulType: 3
+  _soulType: 4
   _targetLimbType: 2
   _abilityPrefab: {fileID: 1401458735869912083, guid: 617f35baa3bd0ca4d84f4f0219b74842, type: 3}
   _abilityDescription: Fast short move

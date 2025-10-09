@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: RedBody
   m_EditorClassIdentifier: 
-  _soulType: 2
+  _soulType: 3
   _targetLimbType: 1
   _abilityPrefab: {fileID: 6985804978609708388, guid: 75c9cf8f8af0c174db3713497d928cf0, type: 3}
   _abilityDescription: Explose when damage

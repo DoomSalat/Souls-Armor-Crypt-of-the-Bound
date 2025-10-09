@@ -42,6 +42,9 @@ public class ParticleReverseSystem : MonoBehaviour
 
 	private void Update()
 	{
+		if (Time.timeScale == 0 && !_particleSystem.main.useUnscaledTime)
+			return;
+
 		bool isCurrentlyPlaying = _particleSystem.isPlaying;
 		float currentSimulationTime = _particleSystem.time;
 
@@ -83,6 +86,18 @@ public class ParticleReverseSystem : MonoBehaviour
 	public void Play()
 	{
 		_particleSystem.Play();
+	}
+
+	public void SetUnscaledTime()
+	{
+		var main = _particleSystem.main;
+		main.useUnscaledTime = true;
+	}
+
+	public void SetNormalTime()
+	{
+		var main = _particleSystem.main;
+		main.useUnscaledTime = false;
 	}
 
 	private void TryInitialize()

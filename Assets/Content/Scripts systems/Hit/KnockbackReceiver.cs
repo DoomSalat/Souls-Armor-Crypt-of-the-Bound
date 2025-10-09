@@ -10,12 +10,14 @@ public class KnockbackReceiver : MonoBehaviour
 
 	private Rigidbody2D _rigidbody;
 	private Coroutine _knockbackCoroutine;
+	private WaitForSeconds _knockbackWait;
 
 	public bool IsKnockedBack { get; private set; }
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
+		_knockbackWait = new WaitForSeconds(_knockbackDuration);
 	}
 
 	public void ApplyKnockback(DamageData damageData)
@@ -61,7 +63,7 @@ public class KnockbackReceiver : MonoBehaviour
 	private IEnumerator KnockbackCoroutine()
 	{
 		IsKnockedBack = true;
-		yield return new WaitForSeconds(_knockbackDuration);
+		yield return _knockbackWait;
 
 		IsKnockedBack = false;
 		_knockbackCoroutine = null;

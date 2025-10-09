@@ -12890,7 +12890,7 @@ MonoBehaviour:
   - {fileID: 1790654351}
   - {fileID: 480487197}
   _soulMaterialApplier: {fileID: 2054195870}
-  _soulType: 1
+  _soulType: 2
 --- !u!114 &727849247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64069,10 +64069,6 @@ PrefabInstance:
     - target: {fileID: 8815507487215961974, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: Targets.Array.data[1].Object
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954013109217506612, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
-      propertyPath: _defaultSoulType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8954013109217506612, guid: d5298c06da3cf91429ed6e204badfa0d, type: 3}
       propertyPath: _inventoryController

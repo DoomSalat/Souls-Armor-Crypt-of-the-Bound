@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: GreenLeg
   m_EditorClassIdentifier: 
-  _soulType: 4
+  _soulType: 5
   _targetLimbType: 2
   _abilityPrefab: {fileID: 1401458735869912083, guid: 81113aa3d44a18c42b48ac604577aa93, type: 3}
   _abilityDescription: 'When start check enemyes near. If have - create poison soul.

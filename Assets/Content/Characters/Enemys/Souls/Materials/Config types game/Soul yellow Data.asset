@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103710858ebfcd245a681cdc0d162943, type: 3}
   m_Name: Soul yellow Data
   m_EditorClassIdentifier: 
-  _soulType: 3
+  _soulType: 4
   _material: {fileID: 2100000, guid: 555ba2d555020af48961fe0eea2dfe55, type: 2}

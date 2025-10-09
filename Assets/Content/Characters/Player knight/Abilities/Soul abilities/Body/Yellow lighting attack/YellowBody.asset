@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: YellowBody
   m_EditorClassIdentifier: 
-  _soulType: 3
+  _soulType: 4
   _targetLimbType: 1
   _abilityPrefab: {fileID: 7278809191192123143, guid: 7b4ade01e6a65ca488940752afebda50, type: 3}
   _abilityDescription: Closest enemy hit lighting

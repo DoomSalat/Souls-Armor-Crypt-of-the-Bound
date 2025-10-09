@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: YellowArm
   m_EditorClassIdentifier: 
-  _soulType: 3
+  _soulType: 4
   _targetLimbType: 4
   _abilityPrefab: {fileID: 1301348624759801972, guid: e031a96f44310d34786dc6726a59e910, type: 3}
   _abilityDescription: Fast sword

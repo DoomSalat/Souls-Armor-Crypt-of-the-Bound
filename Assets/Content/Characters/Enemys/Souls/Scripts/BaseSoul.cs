@@ -23,4 +23,9 @@ public abstract class BaseSoul : MonoBehaviour, ISoul
 	{
 		_soulComponent.ApplySpawnKnockback(direction, force);
 	}
+
+	public virtual void SetAnimatorUnscaledTime()
+	{
+		_soulComponent.SetAnimatorUnscaledTime();
+	}
 }

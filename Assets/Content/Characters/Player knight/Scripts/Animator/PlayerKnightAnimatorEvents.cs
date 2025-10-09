@@ -66,6 +66,24 @@ public class PlayerKnightAnimatorEvents : MonoBehaviour
 		}
 	}
 
+	public void SetAbsorptionBodyUnscaledTime()
+	{
+		foreach (var particle in _particlesAbsorptionBody)
+		{
+			var main = particle.main;
+			main.useUnscaledTime = true;
+		}
+	}
+
+	public void SetAbsorptionBodyNormalTime()
+	{
+		foreach (var particle in _particlesAbsorptionBody)
+		{
+			var main = particle.main;
+			main.useUnscaledTime = false;
+		}
+	}
+
 	public void PlayMainAbsorption()
 	{
 		DeactivateAbsorptionAttractor();

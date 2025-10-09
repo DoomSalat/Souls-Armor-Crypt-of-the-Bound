@@ -9,4 +9,5 @@ public interface ISoul
 	public void StartAttraction(Transform target, System.Action onAttractionCompleted);
 	public void OnAbsorptionCompleted();
 	public void ApplySpawnKnockback(Vector2 direction, float force);
+	public void SetAnimatorUnscaledTime();
 }

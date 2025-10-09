@@ -125,6 +125,18 @@ public class Sword : MonoBehaviour
 		_swordCollision.SetSpeedThreshold(threshold);
 	}
 
+	public void SetUnscaledTime()
+	{
+		_particleController.SetUnscaledTime();
+		_angleShake.SetUnscaledTime();
+	}
+
+	public void SetNormalTime()
+	{
+		_particleController.SetNormalTime();
+		_angleShake.SetNormalTime();
+	}
+
 	private void OnEnteredRadius()
 	{
 		_followSystem.SetFollowingState(true);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: BlueBody
   m_EditorClassIdentifier: 
-  _soulType: 1
+  _soulType: 2
   _targetLimbType: 1
   _abilityPrefab: {fileID: 4744832780881460434, guid: 8a5ad0a0e04c71d469590f24dc6876af, type: 3}
   _abilityDescription: 5 seconds invisibility

@@ -11,15 +11,17 @@ public class AbsorptionState : PlayerState
 	private readonly PlayerLimbs _playerLimbs;
 	private readonly Transform _soulAbsorptionTarget;
 	private readonly AbsorptionCooldown _absorptionCooldown;
-	private readonly SwordController _swordController;
 	private readonly TimeController _timeController;
 	private readonly PlayerDamage _playerDamage;
+	private readonly SwordController _swordController;
 
 	private ISoul _currentSoul;
 	private MonoBehaviour _coroutineRunner;
 	private bool _waitingForInventoryCompletion = false;
 	private bool _isInventoryPhase = false;
 	private Coroutine _absorptionCoroutine;
+	private WaitForSeconds _absorptionDelayWait;
+	private WaitUntil _waitingForInventoryCompletionWaitUntil;
 
 	private float _absorptionDelay = 0.5f;
 
@@ -34,9 +36,9 @@ public class AbsorptionState : PlayerState
 							PlayerLimbs playerLimbs,
 							Transform soulAbsorptionTarget,
 							AbsorptionCooldown absorptionCooldown,
-							SwordController swordController,
 							TimeController timeController,
-							PlayerDamage playerDamage)
+							PlayerDamage playerDamage,
+							SwordController swordController)
 	{
 		_animator = playerKnightAnimator;
 		_absorptionScopeController = absorptionScopeController;
@@ -46,9 +48,11 @@ public class AbsorptionState : PlayerState
 		_coroutineRunner = absorptionScopeController;
 		_soulAbsorptionTarget = soulAbsorptionTarget;
 		_absorptionCooldown = absorptionCooldown;
-		_swordController = swordController;
 		_timeController = timeController;
 		_playerDamage = playerDamage;
+		_swordController = swordController;
+		_absorptionDelayWait = new WaitForSeconds(_absorptionDelay);
+		_waitingForInventoryCompletionWaitUntil = new WaitUntil(() => _waitingForInventoryCompletion == false);
 
 		var mousePos = InputUtilits.GetMouseClampPosition();
 		Camera.main.ScreenToWorldPoint(mousePos);
@@ -75,9 +79,11 @@ public class AbsorptionState : PlayerState
 		_absorptionScope.SoulFounded -= OnSoulFound;
 		_absorptionScope.SoulTargeted -= OnSoulTargeted;
 		_animator.AbdorptionAnimationEnded -= OnAbsorptionAnimationEnded;
+		_animator.AbdorptionAnimationEnded -= OnAbsorptionDeactivationComplete;
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 
 		_animator.SetCapture(false);
+		_animator.SetNormalTime();
 	}
 
 	private void OnSoulFound(ISoul soul)
@@ -110,7 +116,7 @@ public class AbsorptionState : PlayerState
 
 	private IEnumerator StartAbsorptionProcess()
 	{
-		yield return new WaitForSeconds(_absorptionDelay);
+		yield return _absorptionDelayWait;
 		_absorptionScope.Hide();
 
 		_timeController.StopTime();
@@ -120,7 +126,7 @@ public class AbsorptionState : PlayerState
 		_waitingForInventoryCompletion = true;
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced += OnInventoryCompleted;
 
-		yield return new WaitUntil(() => _waitingForInventoryCompletion == false);
+		yield return _waitingForInventoryCompletionWaitUntil;
 
 		_currentSoul.OnAbsorptionCompleted();
 
@@ -132,8 +138,20 @@ public class AbsorptionState : PlayerState
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
 
-		_timeController.ResumeTime();
+		_animator.SetUnscaledTime();
+		_currentSoul?.SetAnimatorUnscaledTime();
+		_swordController.SetUnscaledTime();
+		_animator.AbdorptionAnimationEnded += OnAbsorptionDeactivationComplete;
+
 		InventoryClosed?.Invoke();
+	}
+
+	private void OnAbsorptionDeactivationComplete()
+	{
+		_animator.AbdorptionAnimationEnded -= OnAbsorptionDeactivationComplete;
+		_animator.SetNormalTime();
+		_swordController.SetNormalTime();
+		_timeController.ResumeTime();
 	}
 
 	public override void DamageTaken(DamageData damageData)

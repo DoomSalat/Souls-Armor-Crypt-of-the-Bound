@@ -42,9 +42,8 @@ public class BodyLightingAbility : MonoBehaviour, IAbilityBody
 		{
 			if (closestEnemys[i] != null)
 			{
-				targetPosition = closestEnemys[i].transform.position;
 				ApplyDamageToEnemy(closestEnemys[i]);
-				_lightningSpawner.SpawnLightning(targetPosition, true);
+				_lightningSpawner.SpawnLightning(closestEnemys[i].transform.position, true);
 				foundedEnemys++;
 			}
 		}

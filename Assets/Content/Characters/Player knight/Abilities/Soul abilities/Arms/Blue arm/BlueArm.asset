@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: BlueArm
   m_EditorClassIdentifier: 
-  _soulType: 1
+  _soulType: 2
   _targetLimbType: 4
   _abilityPrefab: {fileID: 1301348624759801972, guid: ee20eac5d51fb4543a85d68171ce1bad, type: 3}
   _abilityDescription: Standard sword

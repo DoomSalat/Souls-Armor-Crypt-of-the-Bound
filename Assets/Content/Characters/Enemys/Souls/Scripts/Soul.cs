@@ -175,6 +175,11 @@ public class Soul : MonoBehaviour, ISpawnInitializable
 		ForceDeath();
 	}
 
+	public void SetAnimatorUnscaledTime()
+	{
+		_soulAnimator.SetUnscaledTime();
+	}
+
 	private void OnAttractionCompletedInternal()
 	{
 		_isEndAttraction = true;

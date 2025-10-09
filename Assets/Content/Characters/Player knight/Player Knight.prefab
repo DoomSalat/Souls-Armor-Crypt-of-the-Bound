@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryController: {fileID: 0}
   _limbsVisual: {fileID: 1507229470332080237}
-  _defaultSoulType: 1
+  _defaultSoulType: 2
 --- !u!114 &8251905907222872888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,26 +1507,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soulAbilitiesConfig:
     _soulGroups:
-    - _soulType: 1
+    - _soulType: 2
       _abilities:
       - {fileID: 11400000, guid: 64f3772634cf81b4ebee00eb4682e761, type: 2}
       - {fileID: 11400000, guid: 674b079e089882c41b44c6f66e7afe7b, type: 2}
       - {fileID: 11400000, guid: a5739c97323191f49b739148e0fed7ac, type: 2}
       - {fileID: 11400000, guid: e92a5057eab0b3d43a099ae57348f768, type: 2}
       - {fileID: 11400000, guid: e92a5057eab0b3d43a099ae57348f768, type: 2}
-    - _soulType: 2
+    - _soulType: 3
       _abilities:
       - {fileID: 11400000, guid: 04dd6a353cae8784aa65a6bcb83bace2, type: 2}
       - {fileID: 11400000, guid: a43a18bdbc584594294bc3adf3afd8ed, type: 2}
       - {fileID: 11400000, guid: 472536384ed232346b5a8ccbc62c093f, type: 2}
       - {fileID: 11400000, guid: 246bc20189723e448b8e5879a530e2a6, type: 2}
-    - _soulType: 3
+    - _soulType: 4
       _abilities:
       - {fileID: 11400000, guid: c2be9f5c1a1e76d4284f099288bd9a4c, type: 2}
       - {fileID: 11400000, guid: 9d2ed82ec3bf44240b0f2556e34d34ca, type: 2}
       - {fileID: 11400000, guid: 583b9a35559a48b47b1b0cc75b190caa, type: 2}
       - {fileID: 11400000, guid: 0cfb0a44ecd21114f81a3bf563588f94, type: 2}
-    - _soulType: 4
+    - _soulType: 5
       _abilities:
       - {fileID: 11400000, guid: 52ac3df636e2d4749bdf71b5e5373dd2, type: 2}
       - {fileID: 11400000, guid: a4a9608b7121d1849aacfca4a15c2a9a, type: 2}
@@ -1837,14 +1837,6 @@ PrefabInstance:
     - target: {fileID: 5515092231466637120, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.030676827
-      objectReference: {fileID: 0}
-    - target: {fileID: 6214532615712991873, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
-      propertyPath: _fadeDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6214532615712991873, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
-      propertyPath: _whiteEffectDuration
-      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7359019796740949565, guid: e2958a50194c3a54db343dd32f2a0199, type: 3}
       propertyPath: m_LocalScale.y

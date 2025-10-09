@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103710858ebfcd245a681cdc0d162943, type: 3}
   m_Name: Particle Soul red Data
   m_EditorClassIdentifier: 
-  _soulType: 2
+  _soulType: 3
   _material: {fileID: 2100000, guid: 964cb4f0fcbcfae43ae56f4c5cc06b31, type: 2}

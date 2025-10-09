@@ -171,6 +171,16 @@ public class SwordController : MonoBehaviour
 		_sword.gameObject.SetActive(false);
 	}
 
+	public void SetUnscaledTime()
+	{
+		_sword.SetUnscaledTime();
+	}
+
+	public void SetNormalTime()
+	{
+		_sword.SetNormalTime();
+	}
+
 	private void DisableSpring()
 	{
 		DOTween.Kill(_springRecoveryTweenId);

@@ -223,4 +223,16 @@ public class PlayerKnightAnimator : MonoBehaviour
 	{
 		CutsceneKilledSoul?.Invoke();
 	}
+
+	public void SetUnscaledTime()
+	{
+		_animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+		_events.SetAbsorptionBodyUnscaledTime();
+	}
+
+	public void SetNormalTime()
+	{
+		_animator.updateMode = AnimatorUpdateMode.Normal;
+		_events.SetAbsorptionBodyNormalTime();
+	}
 }

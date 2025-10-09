@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103710858ebfcd245a681cdc0d162943, type: 3}
   m_Name: Particle Soul purple Data
   m_EditorClassIdentifier: 
-  _soulType: 5
+  _soulType: 6
   _material: {fileID: 2100000, guid: 281a528e5963e534294f14df75f35f1a, type: 2}

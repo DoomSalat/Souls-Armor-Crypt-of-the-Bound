@@ -10,6 +10,7 @@ public class RedFire : MonoBehaviour
 
 	private bool _isEnded = false;
 	private Coroutine _lifeTimeCoroutine;
+	private WaitForSeconds _lifeTimeWait;
 
 	public event System.Action<RedFire> FireDestroyed;
 
@@ -32,6 +33,11 @@ public class RedFire : MonoBehaviour
 		_redFireAnimator.AnimationEnded -= OnAnimationEnded;
 	}
 
+	public void PreInitialize()
+	{
+		_lifeTimeWait = new WaitForSeconds(_lifeTime);
+	}
+
 	public void Initialize()
 	{
 		StartLifeTime();
@@ -51,7 +57,7 @@ public class RedFire : MonoBehaviour
 
 	private IEnumerator LifeTimeCoroutine()
 	{
-		yield return new WaitForSeconds(_lifeTime);
+		yield return _lifeTimeWait;
 
 		_isEnded = true;
 		_hitBox.enabled = false;

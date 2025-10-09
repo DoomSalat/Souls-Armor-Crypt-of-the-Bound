@@ -59,6 +59,7 @@ public class RedFireSpawner : MonoBehaviour
 	private RedFire CreateFire()
 	{
 		RedFire fire = Instantiate(_redFirePrefab, transform.position, Quaternion.identity);
+		fire.PreInitialize();
 		fire.FireDestroyed += OnFireDestroyed;
 
 		return fire;

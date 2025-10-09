@@ -32,16 +32,6 @@ public class SoulAnimator : MonoBehaviour
 		_soulAnimatorEvent.DeathExplosionEnded -= OnDeathExplosionEnded;
 	}
 
-	private void OnDeathExplosionStarted()
-	{
-		DeathExplosionStarted?.Invoke();
-	}
-
-	private void OnDeathExplosionEnded()
-	{
-		DeathExplosionEnded?.Invoke();
-	}
-
 	public void PlayDiscontinuity()
 	{
 		_animator.Play(SoulAnimatorData.Params.Discontinuity);
@@ -73,10 +63,33 @@ public class SoulAnimator : MonoBehaviour
 		_isAbsorptionActive = false;
 		_angularShake.Stop();
 		ResetRotation();
+		SetNormalTime();
 	}
 
 	public void ResetRotation()
 	{
 		_smoothRotate.ResetRotation();
+	}
+
+	public void SetUnscaledTime()
+	{
+		_animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+		_soulAnimatorEvent.SetUnscaledTime();
+	}
+
+	public void SetNormalTime()
+	{
+		_animator.updateMode = AnimatorUpdateMode.Normal;
+		_soulAnimatorEvent.SetNormalTime();
+	}
+
+	private void OnDeathExplosionStarted()
+	{
+		DeathExplosionStarted?.Invoke();
+	}
+
+	private void OnDeathExplosionEnded()
+	{
+		DeathExplosionEnded?.Invoke();
 	}
 }

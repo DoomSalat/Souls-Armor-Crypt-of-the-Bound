@@ -42,4 +42,14 @@ public class SoulAnimatorEvent : MonoBehaviour
 
 		DeathExplosionEnded?.Invoke();
 	}
+
+	public void SetUnscaledTime()
+	{
+		_particleExplosion.SetUnscaledTime();
+	}
+
+	public void SetNormalTime()
+	{
+		_particleExplosion.SetNormalTime();
+	}
 }

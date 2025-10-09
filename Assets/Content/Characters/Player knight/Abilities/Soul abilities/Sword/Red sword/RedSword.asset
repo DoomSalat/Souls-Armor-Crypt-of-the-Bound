@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed2f7af0301964c9d99e55acc20074, type: 3}
   m_Name: RedSword
   m_EditorClassIdentifier: 
-  _soulType: 2
+  _soulType: 3
   _targetLimbType: 6
   _abilityPrefab: {fileID: 1401458735869912083, guid: 5d85da67eab0e8847b581b633cf797d0, type: 3}
   _abilityDescription: Create soul flame on ground. Kill enemy if touch. Life tine

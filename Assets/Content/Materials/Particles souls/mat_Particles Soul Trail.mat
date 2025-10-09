@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_Particles Soul Trail
   m_Shader: {fileID: -6465566751694194690, guid: 727b9a8ffd2f3794881ffa6bdd85d1d7, type: 3}
-  m_Parent: {fileID: 2100000, guid: a038551429d96f142a8eb5e4b1f85971, type: 2}
+  m_Parent: {fileID: 2100000, guid: 964cb4f0fcbcfae43ae56f4c5cc06b31, type: 2}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords: []
   m_InvalidKeywords:
