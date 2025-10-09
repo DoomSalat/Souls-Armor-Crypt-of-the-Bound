@@ -27,6 +27,7 @@ public class AbsorptionState : PlayerState
 
 	public event System.Action AbsorptionCompleted;
 	public event System.Action AbsorptionStarted;
+	public event System.Action AbsorptionInterrupted;
 	public event System.Action InventoryClosed;
 
 	public AbsorptionState(PlayerKnightAnimator playerKnightAnimator,
@@ -118,6 +119,9 @@ public class AbsorptionState : PlayerState
 	{
 		yield return _absorptionDelayWait;
 
+		if (_currentSoul == null)
+			yield break;
+
 		_timeController.StopTime();
 		_isInventoryPhase = true;
 		_playerLimbs.ActivateInventory(_currentSoul.GetSoulType());
@@ -126,6 +130,9 @@ public class AbsorptionState : PlayerState
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced += OnInventoryCompleted;
 
 		yield return _waitingForInventoryCompletionWaitUntil;
+
+		if (_currentSoul == null)
+			yield break;
 
 		_currentSoul.OnAbsorptionCompleted();
 
@@ -170,12 +177,14 @@ public class AbsorptionState : PlayerState
 				_absorptionCoroutine = null;
 			}
 
+			_absorptionCooldown.StartCooldown();
 			_currentSoul.OnAbsorptionCompleted();
 			_currentSoul = null;
 		}
 
 		_absorptionScope.Hide();
 		_animator.AbdorptionDeactive();
+		AbsorptionInterrupted?.Invoke();
 		AbsorptionCompleted?.Invoke();
 	}
 

@@ -81,6 +81,7 @@ public class CameraController : MonoBehaviour
 			return;
 
 		_absorptionState.AbsorptionStarted += StartAbsorptionZoom;
+		_absorptionState.AbsorptionInterrupted += OnAbsorptionInterrupted;
 		_absorptionState.InventoryClosed += EndAbsorptionZoom;
 	}
 
@@ -90,6 +91,7 @@ public class CameraController : MonoBehaviour
 			return;
 
 		_absorptionState.AbsorptionStarted -= StartAbsorptionZoom;
+		_absorptionState.AbsorptionInterrupted -= OnAbsorptionInterrupted;
 		_absorptionState.InventoryClosed -= EndAbsorptionZoom;
 	}
 
@@ -139,6 +141,12 @@ public class CameraController : MonoBehaviour
 	{
 		_currentZoomTween?.Kill();
 		SetCameraOrthoSize(_originalOrthoSize);
+	}
+
+	private void OnAbsorptionInterrupted()
+	{
+		_currentZoomTween?.Kill();
+		CreateZoomTween(_originalOrthoSize, AbsorptionZoomReturn, _returnZoomDuration, _returnZoomEase);
 	}
 
 	public void SetCutsceneZoomInstant()
