@@ -14,6 +14,11 @@ public class BlueSwordAbility : MonoBehaviour, IAbilitySword
 
 	}
 
+	public void InitializeVisualEffects(Transform effectsParent, SwordChargeEffect chargeEffect)
+	{
+		InitializeVisualEffects(effectsParent);
+	}
+
 	public void Activate()
 	{
 

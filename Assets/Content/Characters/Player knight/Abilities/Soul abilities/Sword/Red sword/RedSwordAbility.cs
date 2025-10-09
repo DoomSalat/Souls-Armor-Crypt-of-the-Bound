@@ -7,6 +7,7 @@ public class RedSwordAbility : MonoBehaviour, IAbilitySword
 	[SerializeField] private int _spawnedDelay = 3;
 
 	private RedFireSpawner _redFireSpawner;
+	private SwordChargeEffect _chargeEffect;
 	private Coroutine _spawnCoroutine;
 	private WaitForSeconds _spawnedDelayWait;
 	private bool _isActive;
@@ -25,12 +26,21 @@ public class RedSwordAbility : MonoBehaviour, IAbilitySword
 		_redFireSpawner.Initialize();
 	}
 
+	public void InitializeVisualEffects(Transform effectsParent, SwordChargeEffect chargeEffect)
+	{
+		_chargeEffect = chargeEffect;
+		InitializeVisualEffects(effectsParent);
+
+		_chargeEffect.PlayCharged();
+	}
+
 	public void Activate()
 	{
 		if (_isActive == false)
 			return;
 
 		_redFireSpawner.SpawnFire();
+		_chargeEffect.Stop();
 
 		if (_spawnCoroutine != null)
 		{
@@ -40,12 +50,24 @@ public class RedSwordAbility : MonoBehaviour, IAbilitySword
 		_spawnCoroutine = StartCoroutine(SpawnWithDelay());
 	}
 
+	public void Deactivate()
+	{
+		if (_spawnCoroutine != null)
+		{
+			StopCoroutine(_spawnCoroutine);
+			_spawnCoroutine = null;
+		}
+
+		_chargeEffect.Stop();
+		_isActive = true;
+	}
+
 	private IEnumerator SpawnWithDelay()
 	{
 		_isActive = false;
 		yield return _spawnedDelayWait;
 		_isActive = true;
-	}
 
-	public void Deactivate() { }
+		_chargeEffect.PlayCharged();
+	}
 }

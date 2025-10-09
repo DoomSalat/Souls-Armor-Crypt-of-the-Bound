@@ -1,27 +1,19 @@
 using UnityEngine;
-using System.Collections;
 using Sirenix.OdinInspector;
 
 public class GreenSwordAbility : MonoBehaviour, IAbilitySword
 {
-	private const int DefaultHitCount = 1;
-
-	[SerializeField] private GreenPosionSeekerSpawner _greenPosionSeekerSpawnerPrefab;
-	[SerializeField] private int _timeToActivate = 5;
-	[SerializeField, ReadOnly] private bool _isCountingHits = false;
-	[SerializeField, ReadOnly] private bool _isReadyToSpawn = false;
+	[SerializeField, Required] private GreenPosionSeekerSpawner _greenPosionSeekerSpawnerPrefab;
+	[SerializeField] private float _foundEnemyRadius = 5f;
+	[SerializeField] private LayerMask _enemyLayerMask = -1;
 
 	private GreenPosionSeekerSpawner _greenPosionSeekerSpawner;
-	private int _hitCount = 0;
-	private Coroutine _hitCountdownCoroutine;
-	private WaitForSeconds _hitCountdownWait;
+
+	private Collider2D[] _collidersBuffer = new Collider2D[20];
 
 	public bool HasVisualEffects => true;
 
-	public void Initialize()
-	{
-		_hitCountdownWait = new WaitForSeconds(_timeToActivate);
-	}
+	public void Initialize() { }
 
 	public void InitializeVisualEffects(Transform effectsParent)
 	{
@@ -29,56 +21,31 @@ public class GreenSwordAbility : MonoBehaviour, IAbilitySword
 		_greenPosionSeekerSpawner.Initialize();
 	}
 
+	public void InitializeVisualEffects(Transform effectsParent, SwordChargeEffect chargeEffect)
+	{
+		InitializeVisualEffects(effectsParent);
+	}
+
 	public void Activate()
 	{
-		if (_isReadyToSpawn)
+		int maxEnemies = _collidersBuffer.Length;
+		Collider2D[] foundEnemies = FoundOverlapCircleUtilits.FindCircleEnemys(_greenPosionSeekerSpawner.transform.position, _foundEnemyRadius, _enemyLayerMask, _collidersBuffer, maxEnemies);
+
+		int enemyCount = 0;
+		for (int i = 0; i < foundEnemies.Length; i++)
 		{
-			_greenPosionSeekerSpawner.SetCount(_hitCount);
+			if (foundEnemies[i] != null)
+			{
+				enemyCount++;
+			}
+		}
+
+		if (enemyCount > 0)
+		{
+			_greenPosionSeekerSpawner.SetCount(enemyCount);
 			_greenPosionSeekerSpawner.SpawnSeekers();
-
-			ResetState();
-			return;
-		}
-
-		if (!_isCountingHits)
-		{
-			StartHitCounting();
-		}
-		else
-		{
-			_hitCount++;
 		}
 	}
 
 	public void Deactivate() { }
-
-	private void StartHitCounting()
-	{
-		_hitCount = DefaultHitCount;
-		_isCountingHits = true;
-		_isReadyToSpawn = false;
-
-		if (_hitCountdownCoroutine != null)
-		{
-			StopCoroutine(_hitCountdownCoroutine);
-		}
-
-		_hitCountdownCoroutine = StartCoroutine(HitCountdown());
-	}
-
-	private IEnumerator HitCountdown()
-	{
-		yield return _hitCountdownWait;
-
-		_isCountingHits = false;
-		_isReadyToSpawn = true;
-		_hitCountdownCoroutine = null;
-	}
-
-	private void ResetState()
-	{
-		_hitCount = 0;
-		_isCountingHits = false;
-		_isReadyToSpawn = false;
-	}
 }

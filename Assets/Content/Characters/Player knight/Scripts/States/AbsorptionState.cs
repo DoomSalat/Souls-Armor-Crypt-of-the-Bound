@@ -117,7 +117,6 @@ public class AbsorptionState : PlayerState
 	private IEnumerator StartAbsorptionProcess()
 	{
 		yield return _absorptionDelayWait;
-		_absorptionScope.Hide();
 
 		_timeController.StopTime();
 		_isInventoryPhase = true;
@@ -137,6 +136,8 @@ public class AbsorptionState : PlayerState
 	{
 		_playerLimbs.InventoryController.InventorySoul.SoulPlaced -= OnInventoryCompleted;
 		_waitingForInventoryCompletion = false;
+
+		_absorptionScope.Hide();
 
 		_animator.SetUnscaledTime();
 		_currentSoul?.SetAnimatorUnscaledTime();

@@ -22,6 +22,7 @@ public class AbilityInitializer : MonoBehaviour
 	[SerializeField, Required] private LimbEffectsData _swordEffectsParent;
 	[Space]
 	[SerializeField, Required] private Sword _sword;
+	[SerializeField, Required] private SwordChargeEffect _swordChargeEffect;
 
 	private PlayerLimbs _playerLimbs;
 	private List<IAbility> _abilities = new List<IAbility>();
@@ -132,7 +133,14 @@ public class AbilityInitializer : MonoBehaviour
 			if (limbType == LimbType.Sword)
 			{
 				var newAbility = GetCurrentAbility(limbType);
-				_sword.SetSwordAbility(newAbility as IAbilitySword);
+				var swordAbility = newAbility as IAbilitySword;
+				_sword.SetSwordAbility(swordAbility);
+
+				if (swordAbility != null)
+				{
+					var swordEffectsParent = GetEffectsParentForLimb(limbType);
+					swordAbility.InitializeVisualEffects(swordEffectsParent, _swordChargeEffect);
+				}
 			}
 		}
 		else if (limbInfo.SoulType == SoulType.None && currentAbility != null)

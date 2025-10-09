@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lightningSpawnerPrefab: {fileID: -7185084033761553858, guid: 84e3c32052b9ea24aab55064e5ab3006, type: 3}
-  _cooldown: 1
-  _foundEnemyRadius: 10
+  _chargeTime: 2
+  _foundEnemyRadius: 5
   _enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1024
+  _isCountingHits: 0
+  _isReadyToSpawn: 0

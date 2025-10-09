@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _greenPosionSeekerSpawnerPrefab: {fileID: 4369643914198464388, guid: 64175206febc1b44d91542258f0f4a82, type: 3}
-  _timeToActivate: 3
-  _isCountingHits: 0
-  _isReadyToSpawn: 0
+  _foundEnemyRadius: 10
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024

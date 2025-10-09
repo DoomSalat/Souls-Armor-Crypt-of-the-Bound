@@ -1539,8 +1539,9 @@ MonoBehaviour:
   _rightArmEffectsParent: {fileID: 5810449381830479625}
   _leftLegEffectsParent: {fileID: 342020225892527343}
   _rightLegEffectsParent: {fileID: 1380055723352258211}
-  _swordEffectsParent: {fileID: 439236044874112152}
+  _swordEffectsParent: {fileID: 3683324247433142741}
   _sword: {fileID: 4972086489707388878}
+  _swordChargeEffect: {fileID: 2899784723711099157}
 --- !u!1001 &4596988974686164566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1628,10 +1629,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 138704622205312929, guid: 7374b60a3adf1b84394202db70569935, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 439236044874112152}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7374b60a3adf1b84394202db70569935, type: 3}
 --- !u!4 &565088543649250528 stripped
 Transform:
@@ -1654,24 +1652,28 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3589131533407679560, guid: 7374b60a3adf1b84394202db70569935, type: 3}
   m_PrefabInstance: {fileID: 4596988974686164566}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4478563763440503287 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 138704622205312929, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+--- !u!114 &2899784723711099157 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1726518898673178435, guid: 7374b60a3adf1b84394202db70569935, type: 3}
   m_PrefabInstance: {fileID: 4596988974686164566}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &439236044874112152
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721b20da68c3535419872e2ffc1c64b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwordChargeEffect
+--- !u!114 &3683324247433142741 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 924930065703876483, guid: 7374b60a3adf1b84394202db70569935, type: 3}
+  m_PrefabInstance: {fileID: 4596988974686164566}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4478563763440503287}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a54267b20cd9f241b22b5d99d4b2daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordTarget: {fileID: 565088543649250528}
 --- !u!114 &4972086489707388878 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8848358635647617432, guid: 7374b60a3adf1b84394202db70569935, type: 3}
